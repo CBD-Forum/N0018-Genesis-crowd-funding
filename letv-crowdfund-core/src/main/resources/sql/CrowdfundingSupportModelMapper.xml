@@ -1,0 +1,1480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="support_user" property="supportUser" jdbcType="VARCHAR" />
+    <result column="support_amt" property="supportAmt" jdbcType="DOUBLE" />
+    <result column="support_time" property="supportTime" jdbcType="TIMESTAMP" />
+    <result column="complete_time" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="back_no" property="backNo" jdbcType="VARCHAR" />
+    <result column="pay_state" property="payState" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="post_address_no" property="postAddressNo" jdbcType="VARCHAR" />
+    <result column="support_amt" property="supportAmt" jdbcType="DOUBLE" />
+    <result column="p2p_fee" property="p2pFee" jdbcType="DOUBLE" />
+    <result column="hy_fee" property="hyFee" jdbcType="DOUBLE" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="send_order_id" property="sendOrderId" jdbcType="VARCHAR" />
+    <result column="send_delivery" property="sendDelivery" jdbcType="VARCHAR" />
+    <result column="invest_type" property="investType" jdbcType="VARCHAR" />
+    <result column="pay_way" property="payWay" jdbcType="VARCHAR" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+    <result column="buy_num" property="buyNum" jdbcType="INTEGER" />
+    <result column="support_way" property="supportWay" jdbcType="VARCHAR" />
+    <result column="buy_type" property="buyType" jdbcType="VARCHAR" />
+    <result column="actual_pay_amt" property="actualPayAmt" jdbcType="DOUBLE" />
+    <result column="reward_no" property="rewardNo" jdbcType="VARCHAR" />
+    <result column="apply_lead_des" property="applyLeadDes" jdbcType="LONGVARCHAR" />
+    <result column="transfer_amt" property="transferAmt" jdbcType="DOUBLE" />
+    <result column="part_money" property="partMoney" jdbcType="DOUBLE" />
+    <result column="support_class" property="supportClass" jdbcType="VARCHAR" />
+    <result column="is_transfer" property="isTransfer" jdbcType="VARCHAR" />
+    <result column="refund_state" property="refundState" jdbcType="VARCHAR" />
+    <result column="contract_state" property="contractState" jdbcType="VARCHAR" />
+    <result column="contract_id" property="contractId" jdbcType="VARCHAR" />
+    <result column="contract_url" property="contractUrl" jdbcType="VARCHAR" />
+    <result column="contract_invest_sign_state" property="contractInvestSignState" jdbcType="VARCHAR" />
+    <result column="contract_project_sign_state" property="contractProjectSignState" jdbcType="VARCHAR" />
+    <result column="contract_invest_sign_time" property="contractInvestSignTime" jdbcType="TIMESTAMP" />
+    <result column="contract_project_sign_time" property="contractProjectSignTime" jdbcType="TIMESTAMP" />
+    <result column="contract_create_time" property="contractCreateTime" jdbcType="TIMESTAMP" />
+    <result column="application_content" property="applicationContent" jdbcType="VARCHAR" />
+    <result column="is_application_delivery" property="isApplicationDelivery" jdbcType="VARCHAR" />
+    <result column="intention_no" property="intentionNo" jdbcType="VARCHAR" />
+    <result column="intention_state" property="intentionState" jdbcType="VARCHAR" />
+ 	<result column="intention_amt" property="intentionAmt" jdbcType="DOUBLE" />
+ 	<result column="intention_flag" property="intentionFlag" jdbcType="VARCHAR" />
+ 	<result column="intention_end_time" property="intentionEndTime" jdbcType="TIMESTAMP" />
+ 	<result column="remark" property="remark" jdbcType="VARCHAR" />
+ 	<result column="content" property="content" jdbcType="VARCHAR" />
+ 	<result column="trans_fee" property="transFee" jdbcType="DOUBLE" />
+ 	<result column="device_type" property="deviceType" jdbcType="DOUBLE" />
+ 	<result column="refuse_reason" property="refuseReason" jdbcType="VARCHAR" /> 	
+    <result column="refuse_apply_time" property="refuseApplyTime" jdbcType="TIMESTAMP" /> 	
+    <result column="refuse_audit_time" property="refuseAuditTime" jdbcType="TIMESTAMP" /> 
+    <result column="delivery_name" property="deliveryName" jdbcType="VARCHAR" />
+    <result column="delivery_phone" property="deliveryPhone" jdbcType="VARCHAR" />
+    <result column="delivery_address" property="deliveryAddress" jdbcType="VARCHAR" />
+    	
+ 
+ 	
+ 	 
+ 	
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, support_user, support_amt, support_time, loan_no, back_no, pay_state, 
+    state, post_address_no,complete_time,p2p_fee,hy_fee,send_time,send_order_id,send_delivery,
+    invest_type,pay_way,modify_time,modify_user,buy_num,support_way,buy_type,actual_pay_amt,reward_no,
+    apply_lead_des,transfer_amt,part_money,support_class,is_transfer,refund_state,application_content,
+    contract_state,contract_id,contract_url,is_application_delivery,intention_no,intention_state,intention_amt,remark,content,
+    contract_invest_sign_state,contract_project_sign_state,trans_fee,contract_invest_sign_time,
+    contract_project_sign_time,contract_create_time,device_type,refuse_reason,refuse_apply_time,refuse_audit_time,
+    intention_flag,intention_end_time,delivery_name,delivery_phone,delivery_address
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_support
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_support
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询全款支付是否成功 -->
+  <select id="selectPayIsSuccess" resultType="java.lang.Integer"  parameterType="java.lang.String" >
+  select count(1)  from crowdfunding_support
+    where order_id = #{orderId,jdbcType=VARCHAR} and pay_state='payed'
+  </select>
+    <!-- 查询意向金支付是否成功 -->
+  <select id="selectPayIntentionIsSucess"  resultType="java.lang.Integer"  parameterType="java.lang.String" >
+  select count(1) from crowdfunding_support
+    where order_id = #{orderId,jdbcType=VARCHAR} and
+  intention_state='payed'
+  </select>
+  
+   <!-- 查询意向金尾款支付是否成功 -->
+  <select id="selectIntentionEndIsSucess"  resultType="java.lang.Integer"  parameterType="java.lang.String" >
+  select count(1) from crowdfunding_support
+    where order_id = #{orderId,jdbcType=VARCHAR} and
+  intention_state='payed' and intention_state='payed'
+  </select>
+  <select id="selectByIntentionNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_support
+    where intention_no = #{intentionNo,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询待发货的支持记录条数 -->
+  <select id="selectNoSendDataByLoanNo" resultType="java.lang.Long"  parameterType="java.lang.String" >
+<!--     select 
+      count(1)
+    from crowdfunding_support
+    where state='lended' and loan_no = #{loanNo,jdbcType=VARCHAR} -->
+    select (a.count+b.count) count from
+	(select count(1) count from crowdfunding_support cs left join crowdfunding_back_set cbs on cs.back_no=cbs.back_no where cs.state='lended' and cs.loan_no =#{loanNo,jdbcType=VARCHAR} and cbs.prize_draw_flag=0 and cs.is_transfer!='1') a,
+	(select count(1) count from crowdfund_user_prize where (is_prize is null or is_prize=1) and support_no in(select order_id from crowdfunding_support cs left join crowdfunding_back_set cbs on cs.back_no=cbs.back_no where cs.state='lended' and cs.loan_no =#{loanNo,jdbcType=VARCHAR} and cbs.prize_draw_flag=1 and cs.is_transfer!='1')) b
+  </select>
+  <!-- 查询已支付成功但未放款的支持记录 -->
+  <select id="selectByLoanNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_support
+    where pay_state='payed' and state = 'add' and loan_no = #{loanNo,jdbcType=VARCHAR} 
+    
+  </select>
+  
+  <!-- 查询为放款的筹款金额和运费总额-->
+  <select id="selectNoLendAmtByLoanNo" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+    ifnull(sum(support_amt),0) as supportAmt,
+    ifnull(sum(IFNULL(trans_fee,0)),0) as transAmt
+    from crowdfunding_support
+    where pay_state='payed' and state = 'add' and loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select> 
+  
+  <!-- 查询已支付成功的支持总数以及总金额 -->
+  <select id="selectSupportDataByLoanNo" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+     count(1) as supportNum,ifnull(sum(support_amt),0) as supportAmt
+    from crowdfunding_support
+    where pay_state='payed' and state ='add' and loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询支持用户及支持金额-->
+  <select id="selectUserSupportByLoanNo" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+     support_user as supportUser,support_amt  supportAmt,trans_fee transFee
+    from crowdfunding_support
+    where pay_state='payed' and loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectTotalAmt" resultType="java.util.Map" parameterType="java.lang.String" >
+    select a.supportAmt,b.payAmt from 
+	  (select 
+	       ifnull(sum(support_amt),0) as supportAmt
+	    from crowdfunding_support
+	    where pay_state='payed' and support_user = #{supportUser,jdbcType=VARCHAR})a,
+	 (select 
+	     ifnull(sum(pay_amt),0) as payAmt
+	    from sales_order
+	    where pay_state='payed' and buyer = #{supportUser,jdbcType=VARCHAR})b
+  </select>
+  <select id="selectTotalP2pFee" resultType="java.lang.Double" parameterType="java.lang.String" >
+    select sum(p2p_fee)
+    from crowdfunding_support
+    where state='lended' and loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询已支付的份数 -->
+   <select id="selectPayedParts" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select 
+     sum(buy_num)
+    from crowdfunding_support
+    where loan_no = #{loanNo,jdbcType=VARCHAR} and pay_state = 'payed'
+  </select>
+    <!-- 查询正在支付的份数 -->
+   <select id="selectPayingParts" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select 
+     sum(new_buy_num)
+    from crowdfunding_support
+    where loan_no = #{loanNo,jdbcType=VARCHAR} 
+  </select>
+  <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    select 
+		transferDay.code transferDay,
+	    cst.id, 
+	    cst.order_id as orderId, 
+	    cst.transfer_amt transferAmt,
+	    cst.part_money partMoney,
+	    cst.trans_fee transFee,
+	    ifnull(cst.support_class,'') supportClass,
+	    cst.support_user as supportUser, 
+	    cst.is_application_delivery isApplicationDelivery,
+	    cst.application_content applicationContent,
+	    (case when LENGTH(u.real_name) = 0 or  u.real_name is null then CONCAT(LEFT(cst.support_user,2),'***',RIGHT(cst.support_user,1))
+        else u.real_name end) as supportUser2,
+	    round(cst.support_amt-IFNULL(cst.transfer_amt,0),2) as supportAmt, 
+	    cst.support_time as supportTime, 
+	    cst.complete_time as completeTime,
+	    leadUser.real_name as leadInvestorName,
+	    (select date_sub(cf.fund_end_time,INTERVAL (select code from business_config where display_name='INTENTION_DEFAULT_REFUND_DAY') DAY)) as intentionDate,
+	    cst.loan_no as loanNo, 
+	    cst.back_no as backNo, 
+	    cst.pay_state as payState, 
+	    cst.state, 
+	    cst.post_address_no as postAddressNo,
+	    cst.invest_type as investType,
+	    cst.pay_way as payWay,
+	    cst.modify_time as modifyTime,
+	    cst.modify_user as modifyUser,
+	    cst.is_transfer isTransfer,
+	    case when cst.is_transfer = '1' then '已转让' else '' end isTransferName,
+	    cst.buy_num as buyNum,
+	    cst.support_way as supportWay,
+	    cst.intention_amt as intentionAmt,
+        cst.intention_flag as intentionFlag,
+        cst.intention_end_time as intentionEndTime,
+        cst.intention_no as intentionNo,
+        cst.intention_state as intentionState,
+	      (select d.display_name from dictionary d 
+     		     where d.type_code='support_type' and d.code=cst.support_way)as supportWayName,
+	    cst.buy_type as buyType,
+	    cst.actual_pay_amt as actualPayAmt,
+	    cst.reward_no as rewardNo,
+	    cst.delivery_name as deliveryName,
+	    cst.delivery_phone as deliveryPhone,
+	    cst.delivery_address as deliveryAddress,
+	    cf.loan_name as loanName,
+	    cf.fund_amt as fundAmt,
+	    cf.approve_amt as approveAmt,
+	    cf.over_fund_amt overFundAmt,
+	    cf.block_chain_address blockChainAddress,
+	    ROUND(cf.approve_amt/cf.fund_amt,4) as supportRatio,
+	    cf.loan_user as loanUser,
+	    cf.loan_logo as loanLogo,
+	    cf.loan_type as loanType,
+	    ROUND(cf.approve_amt/cf.fund_amt,4) as supportRatio,
+		cf.fund_end_time fundEndTime,
+	    CONCAT(LEFT(cf.loan_user,2),'***',RIGHT(cf.loan_user,1)) as loanUser2,
+	    cbs.back_content as backContent,
+	    cbs.photo_url1 as photoUrl1,
+	    cbs.back_type backType,
+	    cst.hy_fee,
+	    cst.p2p_fee,
+	    pa.province,
+	    pa.city,
+	    (select a.short_name from area a  where a.id=pa.city) as cityName,
+        (select a.short_name from area a where a.id=pa.province) as provinceName,
+	    pa.adress_detail as adressDetail,
+	    contract_project_sign_time contractProjectSignTime,
+	    pa.post_user as postUser,
+	    pa.mobile as postMobile,
+	    cst.send_time as sendTime,
+	    cst.send_order_id as sendOrderId,
+	    cst.send_delivery as sendDelivery, 
+	    ( case when cf.loan_type in ('stock') then ROUND(cf.actual_fee*100,4)  else 0 end) as shareRatio,	    
+	    
+	    (select d.display_name from dictionary d 
+     		     where d.type_code='crowdfund_paystate' and d.code=cst.pay_state)as payStateName,
+        (select d.display_name from dictionary d 
+     		     where d.type_code='crowdfund_orderstate' and d.code=cst.state)as stateName,
+        (select d.display_name from dictionary d 
+	     		     where d.type_code='crowdfund_state' and d.code=cf.loan_state)as loanStateName,
+	     cst.refund_state refundState,		     
+	     (select d.display_name from dictionary d 
+	     		     where d.type_code='refund_state' and d.code=cst.refund_state)as refundStateName,
+	     cf.loan_state as loanState,
+         u.real_name supportUserName,
+         u.nick_name supportNickName,
+         u.photo,
+         u.email supportUserEmail,
+         lf.super_investor as leadInvestor,
+         leadUser.nick_name leadInvestorNickName,
+         leadUser.real_name leadInvestorRealName,
+         u1.real_name loanUserName,
+		 cst.contract_id contractId,
+		 cst.contract_url contractUrl,
+		 cst.contract_state contractState,
+		 cst.contract_invest_sign_state contractInvestSignState,
+		 cst.contract_invest_sign_time contractInvestSignTime,
+		 cst.contract_project_sign_state contractProjectSignState,
+		 cst.contract_project_sign_time contractProjectSignTime, 
+		 cst.remark,
+     	 cbs.prize_draw_flag prizeDrawFlag,
+         cup.is_prize isPrize,
+         cup.prize_no prizeNo,
+         cup.prize_time prizeTime,	
+         cst.refuse_reason refuseReason,
+         cst.refuse_apply_time refuseApplyTime,
+         cst.refuse_audit_time refuseAuditTime,
+         cst.refuse_loan_audit_time as refuseLoanAuditTime,
+         cst.refuse_complate_time as refuseComplateTime,
+         (select count(1) from crowdfund_lead_investor cli where cli.lead_investor=cst.support_user and cli.loan_no=cst.loan_no) as isLoanLeader,
+         <!-- 是否可退款 -->
+         (case when 
+			NOW() &lt; DATE_SUB(DATE_ADD(cf.cash_time,INTERVAL cbs.back_time DAY),
+			             INTERVAL (select `code` from business_config where display_name= 'SEND_BEFORE_REFUND_DAY' ) DAY)  
+				        and cst.state = 'lended' and cst.refund_state is null 
+			then 'canRefund' 
+			when cst.refund_state in ('waitConfirm','auditing','passed') 
+			then 'refunding'
+			when cst.refund_state in ('refund_success') 
+			then 'refundSuccess'
+			when cst.refund_state in ('refuse','loanRefuse')
+			then 'refundFail' else 'noRefund' end ) as refundType,
+			<!-- 是否可转让 -->
+			(case  when NOW() &gt; DATE_ADD(cst.complete_time,INTERVAL (select code from business_config where display_name='TRANSFER_LOCK_PERIOD') DAY)
+  			and NOW() &lt; DATE_ADD(DATE_ADD(DATE_ADD(cf.cash_time,INTERVAL cbs.back_time DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_BRING_BEFORE_DAY') DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_LOCK_PERIOD') DAY)
+  			and cst.pay_state = 'payed' and cst.state = 'lended' and cst.is_transfer != '1'
+            then '1' else '0' end ) as canTransferState,
+            <!-- 预计发货时间 -->
+            DATE_ADD(cf.cash_time,INTERVAL cbs.back_time DAY) estimateSendTime,
+            ifnull(cpt.count,0) transferCount,
+            cbs.state backsetState,
+            cpt1.transfer_audit_state transferAuditState
+    from crowdfunding_support cst 
+                    left join crowdfunding cf on cst.loan_no=cf.loan_no
+    			    left join post_address pa on pa.id=cst.post_address_no
+    		        left join crowdfunding_back_set cbs on cbs.loan_no=cst.loan_no and cbs.back_no=cst.back_no
+    		        left join user u on u.user_id=cst.support_user
+    		        left join lead_follow lf on lf.order_id=cst.order_id
+    		        left join user leadUser on lf.super_investor = leadUser.user_id
+    		        left join stock_back_set sbs on sbs.loan_no=cst.loan_no
+    		        LEFT JOIN user u1 on u1.user_id = cf.loan_user
+    		        LEFT JOIN crowdfund_user_prize cup on cup.loan_no = cst.loan_no  and cup.support_no = cst.order_id
+    		        LEFT JOIN (select code from business_config where display_name='TRANSFER_PRODUCT_DAY') transferDay on  1=1
+    		        left join (select support_no,ifnull(count(1),0) count from crowdfund_product_transfer where transfer_state not in ('transfered')  group by support_no) cpt on cpt.support_no=cst.order_id
+					LEFT JOIN (
+	                    select support_no,transfer_audit_state,transfer_time from crowdfund_product_transfer where transfer_state not in ('transfered','transferend')
+						  GROUP by support_no order by transfer_time desc    
+	                   )cpt1 on  cpt1.support_no = cst.order_id    
+    
+    <include refid="base_where"></include>
+      
+      
+     <if test="sort=='defaultSort'" >
+      <!-- order by (case when c.loan_state='preheat' then 0
+     			when c.loan_state='funding' then 1 
+                when c.loan_state='lended' then 2  
+                when c.loan_state='funded' then 3 
+                else 4 end ) asc,c.release_time asc  -->
+       order by cst.support_time desc 
+     </if> 
+     <if test="sort=='refundSort'" >
+       order by (case when cst.refund_state ='waitConfirm' then 0
+     			when cst.refund_state='loanPassed' then 1 
+                when cst.refund_state='auditing' then 2  
+                when cst.refund_state ='passed' then 3 
+                else 4 end ) asc
+     
+     </if>   
+     <if test="sort=='investSignContractList'" >
+       order by 
+       case cf.loan_state when 'flow' then 0 else 1 end desc ,
+       cst.contract_invest_sign_state,
+		cst.support_time ASC
+     </if>   
+     <if test="sort=='projectSignContractList'" >
+       order by 
+       case cf.loan_state when 'flow' then 0 else 1 end desc ,
+       cst.contract_project_sign_state, 
+       cst.support_time ASC
+     </if>    
+    <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    select count(1)
+    from crowdfunding_support cst 
+                    left join crowdfunding cf on cst.loan_no=cf.loan_no
+    			    left join post_address pa on pa.address_no=cst.post_address_no
+    		        left join crowdfunding_back_set cbs on cbs.loan_no=cst.loan_no and cbs.back_no=cst.back_no
+    		        left join user u on u.user_id=cst.support_user
+    		        left join lead_follow lf on lf.order_id=cst.order_id
+    		        left join user leadUser on lf.super_investor = leadUser.user_id
+    		        LEFT JOIN crowdfund_user_prize cup on cup.loan_no = cst.loan_no and cup.support_no = cst.order_id
+    		        left join (select support_no,ifnull(count(1),0) count from crowdfund_product_transfer where transfer_state not in ('transfered')  group by support_no) cpt on cpt.support_no=cst.order_id
+    <include refid="base_where"></include>
+  </select >
+  <select id="selectIntentionsByLoanNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select    <include refid="Base_Column_List" />
+ from crowdfunding_support where loan_no= #{loanNo,jdbcType=VARCHAR} and intention_state='payed' and pay_state='noPay'
+  </select>
+  
+  <sql id="base_where">
+	  <where>
+	  	  and  cst.support_amt-IFNULL(cst.transfer_amt,0) !=0
+		  <if test="id != null and id != ''" >
+	        and cst.id = #{id,jdbcType=VARCHAR}
+	      </if>
+	      <if test="loanNo != null and loanNo != ''" >
+	        and cst.loan_no = #{loanNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="backNo != null and backNo != ''" >
+	        and cst.back_no = #{backNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="searchState != null and searchState != ''" >
+	        and cst.state = #{searchState,jdbcType=VARCHAR}
+	      </if>
+	      <if test="payState != null and payState != ''" >
+	        and cst.pay_state = #{payState,jdbcType=VARCHAR}
+	      </if>
+	      <if test="supportUserLike != null and supportUserLike != ''" >
+	        and cst.support_user like  CONCAT(CONCAT('%', #{supportUserLike,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <if test="supportUser != null and supportUser != ''" >
+	        and cst.support_user = #{supportUser,jdbcType=VARCHAR}
+	      </if>
+	      <if test="supportUserName != null and supportUserName != ''" >
+	        and u.real_name like CONCAT(CONCAT('%', #{supportUserName,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <if test="orderId != null and orderId != ''" >
+	        and cst.order_id = #{orderId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="orderIdLike != null and orderIdLike != ''" >
+	        and cst.order_id like CONCAT(CONCAT('%', #{orderIdLike,jdbcType=VARCHAR}),'%')
+	      </if>
+	       <if test="loanType != null and loanType != ''" >
+	        and cf.loan_type = #{loanType,jdbcType=VARCHAR}
+	      </if>
+	       <if test="leadInvestorName != null and leadInvestorName != ''" >
+	        and leadUser.real_name like CONCAT(CONCAT('%', #{leadInvestorName,jdbcType=VARCHAR}),'%')
+	      </if>
+	       <if test="leadInvestorNickName != null and leadInvestorNickName != ''" >
+	        and leadUser.nick_name like CONCAT(CONCAT('%', #{leadInvestorNickName,jdbcType=VARCHAR}),'%')
+	      </if>
+	       <if test="leadInvestorUser != null and leadInvestorUser != ''" >
+	        and leadUser.user_id =#{leadInvestorUser,jdbcType=VARCHAR}
+	      </if>	      
+	       <if test="postAddressNo != null and postAddressNo != ''" >
+	        and cst.post_address_no =#{postAddressNo,jdbcType=VARCHAR}
+	      </if>
+	       <if test="startInvestTime != null and startInvestTime != ''" >
+	        and cst.support_time &gt;= #{startInvestTime,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="endInvestTime != null and endInvestTime != ''" >
+	       and cst.support_time &lt;= #{endInvestTime,jdbcType=TIMESTAMP}
+	      </if>
+	      
+	      <if test="refundStateName != null and refundStateName != ''" >
+	        and cst.refund_state in ('auditing','refuse','passed','refund_success') and cst.pay_state = 'payed'
+	      </if>
+	      <if test="refundState != null and refundState != ''" >
+	        and cst.refund_state = #{refundState,jdbcType=VARCHAR}
+	      </if>
+	      <if test="isTransfer != null and isTransfer != ''" >
+	        and cst.is_transfer = #{isTransfer,jdbcType=VARCHAR}
+	      </if>
+	      <if test="loanState != null and loanState != ''" >
+	        and cf.loan_state = #{loanState,jdbcType=VARCHAR}
+	      </if>
+	      <if test="loanUser != null and loanUser != ''" >
+	        and cf.loan_user = #{loanUser,jdbcType=VARCHAR}
+	      </if>
+	      <!-- 是否参与抽奖 -->
+	      <if test="prizeDrawFlag != null and prizeDrawFlag != ''" >
+	         and cbs.prize_draw_flag = #{prizeDrawFlag,jdbcType=VARCHAR} 
+	      </if>	
+	      <if test="prizeDrawStatus != null and prizeDrawStatus != ''" >
+	     	<if test="prizeDrawStatus==0">
+	     		and ((cbs.prize_draw_flag in('0') 
+	     		and (cup.is_prize is null or cup.is_prize=0)) or cbs.prize_draw_flag='0')
+	     		
+	     	</if>
+	     	<if test="prizeDrawStatus==1">
+	     		and cbs.prize_draw_flag ='1'
+	     		and cup.prize_no is not null
+	     		and cup.is_prize=1
+	     	</if>
+	      </if>	
+	      <!-- 发货列表中待发货 -->
+	      <if test="sendStateType =='lended'" >
+	        and cst.state = 'lended' 
+	      </if>	      
+	      <!-- 发货列表中已发货 -->
+	      <if test="sendStateType =='sending'" >
+	        and cst.state = 'sending'
+	      </if>		            
+		  <!--未支付 -->
+	      <if test="mySupport =='noPay'" >
+	        and cst.pay_state = 'noPay'
+	      </if>
+	      <!--已支付 -->
+	      <if test="mySupport =='payed'" >
+	        and cst.pay_state = 'payed'
+	      </if>
+	      <!--待发货 -->
+	      <if test="mySupport =='waitSend'" >
+	        and cst.state = 'lended'
+	      </if>
+	      <!--已发货 -->
+	      <if test="mySupport =='sended'" >
+	        and cst.state = 'sending'
+	      </if>
+	      <!--待分红 -->
+	      <if test="mySupport =='divideShare'" >
+	         and cf.loan_state ='lended'
+	      </if>
+	      <!--分红结束 -->
+	      <if test="mySupport =='dividend'" >
+	         and cf.loan_state ='end'
+	      </if>	 
+	      <!--查询股权项目支持列表 -->
+	      <if test="mySupport =='stockSupportList'" >
+	         and (cst.pay_state='payed' or cst.intention_state = 'payed' ) and cst.state &lt;&gt; 'cancel'  
+	      </if>	 	      
+	      <!--可退款 -->
+	      <if test="mySupport =='canRefund'" >
+	        and cst.pay_state = 'payed'
+	        and NOW() &lt; DATE_SUB(DATE_ADD(cf.cash_time,INTERVAL cbs.back_time DAY),
+             INTERVAL (select `code` from business_config where display_name= 'SEND_BEFORE_REFUND_DAY' ) DAY)  
+	        and cst.state = 'lended' and cst.refund_state is null 
+	        <!-- 参与抽奖的回报不支持退款 -->
+	        and cbs.prize_draw_flag = '0'
+	      </if>
+	      <!--退款中 -->
+	      <if test="mySupport =='refunding'" >
+	        <!-- and cst.refund_state = 'auditing' or cst.refund_state = 'loanPassed' -->
+	        and cst.refund_state in ('waitConfirm','auditing','passed')
+	      </if>
+	      <!--退款成功-->
+	      <if test="mySupport =='refundSuccess'" >
+	        <!-- and cst.refund_state = 'passed' -->
+	         and cst.refund_state in ('refund_success')
+	      </if>
+	      <!--退款失败-->
+	      <if test="mySupport =='refundFail'" >
+	        <!-- and cst.refund_state = 'refuse' or cst.refund_state = 'loanRefuse' -->
+	        and cst.refund_state in ('refuse','loanRefuse')
+	      </if>
+          <!-- 查询退款列表 -->
+	      <if test="refundStateType  =='all'" >
+	        and cst.refund_state in ('waitConfirm','loanRefuse','auditing','passed','refuse','refund_success')
+	      </if>	      
+	      <if test="refundStateType  =='waitConfirm'" >
+	        and cst.refund_state in ('waitConfirm')
+	      </if>
+	      <if test="refundStateType  =='auditing'" >
+	         and cst.refund_state in ('auditing','passed')
+	      </if>	      
+	      <if test="refundStateType  =='success'" >
+	         and cst.refund_state in ('refund_success')
+	      </if>		      
+	      <if test="refundStateType  =='fail'" >
+	         and cst.refund_state in ('refuse','loanRefuse')
+	      </if>
+	     <if test="mySupport =='banTransfer'" >
+	     	and ifnull(cpt.count,0)=0
+	     </if> 			      
+	       <!--可转让-->
+	      <if test="mySupport =='canTransfer'" >
+	        and NOW()>DATE_ADD(cf.cash_time,INTERVAL (select code from business_config where display_name='TRANSFER_LOCK_PERIOD') DAY)
+  			and NOW()&lt;DATE_ADD(DATE_ADD(DATE_ADD(cf.cash_time,INTERVAL cbs.back_time DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_BRING_BEFORE_DAY') DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_PRODUCT_DAY') DAY)
+  			and cst.pay_state = 'payed' and cst.state = 'lended' and cst.is_transfer != '1'
+  			and cf.loan_type='product'
+  			<!-- 参与抽奖的回报不支持退款和转让 -->
+  			and ifnull(cbs.prize_draw_flag,'0') = '0' and ifnull(cpt.count,0)=0
+  			<!-- 不支持已购买的再次转让 -->
+  			and ifnull(cst.support_class,'')!='transferSupport'
+	      </if>
+	  </where>
+  </sql>
+  
+  <select id="selectOrderSupportList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    select 
+	    cst.support_user as supportUser, 
+	    sum(cst.support_amt) as supportAmt, 
+	    max(cst.support_time) as supportTime, 
+	    cst.loan_no as loanNo, 
+	    sum(cst.buy_num) as buyNum,
+	    cf.loan_name as loanName,
+        cf.lead_min_amt as leadMinAmt,
+        cst.apply_lead_des as applyLeadDes,
+        u.real_name supportUserName,
+        u.mobile,
+        (select count(1) from crowdfund_lead_investor cli where cli.loan_no=cst.loan_no and cli.lead_investor=cst.support_user) as isLeader
+    from crowdfunding_support cst 
+                    left join crowdfunding cf on cst.loan_no=cf.loan_no
+    		        left join user u on u.user_id=cst.support_user
+    <include refid="base_where_2"></include>
+    group by cst.support_user
+     <if test="sort=='supportTime'" >
+      order by cst.support_time  desc 
+     </if> 
+    <if test="endPage>0">
+     LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selecOrderSupportCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    select count(1)
+    from (
+      select count(1) 
+       from crowdfunding_support cst 
+       left join crowdfunding cf on cst.loan_no=cf.loan_no
+       left join user u on u.user_id=cst.support_user
+       <include refid="base_where_2"></include>
+	    group by cst.support_user)a
+  </select>
+  <sql id="base_where_2">
+	  <where>
+	  	  cst.pay_state='payed'
+	      <if test="orderId != null and orderId != ''" >
+	        and cst.order_id = #{orderId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="loanNo != null and loanNo != ''" >
+	        and cst.loan_no = #{loanNo,jdbcType=VARCHAR}
+	      </if>
+	       <if test="loanName != null and loanName != ''" >
+	        and cst.loan_name like  CONCAT(CONCAT('%', #{loanName,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <if test="supportUserLike != null and supportUserLike != ''" >
+	        and cst.support_user like  CONCAT(CONCAT('%', #{supportUserLike,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <if test="supportUser != null and supportUser != ''" >
+	        and cst.support_user = #{supportUser,jdbcType=VARCHAR}
+	      </if>
+	      <if test="supportUserName != null and supportUserName != ''" >
+	        and u.real_name like CONCAT(CONCAT('%', #{supportUserName,jdbcType=VARCHAR}),'%')
+	      </if>
+	  </where>
+  </sql>
+  <select id="selectLeadSupportList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+   select 
+	    cst.support_user as supportUser, 
+	    cus.lend_auth_photo lendAuthPhoto,
+	    (case when LENGTH(u.real_name) = 0 or  u.real_name is null then CONCAT(LEFT(cst.support_user,2),'***',RIGHT(cst.support_user,1))
+        else u.real_name end) as supportUser2,
+	    sum(cst.support_amt) as supportAmt, 
+	    max(cst.support_time) as supportTime, 
+	    cst.loan_no as loanNo, 
+	    sum(cst.buy_num) as buyNum,
+	    cf.loan_name as loanName,
+	    u.self_detail as selfDetail
+    from crowdfunding_support cst, 
+                    crowdfunding cf ,
+    		         user u ,
+    		        crowdfund_lead_investor cli,
+    		        crowdfund_user_stuff cus
+    		       
+    <include refid="base_where3"></include>
+    group by cst.support_user
+     <if test="sort=='supportTime'" >
+      order by cst.support_time  desc 
+     </if> 
+    <if test="endPage>0">
+     LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <sql id="base_where3">
+	  <where>
+	      cst.loan_no=cf.loan_no 
+  		        and cli.loan_no=cst.loan_no
+  		        and cst.support_user = cli.lead_investor
+  		        and u.user_id=cli.lead_investor 
+  		        and cst.support_user = cus.user_id
+	      <if test="loanNo != null and loanNo != ''" >
+	        and cst.loan_no = #{loanNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="backNo != null and backNo != ''" >
+	        and cst.back_no = #{backNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="payState != null and payState != ''" >
+	        and cst.pay_state = #{payState,jdbcType=VARCHAR}
+	      </if>
+	  </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_support
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    insert into crowdfunding_support (id, order_id, support_user, 
+      support_amt, support_time, loan_no, 
+      back_no, pay_state, state, 
+      post_address_no,complete_time,p2p_fee,hy_fee,send_time,send_order_id,send_delivery,
+      invest_type,pay_way,modify_time,modify_user,buy_num,support_way,buy_type,actual_pay_amt,reward_no,
+      apply_lead_des,transfer_amt,part_money,support_class,is_transfer,refund_state,application_content,
+      is_application_delivery,intention_no,intention_state,intention_amt,remark,content,trans_fee,contract_invest_sign_state,
+      contract_project_sign_state,contract_state,device_type,new_buy_num,intention_flag,
+      delivery_name,delivery_phone,delivery_address
+      )
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{supportUser,jdbcType=VARCHAR}, 
+      #{supportAmt,jdbcType=DOUBLE}, #{supportTime,jdbcType=TIMESTAMP}, #{loanNo,jdbcType=VARCHAR}, 
+      #{backNo,jdbcType=VARCHAR}, #{payState,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{postAddressNo,jdbcType=VARCHAR},#{completeTime,jdbcType=TIMESTAMP},
+      #{p2pFee,jdbcType=DOUBLE},#{hyFee,jdbcType=DOUBLE},#{sendTime,jdbcType=TIMESTAMP},
+      #{sendOrderId,jdbcType=VARCHAR},#{sendDelivery,jdbcType=VARCHAR},
+      #{investType,jdbcType=VARCHAR}, 
+      #{payWay,jdbcType=VARCHAR},
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUser,jdbcType=VARCHAR},
+      #{buyNum,jdbcType=INTEGER},#{supportWay,jdbcType=VARCHAR},
+      #{buyType,jdbcType=VARCHAR},#{actualPayAmt,jdbcType=DOUBLE},
+      #{rewardNo,jdbcType=VARCHAR},#{applyLeadDes,jdbcType=LONGVARCHAR},
+      #{transferAmt,jdbcType=DOUBLE},#{partMoney,jdbcType=DOUBLE},
+      #{supportClass,jdbcType=VARCHAR},#{isTransfer,jdbcType=VARCHAR},
+      #{refundState,jdbcType=VARCHAR},#{applicationContent,jdbcType=VARCHAR},
+      #{isApplicationDelivery,jdbcType=VARCHAR},#{intentionNo,jdbcType=VARCHAR},
+      #{intentionState,jdbcType=VARCHAR},#{intentionAmt,jdbcType=DOUBLE},
+      #{remark,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},#{transFee,jdbcType=DOUBLE},'0','0','notCreate',
+      #{deviceType,jdbcType=VARCHAR}, #{newBuyNum,jdbcType=INTEGER},#{intentionFlag,jdbcType=VARCHAR},
+      #{deliveryName,jdbcType=VARCHAR}, #{deliveryPhone,jdbcType=INTEGER},#{deliveryAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    update crowdfunding_support
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="supportUser != null" >
+        support_user = #{supportUser,jdbcType=VARCHAR},
+      </if>
+       <if test="newBuyNum != null" >
+        new_buy_num = #{newBuyNum,jdbcType=INTEGER},
+      </if>
+      <if test="supportAmt != null" >
+        support_amt = #{supportAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="supportTime != null" >
+        support_time = #{supportTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="completeTime != null" >
+        complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backNo != null" >
+        back_no = #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        pay_state = #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="postAddressNo != null" >
+        post_address_no = #{postAddressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="p2pFee != null" >
+        p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+      </if>
+      <if test="hyFee != null" >
+        hy_fee = #{hyFee,jdbcType=DOUBLE},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendOrderId != null" >
+        send_order_id = #{sendOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDelivery != null" >
+        send_delivery = #{sendDelivery,jdbcType=VARCHAR},
+      </if>
+       <if test="investType != null" >
+        invest_type = #{investType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyNum != null" >
+        buy_num = #{buyNum,jdbcType=INTEGER},
+      </if>
+      <if test="payWay != null" >
+        pay_way = #{payWay,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="supportWay != null" >
+        support_way = #{supportWay,jdbcType=VARCHAR},
+      </if>
+       <if test="buyType != null" >
+        buy_type = #{buyType,jdbcType=VARCHAR},
+      </if>
+       <if test="actualPayAmt != null" >
+        actual_pay_amt = #{actualPayAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="rewardNo != null" >
+        reward_no = #{rewardNo,jdbcType=VARCHAR},
+      </if>
+       <if test="applyLeadDes != null" >
+        apply_lead_des = #{applyLeadDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="transferAmt != null" >
+        transfer_amt = #{transferAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="partMoney != null" >
+        part_money = #{partMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="supportClass != null" >
+        support_class = #{supportClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isTransfer != null" >
+        is_transfer = #{isTransfer,jdbcType=VARCHAR},
+      </if>
+      <if test="refundState != null" >
+        refund_state = #{refundState,jdbcType=VARCHAR},
+      </if>
+      <if test="contractState != null" >
+        contract_state = #{contractState,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractUrl != null" >
+        contract_url = #{contractUrl,jdbcType=VARCHAR},
+      </if>      
+      <if test="applicationContent != null" >
+        application_content = #{applicationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="isApplicationDelivery != null" >
+        is_application_delivery = #{isApplicationDelivery,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionNo != null" >
+        intention_no = #{intentionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionState != null" >
+        intention_state = #{intentionState,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionAmt != null" >
+        intention_amt = #{intentionAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="contractInvestSignState != null" >
+        contract_invest_sign_state = #{contractInvestSignState,jdbcType=VARCHAR},
+      </if>
+      <if test="contractProjectSignState != null" >
+        contract_project_sign_state = #{contractProjectSignState,jdbcType=VARCHAR},
+      </if>      
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+       <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="transFee != null" >
+        trans_fee = #{transFee,jdbcType=DOUBLE},
+      </if>
+      <if test="contractInvestSignTime != null" >
+        contract_invest_sign_time = #{contractInvestSignTime,jdbcType=TIMESTAMP},
+      </if>     
+      <if test="contractProjectSignTime != null" >
+        contract_project_sign_time = #{contractProjectSignTime,jdbcType=TIMESTAMP},
+      </if>       
+      <if test="contractCreateTime != null" >
+        contract_create_time = #{contractCreateTime,jdbcType=TIMESTAMP},
+      </if>       
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="refuseReason != null" >
+        refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+      </if>      
+      <if test="refuseApplyTime != null" >
+        refuse_apply_time = #{refuseApplyTime,jdbcType=TIMESTAMP},
+      </if> 
+      <if test="refuseAuditTime != null" >
+        refuse_audit_time = #{refuseAuditTime,jdbcType=TIMESTAMP},
+      </if>    
+      <if test="refuseLoanAuditTime != null" >
+        refuse_loan_audit_time = #{refuseLoanAuditTime,jdbcType=TIMESTAMP},
+      </if>  
+      <if test="refuseComplateTime != null" >
+        refuse_complate_time = #{refuseComplateTime,jdbcType=TIMESTAMP},
+      </if> 
+      <if test="intentionEndTime != null" >
+        intention_end_time = #{intentionEndTime,jdbcType=TIMESTAMP},
+      </if> 
+      <if test="intentionFlag != null" >
+        intention_flag = #{intentionFlag,jdbcType=VARCHAR},
+      </if>        
+      <if test="deliveryName != null" >
+        delivery_name = #{deliveryName,jdbcType=VARCHAR},
+      </if>   
+      <if test="deliveryPhone != null" >
+        delivery_phone = #{deliveryPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryAddress != null" >
+        delivery_address = #{deliveryAddress,jdbcType=VARCHAR},
+      </if>         
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    update crowdfunding_support
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      support_user = #{supportUser,jdbcType=VARCHAR},
+      support_amt = #{supportAmt,jdbcType=DOUBLE},
+      support_time = #{supportTime,jdbcType=TIMESTAMP},
+      complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      loan_no = #{loanNo,jdbcType=VARCHAR},
+      back_no = #{backNo,jdbcType=VARCHAR},
+      pay_state = #{payState,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      post_address_no = #{postAddressNo,jdbcType=VARCHAR},
+      p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+      hy_fee = #{hyFee,jdbcType=DOUBLE},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      send_order_id = #{sendOrderId,jdbcType=VARCHAR},
+      send_delivery = #{sendDelivery,jdbcType=VARCHAR},
+      invest_type = #{investType,jdbcType=VARCHAR},
+      buy_num = #{buyNum,jdbcType=INTEGER},
+      pay_way = #{payWay,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_user = #{modifyUser,jdbcType=VARCHAR},
+      support_way = #{supportWay,jdbcType=VARCHAR},
+      buy_type = #{buyType,jdbcType=VARCHAR},
+      actual_pay_amt = #{actualPayAmt,jdbcType=DOUBLE},
+      reward_no = #{rewardNo,jdbcType=VARCHAR},
+      apply_lead_des = #{applyLeadDes,jdbcType=LONGVARCHAR},
+      transfer_amt = #{transferAmt,jdbcType=DOUBLE},
+      part_money = #{partMoney,jdbcType=DOUBLE},
+      support_class = #{supportClass,jdbcType=VARCHAR},
+      is_transfer = #{isTransfer,jdbcType=VARCHAR},
+      refund_state = #{refundState,jdbcType=VARCHAR},
+      contract_state = #{contractState,jdbcType=VARCHAR},
+      contract_id = #{contractId,jdbcType=VARCHAR},
+      contract_url = #{contractUrl,jdbcType=VARCHAR},
+      refund_state = #{refundState,jdbcType=VARCHAR},
+      application_content = #{applicationContent,jdbcType=VARCHAR},
+      is_application_delivery = #{isApplicationDelivery,jdbcType=VARCHAR},
+      intention_no = #{intentionNo,jdbcType=VARCHAR},
+      intention_state = #{intentionState,jdbcType=VARCHAR},
+      intention_amt = #{intentionAmt,jdbcType=DOUBLE},
+      contract_invest_sign_state = #{contractInvestSignState,jdbcType=VARCHAR},
+      contract_project_sign_state = #{contractProjectSignState,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      trans_fee = #{transFee,jdbcType=DOUBLE},
+      contract_invest_sign_time = #{contractInvestSignTime,jdbcType=TIMESTAMP},
+      contract_project_sign_time = #{contractProjectSignTime,jdbcType=TIMESTAMP},
+      contract_create_time = #{contractCreateTime,jdbcType=TIMESTAMP},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+      refuse_apply_time = #{refuseApplyTime,jdbcType=TIMESTAMP},
+      refuse_audit_time = #{refuseAuditTime,jdbcType=TIMESTAMP},
+      refuse_loan_audit_time = #{refuseLoanAuditTime,jdbcType=TIMESTAMP},
+      refuse_complate_time = #{refuseComplateTime,jdbcType=TIMESTAMP},
+      intention_end_time = #{intentionEndTime,jdbcType=TIMESTAMP},
+      intention_flag = #{intentionFlag,jdbcType=VARCHAR},
+      delivery_name = #{deliveryName,jdbcType=VARCHAR},
+      delivery_phone = #{deliveryPhone,jdbcType=VARCHAR},
+      delivery_address = #{deliveryAddress,jdbcType=VARCHAR} 
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+   
+  <select id="selectLeaderSupportList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+     select cf.loan_no as loanNo,cf.loan_name as loanName,cf.loan_state as loanState,
+     cf.loan_logo as loanLogo,cf.loan_type as loanType from crowdfunding cf 
+             , (select distinct(loan_no)
+              		from crowdfunding_support where pay_state='payed' and support_user = #{supportUser,jdbcType=VARCHAR}) s
+              where cf.loan_no=s.loan_no and cf.loan_state in ('funding','funded','preheat','lended','end') 
+     <if test="sort=='supportTime'" >
+      order by cf.release_time  desc 
+     </if> 
+    <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selectLeaderSupportCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+     select count(1) from crowdfunding cf 
+             , (select distinct(loan_no)
+              		from crowdfunding_support where pay_state='payed' and support_user = #{supportUser,jdbcType=VARCHAR}) s
+              where cf.loan_no=s.loan_no and cf.loan_state in ('funding','funded','preheat','lended','end') 
+  </select>
+  
+  
+  
+  
+    <select id="selectCrowdfundingInvestTransferList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+		select 
+		t1.loan_no loanNo,
+		t1.order_id orderId,
+		FORMAT(t1.part_money*(t1.buy_num-IFNULL(t3.sumPransferParts,0)),2) supportAmt,
+		t1.support_user supportUser,
+		t1.support_time supportTime,
+		t1.buy_num-IFNULL(t3.sumPransferParts,0) buyNum,
+		t2.loan_name loanName,
+		t1.part_money  miniInvestAmt,
+		t1.refund_state refundState,		     
+	     (select d.display_name from dictionary d 
+	     		     where d.type_code='refund_state' and d.code=t1.refund_state)as refundStateName
+	     		     
+		from crowdfunding_support t1 
+		LEFT JOIN crowdfunding  t2 on t1.loan_no = t2.loan_no
+		LEFT JOIN
+		(SELECT t3.order_no,SUM(IFNULL(t3.transfer_parts,0)-IFNULL(t4.buyParts,0)) sumPransferParts from crowdfund_transfer t3 
+			LEFT JOIN (SELECT t4.transfer_no,SUM(t4.buy_parts) buyParts from crowdfund_transfer_detail t4 
+		where t4.`status` ='payed'
+		GROUP BY t4.transfer_no ) t4 ON t4.transfer_no= t3.transfer_no where (t3.`status` = 'transfering'  and t3.is_agree = '0') or( t3.audit_state = 'auditing') or (t3.audit_state='audit_pass' and is_agree is null)
+		GROUP BY t3.order_no) t3 on t3.order_no = t1.order_id
+		where t1.state = 'lended' 
+		and t2.loan_type in ('house','stock')
+		and t1.support_user = #{supportUser,jdbcType=VARCHAR}
+		and t1.buy_num-IFNULL(t3.sumPransferParts,0) !=0
+		ORDER BY  t1.support_time DESC ,t2.loan_name DESC
+    <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selectCrowdfundingInvestTransferCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+  		select 
+		count(1)
+		from crowdfunding_support t1 
+		LEFT JOIN crowdfunding  t2 on t1.loan_no = t2.loan_no
+		LEFT JOIN
+		(SELECT t3.order_no,SUM(IFNULL(t3.transfer_parts,0)-IFNULL(t4.buyParts,0)) sumPransferParts from crowdfund_transfer t3 
+			LEFT JOIN (SELECT t4.transfer_no,SUM(t4.buy_parts) buyParts from crowdfund_transfer_detail t4 
+		where t4.`status` ='payed'
+		GROUP BY t4.transfer_no ) t4 ON t4.transfer_no= t3.transfer_no where (t3.`status` = 'transfering'  and t3.is_agree = '0') or( t3.audit_state = 'auditing') or (t3.audit_state='audit_pass' and is_agree is null)
+		GROUP BY t3.order_no) t3 on t3.order_no = t1.order_id
+		where t1.state = 'lended' 
+		and t2.loan_type in ('house','stock')
+		and t1.support_user = #{supportUser,jdbcType=VARCHAR}
+		and t1.buy_num-IFNULL(t3.sumPransferParts,0) !=0
+  </select>
+  
+  
+   <select id="selectSupportPartsDetailList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+		SELECT 
+		FORMAT(SUM(t1.support_amt),2) supportAmt,
+		FORMAT(IFNULL(t1.transfer_amt,0),2) transferAmt,
+		(FORMAT(SUM(t1.support_amt),2)-FORMAT(IFNULL(t1.transfer_amt,0),2)) nowSupportAmt,
+		t1.state,
+		t1.pay_state,
+		FORMAT(SUM(t1.buy_num),0) buyNum,
+		t1.support_user supportUser,
+		t1.order_id orderId,
+		t1.support_time supportTime,
+		t2.loan_name loanName,
+		t2.loan_no loanNo,
+		t3.real_name realName,
+		t3.mobile
+		from crowdfunding_support t1 
+		LEFT JOIN crowdfunding t2 on t2.loan_no = t1.loan_no
+		LEFT JOIN `user` t3 on t3.user_id = t1.support_user
+		<include refid="Base_Where_Invest_Parts" />
+		GROUP BY t2.loan_no,t2.loan_name,t1.support_user,t3.real_name,t3.mobile
+		ORDER BY t1.loan_no desc,t1.support_time desc
+    <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+    <select id="selectSupportPartsDetailCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+  		select count(1) from (
+		    select 1 
+			from crowdfunding_support t1 
+			LEFT JOIN crowdfunding t2 on t2.loan_no = t1.loan_no
+			LEFT JOIN `user` t3 on t3.user_id = t1.support_user
+		    <include refid="Base_Where_Invest_Parts" />
+    GROUP BY t2.loan_no,t2.loan_name,t1.support_user,t3.real_name,t3.mobile)t
+  </select>
+  
+  <sql id="Base_Where_Invest_Parts">
+	  <where>
+        and t1.state = 'lended' and t1.pay_state = 'payed' and t1.buy_num !=0
+	    <if test="supportUser != null and supportUser != ''" >
+	    	and t1.support_user like CONCAT(CONCAT('%', #{supportUser,jdbcType=VARCHAR}),'%')
+	    </if>
+	    <if test="supportUserName != null and supportUserName != ''" >
+	    	and t3.real_name like CONCAT(CONCAT('%', #{supportUserName,jdbcType=VARCHAR}),'%')
+	    </if>
+	    <if test="loanNo != null and loanNo != ''" >
+	    	and t2.loan_no like CONCAT(CONCAT('%', #{loanNo,jdbcType=VARCHAR}),'%')
+	    </if>
+	  </where>
+  </sql>
+  
+  <select id="selectBuyNum" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+  		select IFNULL(sum(buy_num),0)
+			from crowdfunding_support t1 where t1.loan_no = #{loanNo,jdbcType=VARCHAR} 
+			and t1.pay_state = 'payed'
+  </select>
+  
+  
+ <select id="selectSumBuyNum" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel">
+  	select IFNULL(sum(buy_num),0) from crowdfunding_support
+  	where state = #{state,jdbcType=VARCHAR} and pay_state = #{payState,jdbcType=VARCHAR}
+	and loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectPaySucessUser" resultMap="BaseResultMap"  parameterType="java.util.Map" >
+  		select 
+  			loan_no,
+  			order_id,
+  			back_no,
+  			support_user
+			from crowdfunding_support t1 where t1.loan_no = #{loanNo,jdbcType=VARCHAR} 
+			and t1.back_no = #{backNo,jdbcType=VARCHAR} 
+			and t1.pay_state = 'payed'
+			order by t1.complete_time desc
+  </select>
+  
+  
+  
+  <select id="selectCanTransferDetail" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel">
+  		select 
+  			t1.support_user supportUser,
+  			t1.support_amt supportAmt,
+  			t1.trans_fee transFee,
+  			t1.loan_no loanNo,
+  			t1.order_id orderId,
+  			t2.loan_name loanName,
+  			t2.lock_day lockDay,
+			t3.back_content backContent
+  			from crowdfunding_support t1
+  			left join crowdfunding t2 on t1.loan_no = t2.loan_no
+			left join crowdfunding_back_set t3 on t3.back_no = t1.back_no
+  			
+  			where  t1.order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectCanTransferList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel">
+  		select 
+  			t1.support_user supportUser,
+  			ifnull(loanI.real_name,t1.support_user) supportUserName,
+  			t1.support_amt supportAmt,
+  			t1.support_time supportTime,
+  			t1.loan_no loanNo,
+  			ifnull(t1.trans_fee,0) transFee,
+  			t1.order_id orderId,
+  			t2.loan_name loanName,
+  			t2.loan_user loanUser,
+  			t2.approve_amt approveAmt,
+  			ifnull(loanU.real_name,t2.loan_user) loanUserName,
+  			t2.loan_logo as loanLogo,
+  			t3.transfer_lock_period lockDay,
+  			t3.back_content as backContent
+  			from crowdfunding_support t1
+  			left join crowdfunding t2 on t1.loan_no = t2.loan_no
+  			left join crowdfunding_back_set t3 on t1.back_no = t3.back_no
+  			left join user loanU on loanU.user_id=t2.loan_user
+  			left join user loanI on loanI.user_id=t1.support_user
+  			where  NOW()>DATE_ADD(t2.cash_time,INTERVAL (select code from business_config where display_name='TRANSFER_LOCK_PERIOD') DAY)
+  			and NOW()&lt;DATE_ADD(DATE_ADD(DATE_ADD(t2.cash_time,INTERVAL t3.back_time DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_BRING_BEFORE_DAY') DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_PRODUCT_DAY') DAY)
+  			and t1.pay_state = 'payed' and t1.state = 'lended' and t1.is_transfer != '1'
+  			and t1.support_user = #{supportUser,jdbcType=VARCHAR}
+  			and t2.loan_type='product'
+  			ORDER BY t1.complete_time DESC
+  		<if test="endPage>0">
+	    	LIMIT #{startPage},#{endPage}
+		</if>
+  </select>
+  
+  <select id="selectCanTransferCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel">
+  	select
+  		count(1)
+  		from crowdfunding_support t1
+  		left join crowdfunding t2 on t1.loan_no = t2.loan_no
+  		left join crowdfunding_back_set t3 on t1.back_no = t3.back_no
+  		where  NOW()>DATE_ADD(t2.cash_time,INTERVAL (select code from business_config where display_name='TRANSFER_LOCK_PERIOD') DAY)
+  		and NOW()&lt;DATE_ADD(DATE_ADD(DATE_ADD(t2.cash_time,INTERVAL t3.back_time DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_BRING_BEFORE_DAY') DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_PRODUCT_DAY') DAY)
+  		and t1.pay_state = 'payed' and t1.state = 'lended' and t1.is_transfer != '1'
+  		and t1.support_user = #{supportUser,jdbcType=VARCHAR}
+  		and t2.loan_type='product'
+  </select>
+  
+
+  
+  
+  
+  
+  <update id="updateByOrderNo" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel" >
+    update crowdfunding_support
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="supportUser != null" >
+        support_user = #{supportUser,jdbcType=VARCHAR},
+      </if>
+      <if test="newBuyNum != null" >
+        new_buy_num = #{newBuyNum,jdbcType=INTEGER},
+      </if>
+      <if test="supportAmt != null" >
+        support_amt = #{supportAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="supportTime != null" >
+        support_time = #{supportTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="completeTime != null" >
+        complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backNo != null" >
+        back_no = #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        pay_state = #{payState,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="postAddressNo != null" >
+        post_address_no = #{postAddressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="p2pFee != null" >
+        p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+      </if>
+      <if test="hyFee != null" >
+        hy_fee = #{hyFee,jdbcType=DOUBLE},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendOrderId != null" >
+        send_order_id = #{sendOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDelivery != null" >
+        send_delivery = #{sendDelivery,jdbcType=VARCHAR},
+      </if>
+       <if test="investType != null" >
+        invest_type = #{investType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyNum != null" >
+        buy_num = #{buyNum,jdbcType=INTEGER},
+      </if>
+      <if test="payWay != null" >
+        pay_way = #{payWay,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUser != null" >
+        modify_user = #{modifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="supportWay != null" >
+        support_way = #{supportWay,jdbcType=VARCHAR},
+      </if>
+       <if test="buyType != null" >
+        buy_type = #{buyType,jdbcType=VARCHAR},
+      </if>
+       <if test="actualPayAmt != null" >
+        actual_pay_amt = #{actualPayAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="rewardNo != null" >
+        reward_no = #{rewardNo,jdbcType=VARCHAR},
+      </if>
+       <if test="applyLeadDes != null" >
+        apply_lead_des = #{applyLeadDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="transferAmt != null" >
+        transfer_amt = #{transferAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="partMoney != null" >
+        part_money = #{partMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="supportClass != null" >
+        support_class = #{supportClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isTransfer != null" >
+        is_transfer = #{isTransfer,jdbcType=VARCHAR},
+      </if>
+      <if test="refundState != null" >
+        refund_state = #{refundState,jdbcType=VARCHAR},
+      </if>
+      <if test="contractState != null" >
+        contract_state = #{contractState,jdbcType=VARCHAR},
+      </if>
+      <if test="contractId != null" >
+        contract_id = #{contractId,jdbcType=VARCHAR},
+      </if>
+      <if test="contractUrl != null" >
+        contract_url = #{contractUrl,jdbcType=VARCHAR},
+      </if>      
+      <if test="applicationContent != null" >
+        application_content = #{applicationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="isApplicationDelivery != null" >
+        is_application_delivery = #{isApplicationDelivery,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionNo != null" >
+        intention_no = #{intentionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionState != null" >
+        intention_state = #{intentionState,jdbcType=VARCHAR},
+      </if>
+      <if test="intentionAmt != null" >
+        intention_amt = #{intentionAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+      	remark = #{remark,jdbcType=VARCHAR},
+      </if>
+       <if test="content != null" >
+      	content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="transFee != null" >
+      	trans_fee = #{transFee,jdbcType=DOUBLE},
+      </if>
+      <if test="refuseReason != null" >
+        refuse_reason = #{refuseReason,jdbcType=VARCHAR},
+      </if>    
+      <if test="refuseLoanAuditTime != null" >
+        refuse_loan_audit_time = #{refuseLoanAuditTime,jdbcType=TIMESTAMP},
+      </if> 
+       <if test="refuseComplateTime != null" >
+        refuse_complate_time = #{refuseComplateTime,jdbcType=TIMESTAMP},
+      </if> 
+      <if test="intentionEndTime != null" >
+        intention_end_time = #{intentionEndTime,jdbcType=TIMESTAMP},
+      </if> 
+      <if test="intentionFlag != null" >
+        intention_flag = #{intentionFlag,jdbcType=VARCHAR},
+      </if>      
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  
+  <select id="selectSupportInfo" resultType="java.util.Map" parameterType="java.lang.String">
+ 		select 
+  			t1.support_amt supportAmt,
+  			t1.remark,
+  			t1.content,
+  			t1.buy_num buyNum,
+  			t1.intention_end_time intentionEndTime,
+  			t2.back_type backType,
+			t2.back_lable backLable,
+  			t1.trans_fee transFee,
+			t2.daily_profit dailyProfit,
+			t1.post_address_no postAddressNo,
+			t3.stock_num financeNum,
+			t3.stock_part_amt miniInvestAmt,
+			t4.email,
+			t4.email,t1.support_user supportUser,
+            t1.loan_no loanNo,
+			FORMAT(IFNULL(b.balance,0),2) as balance
+		from crowdfunding_support t1 
+		left join
+		crowdfunding_back_set t2 on t1.back_no = t2.back_no
+		left join crowdfunding t3 on t1.loan_no = t3.loan_no
+		left join (select ub.balance,ub.user_id,ub.frozen_amt from user_bill ub 
+		     where ub.seq_num=(select max(ub2.seq_num) from user_bill ub2 where ub2.user_id=ub.user_id)) b on b.user_id=t1.support_user	
+		left join `user` t4 on t1.support_user = t4.user_id
+	where t1.order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectDailyIncomeSupportList" resultMap="BaseResultMap" parameterType="java.lang.String"  >
+  	select 
+	t1.support_amt supportAmt,
+	t1.support_user supportUser,
+	t1.loan_no loanNo,
+	t1.order_id orderId,
+	t1.complete_time completeTime,
+	t1.pay_state payState,
+	t1.state
+	from crowdfunding_support t1
+	where t1.pay_state = 'payed' and t1.state='add'  and 
+	DATE_FORMAT(t1.complete_time,'%Y%m%d') &lt;= DATE_FORMAT(NOW(),'%Y%m%d')
+  </select>
+  
+  <select id="selectCountInvestAll" resultType="java.util.Map" parameterType="java.lang.String">
+  	select 
+	(select IFNULL(sum(t1.support_amt),0) from crowdfunding_support t1 where t1.pay_state = 'payed' and t1.support_user=#{userId,jdbcType=VARCHAR}) historyInvest,
+	( 
+             select IFNULL(sum(cst.support_amt),0)  from crowdfunding_support cst 
+                    left join crowdfunding cf on cst.loan_no=cf.loan_no
+    			    left join post_address pa on pa.address_no=cst.post_address_no
+    		        left join crowdfunding_back_set cbs on cbs.loan_no=cst.loan_no and cbs.back_no=cst.back_no
+    		        left join user u on u.user_id=cst.support_user
+    		        left join lead_follow lf on lf.order_id=cst.order_id
+    		        left join user leadUser on lf.super_investor = leadUser.user_id
+    		        LEFT JOIN crowdfund_user_prize cup on cup.loan_no = cst.loan_no and cup.support_no = cst.order_id
+    		        left join (select support_no,ifnull(count(1),0) count from crowdfund_product_transfer where transfer_state not in ('transfered')  group by support_no) cpt on cpt.support_no=cst.order_id
+				where 	cst.support_amt - IFNULL(cst.transfer_amt, 0) != 0
+				AND cst.support_user =#{userId,jdbcType=VARCHAR}
+				and  NOW()>DATE_ADD(cf.cash_time,INTERVAL (select code from business_config where display_name='TRANSFER_LOCK_PERIOD') DAY)
+  			and NOW()&lt;DATE_ADD(DATE_ADD(DATE_ADD(cf.cash_time,INTERVAL cbs.back_time DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_BRING_BEFORE_DAY') DAY),INTERVAL -(select code from business_config where display_name='TRANSFER_PRODUCT_DAY') DAY)
+  			and cst.pay_state = 'payed' and cst.state = 'lended' and cst.is_transfer != '1'
+  			and cf.loan_type='product'
+  	 
+  			and ifnull(cbs.prize_draw_flag,'0') = '0' and ifnull(cpt.count,0)=0
+  
+  			and ifnull(cst.support_class,'')!='transferSupport'	
+	
+	) canTransferAssets,
+	
+	   (select IFNULL(sum(t1.transfer_amt),0) from crowdfund_product_transfer t1 where t1.transfer_state = 'transfered' AND t1.transfer_audit_state = 'passed' and t1.transfer_user=#{userId,jdbcType=VARCHAR}) alreadyTransferAssets,
+			( 
+			select IFNULL(sum(t1.transfer_amt),0) from  crowdfund_product_transfer t1  where  t1.transfer_user = #{userId,jdbcType=VARCHAR}
+		AND (
+			t1.transfer_state = 'transfering'
+			OR t1.transfer_state = 'transfering_locking'
+			OR (
+				t1.transfer_state = 'transfered'
+				AND t1.transfer_audit_state = 'auditing'
+			)
+			OR (
+				t1.transfer_state = 'transfered'
+				AND t1.transfer_audit_state = 'auditing_passed'
+			)
+			OR (
+				t1.transfer_state = 'transfered'
+				AND t1.transfer_audit_state = 'auditing_refuse'
+			)
+		 )
+	)transferingAssets,
+	(
+	
+	select IFNULL(SUM(DATEDIFF(t2.cash_time,t1.complete_time)*
+	IFNULL((select `code` from business_config where display_name= 'DAILY_INCOME_RATE' ),0.05)*t1.support_amt),0)
+	 from crowdfunding_support t1 left join crowdfunding t2 on t1.loan_no = t2.loan_no where t1.pay_state='payed' and t1.state='add' and t1.support_user=#{userId,jdbcType=VARCHAR}) estimatedEarnings
+  	
+  </select>
+  <!-- 支付收益 -->
+	<select id="selectDailyIncomeData" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select
+		#{curDate,jdbcType=VARCHAR} as DATA_DATE,
+		CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+		'6029' as Company,'10089999' as Department,t1.support_user as
+		Customer_ID ,c.loan_no as product_code, c.loan_user as Project_Cus_id,
+		case c.loan_type when 'public' then '76030001' when 'stock' then
+		'76020001' when 'product' then '76010001' end as business_code ,
+		'CNY' as currency_code,'1' as currency_rate,'BC_ZFLX' as
+		event_code,DATE_FORMAT(NOW(),'%Y-%m-%d %H-%i-%s') as business_date,
+		CONCAT( CURDATE()+0,round(round(rand(),6)*1000000) )
+		order_number,t1.support_amt as order_amount,
+		(select code from business_config where
+		display_name='DAILY_INCOME_RATE')*t1.support_amt as client_amount,
+		b.back_type as product_type,u.real_name as Customer_Name,ur.real_name
+		as Project_Cus_name,
+		c.loan_name as product_name,'0' as service_amount
+		from crowdfunding_support t1
+		left join crowdfunding c on t1.loan_no = c.loan_no
+		left join user ur on ur.user_id = c.loan_user
+		left join user u on u.user_id = t1.support_user
+		left join crowdfunding_back_set b on b.loan_no = c.loan_no
+		where t1.pay_state = 'payed' and t1.state='add' and
+		DATE_FORMAT(t1.complete_time,'%Y%m%d') &lt;=
+		DATE_FORMAT(NOW(),'%Y%m%d')
+		and c.loan_state!='lended'
+		order by t1.complete_time desc
+	</select>
+	
+   <!-- 查询项目签署完成情况 -->
+   <select id="selectContractSignNum" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingSupportModel">
+  	 select count(1) from crowdfunding_support
+  	  where  contract_project_sign_state = '0' and pay_state = 'payed'
+	  and loan_no = #{loanNo,jdbcType=VARCHAR}
+   </select>
+   
+   <!-- 查询未到期并且没有支付尾款的投资 -->
+   <select  id="selectNoComplateListByLoanNo"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+      select 
+         <include refid="Base_Column_List" />
+       from crowdfunding_support
+      where loan_no =#{loanNo,jdbcType=VARCHAR}  and intention_flag ='1' 
+        and state &lt;&gt; 'cancel' 
+		and CASE when intention_state = 'noPay' then 1=1 and NOW() &lt; intention_end_time and intention_state = 'noPay'
+		         when intention_state = 'payed' then 1=1 and intention_state = 'noPay'
+		         when intention_state = 'returnback' then intention_state = 'noPay' end    
+   </select>
+   
+   <!-- 查询已到期并且没有支付尾款的投资 -->
+   <select  id="selectOverDueNoComplateList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+      select 
+         <include refid="Base_Column_List" />
+       from crowdfunding_support
+      where 1=1 and intention_flag ='1' 
+        and state &lt;&gt; 'cancel' and intention_state = 'payed' 
+        and NOW() &gt; intention_end_time      
+   </select>  
+  
+</mapper>

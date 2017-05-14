@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="待审核提取盈利申请" fileName="待审核提取盈利申请">
+	<report-header>
+		<column name="订单号" mapping="capitalOrderNo" />
+		<column name="用户名" mapping="userId" />
+		<column name="用户真实姓名" mapping="userName" />
+		<column name="手机号" mapping="mobile" />
+		<column name="提取盈利金额(元)" mapping="money" />
+		<column name="操盘账号" mapping="tradeUsername" />
+		<column name="保证金" mapping="guaranteeMoney" />
+		<column name="申请时间" mapping="applyTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="审核时间" mapping="auditTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="审核人" mapping="auditor" />
+		<column name="审核备注" mapping="auditMemo" />
+		<column name="状态" mapping="status" />
+	</report-header>
+	<dataSource serviceClassId="drawInterestService"
+		serviceMethod="getDrawInterestPage" />
+</report>

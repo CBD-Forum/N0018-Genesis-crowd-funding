@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.verifycode.model.VerifyCodeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.verifycode.model.VerifyCodeModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="verify_code" property="verifyCode" jdbcType="VARCHAR" />
+    <result column="verify_type" property="verifyType" jdbcType="VARCHAR" />
+    <result column="send_target" property="sendTarget" jdbcType="VARCHAR" />
+    <result column="dead_time" property="deadTime" jdbcType="TIMESTAMP" />
+    <result column="gen_time" property="genTime" jdbcType="TIMESTAMP" />
+    <result column="send_result" property="sendResult" jdbcType="VARCHAR" />
+    <result column="send_id" property="sendId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, user_type, verify_code, verify_type, send_target, dead_time, gen_time, 
+    send_result, send_id,status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from verify_code
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTypeAndTarget" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from verify_code
+    where verify_type = #{verifyType,jdbcType=VARCHAR}
+    and dead_time > now()
+    and send_result='success'
+    and status='valid'
+    <if test="sendTarget!=null and sendTarget!=''">
+    	and send_target = #{sendTarget,jdbcType=VARCHAR}
+    </if>
+    and user_id = #{userId,jdbcType=VARCHAR} 
+    and user_type = #{userType,jdbcType=VARCHAR}
+    order by gen_time DESC  limit 0,1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from verify_code
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.verifycode.model.VerifyCodeModel" >
+    insert into verify_code (id, user_id, user_type, 
+      verify_code, verify_type, send_target, 
+      dead_time, gen_time, send_result, 
+      send_id,status)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{verifyCode,jdbcType=VARCHAR}, #{verifyType,jdbcType=VARCHAR}, #{sendTarget,jdbcType=VARCHAR}, 
+      #{deadTime,jdbcType=TIMESTAMP}, #{genTime,jdbcType=TIMESTAMP}, #{sendResult,jdbcType=VARCHAR}, 
+      #{sendId,jdbcType=VARCHAR},#{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.verifycode.model.VerifyCodeModel" >
+    insert into verify_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="verifyCode != null" >
+        verify_code,
+      </if>
+      <if test="verifyType != null" >
+        verify_type,
+      </if>
+      <if test="sendTarget != null" >
+        send_target,
+      </if>
+      <if test="deadTime != null" >
+        dead_time,
+      </if>
+      <if test="genTime != null" >
+        gen_time,
+      </if>
+      <if test="sendResult != null" >
+        send_result,
+      </if>
+      <if test="sendId != null" >
+        send_id,
+      </if>
+       <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyType != null" >
+        #{verifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTarget != null" >
+        #{sendTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="deadTime != null" >
+        #{deadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="genTime != null" >
+        #{genTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendResult != null" >
+        #{sendResult,jdbcType=VARCHAR},
+      </if>
+      <if test="sendId != null" >
+        #{sendId,jdbcType=VARCHAR},
+      </if>
+       <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.verifycode.model.VerifyCodeModel" >
+    update verify_code
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        verify_code = #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyType != null" >
+        verify_type = #{verifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTarget != null" >
+        send_target = #{sendTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="deadTime != null" >
+        dead_time = #{deadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="genTime != null" >
+        gen_time = #{genTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendResult != null" >
+        send_result = #{sendResult,jdbcType=VARCHAR},
+      </if>
+      <if test="sendId != null" >
+        send_id = #{sendId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.verifycode.model.VerifyCodeModel" >
+    update verify_code
+    set user_id = #{userId,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      verify_code = #{verifyCode,jdbcType=VARCHAR},
+      verify_type = #{verifyType,jdbcType=VARCHAR},
+      send_target = #{sendTarget,jdbcType=VARCHAR},
+      dead_time = #{deadTime,jdbcType=TIMESTAMP},
+      gen_time = #{genTime,jdbcType=TIMESTAMP},
+      send_result = #{sendResult,jdbcType=VARCHAR},
+      send_id = #{sendId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="transfer_no" property="transferNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="post_address_no" property="postAddressNo" jdbcType="VARCHAR" />
+    <result column="support_content" property="supportContent" jdbcType="VARCHAR" />
+    <result column="support_remark" property="supportRemark" jdbcType="VARCHAR" />
+    <result column="is_use" property="isUse" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, transfer_no, user_id, post_address_no, support_content, support_remark,is_use
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_transfer_extend
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_transfer_extend
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModel" >
+    insert into crowdfund_transfer_extend (id, transfer_no, user_id, 
+      post_address_no, support_content, support_remark,is_use
+      )
+    values (#{id,jdbcType=VARCHAR}, #{transferNo,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{postAddressNo,jdbcType=VARCHAR}, #{supportContent,jdbcType=VARCHAR}, #{supportRemark,jdbcType=VARCHAR}
+      , #{isUse,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModel" >
+    insert into crowdfund_transfer_extend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        id,
+      </if>
+      <if test="transferNo != null and transferNo != ''" >
+        transfer_no,
+      </if>
+      <if test="userId != null and userId != ''" >
+        user_id,
+      </if>
+      <if test="postAddressNo != null and postAddressNo != ''" >
+        post_address_no,
+      </if>
+      <if test="supportContent != null and supportContent != ''" >
+        support_content,
+      </if>
+      <if test="supportRemark != null and supportRemark != ''" >
+        support_remark,
+      </if>
+      <if test="isUse != null and isUse != ''" >
+        is_use,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null and id != ''" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="transferNo != null and transferNo != ''" >
+        #{transferNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null and userId != ''" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="postAddressNo != null and postAddressNo != ''" >
+        #{postAddressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="supportContent != null and supportContent != ''" >
+        #{supportContent,jdbcType=VARCHAR},
+      </if>
+      <if test="supportRemark != null and supportRemark != ''" >
+        #{supportRemark,jdbcType=VARCHAR},
+      </if>
+       <if test="isUse != null and isUse != ''" >
+        #{isUse,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModel" >
+    update crowdfund_transfer_extend
+    <set >
+      <if test="transferNo != null and transferNo != ''" >
+        transfer_no = #{transferNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null and userId != ''" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="postAddressNo != null and postAddressNo != ''" >
+        post_address_no = #{postAddressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="supportContent != null and supportContent != ''" >
+        support_content = #{supportContent,jdbcType=VARCHAR},
+      </if>
+      <if test="supportRemark != null and supportRemark != ''" >
+        support_remark = #{supportRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="isUse != null and isUse != ''" >
+        is_use=#{isUse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModel" >
+    update crowdfund_transfer_extend
+    set transfer_no = #{transferNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      post_address_no = #{postAddressNo,jdbcType=VARCHAR},
+      support_content = #{supportContent,jdbcType=VARCHAR},
+      support_remark = #{supportRemark,jdbcType=VARCHAR},
+      is_use=#{isUse,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteUserAndTrans" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModel" >
+    delete from crowdfund_transfer_extend
+    where user_id = #{userId,jdbcType=VARCHAR} and transfer_no=#{transferNo,jdbcType=VARCHAR}
+  </delete>
+  <sql id="BASH_WHERE">
+  	<where>
+  	  <if test="id != null and id != ''" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+  	  <if test="transferNo != null and transferNo != ''" >
+        and transfer_no = #{transferNo,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null and userId != ''" >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="postAddressNo != null and postAddressNo != ''" >
+        and post_address_no = #{postAddressNo,jdbcType=VARCHAR}
+      </if>
+      <if test="supportContent != null and supportContent != ''" >
+        and support_content = #{supportContent,jdbcType=VARCHAR}
+      </if>
+      <if test="supportRemark != null and supportRemark != ''" >
+        and support_remark = #{supportRemark,jdbcType=VARCHAR}
+      </if>
+      <if test="isUse != null and isUse != ''" >
+        and is_use=#{isUse,jdbcType=VARCHAR}
+      </if>
+  	</where>
+  </sql>
+  <select id="findByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferExtendModel">
+  	select * from crowdfund_transfer_extend
+  	<include refid="BASH_WHERE"></include>
+  </select>
+</mapper>

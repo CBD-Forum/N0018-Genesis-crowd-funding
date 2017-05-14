@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="投资流水" fileName="投资流水列表">
+	<report-header>
+		<column name="用户名" mapping="user_id" />
+		<column name="真实姓名" mapping="real_name" />
+		<column name="可用余额(元)" mapping="balance" />
+		<column name="冻结金额(元)" mapping="frozenAmt" />
+		<column name="累积支持金额(元)" mapping="totalSupportAmt" />
+<!-- 		<column name="充值金额(元)" mapping="totalRechargeAmt" /> -->
+		<column name="已提现成功金额(元)" mapping="totalWithdrawAmt" />
+		<column name="筹资总额(元)" mapping="totalLoanAmt" />
+		<column name="账户净资产(元)" mapping="totalCapital" />
+	</report-header>
+	<dataSource serviceClassId="crowdfundingService" serviceMethod="getUserCapitalList" />
+</report>

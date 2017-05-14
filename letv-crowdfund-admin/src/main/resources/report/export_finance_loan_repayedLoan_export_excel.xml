@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="还款完成项目列表" fileName="还款完成项目列表">
+	<report-header>
+		<column name="项目编号" mapping="loanNo" />
+		<column name="项目名称" mapping="loanName" />
+		<column name="借款用户名" mapping="loanUser" />
+		<column name="借款人真实姓名" mapping="loanUserName" />
+		<column name="借款期限(月)" mapping="loanTerm" />
+		<column name="借款金额(元)" mapping="loanAmt" />
+		<column name="借款利率" mapping="interestRate" />
+		<column name="状态" mapping="loanStateName" />
+		<column name="已还期数/总期数" mapping="loanProvince" />
+		<column name="已还利息/总利息" mapping="loanCity" />
+		<column name="已还本金/总本金" mapping="guaranteeName" />
+		<column name="还款截止日" mapping="lastRepayDate" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="每月还款日" mapping="repayDay" />
+		<column name="逾期账单数量" mapping="overdueTimes" />
+	</report-header>
+	<dataSource serviceClassId="loanService" serviceMethod="getLoansByStatus" />
+</report>

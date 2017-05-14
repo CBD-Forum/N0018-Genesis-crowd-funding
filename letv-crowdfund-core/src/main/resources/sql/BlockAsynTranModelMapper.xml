@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.blockasyntran.model.BlockAsynTranModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.blockasyntran.model.BlockAsynTranModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tran_id" property="tranId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="query_status" property="queryStatus" jdbcType="VARCHAR" />
+    <result column="query_message" property="queryMessage" jdbcType="VARCHAR" />  
+    <result column="request_id" property="requestID" jdbcType="VARCHAR" />
+    <result column="query_request_id" property="queryRequestID" jdbcType="VARCHAR" />  
+    
+    <result column="request_data" property="requestData" jdbcType="VARCHAR" />
+    <result column="task_count" property="taskCount" jdbcType="INTEGER" />
+    <result column="task_state" property="taskState" jdbcType="VARCHAR" />
+    <result column="task_msg" property="taskMsg" jdbcType="VARCHAR" />
+    
+    <result column="source" property="source" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tran_id, create_time, update_time, parent_id, type, status,message,memo,query_status,query_message,request_id
+    ,query_request_id,request_data,task_count,task_state,task_msg,source
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from block_asyn_tran
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByTranId" resultMap="BaseResultMap" parameterType="com.fbd.core.app.blockasyntran.model.BlockAsynTranModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from block_asyn_tran
+    where tran_id = #{tranId,jdbcType=VARCHAR}
+  </select>
+  <select id="findByRequestId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from block_asyn_tran
+    where request_id = #{value,jdbcType=VARCHAR}
+  </select>
+  <select id="findByQueryRequestId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from block_asyn_tran
+    where query_request_id = #{queryRequestId,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from block_asyn_tran
+    where tran_id = #{tranId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectFlowCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+      count(1)
+    from block_asyn_tran
+    where parent_id = #{parentId,jdbcType=VARCHAR} and type='flow' and status='success'
+  </select>
+  <select id="selectFailFlowsList" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from block_asyn_tran
+    where parent_id = #{parentId,jdbcType=VARCHAR} and type='flow' and status!='success'
+  </select>
+  
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from block_asyn_tran
+    <include refid="Base_Where"/>
+    order by create_time desc limit 1
+  </select> 
+   
+  <sql id="Base_Where">
+  	<where>
+      <if test="id != null and id != '' " >
+        and  id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != '' " >
+        and  type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="parentId != null and parentId != '' " >
+        and  parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' " >
+        and  status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="tranId != null and tranId != '' " >
+        and  tran_id = #{tranId,jdbcType=VARCHAR}
+      </if>
+      <if test="memo != null and memo != '' " >
+        and  memo = #{memo,jdbcType=VARCHAR}
+      </if>      
+      <if test="queryStatus != null and queryStatus != '' " >
+        and  query_status = #{queryStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="queryMessage != null and queryMessage != '' " >
+        and  query_message = #{queryMessage,jdbcType=VARCHAR}
+      </if>
+       <if test="requestID != null and requestID != '' " >
+        and  request_id = #{requestID,jdbcType=VARCHAR}
+      </if>
+      <if test="queryRequestID != null and queryRequestID != '' " >
+        and  query_request_id = #{queryRequestID,jdbcType=VARCHAR}
+      </if>
+      <if test="source != null and source != '' " >
+        and  source = #{source,jdbcType=VARCHAR}
+      </if>
+    </where>  
+  </sql>
+  
+  <select id="selectSuccessCount" parameterType="com.fbd.core.app.blockasyntran.model.BlockAsynTranModel" resultType="java.lang.Integer">
+  select count(1) from block_asyn_tran where  request_id = #{requestID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from block_asyn_tran
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.blockasyntran.model.BlockAsynTranModel" >
+    insert into block_asyn_tran (id, tran_id, create_time, 
+      update_time, parent_id, type, 
+      status,message,memo,query_status,query_message,request_id,query_request_id
+      ,request_data,task_count,task_state,task_msg,source)
+    values (#{id,jdbcType=VARCHAR}, #{tranId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{parentId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR},#{message,jdbcType=VARCHAR},
+      #{memo,jdbcType=VARCHAR},#{queryStatus,jdbcType=VARCHAR},#{queryMessage,jdbcType=VARCHAR},#{requestID,jdbcType=VARCHAR},#{queryRequestID,jdbcType=VARCHAR}
+      ,#{requestData,jdbcType=VARCHAR},#{taskCount,jdbcType=INTEGER},#{taskState,jdbcType=VARCHAR},#{taskMsg,jdbcType=VARCHAR},#{source,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.blockasyntran.model.BlockAsynTranModel" >
+    update block_asyn_tran
+    <set >
+      <if test="tranId != null" >
+        tran_id = #{tranId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+        <if test="message != null" >
+       message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+       memo = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="queryStatus != null and queryStatus != '' " >
+        query_status = #{queryStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="queryMessage != null and queryMessage != '' " >
+        query_message = #{queryMessage,jdbcType=VARCHAR},
+      </if>
+       <if test="requestID != null and requestID != '' " >
+        request_id = #{requestID,jdbcType=VARCHAR},
+      </if>
+      <if test="queryRequestID != null and queryRequestID != '' " >
+        query_request_id = #{queryRequestID,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="requestData != null and requestData != '' " >
+        request_data = #{requestData,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCount != null and taskCount != '' " >
+        task_count = #{taskCount,jdbcType=INTEGER},
+      </if>
+      <if test="taskState != null and taskState != '' " >
+        task_state = #{taskState,jdbcType=VARCHAR},
+      </if>
+      <if test="taskMsg != null and taskMsg != '' " >
+        task_msg = #{taskMsg,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="source != null and source != '' " >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.blockasyntran.model.BlockAsynTranModel" >
+    update block_asyn_tran
+    set tran_id = #{tranId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=VARCHAR},
+      query_status = #{queryStatus,jdbcType=VARCHAR},
+      request_id = #{requestID,jdbcType=VARCHAR},
+      query_request_id = #{queryRequestID,jdbcType=VARCHAR},
+      query_message = #{queryMessage,jdbcType=VARCHAR},
+      request_data = #{requestData,jdbcType=VARCHAR},
+      task_count = #{taskCount,jdbcType=INTEGER},
+      task_state = #{taskState,jdbcType=VARCHAR},
+      task_msg = #{taskMsg,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <sql id="WHERE_COLUMN">
+  	<where>
+  	  <if test="source != null and source != ''" >
+        and source = #{source,jdbcType=VARCHAR}
+      </if>
+  	  <if test="tranId != null and tranId != ''" >
+        and tran_id = #{tranId,jdbcType=VARCHAR}
+      </if>
+      <if test="parentId != null and parentId != ''" >
+        and parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != ''" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="message != null and message != ''" >
+       and message = #{message,jdbcType=VARCHAR}
+      </if>
+      <if test="memo != null and memo != ''" >
+       and memo = #{memo,jdbcType=VARCHAR}
+      </if>
+      <if test="queryStatus != null and queryStatus != '' " >
+       and query_status = #{queryStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="queryMessage != null and queryMessage != '' " >
+       and query_message = #{queryMessage,jdbcType=VARCHAR}
+      </if>
+      <if test="requestID != null and requestID != '' " >
+       and request_id = #{requestID,jdbcType=VARCHAR}
+      </if>
+      <if test="queryRequestID != null and queryRequestID != '' " >
+       and query_request_id = #{queryRequestID,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="requestData != null and requestData != '' " >
+       and request_data = #{requestData,jdbcType=VARCHAR}
+      </if>
+      <if test="taskCount != null and taskCount != '' " >
+       and task_count = #{taskCount,jdbcType=INTEGER}
+      </if>
+      <if test="taskState != null and taskState != '' " >
+       and task_state = #{taskState,jdbcType=VARCHAR}
+      </if>
+      <if test="taskMsg != null and taskMsg != '' " >
+       and task_msg = #{taskMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="queryLogic!=null and queryLogic !=''">
+      	<if test="queryLogic=='userCreateAccount_notAsyn'">
+      		<!-- 用户开户 没异步 -->
+      		and DATE_ADD(create_time,INTERVAL 10 MINUTE)&lt;now()
+      		and (status is null or status ='new')
+      	</if>
+      	<if test="queryLogic=='userCreateAccount_errorAsyn'">
+      		<!-- 用户开户 异步异常 -->
+      		and DATE_ADD(update_time,INTERVAL 10 MINUTE)&lt;now()
+      		and status !='SubmitGlobalLedgerSuccess'
+      	</if>
+      	<if test="queryLogic=='userActivationAccount_notAsyn'">
+      		<!-- 用户激活 没异步 -->
+      		and DATE_ADD(update_time,INTERVAL 10 MINUTE)&lt;now()
+      		and (status is null or status ='new')
+      	</if>
+      	<if test="queryLogic=='userActivationAccount_errorAsyn'">
+      		<!-- 用户激活 没异步 -->
+      		and DATE_ADD(update_time,INTERVAL 10 MINUTE)&lt;now()
+      		and status !='SubmitGlobalLedgerSuccess'
+      	</if>
+      	
+      	<if test="queryLogic=='userTrustAccount_notAsyn'">
+      		<!-- 用户信任 没异步 -->
+      		and DATE_ADD(update_time,INTERVAL 10 MINUTE)&lt;now()
+      		and (status is null or status ='new')
+      	</if>
+      	<if test="queryLogic=='userTrustAccount_errorAsyn'">
+      		<!-- 用户信任 没异步 -->
+      		and DATE_ADD(update_time,INTERVAL 10 MINUTE)&lt;now()
+      		and status !='SubmitGlobalLedgerSuccess'
+      	</if>
+      </if>
+  	</where>
+  </sql>
+  <select id="findByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.blockasyntran.model.BlockAsynTranModel" >
+  	select 
+  	*
+  	from block_asyn_tran
+  	<include refid="WHERE_COLUMN"></include>
+  </select>
+</mapper>

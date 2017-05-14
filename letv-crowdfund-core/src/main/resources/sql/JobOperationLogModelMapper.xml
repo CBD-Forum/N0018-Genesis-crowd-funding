@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.log.model.JobOperationLogModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.log.model.JobOperationLogModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="operate_type" property="operateType" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="operate_begin_time" property="operateBeginTime" jdbcType="TIMESTAMP" />
+    <result column="operate_end_time" property="operateEndTime" jdbcType="TIMESTAMP" />
+    <result column="busi_id" property="busiId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, operate_type, summary, content, result, operate_begin_time, operate_end_time,busi_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from job_operation_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- ****************分页查询************************ -->
+  <sql id="Base_Where_List">
+  	<where>
+  	  <if test="id != null and id != ''" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+  	  <if test="operateType != null and operateType!=''" >
+        and operate_type = #{operateType,jdbcType=VARCHAR}
+      </if>
+      <if test="operateBeginTime != null and operateBeginTime != ''" >
+        and operate_begin_time >= #{operateBeginTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="operateEndTime != null and operateEndTime != ''" >
+        and operate_begin_time &lt;= #{operateEndTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="result != null and result!=''" >
+        and result = #{result,jdbcType=VARCHAR}
+      </if>
+  	</where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	  <if test="sort =='operateType'" >
+  	  	 order by operate_type ${order}
+      </if>
+      <if test="sort =='operateBeginTime'" >
+      	 order by operate_begin_time ${order}
+      </if>
+  </sql>
+  
+   <select id="getCount" resultType="java.lang.Long" parameterType="java.util.Map">
+    select count(1) from job_operation_log j
+    left join loan l on j.busi_id=l.loan_no
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="selectList" resultType="java.util.Map" parameterType="java.util.Map" >
+    select 
+    	j.id, j.operate_type, j.summary, j.content, j.result, j.operate_begin_time, j.operate_end_time,j.busi_id,
+    	l.loan_no,l.loan_name,l.loan_user
+    from job_operation_log j
+    left join loan l on j.busi_id=l.loan_no
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  
+  <!-- ****************分页查询************************ -->
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from job_operation_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.log.model.JobOperationLogModel" >
+    insert into job_operation_log (id, operate_type, summary, 
+      content, result, operate_begin_time, 
+      operate_end_time,busi_id)
+    values (#{id,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, #{operateBeginTime,jdbcType=TIMESTAMP}, 
+      #{operateEndTime,jdbcType=TIMESTAMP},#{busiId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.log.model.JobOperationLogModel" >
+    insert into job_operation_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="operateBeginTime != null" >
+        operate_begin_time,
+      </if>
+      <if test="operateEndTime != null" >
+        operate_end_time,
+      </if>
+      <if test="busiId != null" >
+        busi_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="operateBeginTime != null" >
+        #{operateBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateEndTime != null" >
+        #{operateEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="busiId != null" >
+         #{busiId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.log.model.JobOperationLogModel" >
+    update job_operation_log
+    <set >
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="operateBeginTime != null" >
+        operate_begin_time = #{operateBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateEndTime != null" >
+        operate_end_time = #{operateEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="busiId != null" >
+        busi_id = #{busiId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.log.model.JobOperationLogModel" >
+    update job_operation_log
+    set operate_type = #{operateType,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      operate_begin_time = #{operateBeginTime,jdbcType=TIMESTAMP},
+      operate_end_time = #{operateEndTime,jdbcType=TIMESTAMP},
+      busi_id = #{busiId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

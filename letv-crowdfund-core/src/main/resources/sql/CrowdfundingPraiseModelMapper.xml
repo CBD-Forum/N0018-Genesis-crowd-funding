@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingPraiseModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingPraiseModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="praise_session_id" property="praiseSessionId" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, praise_session_id, loan_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_praise
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPraiseSessionId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_praise
+    where praise_session_id = #{praiseSessionId,jdbcType=VARCHAR}
+  </select>  
+  
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_praise
+      <include refid="base_where"/>
+  </select>    
+  
+  <sql id="base_where">
+	  <where>
+       <if test="praiseSessionId != null and praiseSessionId != ''" >
+          and praise_session_id = #{praiseSessionId,jdbcType=VARCHAR}
+       </if>
+       <if test="loanNo != null and loanNo != ''" >
+         and loan_no = #{loanNo,jdbcType=VARCHAR}
+       </if>
+       <if test="id != null and id != ''" >
+        and id = #{id,jdbcType=VARCHAR}
+       </if>
+	  </where>
+  </sql>  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_praise
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingPraiseModel" >
+    insert into crowdfunding_praise (id, praise_session_id, loan_no
+      )
+    values (#{id,jdbcType=VARCHAR}, #{praiseSessionId,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingPraiseModel" >
+    insert into crowdfunding_praise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="praiseSessionId != null" >
+        praise_session_id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="praiseSessionId != null" >
+        #{praiseSessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingPraiseModel" >
+    update crowdfunding_praise
+    <set >
+      <if test="praiseSessionId != null" >
+        praise_session_id = #{praiseSessionId,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingPraiseModel" >
+    update crowdfunding_praise
+    set praise_session_id = #{praiseSessionId,jdbcType=VARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

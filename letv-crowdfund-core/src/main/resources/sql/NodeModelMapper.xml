@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.node.model.NodeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.node.model.NodeModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="node_type" property="nodeType" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="version" property="version" jdbcType="DOUBLE" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="last_modify_user" property="lastModifyUser" jdbcType="VARCHAR" />
+    <result column="seq_num" property="seqNum" jdbcType="INTEGER" />
+    <result column="thumb" property="thumb" jdbcType="VARCHAR" />
+    <result column="body" property="body" jdbcType="LONGVARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="LONGVARCHAR" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,code, node_type, title, subtitle, language, status, create_time, update_time, version, 
+    creator, last_modify_user, seq_num, thumb, body, keywords, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from node
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="getByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.node.model.NodeModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from node
+    where node_type = #{nodeType,jdbcType=VARCHAR}
+    order by update_time desc
+  </select>
+  
+  <select id="getByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from node
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- *************** 用于分页查询  ************* -->
+  
+  <sql id="Base_Where_List">
+	<where>
+	  <if test="nodeType != null and nodeType != ''" >
+        and t1.node_type = #{nodeType,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null and title != ''" >
+        and t1.title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="code != null and code != ''" >
+        and t1.code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="subtitle != null and subtitle != ''" >
+        and t1.subtitle = #{subtitle,jdbcType=VARCHAR}
+      </if>
+      <if test="language != null and language != ''" >
+        and t1.language = #{language,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and t1.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != ''" >
+        and t1.create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null and updateTime != ''" >
+        and t1.update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="version != null and version != ''" >
+        and t1.version = #{version,jdbcType=DOUBLE}
+      </if>
+      <if test="creator != null and creator != ''" >
+        and t1.creator = #{creator,jdbcType=VARCHAR}
+      </if>
+      <if test="lastModifyUser != null and lastModifyUser != ''" >
+        and t1.last_modify_user = #{lastModifyUser,jdbcType=VARCHAR}
+      </if>
+      <if test="seqNum != null and seqNum != ''" >
+        and t1.seq_num = #{seqNum,jdbcType=INTEGER}
+      </if>
+      <if test="thumb != null and thumb != ''" >
+        and t1.thumb = #{thumb,jdbcType=VARCHAR}
+      </if>
+      <if test="body != null and body != ''" >
+        and t1.body = #{body,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="keywords != null and keywords != ''" >
+        and t1.keywords = #{keywords,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="description != null and description != ''" >
+        and t1.description = #{description,jdbcType=LONGVARCHAR}
+      </if>
+	</where>
+  </sql>
+  
+  <sql id="Base_Table_List">
+  	 node t1 
+	 LEFT JOIN node_type t2 ON t1.node_type = t2.`code`
+	 LEFT JOIN dictionary t3 ON t1.`status` = t3.`code` AND t3.type_code = 'node_node_status'
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from <include refid="Base_Table_List" />
+    <include refid="Base_Where_List" />
+  </select>
+  
+ <select id="select" resultType="java.util.Map" parameterType="com.fbd.core.app.node.model.NodeModel" >
+    select 
+    	t1.id,
+		t1.`code`,
+		t1.node_type nodeType,
+		t2.`name` nodeTypeName,
+		t1.title,
+		t1.subtitle,
+		t1.body,
+		t1.`language`,
+		t1.`status`,
+		t3.display_name statusName,
+		t1.keywords,
+		t1.description,
+		t1.create_time createTime,
+		t1.update_time updateTime,
+		t1.creator,
+		t1.thumb,
+		t1.last_modify_user lastModifyUser
+    from <include refid="Base_Table_List" />
+   <include refid="Base_Where_List" />
+   <!-- 
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	 -->
+	 order by t1.create_time desc
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+   <!-- *************** 用于分页查询  end************* -->
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from node
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.node.model.NodeModel" >
+    insert into node (id, code,node_type, title, 
+      subtitle, language, status, 
+      create_time, update_time, version, 
+      creator, last_modify_user, seq_num, 
+      thumb, body, keywords, 
+      description)
+    values (#{id,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{nodeType,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{subtitle,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{version,jdbcType=DOUBLE}, 
+      #{creator,jdbcType=VARCHAR}, #{lastModifyUser,jdbcType=VARCHAR}, #{seqNum,jdbcType=INTEGER}, 
+      #{thumb,jdbcType=VARCHAR}, #{body,jdbcType=LONGVARCHAR}, #{keywords,jdbcType=LONGVARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.node.model.NodeModel" >
+    insert into node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="nodeType != null" >
+        node_type,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subtitle != null" >
+        subtitle,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="lastModifyUser != null" >
+        last_modify_user,
+      </if>
+      <if test="seqNum != null" >
+        seq_num,
+      </if>
+      <if test="thumb != null" >
+        thumb,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="nodeType != null" >
+        #{nodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DOUBLE},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyUser != null" >
+        #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        #{seqNum,jdbcType=INTEGER},
+      </if>
+      <if test="thumb != null" >
+        #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.node.model.NodeModel" >
+    update node
+    <set >
+      <if test="nodeType != null" >
+        node_type = #{nodeType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subtitle != null" >
+        subtitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=DOUBLE},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyUser != null" >
+        last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        seq_num = #{seqNum,jdbcType=INTEGER},
+      </if>
+      <if test="thumb != null" >
+        thumb = #{thumb,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.node.model.NodeModel" >
+    update node
+    set node_type = #{nodeType,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      version = #{version,jdbcType=DOUBLE},
+      creator = #{creator,jdbcType=VARCHAR},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      seq_num = #{seqNum,jdbcType=INTEGER},
+      thumb = #{thumb,jdbcType=VARCHAR},
+      body = #{body,jdbcType=LONGVARCHAR},
+      keywords = #{keywords,jdbcType=LONGVARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

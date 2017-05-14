@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.admin.model.AdminModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.admin.model.AdminModel" extends="com.fbd.core.app.user.model.UserSecurityModelMapper.BaseResultMap">
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="admin_id" property="adminId" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="employee_no" property="employeeNo" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="dept" property="dept" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="id_card_no" property="idCardNo" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="INTEGER" />
+    <result column="post" property="post" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="audit_status" property="auditStatus" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, admin_id, real_name, employee_no, password, dept,email,mobile, ID_card_no,city, post, create_time, creator, 
+    auditor, audit_time, audit_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据员工号查询对象 -->
+  <select id="selectByEmployeeNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT t1.*,t2.* FROM admin t1 
+		LEFT JOIN user_security t2 ON t1.admin_id = t2.user_id AND t2.user_type = 'A'
+	WHERE t1.employee_no = #{employeeNo,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据手机号查询对象 -->
+  <select id="selectByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT t1.*,t2.* FROM admin t1 
+		LEFT JOIN user_security t2 ON t1.admin_id = t2.user_id AND t2.user_type = 'A'
+	WHERE t1.mobile = #{mobile,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据邮箱查询对象 -->
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT t1.*,t2.* FROM admin t1 
+		LEFT JOIN user_security t2 ON t1.admin_id = t2.user_id AND t2.user_type = 'A'
+	WHERE t1.email = #{email,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据邮箱查询对象 -->
+  <select id="selectByIDNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT t1.*,t2.* FROM admin t1 
+		LEFT JOIN user_security t2 ON t1.admin_id = t2.user_id AND t2.user_type = 'A'
+	WHERE t1.id_card_no = #{idCardNo,jdbcType=VARCHAR} AND t1.real_name = #{realName,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据用户编号查询对象 -->
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT t5.roleCode postCode,t5.roleName post,t1.*,t2.*,t3.display_name statusName,t4.display_name deptText FROM admin t1 
+		LEFT JOIN user_security t2 ON t1.admin_id = t2.user_id AND t2.user_type = 'A'
+		LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+		LEFT JOIN dictionary t4 ON t1.dept = t4.`code` AND t4.type_code='dept'
+		LEFT JOIN (SELECT t2.user_id,GROUP_CONCAT(t1.code) roleCode,GROUP_CONCAT(t1.name) roleName FROM role t1,user_role t2 where t1.id=t2.role_id GROUP BY t2.user_id) t5 ON t1.id = t5.user_id
+	WHERE t1.admin_id = #{adminId,jdbcType=VARCHAR} 
+  </select>
+  
+  <!-- 获取权限 -->
+  <select id="getAuth"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	SELECT
+		t3.`code` roleCode,
+		t3.`name` roleName,
+		t5.`code` resourceCode,
+		t5.label resourceName,
+		t5.url resourceUrl,
+		t6.`code` resourcePcode
+	FROM
+		admin t1,
+		user_role t2,
+		role t3,
+		role_permission t4,
+		permission t5,
+		permission t6
+	WHERE
+		t1.id = t2.user_id
+	AND t2.role_id = t3.id
+	AND t3.id = t4.role_id
+	AND t4.permission_id = t5.id
+	AND t5.pid = t6.id
+	AND t5.pid != '1'
+	AND t5.status = '0'
+	AND t1.admin_id = #{userId,jdbcType=VARCHAR}
+	GROUP BY t5.`code`
+	ORDER BY t5.seq_num
+  </select>
+  
+  <sql id="Base_Where_List">
+  	<where>
+      <if test="adminId != null and adminId!=''" >
+        and t1.admin_id like CONCAT(CONCAT('%', #{adminId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="realName != null and realName!=''" >
+        and t1.real_name like CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="employeeNo != null and employeeNo!=''" >
+        and t1.employee_no like CONCAT(CONCAT('%', #{employeeNo,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="email != null and email!=''" >
+        and t1.email like CONCAT(CONCAT('%', #{email,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="mobile != null and mobile!=''" >
+        and t1.mobile like CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="password != null and password!=''" >
+        and t1.password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="dept != null and dept!=''" >
+        and t1.dept = #{dept,jdbcType=INTEGER}
+      </if>
+      <if test="city != null and city!=''" >
+        and t1.city = #{city,jdbcType=INTEGER}
+      </if>
+      <if test="post != null and post!=''" >
+        and t1.post = #{post,jdbcType=VARCHAR}
+      </if>
+      <if test="startCreateTime != null and startCreateTime != '' " >
+        and t1.create_time &gt;= #{startCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endCreateTime != null and endCreateTime != '' " >
+        and t1.create_time &lt;= #{endCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="creator != null and creator!=''" >
+        and t1.creator = #{creator,jdbcType=VARCHAR}
+      </if>
+      <if test="auditor != null and auditor!=''" >
+        and t1.auditor = #{auditor,jdbcType=VARCHAR}
+      </if>
+      <if test="auditTime != null and auditTime!=''" >
+        and t1.audit_time = #{auditTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="auditStatus != null and auditStatus!=''" >
+        and t1.audit_status = #{auditStatus,jdbcType=CHAR}
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='adminId'" >
+        t1.admin_id ${order}
+      </if>
+      <if test="sort =='createTime'" >
+        t1.create_time ${order}
+      </if>
+      <if test="sort =='realName'" >
+        t1.real_name ${order}
+      </if>
+      <if test="sort =='mobile'" >
+        t1.mobile ${order}
+      </if>
+      <if test="sort =='email'" >
+        t1.email ${order}
+      </if>
+      <if test="sort =='employeeNo'" >
+        t1.employee_no ${order}
+      </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from admin t1 
+    LEFT JOIN user_security t2 ON t1.admin_id=t2.user_id AND t2.user_type ='A'
+	LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+	LEFT JOIN dictionary t4 ON t1.dept = t4.`code` AND t4.type_code='dept'
+	LEFT JOIN (SELECT t2.user_id,GROUP_CONCAT(t1.name) roleName FROM role t1,user_role t2 where t1.id=t2.role_id GROUP BY t2.user_id) t5 ON t1.id = t5.user_id
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.admin.model.AdminModel" >
+    select roleName post,t1.*,t2.*,t3.display_name statusName,t4.display_name deptText
+    from admin t1 
+    LEFT JOIN user_security t2 ON t1.admin_id=t2.user_id AND t2.user_type ='A'
+	LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+	LEFT JOIN dictionary t4 ON t1.dept = t4.`code` AND t4.type_code='dept'
+	LEFT JOIN (SELECT t2.user_id,GROUP_CONCAT(t1.name) roleName FROM role t1,user_role t2 where t1.id=t2.role_id GROUP BY t2.user_id) t5 ON t1.id = t5.user_id
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from admin
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.admin.model.AdminModel" >
+    insert into admin (id, admin_id, real_name, 
+      employee_no, password, dept, 
+      city, post, mobile,email,id_card_no,create_time, 
+      creator, auditor, audit_time, 
+      audit_status)
+    values (#{id,jdbcType=VARCHAR}, #{adminId,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{employeeNo,jdbcType=VARCHAR}, MD5(#{password,jdbcType=VARCHAR}), #{dept,jdbcType=INTEGER}, 
+      #{city,jdbcType=INTEGER}, #{post,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR},#{idCardNo,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{auditStatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.admin.model.AdminModel" >
+    insert into admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="employeeNo != null" >
+        employee_no,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="dept != null" >
+        dept,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="post != null" >
+        post,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="idCardNo != null" >
+        id_card_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="auditStatus != null" >
+        audit_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null" >
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null" >
+        #{dept,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=INTEGER},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        #{idCardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.admin.model.AdminModel" >
+    update admin
+    <set >
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null" >
+        employee_no = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null" >
+        dept = #{dept,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=INTEGER},
+      </if>
+      <if test="post != null" >
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null" >
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.admin.model.AdminModel" >
+    update admin
+    set admin_id = #{adminId,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      employee_no = #{employeeNo,jdbcType=VARCHAR},
+      dept = #{dept,jdbcType=INTEGER},
+      city = #{city,jdbcType=INTEGER},
+      post = #{post,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      audit_status = #{auditStatus,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getCount4Sys" resultType="java.util.Map">
+  	SELECT t2.*,count(*) totalLoan,
+		SUM(CASE WHEN loan_state in ('funding','funded','repaying','repayed','overdue') THEN 1 ELSE 0 END) publishLoan,
+		SUM(CASE WHEN loan_state in ('new','auditing','refuse','reviewing','re_refuse','re_passed') THEN 1 ELSE 0 END) unpublishedLoan,
+		SUM(CASE WHEN loan_state in ('funding') THEN 1 ELSE 0 END) fundingLoan,
+		SUM(CASE WHEN loan_state in ('repaying') THEN 1 ELSE 0 END) repayingLoan,
+		SUM(CASE WHEN loan_state in ('repayed') THEN 1 ELSE 0 END) repayedLoan,
+		FORMAT((SELECT SUM(invest_amt) FROM invest WHERE invest_state in ('success','repaying','completed')),2) invest_amt,
+		FORMAT((SELECT SUM(recharge_amt)  FROM recharge WHERE state='recharged'),2) recharge_amt,
+		FORMAT((SELECT SUM(amt) FROM withdraw WHERE state='passed'),2) withdraw_amt
+		FROM loan,(SELECT count(*) totalUser,
+		SUM(CASE WHEN is_borrower = 1 THEN 1 ELSE 0 END) borrowUser,
+		SUM(CASE WHEN date_format(create_time, '%Y-%m-%d')=CURDATE() THEN 1 ELSE 0 END) todayUser,
+		(SELECT count(*) FROM admin) adminUser
+	FROM user) t2
+  </select>
+  
+  <!-- 众筹项目使用 -->
+  <select id="getCount4CrowdFundSys" resultType="java.util.Map">
+  	SELECT t2.*,count(1) totalLoan,
+		IFNULL(SUM(CASE WHEN loan_state in ('funding','funded','lended','end') THEN 1 ELSE 0 END),0) publishLoan,
+		IFNULL(SUM(CASE WHEN loan_state in ('add','submit','refuse','passed') THEN 1 ELSE 0 END),0) unpublishedLoan,
+		IFNULL(SUM(CASE WHEN loan_state in ('funding') THEN 1 ELSE 0 END),0) fundingLoan,
+		IFNULL(SUM(CASE WHEN loan_state in ('funded') THEN 1 ELSE 0 END),0) fundedLoan,
+		IFNULL(SUM(CASE WHEN loan_state in ('lended') THEN 1 ELSE 0 END),0) lendedLoan,
+		IFNULL(SUM(CASE WHEN loan_state in ('end') THEN 1 ELSE 0 END),0) repayedLoan,
+		FORMAT((SELECT IFNULL(SUM(support_amt),0) FROM crowdfunding_support WHERE pay_state='payed' and (state in('lended','sending') or state is null)),2) invest_amt,
+		FORMAT((SELECT IFNULL(SUM(recharge_amt),0)  FROM recharge WHERE  state in('recharge_success')),2) recharge_amt,
+		FORMAT((SELECT IFNULL(SUM(amt),0) FROM withdraw WHERE state='success'),2) withdraw_amt
+	FROM crowdfunding,
+	(SELECT count(1) totalUser,
+		SUM(CASE WHEN is_borrower = 1 THEN 1 ELSE 0 END) borrowUser,
+		SUM(CASE WHEN date_format(create_time, '%Y-%m-%d')=CURDATE() THEN 1 ELSE 0 END) todayUser,
+		(SELECT count(1) FROM admin) adminUser,
+		(SELECT COUNT(1) FROM crowdfund_user_stuff where user_level = 'lead') countLead,
+		(SELECT COUNT(1) FROM crowdfund_user_stuff where user_level = 'authed') countAuthed
+	FROM user) t2
+  </select>
+  
+  <!-- 初始化密码 -->
+  <update id="initPassword" parameterType="java.lang.String">
+  	UPDATE admin SET `password`=MD5(RIGHT(ID_card_no,6)) WHERE id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- 重置密码 -->
+  <update id="resetPassword" parameterType="java.util.Map">
+  	UPDATE admin SET `password`=MD5(#{password,jdbcType=VARCHAR}) WHERE admin_id = #{adminId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询管理员的详情 -->
+   <select id="selectAdminDetail" resultMap="BaseResultMap" parameterType="java.lang.String">
+   	SELECT t1.*,t2.*,t3.display_name statusName,t4.roleName,t5.ip_address,t6.display_name userTypeText,t7.display_name deptText
+	   	FROM admin t1 
+		LEFT JOIN user_security t2 ON t1.admin_id = t2.user_id AND t2.user_type='A'
+		LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+		LEFT JOIN (SELECT t2.user_id,GROUP_CONCAT(t1.name) roleName FROM role t1,user_role t2 where t1.id=t2.role_id GROUP BY t2.user_id) t4 ON t1.id = t4.user_id
+		LEFT JOIN (SELECT t1.* FROM admin_log t1,(SELECT user_id,MAX(login_time) login_time FROM admin_log GROUP BY user_id) t2
+		WHERE t1.user_id = t2.user_id AND t1.login_time= t2.login_time) t5 ON t1.admin_id = t5.user_id
+		LEFT JOIN dictionary t6 ON t2.user_type = t6.`code` AND t6.type_code = 'user_type'
+		LEFT JOIN dictionary t7 ON t1.dept = t7.`code` AND t7.type_code='dept'
+	WHERE t1.id=#{id,jdbcType=VARCHAR}
+   </select>
+   
+</mapper>

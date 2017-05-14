@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.huiyuan.model.CreateEnterpriseMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.huiyuan.model.CreateEnterpriseMember" >
+      <id column="id" property="id" jdbcType="VARCHAR" />
+  
+    <id column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="enterprise_name" property="enterpriseName" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
+    <result column="legal_person_phone" property="legalPersonPhone" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="license_no" property="licenseNo" jdbcType="VARCHAR" />
+    <result column="license_address" property="licenseAddress" jdbcType="VARCHAR" />
+    <result column="license_expire_date" property="licenseExpireDate" jdbcType="VARCHAR" />
+    <result column="business_scope" property="businessScope" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="organization_no" property="organizationNo" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="is_active" property="isActive" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+     <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+     <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+   id, uid, login_name, enterprise_name, member_name, legal_person, legal_person_phone, 
+    website, address, license_no, license_address, license_expire_date, business_scope, 
+    telephone, organization_no, summary, is_active, user_type,user_id,member_id,parent_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from create_enterprise_member
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from create_enterprise_member
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.huiyuan.model.CreateEnterpriseMember" >
+    insert into create_enterprise_member (id,uid, login_name, enterprise_name, 
+      member_name, legal_person, legal_person_phone, 
+      website, address, license_no, 
+      license_address, license_expire_date, business_scope, 
+      telephone, organization_no, summary, 
+      is_active, user_type,user_id,member_id,parent_id)
+    values (#{id,jdbcType=VARCHAR},#{uid,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{enterpriseName,jdbcType=VARCHAR}, 
+      #{memberName,jdbcType=VARCHAR}, #{legalPerson,jdbcType=VARCHAR}, #{legalPersonPhone,jdbcType=VARCHAR}, 
+      #{website,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{licenseNo,jdbcType=VARCHAR}, 
+      #{licenseAddress,jdbcType=VARCHAR}, #{licenseExpireDate,jdbcType=VARCHAR}, #{businessScope,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{organizationNo,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{isActive,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.huiyuan.model.CreateEnterpriseMember" >
+    insert into create_enterprise_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     <if test="id != null" >
+        id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="enterpriseName != null" >
+        enterprise_name,
+      </if>
+      <if test="memberName != null" >
+        member_name,
+      </if>
+      <if test="legalPerson != null" >
+        legal_person,
+      </if>
+      <if test="legalPersonPhone != null" >
+        legal_person_phone,
+      </if>
+      <if test="website != null" >
+        website,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="licenseNo != null" >
+        license_no,
+      </if>
+      <if test="licenseAddress != null" >
+        license_address,
+      </if>
+      <if test="licenseExpireDate != null" >
+        license_expire_date,
+      </if>
+      <if test="businessScope != null" >
+        business_scope,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="organizationNo != null" >
+        organization_no,
+      </if>
+      <if test="summary != null" >
+        summary,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+       <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null" >
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonPhone != null" >
+        #{legalPersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null" >
+        #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseAddress != null" >
+        #{licenseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseExpireDate != null" >
+        #{licenseExpireDate,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null" >
+        #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationNo != null" >
+        #{organizationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+       <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.huiyuan.model.CreateEnterpriseMember" >
+    update create_enterprise_member
+    <set >
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null" >
+        enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonPhone != null" >
+        legal_person_phone = #{legalPersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="website != null" >
+        website = #{website,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null" >
+        license_no = #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseAddress != null" >
+        license_address = #{licenseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseExpireDate != null" >
+        license_expire_date = #{licenseExpireDate,jdbcType=VARCHAR},
+      </if>
+      <if test="businessScope != null" >
+        business_scope = #{businessScope,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationNo != null" >
+        organization_no = #{organizationNo,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.huiyuan.model.CreateEnterpriseMember" >
+    update create_enterprise_member
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      enterprise_name = #{enterpriseName,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      legal_person_phone = #{legalPersonPhone,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      license_no = #{licenseNo,jdbcType=VARCHAR},
+      license_address = #{licenseAddress,jdbcType=VARCHAR},
+      license_expire_date = #{licenseExpireDate,jdbcType=VARCHAR},
+      business_scope = #{businessScope,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      organization_no = #{organizationNo,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=VARCHAR},
+            uid = #{uid,jdbcType=VARCHAR},
+      
+      user_type = #{userType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectIsExists" resultType="java.lang.Integer"  parameterType="com.fbd.core.app.huiyuan.model.CreateEnterpriseMember" >
+    select count(1) from create_enterprise_member where       is_active = 'T' and
+    (login_name= #{loginName,jdbcType=VARCHAR} )
+  </select>
+   <select id="selectUpdateIsExists" resultType="java.lang.Integer"  parameterType="com.fbd.core.app.huiyuan.model.CreateEnterpriseMember" >
+    select count(1) from create_enterprise_member where       is_active = 'T' and
+    (login_name= #{loginName,jdbcType=VARCHAR} and id!= #{id,jdbcType=VARCHAR}  )
+  </select>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select 
+    <include refid="Base_Column_List" />
+    from create_enterprise_member
+    where user_id=#{userId,jdbcType=VARCHAR}
+  
+  </select>
+</mapper>

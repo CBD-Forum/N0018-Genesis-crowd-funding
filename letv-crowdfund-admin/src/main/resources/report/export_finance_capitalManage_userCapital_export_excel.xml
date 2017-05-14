@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="用户资金流水" fileName="用户资金流水">
+	<report-header>
+		<column name="交易单号" mapping="tradeId" />
+		<column name="用户名" mapping="realName" />
+		<column name="手机号" mapping="mobile" />
+		<column name="交易时间" mapping="tradeTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="交易方向" mapping="tradeDirectionName" />
+		<column name="交易类型" mapping="tradeTypeName" />
+		<column name="交易对方" mapping="oppositeSide" />
+		<column name="交易金额(元)" mapping="displayAmt" />
+		<column name="交易后余额(元)" mapping="balance" />
+		<column name="交易后冻结金额(元)" mapping="frozenAmt" />
+		<column name="详情" mapping="detail" />
+		<column name="上级单号" mapping="parentId" />
+	</report-header>
+	<dataSource serviceClassId="userBillService" serviceMethod="getUserBillList" />
+</report>

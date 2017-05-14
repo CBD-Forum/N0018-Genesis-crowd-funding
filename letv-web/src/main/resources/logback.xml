@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<jmxConfigurator />
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder 可以指定字符集，对于中文输出有意义 -->
+		<encoder charset="UTF-8"> 
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>TRACE</level>
+		</filter>
+
+		<!-- 可让每天产生一个日志文件，最多 10 个，自动回滚 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/home/logs/fbd/web/fbd-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>10</maxHistory>
+		</rollingPolicy>
+
+		<!-- 下面这段注释的代码可以在日志文件超过 5MB 时进行归档，并且归档文件后缀只要是 .zip 或 .gz 就会自动压缩日志归档 -->
+		<!--file>d:/log/Unmi.log</file> <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
+			<fileNamePattern>d:/log/Unmi.%i.log.zip</fileNamePattern> <minIndex>1</minIndex> 
+			<maxIndex>10</maxIndex> </rollingPolicy> <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> 
+			<maxFileSize>5MB</maxFileSize> </triggeringPolicy -->
+
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	
+	<appender name="errorFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+
+		<!-- 可让每天产生一个日志文件，最多 10 个，自动回滚 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/home/logs/fbd/web/fbd-error-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>10</maxHistory>
+		</rollingPolicy>
+
+		<!-- 下面这段注释的代码可以在日志文件超过 5MB 时进行归档，并且归档文件后缀只要是 .zip 或 .gz 就会自动压缩日志归档 -->
+		<!--file>d:/log/Unmi.log</file> <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
+			<fileNamePattern>d:/log/Unmi.%i.log.zip</fileNamePattern> <minIndex>1</minIndex> 
+			<maxIndex>10</maxIndex> </rollingPolicy> <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> 
+			<maxFileSize>5MB</maxFileSize> </triggeringPolicy -->
+
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 需要记录日志的包 -->
+	<logger name="com.fbd" >
+		<level value="TRACE" />
+	</logger>
+	<logger name="org.springframework">
+		<level value="ERROR" />
+	</logger>
+	<logger name="java.sql">
+	   <level value="INFO" />
+	</logger> 
+	<logger name="org.apache">
+		<level value="ERROR" />
+	</logger>
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="file" />
+		<appender-ref ref="errorFile" />
+	</root>
+</configuration>  

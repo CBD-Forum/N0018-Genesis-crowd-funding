@@ -1,0 +1,56 @@
+@charset "utf-8";
+/*下载页面用到的css*/
+/* CSS Document */
+body {
+	margin:0 auto;
+	font-family:"微软雅黑",Tahoma, Verdana, Arial;
+	font-size: 24px;
+	color:#333;
+}
+*{outline:none;font-family:"微软雅黑",Tahoma, Verdana, Arial;}
+ul,dl,dd,h1,h2,h3,h4,h5,h6,form,p { 
+	padding:0; 
+	margin:0;
+}
+p {
+	margin: 0px;
+	padding: 0px;
+}
+textarea {
+	margin: 0px;
+	padding: 0px;
+}
+input {
+	margin: 0px;
+	padding: 0px;
+	outline:none;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+h1,h2,h3,h4,h5,h6{
+	margin: 0px;
+	padding: 0px;
+}
+ul,li,div,body {
+	margin: 0px;
+	padding: 0px;
+}
+img {
+	border:none;
+	padding: 0;
+	margin: 0;
+	outline:none;
+}
+ul li {
+	list-style-type: none;
+}
+a {
+	text-decoration: none;
+	color: #444;
+}
+button{margin: 0;padding: 0;border: none;outline:none;}
+.clear:before,.clear:after {content:""; display:table;}
+.clear:after { clear:both; overflow:hidden;}
+.clear {zoom:1;}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.reconciliation.model.ReconciliationRechargeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.reconciliation.model.ReconciliationRechargeModel" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_date" property="orderDate" jdbcType="VARCHAR" />
+    <result column="reconciliation_order_id" property="reconciliationOrderId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="card_mode" property="cardMode" jdbcType="VARCHAR" />
+    <result column="order_state" property="orderState" jdbcType="VARCHAR" />
+    <result column="order_desc" property="orderDesc" jdbcType="VARCHAR" />
+    <result column="pay_platform" property="payPlatform" jdbcType="VARCHAR" />
+    <result column="local_order_state" property="localOrderState" jdbcType="VARCHAR" />
+    <result column="local_amount" property="localAmount" jdbcType="DOUBLE" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.fbd.core.app.reconciliation.model.ReconciliationRechargeModel" >
+    insert into reconciliation_recharge (id, order_date, reconciliation_order_id, 
+      order_id, amount, card_mode, 
+      order_state, order_desc, pay_platform, 
+      local_order_state, local_amount, state, 
+      create_time)
+    values (#{id,jdbcType=VARCHAR}, #{orderDate,jdbcType=VARCHAR}, #{reconciliationOrderId,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, #{cardMode,jdbcType=VARCHAR}, 
+      #{orderState,jdbcType=VARCHAR}, #{orderDesc,jdbcType=VARCHAR}, #{payPlatform,jdbcType=VARCHAR}, 
+      #{localOrderState,jdbcType=VARCHAR}, #{localAmount,jdbcType=DOUBLE}, #{state,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+	insert into reconciliation_recharge (id, order_date, reconciliation_order_id, 
+      order_id, amount, card_mode, 
+      order_state, order_desc, pay_platform, 
+      local_order_state, local_amount, state, 
+      create_time)
+	values
+	<foreach collection="list" item="item" index="index" separator="," >
+	  (#{item.id,jdbcType=VARCHAR}, #{item.orderDate,jdbcType=VARCHAR}, #{item.reconciliationOrderId,jdbcType=VARCHAR}, 
+      #{item.orderId,jdbcType=VARCHAR}, #{item.amount,jdbcType=DOUBLE}, #{item.cardMode,jdbcType=VARCHAR}, 
+      #{item.orderState,jdbcType=VARCHAR}, #{item.orderDesc,jdbcType=VARCHAR}, #{item.payPlatform,jdbcType=VARCHAR}, 
+      #{item.localOrderState,jdbcType=VARCHAR}, #{item.localAmount,jdbcType=DOUBLE}, #{item.state,jdbcType=VARCHAR}, 
+      #{item.createTime,jdbcType=TIMESTAMP})
+	</foreach>
+   </insert>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</mapper>

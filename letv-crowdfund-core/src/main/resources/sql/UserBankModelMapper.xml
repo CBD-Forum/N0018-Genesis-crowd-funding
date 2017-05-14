@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.bank.model.UserBankModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.bank.model.UserBankModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="bank_no" property="bankNo" jdbcType="VARCHAR" />
+    <result column="bank_account" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="open_acct_bank" property="openAcctBank" jdbcType="VARCHAR" />
+    <result column="bank_type" property="bankType" jdbcType="VARCHAR" />
+    <result column="bank_city" property="bankCity" jdbcType="VARCHAR" />
+    <result column="bank_province" property="bankProvince" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="thirnd_bank_id" property="thirndBankId" jdbcType="VARCHAR" />
+    <result column="bank_short_name" property="bankShortName" jdbcType="VARCHAR" />
+    <result column="bankProvinceName" property="bankProvinceName" jdbcType="VARCHAR" />
+    <result column="bankCityName" property="bankCityName" jdbcType="VARCHAR" />
+    <result column="third_bind_type" property="thirdBindType" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="bankName" property="bankName" jdbcType="VARCHAR" />
+ 
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, name, bank_no, bank_account, bank, owner_name, open_acct_bank, bank_type, 
+    bank_city, bank_province, create_time, state,thirnd_bank_id,third_bind_type,update_time
+  </sql>
+  
+   <select id="getBnakByUserAndBankAccount" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_bank
+    where user_id = #{userId,jdbcType=VARCHAR} and bank_account=#{bankAccount,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    ub.id, ub.user_id, ub.name, ub.bank_no, ub.bank_account, ub.bank, u1.real_name owner_name, ub.open_acct_bank, ub.bank_type, 
+    ub.bank_city, ub.bank_province, ub.create_time, ub.state,ub.thirnd_bank_id,
+    rb.bank_short_name,rb.bank_name bankName,rb.pay_code payCode 
+     from user_bank ub LEFT JOIN user u1 on ub.user_id = u1.user_id
+     left join recharge_bank rb on ub.bank = rb.bank_code
+    where state='bind'  and ub.user_id = #{userId,jdbcType=VARCHAR}   
+    order by ub.update_time desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_bank
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectBnakByBankAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select a.short_name from area a  where a.id=bank_city) as bankCityName,
+	(select a.short_name from area a where a.id=bank_province) as bankProvinceName
+    from user_bank
+    where bank_account = #{bankAccount,jdbcType=VARCHAR} limit 1
+  </select>
+  
+  <select id="selectBnakByBankAccountAndState" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select a.short_name from area a  where a.id=bank_city) as bankCityName,
+	(select a.short_name from area a where a.id=bank_province) as bankProvinceName
+    from user_bank
+    where bank_account = #{bankAccount,jdbcType=VARCHAR} and state = #{state,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_bank
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.bank.model.UserBankModel" >
+    insert into user_bank (id, user_id, name, 
+      bank_no, bank_account, bank, 
+      owner_name, open_acct_bank, bank_type, 
+      bank_city, bank_province, create_time, 
+      state,thirnd_bank_id,third_bind_type,update_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{bankNo,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, 
+      #{ownerName,jdbcType=VARCHAR}, #{openAcctBank,jdbcType=VARCHAR}, #{bankType,jdbcType=VARCHAR}, 
+      #{bankCity,jdbcType=VARCHAR}, #{bankProvince,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR},#{thirndBankId,jdbcType=VARCHAR},#{thirdBindType,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.bank.model.UserBankModel" >
+    insert into user_bank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="bankNo != null" >
+        bank_no,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="bank != null" >
+        bank,
+      </if>
+      <if test="ownerName != null" >
+        owner_name,
+      </if>
+      <if test="openAcctBank != null" >
+        open_acct_bank,
+      </if>
+      <if test="bankType != null" >
+        bank_type,
+      </if>
+      <if test="bankCity != null" >
+        bank_city,
+      </if>
+      <if test="bankProvince != null" >
+        bank_province,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null" >
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="openAcctBank != null" >
+        #{openAcctBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCity != null" >
+        #{bankCity,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvince != null" >
+        #{bankProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.bank.model.UserBankModel" >
+    update user_bank
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null" >
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null" >
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="openAcctBank != null" >
+        open_acct_bank = #{openAcctBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        bank_type = #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCity != null" >
+        bank_city = #{bankCity,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvince != null" >
+        bank_province = #{bankProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="thirndBankId != null" >
+        thirnd_bank_id = #{thirndBankId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdBindType != null" >
+        third_bind_type = #{thirdBindType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.bank.model.UserBankModel" >
+    update user_bank
+    set user_id = #{userId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      bank_no = #{bankNo,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      bank = #{bank,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      open_acct_bank = #{openAcctBank,jdbcType=VARCHAR},
+      bank_type = #{bankType,jdbcType=VARCHAR},
+      bank_city = #{bankCity,jdbcType=VARCHAR},
+      bank_province = #{bankProvince,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      thirnd_bank_id = #{thirndBankId,jdbcType=VARCHAR},
+      third_bind_type = #{thirdBindType,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateUserBankState" parameterType="com.fbd.core.app.bank.model.UserBankModel" >
+    update user_bank set state = #{state,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

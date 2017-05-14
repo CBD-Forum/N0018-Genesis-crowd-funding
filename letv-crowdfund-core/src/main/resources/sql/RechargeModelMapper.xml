@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.recharge.model.RechargeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.recharge.model.RechargeModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="recharge_amt" property="rechargeAmt" jdbcType="DOUBLE" />
+    <result column="actual_amt" property="actualAmt" jdbcType="DOUBLE" />
+    <result column="recharge_way" property="rechargeWay" jdbcType="VARCHAR" />
+    <result column="recharge_fee" property="rechargeFee" jdbcType="DOUBLE" />
+    <result column="fee_child_acctno" property="feeChildAcctno" jdbcType="VARCHAR" />
+    <result column="fee_acct_no" property="feeAcctNo" jdbcType="VARCHAR" />
+    <result column="reward_no" property="rewardNo" jdbcType="VARCHAR" />
+    <result column="is_recharged_admin" property="isRechargedAdmin" jdbcType="CHAR" />
+    <result column="complete_time" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="state_name" property="stateName" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="hy_fee" property="hyFee" jdbcType="DOUBLE" />
+    <result column="p2p_fee" property="p2pFee" jdbcType="DOUBLE" />
+    <result column="bank_id" property="bankId" jdbcType="DOUBLE" />
+    
+    <result column="financial_opinion" property="financialOpinion" jdbcType="VARCHAR" />
+    <result column="operator_opinion" property="operatorOpinion" jdbcType="VARCHAR" />
+    <result column="third_recharge_type" property="thirdRechargeType" jdbcType="VARCHAR" />
+    <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+    <result column="block_chain_state" property="blockChainState" jdbcType="VARCHAR" />
+    <result column="agreement_state" property="agreementState" jdbcType="VARCHAR" />
+    <result column="agreement_url" property="agreementUrl" jdbcType="VARCHAR" />
+    <result column="reconciliation_state" property="reconciliationState" jdbcType="VARCHAR" />
+    
+    <result column="transfer_complate_time" property="transferComplateTime" jdbcType="TIMESTAMP" />
+    <result column="reconciliation_time" property="reconciliationTime" jdbcType="TIMESTAMP" />
+  
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id,user_id, recharge_amt, actual_amt, recharge_way, recharge_fee, fee_child_acctno, 
+    fee_acct_no, reward_no, is_recharged_admin, complete_time, create_time, state,hy_fee,p2p_fee,
+    bank_id,third_recharge_type,transaction_id,block_chain_state,agreement_state,agreement_url,
+    reconciliation_state,transfer_complate_time,reconciliation_time
+  </sql>
+  
+  <select id="selectListByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge 
+    <include refid="base_Where"/>  
+  </select>  
+  
+  <!-- ********************前台充值列表start************************* -->
+  <!-- 查询充值列表 -->
+  <sql id="base_Where">
+  	<where>
+  	  <if test="userId != null and userId != ''" >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="state != null and state != ''" >
+        and state = #{state,jdbcType=VARCHAR}
+      </if>
+      <if test="createStartTime != null and createStartTime != ''" >
+        and create_time &gt;= #{createStartTime,jdbcType=TIMESTAMP}
+      </if>
+       <if test="createEndTime != null and createEndTime != ''" >
+        and create_time &lt;= #{createEndTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="blockChainState != null and blockChainState != ''" >
+    	and block_chain_state = #{blockChainState,jdbcType=VARCHAR}
+      </if>
+      <if test="transactionId != null and transactionId != ''" >
+    	and transaction_id = #{transactionId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <!-- <select id="selectRechargeList" resultMap="BaseResultMap" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select display_name from dictionary where code=state and type_code='recharge_state') as state_name,
+    (select bank_name from recharge_bank where bank_code=recharge_way and busi_type='B2C') as bank_name
+    from recharge
+    <include refid="base_Where"/>
+    默认按照充值日期
+    order by create_time desc
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <select id="selectRechargeListCounts" resultType="java.lang.Long" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    select count(1)
+    from recharge
+    <include refid="base_Where"/>
+  </select> -->
+  <!-- ********************前台充值列表end************************* -->
+  
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from recharge
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    insert into recharge (id, order_id,user_id, recharge_amt, 
+      actual_amt, recharge_way, recharge_fee, 
+      fee_child_acctno, fee_acct_no, reward_no, 
+      is_recharged_admin, complete_time, create_time, 
+      state,hy_fee,p2p_fee,bank_id,third_recharge_type,reconciliation_state)
+    values (#{id,jdbcType=VARCHAR},#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{rechargeAmt,jdbcType=DOUBLE}, 
+      #{actualAmt,jdbcType=DOUBLE}, #{rechargeWay,jdbcType=VARCHAR}, #{rechargeFee,jdbcType=DOUBLE}, 
+      #{feeChildAcctno,jdbcType=VARCHAR}, #{feeAcctNo,jdbcType=VARCHAR}, #{rewardNo,jdbcType=VARCHAR}, 
+      #{isRechargedAdmin,jdbcType=CHAR}, #{completeTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR},#{hyFee,jdbcType=DOUBLE},#{p2pFee,jdbcType=DOUBLE},
+      #{bankId,jdbcType=VARCHAR},#{thirdRechargeType,jdbcType=VARCHAR},#{reconciliationState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    insert into recharge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="OrderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="rechargeAmt != null" >
+        recharge_amt,
+      </if>
+      <if test="actualAmt != null" >
+        actual_amt,
+      </if>
+      <if test="rechargeWay != null" >
+        recharge_way,
+      </if>
+      <if test="rechargeFee != null" >
+        recharge_fee,
+      </if>
+      <if test="feeChildAcctno != null" >
+        fee_child_acctno,
+      </if>
+      <if test="feeAcctNo != null" >
+        fee_acct_no,
+      </if>
+      <if test="rewardNo != null" >
+        reward_no,
+      </if>
+      <if test="isRechargedAdmin != null" >
+        is_recharged_admin,
+      </if>
+      <if test="completeTime != null" >
+        complete_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="hyFee != null" >
+        hy_fee,
+      </if>
+      <if test="p2pFee != null" >
+        p2p_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{order_id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmt != null" >
+        #{rechargeAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="actualAmt != null" >
+        #{actualAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="rechargeWay != null" >
+        #{rechargeWay,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeFee != null" >
+        #{rechargeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="feeChildAcctno != null" >
+        #{feeChildAcctno,jdbcType=VARCHAR},
+      </if>
+      <if test="feeAcctNo != null" >
+        #{feeAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNo != null" >
+        #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isRechargedAdmin != null" >
+        #{isRechargedAdmin,jdbcType=CHAR},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="hyFee != null" >
+        #{hyFee,jdbcType=DOUBLE},
+      </if>
+      <if test="p2pFee != null" >
+        #{p2pFee,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    update recharge
+    <set >
+     <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmt != null" >
+        recharge_amt = #{rechargeAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="actualAmt != null" >
+        actual_amt = #{actualAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="rechargeWay != null" >
+        recharge_way = #{rechargeWay,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeFee != null" >
+        recharge_fee = #{rechargeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="feeChildAcctno != null" >
+        fee_child_acctno = #{feeChildAcctno,jdbcType=VARCHAR},
+      </if>
+      <if test="feeAcctNo != null" >
+        fee_acct_no = #{feeAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNo != null" >
+        reward_no = #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isRechargedAdmin != null" >
+        is_recharged_admin = #{isRechargedAdmin,jdbcType=CHAR},
+      </if>
+      <if test="completeTime != null" >
+        complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="hyFee != null" >
+        hy_fee = #{hyFee,jdbcType=DOUBLE},
+      </if>
+      <if test="p2pFee != null" >
+        p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+      </if>
+      <if test="bankId != null" >
+        bank_id = #{bankId,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="financialOpinion != null" >
+        financial_opinion = #{financialOpinion,jdbcType=VARCHAR},
+      </if>
+        <if test="operatorOpinion != null" >
+        operator_opinion = #{operatorOpinion,jdbcType=VARCHAR},
+      </if>
+        <if test="operatorAuditTime != null" >
+        operator_audit_time = #{operatorAuditTime,jdbcType=VARCHAR},
+      </if>
+        <if test="financialAuditTime != null" >
+        financial_audit_time = #{financialAuditTime,jdbcType=VARCHAR},
+      </if>
+        <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+       <if test="financialAuditor != null" >
+        financial_auditor = #{financialAuditor,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="thirdRechargeType != null" >
+        third_recharge_type = #{thirdRechargeType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if> 
+      <if test="blockChainState != null" >
+        block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+      </if>  
+      <if test="agreementState != null" >
+        agreement_state = #{agreementState,jdbcType=VARCHAR},
+      </if>       
+      <if test="agreementUrl != null" >
+        agreement_url = #{agreementUrl,jdbcType=VARCHAR},
+      </if> 
+      <if test="reconciliationState != null" >
+        reconciliation_state = #{reconciliationState,jdbcType=VARCHAR},
+      </if> 
+      <if test="transferComplateTime != null" >
+        transfer_complate_time = #{transferComplateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reconciliationTime != null" >
+        reconciliation_time = #{reconciliationTime,jdbcType=TIMESTAMP},
+      </if>             
+               
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+   <update id="updateByOrderId" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    update recharge
+    <set >
+     <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeAmt != null" >
+        recharge_amt = #{rechargeAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="actualAmt != null" >
+        actual_amt = #{actualAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="rechargeWay != null" >
+        recharge_way = #{rechargeWay,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeFee != null" >
+        recharge_fee = #{rechargeFee,jdbcType=DOUBLE},
+      </if>
+      <if test="feeChildAcctno != null" >
+        fee_child_acctno = #{feeChildAcctno,jdbcType=VARCHAR},
+      </if>
+      <if test="feeAcctNo != null" >
+        fee_acct_no = #{feeAcctNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNo != null" >
+        reward_no = #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isRechargedAdmin != null" >
+        is_recharged_admin = #{isRechargedAdmin,jdbcType=CHAR},
+      </if>
+      <if test="completeTime != null" >
+        complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="hyFee != null" >
+        hy_fee = #{hyFee,jdbcType=DOUBLE},
+      </if>
+      <if test="p2pFee != null" >
+        p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+      </if>
+      <if test="bankId != null" >
+        bank_id = #{bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="financialOpinion != null" >
+        financial_opinion = #{financialOpinion,jdbcType=VARCHAR},
+      </if>
+        <if test="operatorOpinion != null" >
+        operator_opinion = #{operatorOpinion,jdbcType=VARCHAR},
+      </if>
+        <if test="operatorAuditTime != null" >
+        operator_audit_time = #{operatorAuditTime,jdbcType=VARCHAR},
+      </if>
+        <if test="financialAuditTime != null" >
+        financial_audit_time = #{financialAuditTime,jdbcType=VARCHAR},
+      </if>
+        <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+       <if test="financialAuditor != null" >
+        financial_auditor = #{financialAuditor,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionId != null" >
+        transaction_id = #{transactionId,jdbcType=VARCHAR},
+      </if> 
+      <if test="thirdRechargeType != null" >
+        third_recharge_type = #{thirdRechargeType,jdbcType=VARCHAR},
+      </if>
+      <if test="blockChainState != null" >
+        block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+      </if> 
+      <if test="agreementState != null" >
+        agreement_state = #{agreementState,jdbcType=VARCHAR},
+      </if>       
+      <if test="agreementUrl != null" >
+        agreement_url = #{agreementUrl,jdbcType=VARCHAR},
+      </if> 
+      <if test="reconciliationState != null" >
+        reconciliation_state = #{reconciliationState,jdbcType=VARCHAR},
+      </if>   
+      <if test="transferComplateTime != null" >
+        transfer_complate_time = #{transferComplateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reconciliationTime != null" >
+        reconciliation_time = #{reconciliationTime,jdbcType=TIMESTAMP},
+      </if>      
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    update recharge
+    set user_id = #{userId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      recharge_amt = #{rechargeAmt,jdbcType=DOUBLE},
+      actual_amt = #{actualAmt,jdbcType=DOUBLE},
+      recharge_way = #{rechargeWay,jdbcType=VARCHAR},
+      recharge_fee = #{rechargeFee,jdbcType=DOUBLE},
+      fee_child_acctno = #{feeChildAcctno,jdbcType=VARCHAR},
+      fee_acct_no = #{feeAcctNo,jdbcType=VARCHAR},
+      reward_no = #{rewardNo,jdbcType=VARCHAR},
+      is_recharged_admin = #{isRechargedAdmin,jdbcType=CHAR},
+      complete_time = #{completeTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      hy_fee = #{hyFee,jdbcType=DOUBLE},
+      p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+      bank_id = #{bankId,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      third_recharge_type = #{thirdRechargeType,jdbcType=VARCHAR},
+      block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+      agreement_state = #{agreementState,jdbcType=VARCHAR},
+      agreement_url = #{agreementUrl,jdbcType=VARCHAR},
+      reconciliation_state = #{reconciliationState,jdbcType=VARCHAR},
+      transfer_complate_time = #{transferComplateTime,jdbcType=TIMESTAMP},
+      reconciliation_time = #{reconciliationTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 后台查询列表 -->
+  <sql id="Base_Where_List_4_Admin">
+	  <where>
+	  	<if test="startCompleteTime != null and startCompleteTime != ''" >
+	    	and t1.complete_time &gt;= #{startCompleteTime,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="endCompleteTime != null and endCompleteTime != ''" >
+	    	and t1.complete_time &lt;= #{endCompleteTime,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="startCreateTime != null and startCreateTime != ''" >
+	    	and t1.create_time &gt;= #{startCreateTime,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="endCreateTime != null and endCreateTime != ''" >
+	    	and t1.create_time &lt;= #{endCreateTime,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="state != null and state != ''" >
+	    	and t1.state = #{state,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="userId != null and userId != ''" >
+	    	and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+	    </if>
+	    <if test="notUserId != null and notUserId != ''">
+	    	and t1.user_id &lt;&gt; #{notUserId,jdbcType=VARCHAR}
+	    </if>
+	  </where>
+  </sql>
+  
+   <sql id="Base_OrderBy_List_4_Admin">
+  	<if test="sort =='rechargeAmt'" >
+        t1.recharge_amt ${order}
+      </if>
+      <if test="sort =='actualAmt'" >
+        t1.actual_amt ${order}
+      </if>
+      <if test="sort =='rechargeFee'" >
+        t1.recharge_fee ${order}
+      </if>
+      <if test="sort =='createTime'" >
+        t1.create_time ${order}
+      </if>
+      <if test="sort =='completeTime'" >
+        t1.complete_time ${order}
+      </if>
+  </sql>
+  
+  <select id="getRecharges4Admin" resultType="java.util.Map">
+  	SELECT t1.id,
+		t1.order_id orderId,     -- 
+		t1.user_id userId,     -- 用户编号
+		FORMAT(t1.recharge_amt,2) rechargeAmt,     -- 充值金额
+		FORMAT(t1.actual_amt,2) actualAmt,     -- 到账金额
+		t1.recharge_way rechargeWay,     -- 充值方式
+		FORMAT(t1.recharge_fee,2) rechargeFee,     -- 手续费
+		t1.fee_child_acctno feeChildAcctno,     -- 手续费子账户号
+		t1.fee_acct_no feeAcctNo,     -- 手续费客户号
+		t1.reward_no rewardNo,     -- 优惠券编号
+		t1.is_recharged_admin isRechargedAdmin,     -- 是否为管理员充值
+		t1.complete_time completeTime,     -- 到账时间
+		t1.create_time createTime,     -- 提交时间
+		t1.state,     -- 等待支付，支付成功
+		t2.real_name userName,
+		t3.display_name stateName,
+		t5.bank_name  bankName
+	FROM recharge t1
+	LEFT JOIN `user` t2 ON t1.user_id=t2.user_id
+	LEFT JOIN dictionary t3 ON t1.state = t3.`code` AND t3.type_code='recharge_state'
+	LEFT JOIN user_bank t4 ON t1.user_id = t4.user_id
+	LEFT JOIN recharge_bank t5 ON t1.recharge_way = t5.bank_code AND t5.busi_type = 'B2C'
+	<include refid="Base_Where_List_4_Admin" />
+	<if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List_4_Admin" />
+	</if>
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  
+  <select id="getRechargeCount4Admin" resultType="java.lang.Long"  >
+    select count(*)
+	    FROM recharge t1
+		LEFT JOIN `user` t2 ON t1.user_id=t2.user_id
+		LEFT JOIN dictionary t3 ON t1.state = t3.`code` AND t3.type_code='recharge_state'
+		LEFT JOIN user_bank t4 ON t1.user_id = t4.user_id
+	LEFT JOIN recharge_bank t5 ON t1.recharge_way = t5.bank_code AND t5.busi_type = 'B2C'
+		<include refid="Base_Where_List_4_Admin" />
+  </select>
+  
+  <select id="selectRechargeList" resultType="java.util.Map" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+  	select 
+  	t1.id,
+	t1.recharge_amt rechargeAmt,
+	t1.actual_amt actual_amt,
+	t1.user_id userId,
+	t1.create_time createTime,
+	t1.complete_time completeTime,
+	t1.order_id orderId,
+	t1.state,
+	d1.display_name as stateName,
+    d2.display_name as blockChainStateName,
+    t1.block_chain_state as blockChainState,
+    t1.transaction_id  transactionId,
+	t2.bank,
+	t2.bank_account bankAccount,
+	t3.real_name realName,
+	t1.third_recharge_type thirdRechargeType,
+    d3.display_name as thirdRechargeTypeName 
+	from recharge t1 
+	left join user_bank t2 on t1.bank_id = t2.thirnd_bank_id
+	left join `user` t3 on t1.user_id = t3.user_id
+  LEFT JOIN dictionary d1 on d1.code=t1.state and d1.type_code='recharge_state'
+  LEFT JOIN dictionary d2 on d2.code=t1.block_chain_state and d2.type_code='block_chain_state'
+  LEFT JOIN dictionary d3 on d3.code=t1.third_recharge_type and d3.type_code='thirdType'
+	<include refid="Base_where_recharge_bank"/>
+	
+	ORDER BY (case when t1.state = 'recharge_success_auditing' then 1 
+	when t1.state = 'operator_passed' then 2 
+	when t1.state = 'finaical_passed' then 3 
+	when t1.state = 'recharge_success' then 4 
+	when t1.state = 'recharge_yy_refuse' then 5 
+	when t1.state = 'recharge_cw_refuse' then 6
+	when t1.state = 'recharging'  then 7 else 8 end ) asc, t1.complete_time desc
+  	
+  	<if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  
+  <select id="selectRechargeCounts" resultType="java.lang.Long" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    select count(1)
+    from recharge t1
+    left join user_bank t2 on t1.bank_id = t2.thirnd_bank_id
+	left join `user` t3 on t1.user_id = t3.user_id
+    <include refid="Base_where_recharge_bank"/>
+  </select>
+  
+  <!-- 后台查询列表 -->
+  <sql id="Base_where_recharge_bank">
+	  <where>
+	    <if test="createStartTime != null and createStartTime != ''" >
+        	and t1.create_time &gt;= #{createStartTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="createEndTime != null and createEndTime != ''" >
+        	and t1.create_time &lt;= #{createEndTime,jdbcType=TIMESTAMP}
+        </if>
+	    <if test="state != null and state != ''" >
+	    	and t1.state = #{state,jdbcType=VARCHAR}
+	    </if>
+	    <if test="blockChainState != null and blockChainState != ''" >
+	    	and t1.block_chain_state = #{blockChainState,jdbcType=VARCHAR}
+	    </if>
+	    <if test="transactionId != null and transactionId != ''" >
+	    	and t1.transaction_id = #{transactionId,jdbcType=VARCHAR}
+	    </if>
+	    <if test="userId != null and userId != ''" >
+	    	and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+	    </if>
+	    <if test="endCompleteTime != null and endCompleteTime != ''" >
+	    	and t1.complete_time &gt;= #{startCompleteTime,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="endCompleteTime != null and endCompleteTime != ''" >
+	    	and t1.complete_time &lt;=#{endCompleteTime,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="realName != null and realName != ''" >
+	    	and t3.real_name like CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+	    </if>
+	  </where>
+  </sql>
+  <!-- 银行到帐确认 成功-->
+   <select id="selectBlockChainRechargeData" parameterType="java.util.Map"  resultType="java.util.Map">
+  select  DATE_FORMAT(#{curDate} ,'%Y-%m-%d %H:%i:%s') as DATA_DATE,CONCAT( CURDATE()+0,'-1') as Batch_no
+  ,'6029' as Company,'10089999' as Department,
+   u.user_id as Customer_ID,u.real_name as Customer_Name ,
+  r.order_id as order_number,'BC_CZ' as event_code, 
+  DATE_FORMAT(r.complete_time ,'%Y-%m-%d %H:%i:%s') as business_date ,'CNY' as currency_code,
+'1' as currency_rate,IFNULL(r.recharge_amt,0) as receive_amount 
+,#{paymentMethod,jdbcType=VARCHAR} as receive_type
+,#{paymentAccount,jdbcType=VARCHAR} as receive_account 
+ ,0 as actual_amount,'76020001'  as business_code,'S602901' as source,'0' as product_code
+ ,r.reconciliation_time as reconciliationTime
+from recharge r inner join user u on r.user_id = u.user_id
+where r.reconciliation_state =1 
+  <if test="completeTime != null and completeTime != ''" >
+ and r.reconciliation_time > #{completeTime,jdbcType=TIMESTAMP}
+ </if>
+  order by r.reconciliation_time desc
+  </select>
+  
+  <!-- 众筹令到帐成功-->
+   <select id="selectRechargeData" parameterType="java.util.Map"  resultType="java.util.Map">
+  select  DATE_FORMAT(#{curDate} ,'%Y-%m-%d %H:%i:%s') as DATA_DATE,CONCAT( CURDATE()+0,'-1') as Batch_no
+  ,'6029' as Company,'10089999' as Department,
+   u.user_id as Customer_ID,u.real_name as Customer_Name ,
+  r.order_id as order_number,'BC_CZ' as event_code, 
+  DATE_FORMAT(r.complete_time ,'%Y-%m-%d %H:%i:%s') as business_date ,'CNY' as currency_code,
+'1' as currency_rate,0 as receive_amount 
+,#{paymentMethod,jdbcType=VARCHAR} as receive_type
+,#{paymentAccount,jdbcType=VARCHAR} as receive_account 
+ ,IFNULL(r.recharge_amt,0) as actual_amount,'76020001'  as business_code,'S602901' as source,'0' as product_code
+from recharge r inner join user u on r.user_id = u.user_id
+where r.state='recharge_success' 
+  <if test="completeTime != null and completeTime != ''" >
+ and r.complete_time > #{completeTime,jdbcType=TIMESTAMP}
+ </if>
+  order by r.complete_time desc
+  </select>
+  
+  <select id="selectUserRechargeDetail" resultType="java.util.Map" parameterType="com.fbd.core.app.recharge.model.RechargeModel">
+  	select 
+  	t1.id,
+	t1.recharge_amt rechargeAmt,
+	t1.order_id orderId,
+	t1.create_time createTime,
+	t1.complete_time completeTime,
+	t1.state,
+	t1.financial_opinion financialOpinion,
+	t1.operator_opinion operatorOpinion,
+	(select d.display_name from dictionary d where d.type_code = 'recharge_state' and d.`code` = t1.state) rechargeStateName
+	
+	from recharge t1
+	<include refid="Base_where_user_recharge"/>
+  </select>
+  
+  <select id="selectUserRechargeList" resultType="java.util.Map" parameterType="com.fbd.core.app.recharge.model.RechargeModel">
+  	select 
+  	t1.id,
+	t1.recharge_amt rechargeAmt,
+	t1.order_id orderId,
+	t1.create_time createTime,
+	t1.complete_time completeTime,
+	t1.state,
+	(select d.display_name from dictionary d where d.type_code = 'recharge_state' and d.`code` = t1.state) rechargeStateName
+	
+	from recharge t1
+	<include refid="Base_where_user_recharge"/>
+	
+	order by t1.complete_time desc,t1.create_time desc
+  	
+  	<if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  
+  <select id="selectUserRechargeCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.recharge.model.RechargeModel">
+  		select count(1)
+  		from recharge t1
+  		<include refid="Base_where_user_recharge"/>
+  </select>
+  
+  <sql id="Base_where_user_recharge">
+  	<where>
+  		<if test="createStartTime != null and createStartTime != ''" >
+        	and create_time &gt;= #{createStartTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="createEndTime != null and createEndTime != ''" >
+        	and create_time &lt;= #{createEndTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="stateIn =='fail'" >
+	    	and t1.state in ('recharge_cw_refuse','recharge_yy_refuse')
+	    </if>
+	    <if test="stateIn =='inTransaction'" >
+	    	and t1.state in ('recharge_success_auditing','operator_passed')
+	    </if>
+	    <if test="userId != null and userId != ''" >
+	    	and t1.user_id = #{userId,jdbcType=VARCHAR}
+	    </if>
+	    <if test="id != null and id != ''" >
+	    	and t1.id = #{id,jdbcType=VARCHAR}
+	    </if>
+  	</where>
+  </sql>
+  
+  
+  <!-- 查询当天充值成功的充值数据 -->
+  <select id="selectListByCurrentDay" resultMap="BaseResultMap" parameterType="com.fbd.core.app.recharge.model.RechargeModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge  
+     
+  </select>  
+  
+  
+  
+</mapper>

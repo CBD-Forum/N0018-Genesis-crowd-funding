@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="用户账户资金统计" fileName="用户账户资金统计列表">
+	<report-header>
+		<column name="用户名" mapping="user_id" />
+		<column name="真实姓名" mapping="real_name" />
+		<column name="红包金额(元)" mapping="totalRewardAmt" />
+		<column name="可用余额(元)" mapping="balance" />
+		<column name="冻结金额(元)" mapping="frozenAmt" />
+		<column name="累积投资金额(元)" mapping="totalInvestAmt" />
+		<column name="累积收益(元)" mapping="totalPaidInt" />
+		<column name="待收本金(元)" mapping="totalNoBackPrincipal" />
+		<column name="待收收益(元)" mapping="totalNoBackInt" />
+		<column name="充值金额(元)" mapping="totalRewardAmt" />
+		<column name="已提现成功金额(元)" mapping="totalWithdrawAmt" />
+		<column name="借款总额(元)" mapping="totalLoanAmt" />
+		<column name="未还借款本金(元)" mapping="totalNoRepayPrincipal" />
+		<column name="未还借款利息(元)" mapping="totalNoRepayInt" />
+		<column name="账户净资产(元)" mapping="totalCapital" />
+	</report-header>
+	<dataSource serviceClassId="userServiceImpl" serviceMethod="getUserCaptialPage" />
+</report>

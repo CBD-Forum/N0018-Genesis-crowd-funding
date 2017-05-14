@@ -1,0 +1,1744 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.UserModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.UserModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="third_account" property="thirdAccount" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="qq_no" property="qqNo" jdbcType="VARCHAR" />
+    <result column="weibo_no" property="weiboNo" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="certificate_type" property="certificateType" jdbcType="VARCHAR" />
+    <result column="certificate_no" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="INTEGER" />
+    <result column="city" property="city" jdbcType="INTEGER" />
+    <result column="county" property="county" jdbcType="INTEGER" />
+    <result column="home_address" property="homeAddress" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="auth_time" property="authTime" jdbcType="TIMESTAMP" />
+    <result column="user_level" property="userLevel" jdbcType="VARCHAR" />
+    <result column="open_acc_time" property="openAccTime" jdbcType="TIMESTAMP" />
+    <result column="invite_code" property="inviteCode" jdbcType="VARCHAR" />
+  	<result column="is_borrower" property="isBorrower" jdbcType="VARCHAR" />
+  	<result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR" />
+  	<result column="emergency_phone" property="emergencyPhone" jdbcType="VARCHAR" />
+  	<result column="emergency_relation" property="emergencyRelation" jdbcType="VARCHAR" />
+  	<result column="post_code" property="postCode" jdbcType="VARCHAR" />
+  	<result column="is_auth" property="isAuth" jdbcType="VARCHAR" />
+  	<result column="self_detail" property="selfDetail" jdbcType="VARCHAR" />
+  	<result column="is_celebrity" property="isCelebrity" jdbcType="VARCHAR" />
+  	<result column="company" property="company" jdbcType="VARCHAR" />
+  	<result column="position" property="position" jdbcType="VARCHAR" />
+  	<result column="block_chain_address" property="blockChainAddress" jdbcType="VARCHAR" />
+  	<result column="block_chain_secret_key" property="blockChainSecretKey" jdbcType="VARCHAR" />
+  	<result column="block_chain_state" property="blockChainState" jdbcType="VARCHAR" />
+  	<result column="skey" property="skey" jdbcType="VARCHAR" />
+  	<result column="is_set_signature" property="isSetSignature" jdbcType="VARCHAR" />
+  	<result column="UPS_auth" property="UPSAuth" jdbcType="VARCHAR" />
+  	<result column="SXY_auth" property="SXYAuth" jdbcType="VARCHAR" />
+  	<result column="member_type" property="memberType" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="frozen_amt" property="frozenAmt" jdbcType="DOUBLE" />
+    <result column="safety_eye_flag" property="safetyEyeFlag" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  	
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, third_account, email, password, real_name, nick_name, sex, birthday, 
+    qq_no, weibo_no, mobile, tel, certificate_type, certificate_no, country, province, 
+    city, county, home_address, photo, auth_time, user_level, open_acc_time, invite_code, 
+    create_time,is_borrower,emergency_contact,emergency_phone,emergency_relation,
+    post_code,is_auth,self_detail,is_celebrity,company,position,block_chain_address,
+    block_chain_secret_key,block_chain_state,is_set_signature,UPS_auth,SXY_auth,member_type,
+    balance,frozen_amt,safety_eye_flag,update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{user_id,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询所有用户 -->
+  <select id="selectAllUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+   </select>
+  <select id="findByBlockChainAddress" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where block_chain_address = #{blockChainAddress,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByInviteCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where invite_code = #{invite_code,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserByMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserByCertNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where certificate_no = #{certificateNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByThridAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where third_account = #{thirdAccount,jdbcType=VARCHAR}
+  </select>
+  <!-- 安全中心 -->
+   <select id="selectSafeInfoByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+	    id, user_id, third_account,company,position,
+	    CONCAT(LEFT(email,4),'****',RIGHT(email,4))email,
+	    real_name, nick_name, sex, birthday, 
+	    qq_no, weibo_no, CONCAT(LEFT(mobile,3),'****',RIGHT(mobile,4)) mobile, 
+	    tel, certificate_type, 
+	    CONCAT(LEFT(certificate_no,2),'**************',RIGHT(certificate_no,2)) certificate_no,
+	    country, province, 
+	    city, county, 
+	    CONCAT(LEFT(home_address,2),'****') home_address, 
+	    photo,auth_time, user_level, open_acc_time, invite_code, 
+	    create_time,is_borrower,
+	    CONCAT('**',RIGHT(emergency_contact,1)) emergency_contact,
+	    emergency_phone,emergency_relation,post_code,is_auth
+    from user
+    where user_id = #{user_id,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteUserById" parameterType="java.lang.String" >
+    DELETE user,user_security,crowdfund_user_stuff ,user_security_level from user,user_security,crowdfund_user_stuff,user_security_level where 
+	 user.user_id = user_security.user_id and crowdfund_user_stuff.user_id=user.user_id and  user.user_id = user_security_level.user_id and 
+	 user.id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 查询所有用户 -->
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+  </select>  
+  
+  <!-- 后台查询投资用户管理 -->
+  <sql id="Base_Where">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="thirdAccount != null and thirdAccount != '' " >
+        and t1.third_account like CONCAT(CONCAT('%', #{thirdAccount,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="email != null and email != '' " >
+        and t1.email like CONCAT(CONCAT('%', #{email,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="mobile != null and mobile != '' " >
+        and t1.mobile like CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="realName != null and realName != '' " >
+        and t1.real_name like CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="certificateNo != null and certificateNo != '' " >
+        and t1.certificate_no like CONCAT(CONCAT('%', #{certificateNo,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="isBorrower != null and isBorrower != '' " >
+        and t1.is_borrower = #{isBorrower,jdbcType=VARCHAR}
+      </if>
+      <if test="startCreateTime != null and startCreateTime != '' " >
+        and t1.create_time &gt;= #{startCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endCreateTime != null and endCreateTime != '' " >
+        and t1.create_time &lt;= #{endCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="status != null and status != '' " >
+        and t2.`status` = #{status,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isAuth != null and isAuth != '' " >
+        and t1.is_auth = #{isAuth,jdbcType=VARCHAR}
+      </if>
+      <if test="isSetSignature != null and isSetSignature != '' " >
+        and t1.is_set_signature = #{isSetSignature,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Base_Table_List">
+  	FROM
+		user t1
+	LEFT JOIN user_security t2 ON t1.user_id = t2.user_id and t2.user_type='P'
+	LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+	LEFT JOIN invite_code t4 ON t1.user_id = t4.being_invite_user and t4.invitor_type='direct'
+	LEFT JOIN invite_code t5 ON t1.user_id = t5.being_invite_user and t5.invitor_type='indirect'
+	LEFT JOIN dictionary t6 ON t1.user_level = t6.`code` AND t6.type_code='user_level'
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='userId'" >
+       ORDER BY t1.user_id ${order}
+    </if>
+    <if test="sort =='realName'" >
+       ORDER BY t1.real_name ${order}
+    </if>
+    <if test="sort =='thirdAccount'" >
+       ORDER BY t1.third_account ${order}
+    </if>
+    <if test="sort =='userLevel'" >
+       ORDER BY t1.user_level ${order}
+    </if>
+    <if test="sort =='email'" >
+       ORDER BY t1.email ${order}
+    </if>
+    <if test="sort =='mobile'" >
+       ORDER BY t1.mobile ${order}
+    </if>
+    <if test="sort =='createTime'" >
+       ORDER BY t1.create_time ${order}
+    </if>
+    <if test="sort =='statusName'" >
+       ORDER BY t3.display_name ${order}
+    </if>
+    <if test="sort =='directRecommend'" >
+       ORDER BY t4.invite_user ${order}
+    </if>
+    <if test="sort =='indirectRecommend'" >
+       ORDER BY t5.invite_user ${order}
+    </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) <include refid="Base_Table_List" />
+    <include refid="Base_Where" />
+  </select>
+  
+  <!-- 根据UserMode实体查询数据 -->
+  <select id="select"  resultType="java.util.Map" parameterType="com.fbd.core.app.user.model.UserModel" >
+    SELECT
+		t1.id,
+		t1.user_id userId,
+		t1.real_name realName,
+		t1.certificate_no certificateNo,
+		t1.third_account thirdAccount,
+		t1.user_level userLevel,
+		t1.email,
+		t1.mobile,
+		t1.company,
+		t1.position,
+		t1.balance,
+		t1.frozen_amt forzenAmt,
+		t1.create_time createTime,
+		t1.update_time updateTime,
+		t1.member_type memberType,
+		t1.safety_eye_flag safetyEyeFlag,
+		t2.`status`,
+		t3.display_name statusName,
+		t4.invite_user directRecommend,
+		t5.invite_user indirectRecommend,
+		t6.display_name userLevel,
+		t2.last_login_time lastLoginTime,
+		t1.is_borrower isBorrower
+	<include refid="Base_Table_List" />
+	<include refid="Base_Where" />
+   	<if test="sort != null and sort != ''">
+		<include refid="Base_OrderBy_List" />
+	</if>
+	<if test="sort == null or sort == ''">
+		ORDER BY t1.create_time desc
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <!-- 后台查询投资用户管理 -->
+  
+  <!-- 后台查询用户的详细信息 -->
+  <select id="getUserDetailByUserId" resultType="java.util.Map" parameterType="java.lang.String">
+  	SELECT
+  		t1.id id,     -- id
+		t1.user_id userId,     -- 用户名
+		t1.third_account thirdAccount,     -- 第三方账户
+		t1.email email,     -- 邮箱
+		t1.password password,     -- 密码
+		t1.real_name realName,     -- 真实姓名
+		t1.nick_name nickName,     -- 昵称
+		t1.sex sex,     -- 性别:F女，M男
+		t1.birthday birthday,     -- 生日
+		t1.qq_no qqNo,     -- QQ账号
+		t1.weibo_no weiboNo,     -- 微博账号
+		t1.mobile mobile,     -- 手机号
+		t1.tel tel,     -- 出借人电话号
+		t1.certificate_type certificateType,     -- 证件类型
+		t1.certificate_no certificateNo,     -- 证件号
+		t1.country country,     -- 所在国家
+		t1.province province,     -- 所在省
+		t1.city city,     -- 所在城市
+		t1.county county,     -- 所在县
+		t1.home_address homeAddress,     -- 家庭住址
+		t1.photo photo,     -- 头像
+		t1.auth_time authTime,     -- 认证时间
+		t1.open_acc_time openAccTime,     -- 开户时间
+		t1.invite_code inviteCode,     -- 邀请码
+		t1.create_time createTime,     -- 创建时间
+		t1.is_borrower isBorrower,     -- 是否为借款人
+		t1.company,
+		t1.position,
+	    t1.balance,
+		t1.frozen_amt forzenAmt,
+		t1.emergency_contact emergencyContact,     -- 
+		t1.emergency_phone emergencyPhone,     -- 
+		t1.emergency_relation emergencyRelation,     -- 
+		t1.post_code postCode,     -- 
+		t1.member_type memberType,
+		t1.update_time updateTime,
+		t1.safety_eye_flag safetyEyeFlag,
+		t2.*,
+		t3.display_name statusName,
+		t4.*,
+		t5.balance,t5.frozen_amt,
+		t6.actual_amt,
+		t7.amt,
+		t8.display_name userTypeText,
+		t9.*,
+		t10.`name` provinceName,
+		t11.`name` cityName,
+		t12.`name` countyName,
+		t13.display_name userLevel,
+		t14.*
+	FROM
+		user t1
+	LEFT JOIN user_security t2 ON t1.user_id = t2.user_id and t2.user_type='P'
+	LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+	LEFT JOIN (SELECT t1.investor,count(*) invests,FORMAT(sum(t1.invest_amt),2) investMoney,
+		FORMAT(SUM(t2.repayingPrincipal),2) repayingPrincipal,
+		FORMAT(SUM(t2.repayedPrincipal),2) repayedPrincipal,
+		FORMAT(SUM(t2.repayingInterest),2) repayingInterest,
+		FORMAT(SUM(t2.repayedInterest),2) repayedInterest
+		FROM invest t1 LEFT JOIN (SELECT invest_no,
+		SUM(CASE WHEN repay_state='repaying' THEN repay_principal END) repayingPrincipal,
+		SUM(CASE WHEN repay_state='repayed' THEN repay_principal END) repayedPrincipal,
+		SUM(CASE WHEN repay_state='repaying' THEN repay_interest END) repayingInterest,
+		SUM(CASE WHEN repay_state='repayed' THEN repay_interest END) repayedInterest 
+	  FROM invest_repayment GROUP BY invest_no ) t2 ON t1.invest_no=t2.invest_no
+		WHERE t1.invest_state in ('success','repaying','completed')
+		GROUP BY t1.investor) t4 ON t1.user_id=t4.investor
+	LEFT JOIN (SELECT t1.* FROM user_bill t1,(SELECT user_id,MAX(trade_time) trade_time FROM user_bill GROUP BY user_id) t2 WHERE t1.user_id=t2.user_id AND t1.trade_time=t2.trade_time AND t1.trade_type&lt;&gt;'withdraw') t5 ON t1.user_id=t5.user_id 
+	LEFT JOIN (SELECT user_id,FORMAT(SUM(actual_amt),2) actual_amt FROM recharge WHERE state='recharged' GROUP BY user_id) t6 ON t1.user_id=t6.user_id
+	LEFT JOIN (SELECT user_id,FORMAT(SUM(amt),2) amt FROM withdraw WHERE state='passed' GROUP BY user_id) t7 ON t1.user_id=t7.user_id
+	LEFT JOIN dictionary t8 ON t2.user_type = t8.`code` AND t8.type_code = 'user_type'
+  	LEFT JOIN (SELECT loan_user,count(*) totalLoan,
+				SUM(CASE WHEN loan_state in ('funding','funded','repaying','repayed','overdue') THEN 1 ELSE 0 END) publishLoan,
+				SUM(CASE WHEN loan_state in ('new','auditing','refuse','reviewing','re_refuse','re_passed') THEN 1 ELSE 0 END) unpublishedLoan,
+				SUM(CASE WHEN loan_state in ('funding') THEN 1 ELSE 0 END) fundingLoan,
+				SUM(CASE WHEN loan_state in ('repaying') THEN 1 ELSE 0 END) repayingLoan,
+				SUM(CASE WHEN loan_state in ('repayed') THEN 1 ELSE 0 END) repayedLoan,
+				SUM(CASE WHEN loan_state in ('baddebt') THEN 1 ELSE 0 END) baddebtLoan
+				FROM loan WHERE loan_user=#{userId,jdbcType=VARCHAR} GROUP BY loan_user) t9 ON t1.user_id=t9.loan_user
+	LEFT JOIN area t10 ON t1.province = t10.id
+	LEFT JOIN area t11 ON t1.city = t11.id
+	LEFT JOIN area t12 ON t1.county = t12.id
+	LEFT JOIN dictionary t13 ON t1.user_level = t13.`code` AND t13.type_code='user_level'
+	LEFT JOIN (SELECT t1.loan_user,SUM(t1.loan_amt) loan_loanAmt,
+		IFNULL(SUM(CASE WHEN t2.repay_state='repayed' THEN t2.actual_repay_interest END),0) loan_repayedActualRepayInterest,
+		IFNULL(SUM(CASE WHEN t2.repay_state='repaying' THEN t2.actual_repay_principal END),0) loan_repyingActualRepayPrincipal,
+		IFNULL(SUM(CASE WHEN t2.repay_state='repaying' THEN t2.actual_repay_interest END),0) loan_repyingActualRepayInterest
+		FROM loan t1 
+		LEFT JOIN repayment_plan t2 ON t1.loan_no = t2.loan_no GROUP BY t1.loan_user) t14 ON t1.user_id= t14.loan_user
+	WHERE t1.user_id=#{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 后台查询用户的资金统计 -->
+  <select id="getUserCapitalList" resultType="java.util.Map" parameterType="java.lang.String">
+  	select u.user_id,u.real_name, 
+		FORMAT(IFNULL(a.totalRewardAmt,0),2) as totalRewardAmt,
+		FORMAT(IFNULL(b.balance,0),2) as balance,
+	    FORMAT(IFNULL(b.frozen_amt,0),2) as frozenAmt,
+	    FORMAT(IFNULL(c.totalInvestAmt,0),2) as totalInvestAmt,
+	    FORMAT(IFNULL(c.totalPaidInt,0),2) as totalPaidInt,
+	    FORMAT(IFNULL(d.totalNoBackPrincipal,0),2) as totalNoBackPrincipal,
+	    FORMAT(IFNULL(d.totalNoBackInt,0),2) as totalNoBackInt,
+	    FORMAT(IFNULL(e.totalRechargeAmt,0),2) as totalRechargeAmt,
+	    FORMAT(IFNULL(f.totalWithdrawAmt,0),2) as totalWithdrawAmt,
+	    FORMAT(IFNULL(g.totalLoanAmt,0),2) as totalLoanAmt,
+	    FORMAT(IFNULL(h.totalNoRepayPrincipal,0),2) as totalNoRepayPrincipal,
+	    FORMAT(IFNULL(h.totalNoRepayInt,0),2) as totalNoRepayInt,
+	    FORMAT(IFNULL(b.balance,0)+IFNULL(b.frozen_amt,0)+IFNULL(d.totalNoBackPrincipal,0)+IFNULL(d.totalNoBackInt,0)
+	            -IFNULL(h.totalNoRepayPrincipal,0)-IFNULL(h.totalNoRepayInt,0),2) as totalCapital
+	from user u 
+	  <!-- 用户红包 -->
+		left join (select ur.user_id ,sum(r.reward_amt) as totalRewardAmt from user_reward ur,reward r 
+		     where ur.reward_no=r.reward_no 
+		     and r.reward_type='1' 
+		     and ur.state='unused' and ur.effect_time > now() group by ur.user_id)a on u.user_id=a.user_id
+		<!-- 用户可用余额 -->
+		left join (select ub.balance,ub.user_id,ub.frozen_amt from user_bill ub 
+		     where ub.seq_num=(select max(ub2.seq_num) from user_bill ub2 where ub2.user_id=ub.user_id)) b on b.user_id=u.user_id
+		<!-- 用户投资余额 -->
+		left join (select i.investor,sum(i.invest_amt) totalInvestAmt,sum(i.paid_interest) totalPaidInt from invest i 
+		     where i.invest_state in ('success','repaying','completed') group by i.investor) c on c.investor=u.user_id
+		<!-- 用户待还本金，待还利息 -->
+		left join (select ir.investor,sum(ir.repay_principal) as totalNoBackPrincipal,sum(ir.repay_interest) as totalNoBackInt from invest_repayment ir 
+		     where ir.repay_state ='repaying' group by ir.investor) d on d.investor=u.user_id
+		<!-- 用户充值金额 -->
+		left join (select r.user_id,sum(r.actual_amt) totalRechargeAmt from recharge r group by r.user_id)e on e.user_id=u.user_id
+		<!-- 用户取现金额 -->
+		left join (select w.user_id,sum(w.actual_money) totalWithdrawAmt from withdraw w group by w.user_id)f on f.user_id=u.user_id
+		<!-- 用户借款总金额 -->
+		left join (select l.loan_user,sum(l.actual_cash_amt) as totalLoanAmt from loan l 
+		     where l.loan_state in('repaying','repayed','overdue') group by l.loan_user) g on g.loan_user=u.user_id
+		<!-- 用户未还金额 -->
+		left join (select ir.repay_user,sum(ir.repay_principal) as totalNoRepayPrincipal,sum(ir.repay_interest) as totalNoRepayInt from invest_repayment ir 
+	     where ir.repay_state ='repaying' group by ir.repay_user) h on h.repay_user=u.user_id
+	   where 1=1
+      <if test="userId != null and userId != '' " >
+        and u.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="endPage>0">
+	    LIMIT #{startPage},#{endPage}
+	  </if>
+  </select>
+  <select id="getUserCapitalListCount" resultType="java.lang.Long" parameterType="java.lang.String">
+  	select count(1) from user u where 1=1
+  	<if test="userId != null and userId != '' " >
+        and u.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+    </if>
+  </select>
+  
+    <!-- 众筹用户-查询数据 -->
+  <select id="selectCrowdfundUserByUserId"  resultType="java.util.Map" parameterType="java.lang.String" >
+   SELECT
+  		t1.id id,     -- id
+		t1.user_id userId,     -- 用户名
+		t1.third_account thirdAccount,     -- 第三方账户
+		t1.email email,     -- 邮箱
+		t1.password password,     -- 密码
+		t1.real_name realName,     -- 真实姓名
+		t1.nick_name nickName,     -- 昵称
+		t1.sex sex,     -- 性别:F女，M男
+		t1.birthday birthday,     -- 生日
+		t1.qq_no qqNo,     -- QQ账号
+		t1.weibo_no weiboNo,     -- 微博账号
+		t1.mobile mobile,     -- 手机号
+		t1.tel tel,     -- 出借人电话号
+		t1.certificate_type certificateType,     -- 证件类型
+		t1.certificate_no certificateNo,     -- 证件号
+		t1.country country,     -- 所在国家
+		t1.province province,     -- 所在省
+		t1.city city,     -- 所在城市
+		t1.county county,     -- 所在县
+		t1.home_address homeAddress,     -- 家庭住址
+		t1.photo photo,     -- 头像
+		t1.auth_time authTime,     -- 认证时间
+		t1.open_acc_time openAccTime,     -- 开户时间
+		t1.invite_code inviteCode,     -- 邀请码
+		t1.create_time createTime,     -- 创建时间
+		t1.is_borrower isBorrower,     -- 是否为借款人
+		t1.company,
+		t1.position,
+		t1.emergency_contact emergencyContact,     -- 
+		t1.emergency_phone emergencyPhone,     -- 
+		t1.emergency_relation emergencyRelation,     -- 
+		t1.post_code postCode,     -- 
+		t1.member_type memberType,
+		t1.block_chain_address blockChainAddress,
+		t1.block_chain_state blockChainState,
+	    t1.balance,
+		t1.frozen_amt forzenAmt,
+		t1.safety_eye_flag safetyEyeFlag,
+		t1.update_time updateTime,
+		t2.*,
+		t3.display_name statusName,
+		t10.`name` provinceName,
+		t11.`name` cityName,
+		t12.`name` countyName
+	FROM
+		user t1
+	LEFT JOIN user_security t2 ON t1.user_id = t2.user_id and t2.user_type='P'
+	LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+	LEFT JOIN area t10 ON t1.province = t10.id
+	LEFT JOIN area t11 ON t1.city = t11.id
+	LEFT JOIN area t12 ON t1.county = t12.id
+	WHERE t1.user_id=#{userId,jdbcType=VARCHAR}
+  </select>
+   
+   <!-- 众筹用户-查询数据 -->
+  <select id="selectCrowdfundUser"  resultType="java.util.Map" parameterType="com.fbd.core.app.user.model.UserModel" >
+    SELECT
+		t1.id,
+		t1.user_id userId,
+		t1.real_name realName,
+		t1.certificate_no certificateNo,
+		t1.third_account thirdAccount,
+		t1.email,
+		t1.mobile,
+		t1.company,
+		t1.position,
+		t1.member_type memberType,
+		t1.create_time createTime,
+		t1.member_type memberType,
+	    t1.block_chain_address blockChainAddress,
+		t1.block_chain_state blockChainState,
+		t1.balance,
+		t1.frozen_amt forzenAmt,
+		t1.safety_eye_flag safetyEyeFlag,
+		t1.update_time updateTime,
+		t2.`status`,
+		t3.display_name statusName,
+		t4.invite_user directRecommend,
+		t5.invite_user indirectRecommend
+	<include refid="Base_Crowdfund_user_Table_List" />
+	<include refid="Base_Crowdfund_user_Where" />
+   	<if test="sort != null and sort != ''">
+		<include refid="Base_OrderBy_List" />
+	</if>
+	<if test="sort == null or sort == ''">
+		ORDER BY t1.create_time desc
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <!--众筹用户-查询数据 -->
+   <select id="getCrowdfundUserCount" resultType="java.lang.Integer" >
+    select count(1) 
+    <include refid="Base_Crowdfund_user_Table_List" />
+    <include refid="Base_Crowdfund_user_Where" />
+  </select>
+  
+  <sql id="Base_Crowdfund_user_Table_List">
+  	FROM user t1
+	LEFT JOIN user_security t2 ON t1.user_id = t2.user_id and t2.user_type='P'
+	LEFT JOIN dictionary t3 ON t2.`status` = t3.`code` AND t3.type_code = 'user_state'
+	LEFT JOIN invite_code t4 ON t1.user_id = t4.being_invite_user and t4.invitor_type='direct'
+	LEFT JOIN invite_code t5 ON t1.user_id = t5.being_invite_user and t5.invitor_type='indirect'
+	left join create_enterprise_member cem on t1.user_id = cem.user_id
+  </sql>
+  
+  <!-- 后台查询投资用户管理 -->
+  <sql id="Base_Crowdfund_user_Where">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="memberType != null and memberType != '' " >
+        and t1.member_type = #{memberType,jdbcType=VARCHAR}
+      </if>      
+      <if test="userType != null and userType != '' " >
+        and cem.user_type= #{userType,jdbcType=VARCHAR}
+      </if>
+      <if test="thirdAccount != null and thirdAccount != '' " >
+        and t1.third_account like CONCAT(CONCAT('%', #{thirdAccount,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="email != null and email != '' " >
+        and t1.email like CONCAT(CONCAT('%', #{email,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="mobile != null and mobile != '' " >
+        and t1.mobile like CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="realName != null and realName != '' " >
+        and t1.real_name like CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="certificateNo != null and certificateNo != '' " >
+        and t1.certificate_no like CONCAT(CONCAT('%', #{certificateNo,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="isBorrower != null and isBorrower != '' " >
+        and t1.is_borrower = #{isBorrower,jdbcType=VARCHAR}
+      </if>
+      <if test="startCreateTime != null and startCreateTime != '' " >
+        and t1.create_time &gt;= #{startCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endCreateTime != null and endCreateTime != '' " >
+        and t1.create_time &lt;= #{endCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="status != null and status != '' " >
+        and t2.`status` = #{status,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isAuth != null and isAuth != '' " >
+        and t1.is_auth = #{isAuth,jdbcType=VARCHAR}
+      </if>
+      <if test="userLevel != null and userLevel != '' " >
+        and cus.user_level = #{userLevel,jdbcType=VARCHAR}
+      </if>
+      <if test="isCelebrity != null and isCelebrity != '' " >
+        and t1.is_celebrity = #{isCelebrity,jdbcType=VARCHAR}
+      </if>
+      <if test="isSetSignature != null and isSetSignature != '' " >
+        and t1.is_set_signature = #{isSetSignature,jdbcType=VARCHAR}
+      </if>      
+    </where>
+  </sql>
+  
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.UserModel" >
+    insert into user (id, user_id, third_account, 
+      email, password, real_name, 
+      nick_name, sex, birthday, 
+      qq_no, weibo_no, mobile, 
+      tel, certificate_type, certificate_no, 
+      country, province, city, 
+      county, home_address, photo, 
+      auth_time, user_level, open_acc_time, 
+      invite_code, create_time,is_borrower,
+      emergency_contact,emergency_phone,emergency_relation,post_code,is_auth,self_detail,is_celebrity,
+      UPS_auth,SXY_auth,balance,frozen_amt,safety_eye_flag,update_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{thirdAccount,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, 
+      #{qqNo,jdbcType=VARCHAR}, #{weiboNo,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{certificateType,jdbcType=VARCHAR}, #{certificateNo,jdbcType=VARCHAR}, 
+      #{country,jdbcType=INTEGER}, #{province,jdbcType=INTEGER}, #{city,jdbcType=INTEGER}, 
+      #{county,jdbcType=INTEGER}, #{homeAddress,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR}, 
+      #{authTime,jdbcType=TIMESTAMP}, #{userLevel,jdbcType=VARCHAR}, #{openAccTime,jdbcType=TIMESTAMP}, 
+      #{inviteCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{isBorrower,jdbcType=VARCHAR},
+      #{emergencyContact,jdbcType=VARCHAR},#{emergencyPhone,jdbcType=VARCHAR},#{emergencyRelation,jdbcType=VARCHAR},
+      #{postCode,jdbcType=VARCHAR},#{isAuth,jdbcType=VARCHAR},#{selfDetail,jdbcType=VARCHAR},
+      #{isCelebrity,jdbcType=VARCHAR},#{UPSAuth,jdbcType=VARCHAR},#{SXYAuth,jdbcType=VARCHAR},0,0,'0',NOW())
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.user.model.UserModel" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="thirdAccount != null" >
+        third_account,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="qqNo != null" >
+        qq_no,
+      </if>
+      <if test="weiboNo != null" >
+        weibo_no,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="certificateType != null" >
+        certificate_type,
+      </if>
+      <if test="certificateNo != null" >
+        certificate_no,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="county != null" >
+        county,
+      </if>
+      <if test="homeAddress != null" >
+        home_address,
+      </if>
+      <if test="photo != null" >
+        photo,
+      </if>
+      <if test="authTime != null" >
+        auth_time,
+      </if>
+      <if test="userLevel != null" >
+        user_level,
+      </if>
+      <if test="openAccTime != null" >
+        open_acc_time,
+      </if>
+      <if test="inviteCode != null" >
+        invite_code,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isBorrower != null" >
+        is_borrower,
+      </if>
+      <if test="emergencyContact != null" >
+        emergency_contact,
+      </if>
+      <if test="emergencyPhone != null" >
+        emergency_phone,
+      </if>
+      <if test="emergencyRelation != null" >
+        emergency_relation,
+      </if>
+      <if test="postCode != null" >
+        post_code,
+      </if>
+      <if test="isAuth != null" >
+        is_auth,
+      </if>
+      <if test="selfDetail != null" >
+        self_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdAccount != null" >
+        #{thirdAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="qqNo != null" >
+        #{qqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="weiboNo != null" >
+        #{weiboNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=INTEGER},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=INTEGER},
+      </if>
+      <if test="homeAddress != null" >
+        #{homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="authTime != null" >
+        #{authTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="openAccTime != null" >
+        #{openAccTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inviteCode != null" >
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isBorrower != null" >
+        #{isBorrower,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null" >
+        #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyPhone != null" >
+        #{emergencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyRelation != null" >
+        #{emergencyRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+       <if test="isAuth != null" >
+        #{isAuth,jdbcType=VARCHAR},
+      </if>
+       <if test="selfDetail != null" >
+        #{selfDetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.user.model.UserModel" >
+    update user
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdAccount != null" >
+        third_account = #{thirdAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="qqNo != null" >
+        qq_no = #{qqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="weiboNo != null" >
+        weibo_no = #{weiboNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>      
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>        
+      <if test="certificateType != null" >
+        certificate_type = #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=INTEGER},
+      </if>
+      <if test="county != null" >
+        county = #{county,jdbcType=INTEGER},
+      </if>
+      <if test="homeAddress != null" >
+        home_address = #{homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="authTime != null" >
+        auth_time = #{authTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="openAccTime != null" >
+        open_acc_time = #{openAccTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inviteCode != null" >
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="isBorrower != null" >
+        is_borrower = #{isBorrower,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null" >
+        emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyPhone != null" >
+        emergency_phone = #{emergencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyRelation != null" >
+        emergency_relation = #{emergencyRelation,jdbcType=VARCHAR},
+      </if>
+       <if test="postCode != null" >
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+       <if test="isAuth != null" >
+        is_auth = #{isAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="selfDetail != null" >
+        self_detail = #{selfDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="selfDetail != null" >
+        self_detail = #{selfDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="isCelebrity != null" >
+        is_celebrity = #{isCelebrity,jdbcType=VARCHAR},
+      </if>
+      <if test="blockChainAddress != null" >
+        block_chain_address = #{blockChainAddress,jdbcType=VARCHAR},
+      </if>      
+      <if test="blockChainSecretKey != null" >
+        block_chain_secret_key = #{blockChainSecretKey,jdbcType=VARCHAR},
+      </if>      
+      <if test="blockChainState != null" >
+        block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+      </if>
+      <if test="isSetSignature != null" >
+        is_set_signature = #{isSetSignature,jdbcType=VARCHAR},
+      </if>        
+      <if test="UPSAuth != null" >
+        UPS_auth = #{UPSAuth,jdbcType=VARCHAR},
+      </if> 
+      <if test="SXYAuth != null" >
+        SXY_auth = #{SXYAuth,jdbcType=VARCHAR},
+      </if> 
+      <if test="memberType != null" >
+        member_type = #{memberType,jdbcType=VARCHAR},
+      </if>
+      <if test="skey != null" >
+        skey = #{skey,jdbcType=VARCHAR},
+      </if> 
+      <if test="safetyEyeFlag != null" >
+        safety_eye_flag = #{safetyEyeFlag,jdbcType=VARCHAR},
+      </if>      
+      update_time = NOW()   
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.UserModel" >
+    update user
+    set user_id = #{userId,jdbcType=VARCHAR},
+      third_account = #{thirdAccount,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      qq_no = #{qqNo,jdbcType=VARCHAR},
+      weibo_no = #{weiboNo,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      certificate_type = #{certificateType,jdbcType=VARCHAR},
+      certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      country = #{country,jdbcType=INTEGER},
+      province = #{province,jdbcType=INTEGER},
+      city = #{city,jdbcType=INTEGER},
+      county = #{county,jdbcType=INTEGER},
+      home_address = #{homeAddress,jdbcType=VARCHAR},
+      photo = #{photo,jdbcType=VARCHAR},
+      auth_time = #{authTime,jdbcType=TIMESTAMP},
+      user_level = #{userLevel,jdbcType=VARCHAR},
+      open_acc_time = #{openAccTime,jdbcType=TIMESTAMP},
+      invite_code = #{inviteCode,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_borrower = #{isBorrower,jdbcType=VARCHAR},
+      emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      emergency_phone = #{emergencyPhone,jdbcType=VARCHAR},
+      emergency_relation = #{emergencyRelation,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      is_auth = #{isAuth,jdbcType=VARCHAR},
+      self_detail = #{selfDetail,jdbcType=VARCHAR},
+      is_celebrity = #{isCelebrity,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      block_chain_address = #{blockChainAddress,jdbcType=VARCHAR},
+      block_chain_secret_key = #{blockChainSecretKey,jdbcType=VARCHAR},
+      block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+      is_set_signature = #{isSetSignature,jdbcType=VARCHAR},
+      UPS_auth = #{UPSAuth,jdbcType=VARCHAR},
+      SXY_auth = #{SXYAuth,jdbcType=VARCHAR},
+      member_type = #{memberType,jdbcType=VARCHAR},
+      skey = #{skey,jdbcType=VARCHAR},
+      safety_eye_flag = #{safetyEyeFlag,jdbcType=VARCHAR},
+      update_time = NOW()
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据用户id有选择的修改用户信息 -->
+  <update id="updateByUserId" parameterType="com.fbd.core.app.user.model.UserModel" >
+    update user
+    <set >
+      <if test="thirdAccount != null" >
+        third_account = #{thirdAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="qqNo != null" >
+        qq_no = #{qqNo,jdbcType=VARCHAR},
+      </if>
+      <if test="weiboNo != null" >
+        weibo_no = #{weiboNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateType != null" >
+        certificate_type = #{certificateType,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateNo != null" >
+        certificate_no = #{certificateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=INTEGER},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=INTEGER},
+      </if>
+      <if test="homeAddress != null" >
+        home_address = #{homeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null" >
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="authTime != null" >
+        auth_time = #{authTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="openAccTime != null" >
+        open_acc_time = #{openAccTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="inviteCode != null" >
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="isBorrower != null" >
+        is_borrower = #{isBorrower,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null" >
+        emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyPhone != null" >
+        emergency_phone = #{emergencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyRelation != null" >
+        emergency_relation = #{emergencyRelation,jdbcType=VARCHAR},
+      </if>
+       <if test="postCode != null" >
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+       <if test="isAuth != null" >
+        is_auth = #{isAuth,jdbcType=VARCHAR},
+      </if>
+       <if test="selfDetail != null" >
+         self_detail = #{selfDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="isCelebrity != null" >
+        is_celebrity = #{isCelebrity,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>      
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>    
+      <if test="blockChainAddress != null" >
+        block_chain_address = #{blockChainAddress,jdbcType=VARCHAR},
+      </if>      
+      <if test="blockChainSecretKey != null" >
+        block_chain_secret_key = #{blockChainSecretKey,jdbcType=VARCHAR},
+      </if>      
+      <if test="blockChainState != null" >
+        block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+      </if> 
+      <if test="isSetSignature != null" >
+        is_set_signature = #{isSetSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="UPSAuth != null" >
+        UPS_auth = #{UPSAuth,jdbcType=VARCHAR},
+      </if> 
+      <if test="SXYAuth != null" >
+        SXY_auth = #{SXYAuth,jdbcType=VARCHAR},
+      </if> 
+      <if test="memberType != null" >
+        member_type = #{memberType,jdbcType=VARCHAR},
+      </if> 
+      <if test="skey != null" >
+        skey = #{skey,jdbcType=VARCHAR},
+      </if>  
+      <if test="safetyEyeFlag != null" >
+        safety_eye_flag = #{safetyEyeFlag,jdbcType=VARCHAR},
+      </if>
+      update_time = NOW() 
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 重置密码 -->
+  <update id="resetPassword" parameterType="java.lang.String">
+  	UPDATE `user` SET `password`=MD5(RIGHT(mobile,6)),update_time = NOW() WHERE id=#{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- 网站统计-重点客户统计  开始-->
+  <select id="getVipCustomerList" resultType="java.util.Map">
+  	select u.user_id,u.real_name, u.mobile, u.email, u.create_time createTime,
+		FORMAT(IFNULL(a.totalRewardAmt,0),2) as totalRewardAmt,
+		FORMAT(IFNULL(b.balance,0),2) as balance,
+	    FORMAT(IFNULL(b.frozen_amt,0),2) as frozenAmt,
+	    FORMAT(IFNULL(c.totalInvestAmt,0),2) as totalInvestAmt,
+	    FORMAT(IFNULL(c.totalPaidInt,0),2) as totalPaidInt,
+	    FORMAT(IFNULL(d.totalNoBackPrincipal,0),2) as totalNoBackPrincipal,
+	    FORMAT(IFNULL(d.totalNoBackInt,0),2) as totalNoBackInt,
+	    FORMAT(IFNULL(e.totalRechargeAmt,0),2) as totalRechargeAmt,
+	    FORMAT(IFNULL(f.totalWithdrawAmt,0),2) as totalWithdrawAmt,
+	    FORMAT(IFNULL(g.totalLoanAmt,0),2) as totalLoanAmt,
+	    FORMAT(IFNULL(h.totalNoRepayPrincipal,0),2) as totalNoRepayPrincipal,
+	    FORMAT(IFNULL(h.totalNoRepayInt,0),2) as totalNoRepayInt,
+	    FORMAT(IFNULL(b.balance,0)+IFNULL(b.frozen_amt,0)+IFNULL(d.totalNoBackPrincipal,0)+IFNULL(d.totalNoBackInt,0)
+	            -IFNULL(h.totalNoRepayPrincipal,0)-IFNULL(h.totalNoRepayInt,0),2) as totalCapital
+	from user u 
+	  <!-- 用户红包 -->
+		left join (select ur.user_id ,sum(r.reward_amt) as totalRewardAmt from user_reward ur,reward r 
+		     where ur.reward_no=r.reward_no 
+		     and r.reward_type='1' 
+		     and ur.state='unused' and ur.effect_time > now() group by ur.user_id)a on u.user_id=a.user_id
+		<!-- 用户可用余额 -->
+		left join (select ub.balance,ub.user_id,ub.frozen_amt from user_bill ub 
+		     where ub.seq_num=(select max(ub2.seq_num) from user_bill ub2 where ub2.user_id=ub.user_id)) b on b.user_id=u.user_id
+		<!-- 用户投资余额 -->
+		left join (select i.investor,sum(i.invest_amt) totalInvestAmt,sum(i.paid_interest) totalPaidInt from invest i 
+		     where i.invest_state in ('success','repaying','completed') group by i.investor) c on c.investor=u.user_id
+		<!-- 用户待还本金，待还利息 -->
+		left join (select ir.investor,sum(ir.repay_principal) as totalNoBackPrincipal,sum(ir.repay_interest) as totalNoBackInt from invest_repayment ir 
+		     where ir.repay_state ='repaying' group by ir.investor) d on d.investor=u.user_id
+		<!-- 用户充值金额 -->
+		left join (select r.user_id,sum(r.actual_amt) totalRechargeAmt from recharge r group by r.user_id)e on e.user_id=u.user_id
+		<!-- 用户取现金额 -->
+		left join (select w.user_id,sum(w.actual_money) totalWithdrawAmt from withdraw w group by w.user_id)f on f.user_id=u.user_id
+		<!-- 用户借款总金额 -->
+		left join (select l.loan_user,sum(l.actual_cash_amt) as totalLoanAmt from loan l 
+		     where l.loan_state in('repaying','repayed','overdue') group by l.loan_user) g on g.loan_user=u.user_id
+		<!-- 用户未还金额 -->
+		left join (select ir.repay_user,sum(ir.repay_principal) as totalNoRepayPrincipal,sum(ir.repay_interest) as totalNoRepayInt from invest_repayment ir 
+	     where ir.repay_state ='repaying' group by ir.repay_user) h on h.repay_user=u.user_id
+	     
+	   <include refid="vipCustomer_Where" />
+      <if test="sort != null and sort != ''">
+		<!-- <include refid="Base_OrderBy_List" /> -->
+	  </if>
+	  <if test="sort == null or sort == ''">
+		ORDER BY c.totalInvestAmt desc
+	  </if>
+      <if test="endPage>0">
+	    LIMIT #{startPage},#{endPage}
+	  </if>
+  </select>
+  <select id="getVipCustomerListCount" resultType="java.lang.Long">
+  	select count(1) from user u
+  	<!-- 用户投资余额 -->
+	left join (select i.investor,sum(i.invest_amt) totalInvestAmt,sum(i.paid_interest) totalPaidInt from invest i 
+		    where i.invest_state in ('success','repaying','completed') group by i.investor) c on c.investor=u.user_id
+  	<include refid="vipCustomer_Where" />
+  </select>
+  <sql id="vipCustomer_Where">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and u.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="startAmt != null and startAmt != '' " >
+        and c.totalInvestAmt &gt;=#{startAmt,jdbcType=DOUBLE}
+      </if>
+      <if test="endAmt != null and endAmt != '' " >
+        and c.totalInvestAmt &lt;=#{endAmt,jdbcType=DOUBLE}
+      </if>
+    </where>
+  </sql>
+  <!-- 网站统计-重点客户统计  结束-->
+  
+  <!-- 网站统计 充值统计 -->
+  <select id="getRechargStatisticlist" resultType="java.util.Map" parameterType="java.lang.String">
+  	SELECT FORMAT(IFNULL(t.totalRecharge,0),2) totalRechargeMoney,
+		#{everyDay,jdbcType=VARCHAR} statisticDate,t.*,
+		FORMAT(IFNULL(totalRecharge/totalRechargeUserCount,0),2) avgUserRechargeMoney  
+	FROM
+		(SELECT SUM(actual_amt) totalRecharge,                             -- 充值总额
+			count(*) totalRechargeCount,                                     -- 充值笔数
+			FORMAT(IFNULL(MAX(actual_amt),0),2) maxRechargeMoney,                      -- 最高充值金额
+			FORMAT(IFNULL(MIN(actual_amt),0),2) minRechargeMoney,                      -- 最低充值金额
+			FORMAT(IFNULL(SUM(actual_amt)/count(*),0),2) avgRechargeMoney,             -- 平均每笔充值金额
+			(SELECT count(*) FROM (SELECT DISTINCT user_id FROM recharge WHERE DATE_FORMAT(complete_time, '%Y-%c-%e') = #{everyDay,jdbcType=VARCHAR}) t) totalRechargeUserCount,
+			(SELECT count(*) FROM (SELECT DISTINCT user_id FROM recharge WHERE DATE_FORMAT(complete_time, '%Y-%c-%e') = #{everyDay,jdbcType=VARCHAR} AND user_id NOT IN
+			(SELECT DISTINCT user_id FROM recharge WHERE complete_time &lt; STR_TO_DATE(#{everyDay,jdbcType=VARCHAR},'%Y-%c-%e'))) t) newRechargeUserCount
+			FROM recharge WHERE DATE_FORMAT(complete_time, '%Y-%c-%e') = #{everyDay,jdbcType=VARCHAR}) t
+  </select>
+  
+  <!-- 网站统计-潜在客户统计  开始-->
+  <select id="getPotentialCustomerList" resultType="java.util.Map">
+  	select u.user_id,u.real_name, u.mobile, u.email, u.create_time createTime,
+		FORMAT(IFNULL(a.totalRewardAmt,0),2) as totalRewardAmt,
+		FORMAT(IFNULL(b.balance,0),2) as balance,
+	    FORMAT(IFNULL(b.frozen_amt,0),2) as frozenAmt,
+	    FORMAT(IFNULL(c.totalInvestAmt,0),2) as totalInvestAmt,
+	    FORMAT(IFNULL(c.totalPaidInt,0),2) as totalPaidInt,
+	    c1.lastInvestTime,c1.lastInvestDays,
+	    FORMAT(IFNULL(d.totalNoBackPrincipal,0),2) as totalNoBackPrincipal,
+	    FORMAT(IFNULL(d.totalNoBackInt,0),2) as totalNoBackInt,
+	    FORMAT(IFNULL(e.totalRechargeAmt,0),2) as totalRechargeAmt,
+	    FORMAT(IFNULL(f.totalWithdrawAmt,0),2) as totalWithdrawAmt,
+	    FORMAT(IFNULL(g.totalLoanAmt,0),2) as totalLoanAmt,
+	    FORMAT(IFNULL(h.totalNoRepayPrincipal,0),2) as totalNoRepayPrincipal,
+	    FORMAT(IFNULL(h.totalNoRepayInt,0),2) as totalNoRepayInt,
+	    FORMAT(IFNULL(b.balance,0)+IFNULL(b.frozen_amt,0)+IFNULL(d.totalNoBackPrincipal,0)+IFNULL(d.totalNoBackInt,0)
+	            -IFNULL(h.totalNoRepayPrincipal,0)-IFNULL(h.totalNoRepayInt,0),2) as totalCapital
+	from user u 
+	  <!-- 用户红包 -->
+		left join (select ur.user_id ,sum(r.reward_amt) as totalRewardAmt from user_reward ur,reward r 
+		     where ur.reward_no=r.reward_no 
+		     and r.reward_type='1' 
+		     and ur.state='unused' and ur.effect_time > now() group by ur.user_id)a on u.user_id=a.user_id
+		<!-- 用户可用余额 -->
+		left join (select ub.balance,ub.user_id,ub.frozen_amt from user_bill ub 
+		     where ub.seq_num=(select max(ub2.seq_num) from user_bill ub2 where ub2.user_id=ub.user_id)) b on b.user_id=u.user_id
+		<!-- 用户投资余额 -->
+		left join (select i.investor,sum(i.invest_amt) totalInvestAmt,sum(i.paid_interest) totalPaidInt from invest i 
+		     where i.invest_state in ('success','repaying','completed') group by i.investor) c on c.investor=u.user_id
+		<!-- 多少天未投资 -->
+		LEFT JOIN (select i.investor,i.invest_time as lastInvestTime,(CASE WHEN i.invest_time IS NOT NULL THEN DATEDIFF(now(),i.invest_time) ELSE -1 END) as lastInvestDays from invest i 
+		   where i.invest_state in ('success','repaying','completed','flow','cash_fail') 
+		   and investor like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%') order by i.invest_time desc limit 1) c1 ON c1.investor=u.user_id
+		<!-- 用户待还本金，待还利息 -->
+		left join (select ir.investor,sum(ir.repay_principal) as totalNoBackPrincipal,sum(ir.repay_interest) as totalNoBackInt from invest_repayment ir 
+		     where ir.repay_state ='repaying' group by ir.investor) d on d.investor=u.user_id
+		<!-- 用户充值金额 -->
+		left join (select r.user_id,sum(r.actual_amt) totalRechargeAmt from recharge r group by r.user_id)e on e.user_id=u.user_id
+		<!-- 用户取现金额 -->
+		left join (select w.user_id,sum(w.actual_money) totalWithdrawAmt from withdraw w group by w.user_id)f on f.user_id=u.user_id
+		<!-- 用户借款总金额 -->
+		left join (select l.loan_user,sum(l.actual_cash_amt) as totalLoanAmt from loan l 
+		     where l.loan_state in('repaying','repayed','overdue') group by l.loan_user) g on g.loan_user=u.user_id
+		<!-- 用户未还金额 -->
+		left join (select ir.repay_user,sum(ir.repay_principal) as totalNoRepayPrincipal,sum(ir.repay_interest) as totalNoRepayInt from invest_repayment ir 
+	     where ir.repay_state ='repaying' group by ir.repay_user) h on h.repay_user=u.user_id
+	     
+	   <include refid="potentialCustomer_Where" />
+      <if test="sort != null and sort != ''">
+		<if test="sort =='lastInvestDays'" >
+	       ORDER BY lastInvestDays ${order}
+	    </if>
+		<if test="sort =='balance'" >
+	       ORDER BY b.balance ${order}
+	    </if>
+	  </if>
+	  <if test="sort == null or sort == ''">
+		ORDER BY b.balance desc
+	  </if>
+      <if test="endPage>0">
+	    LIMIT #{startPage},#{endPage}
+	  </if>
+  </select>
+  <select id="getPotentialCustomerListCount" resultType="java.lang.Long">
+  	select count(1) from user u
+  	<!-- 用户可用余额 -->
+	left join (select ub.balance,ub.user_id,ub.frozen_amt from user_bill ub 
+		    where ub.seq_num=(select max(ub2.seq_num) from user_bill ub2 where ub2.user_id=ub.user_id)) b on b.user_id=u.user_id
+  	<include refid="potentialCustomer_Where" />
+  </select>
+  <sql id="potentialCustomer_Where">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and u.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="startAmt != null and startAmt != '' " >
+        and b.balance &gt;=#{startAmt,jdbcType=DOUBLE}
+      </if>
+      <if test="endAmt != null and endAmt != '' " >
+        and b.balance &lt;=#{endAmt,jdbcType=DOUBLE}
+      </if>
+      <if test="lastInvestDays != null and lastInvestDays != '' " >
+        and c1.lastInvestDays &gt;=#{lastInvestDays,jdbcType=DOUBLE}
+      </if>
+    </where>
+  </sql>
+  <!-- 网站统计-潜在客户统计  结束  -->
+  
+  <!-- 网站统计-按投资年龄范围统计  开始-->
+  <select id="getInvestAgeList" resultType="java.util.Map">
+  
+  
+  	
+  </select>
+  <!-- 网站统计-按投资年龄范围统计  结束-->
+  
+  <!-- 股票配资 根据userId 查询用户详情 -->
+  <select id="getUser4CapitalById" resultType="java.util.Map" parameterType="java.lang.String" >
+  	SELECT
+  		t1.id,
+		t1.user_id userId,     -- 用户名
+		t1.third_account thirdAccount,     -- 第三方账户
+		t1.email email,     -- 邮箱
+		t1.`password` `password`,     -- 密码
+		t1.real_name realName,     -- 真实姓名
+		t1.nick_name nickName,     -- 昵称
+		t1.sex sex,     -- 性别:F女，M男
+		t1.birthday birthday,     -- 生日
+		t1.qq_no qqNo,     -- QQ账号
+		t1.weibo_no weiboNo,     -- 微博账号
+		t1.mobile mobile,     -- 手机号
+		t1.tel,           -- 出借人电话号
+		
+		t1.certificate_type certificateType,     -- 证件类型
+		t1.certificate_no certificateNo,     -- 证件号
+		t1.country country,     -- 所在国家
+		t1.province province,     -- 所在省
+		t1.city,     -- 所在城市
+		t1.county,     -- 所在县
+		t1.home_address homeAddress,     -- 家庭住址
+		t1.photo,     -- 头像
+		t1.auth_time authTime,     -- 认证时间
+		t1.open_acc_time openAccTime,     -- 开户时间
+		t1.invite_code inviteCode,     -- 邀请码
+		t1.create_time createTime,     -- 创建时间
+		t1.is_borrower isBorrower,     -- 是否为借款人
+		t1.emergency_contact emergencyContact,     -- 
+		t1.emergency_phone emergencyPhone,     -- 
+		t1.emergency_relation emergencyRelation,     -- 
+		t1.post_code postCode,
+		t1.is_auth isAuth,
+		t1.company,
+		t1.position,
+		t1.self_detail selfDetail,
+		t2.id_card_front idCardFront,
+    	t2.id_card_back idCardBack,
+    	t2.id_card_deal_front idCardDealFront,
+    	t2.id_card_deal_back idCardDealBack
+ 	FROM `user` t1
+	LEFT JOIN capital_user t2 ON t1.user_id = t2.user_id
+	WHERE t1.user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 股票配资 首页统计 -->
+  <select id="getCount4Capital" resultType="java.util.Map">
+  	SELECT 
+		(SELECT COUNT(*) FROM `user`) totalUserNum,
+		(SELECT COUNT(DISTINCT investor) FROM invest) investUserNum,
+		(SELECT COUNT(DISTINCT user_id) FROM capital_order) capitalUserNum,
+		FORMAT((SELECT SUM(invest_amt) FROM invest WHERE invest_state in ('success','repaying','completed')),2) investAmt,
+		(SELECT SUM(capital_money) FROM capital_order) capitalAmt
+	FROM DUAL
+  </select>
+  <!-- 用户资产统计 -->
+  <select id="getUserCapital" resultType="java.util.Map">
+  	SELECT
+		balance,frozen_amt,
+		(SELECT IFNULL(SUM(guarantee_money),0) FROM capital_order WHERE user_id='dzwtest2' AND `status` IN ('auditing','funding','funded','tradering','tradered')) guaranteeMoney,
+		(select IFNULL(sum(t.invest_amt),0) 
+	     			from invest t 
+	     			where t.invest_state in ('success','repaying')
+	     			 AND t.investor=#{userId,jdbcType=VARCHAR})  successInvestAmt
+	FROM user_bill where user_id=#{userId,jdbcType=VARCHAR} ORDER BY seq_num DESC LIMIT 0,1
+  </select>
+  
+  <!-- 后台推荐人统计 -->
+  <sql id="userRecommend_Base_Where">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="thirdAccount != null and thirdAccount != '' " >
+        and t1.third_account like CONCAT(CONCAT('%', #{thirdAccount,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="email != null and email != '' " >
+        and t1.email like CONCAT(CONCAT('%', #{email,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="mobile != null and mobile != '' " >
+        and t1.mobile like CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="realName != null and realName != '' " >
+        and t1.real_name like CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="certificateNo != null and certificateNo != '' " >
+        and t1.certificate_no like CONCAT(CONCAT('%', #{certificateNo,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="isBorrower != null and isBorrower != '' " >
+        and t1.is_borrower = #{isBorrower,jdbcType=VARCHAR}
+      </if>
+      <if test="startCreateTime != null and startCreateTime != '' " >
+        and t1.create_time &gt;= #{startCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endCreateTime != null and endCreateTime != '' " >
+        and t1.create_time &lt;= #{endCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="status != null and status != '' " >
+        and t2.`status` = #{status,jdbcType=TIMESTAMP}
+      </if>
+      <if test="isAuth != null and isAuth != '' " >
+        and t1.is_auth = #{isAuth,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="userRecommend_Base_Table_List">
+  	FROM `user` t1 
+	LEFT JOIN (SELECT invite_user,COUNT(*) directCount FROM invite_code WHERE invite_type ='register' AND invitor_type='direct' GROUP BY invite_user) t2 ON t1.user_id = t2.invite_user
+	LEFT JOIN (SELECT invite_user,COUNT(*) indirectCount FROM invite_code WHERE invite_type ='register' AND invitor_type='indirect' GROUP BY invite_user) t3 ON t1.user_id = t3.invite_user
+	LEFT JOIN (SELECT get_user,SUM(assign_amt) directAmt FROM reward_assign WHERE reward_type='recommend' AND invitor_type='direct' GROUP BY get_user) t4 ON t1.user_id = t4.get_user
+	LEFT JOIN (SELECT get_user,SUM(assign_amt) indirectAmt  FROM reward_assign WHERE reward_type='recommend' AND invitor_type='indirect' GROUP BY get_user) t5 ON t1.user_id = t5.get_user
+	LEFT JOIN (SELECT get_user,SUM(assign_amt) totalAmt  FROM reward_assign WHERE reward_type='recommend' AND invitor_type in ('direct','indirect') GROUP BY get_user) t6 ON t1.user_id = t6.get_user
+  </sql>
+  
+  <select id="selectUserRecommendCount" resultType="java.lang.Integer" >
+    select count(*) <include refid="userRecommend_Base_Table_List" />
+    <include refid="userRecommend_Base_Where" />
+  </select>
+  
+  <!-- 根据UserMode实体查询数据 -->
+  <select id="selectUserRecommendList"  resultType="java.util.Map" parameterType="com.fbd.core.app.user.model.UserModel" >
+    SELECT t1.user_id userId,t2.directCount,t3.indirectCount,t4.directAmt,t5.indirectAmt,t6.totalAmt 
+<include refid="userRecommend_Base_Table_List" />
+<include refid="userRecommend_Base_Where" />
+	ORDER BY t2.directCount DESC
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <!-- 网站统计- 借出总统计  开始   -->
+  <select id="getTotalLend" resultType="java.util.Map">
+  select 
+	  (select count(*) from invest i where i.invest_state in ('success','repaying','completed')) as totalCount,	<!--投资人数-->
+	  (select FORMAT(sum(i.invest_amt),2) from invest i where i.invest_state in ('success','repaying','completed')) as totalInvestAmt, 	<!--成功投资金额-->
+	  (select FORMAT(IFNULL(sum(ra.assign_amt),0),2) from reward_assign ra where ra.reward_type='invest' and ra.status ='success') as totalAssignAmt,	<!--投资奖励总额-->
+	  t.repayInterest,t.repayPrincipal,t.repayAmt,t.actualRepayInterest,t.actualRepayPrincipal,t.actualRepayAmt,t.prepayFine,t.overdueFine
+	from (
+	SELECT
+	FORMAT(sum(t2.repay_interest),2) repayInterest,		<!--应还利息-->
+	FORMAT(sum(t2.repay_principal),2) repayPrincipal,	<!--应还本金-->
+	FORMAT(sum(t2.repay_amt),2) repayAmt,	<!--应还总额-->
+	FORMAT(sum(t2.actual_repay_interest),2) actualRepayInterest,	<!--实际还款利息-->
+	FORMAT(sum(t2.actual_repay_principal),2) actualRepayPrincipal,	<!--实际还款本金-->
+	FORMAT(sum(t2.actual_repay_amt),2) actualRepayAmt,	<!--实际还款总额-->
+	FORMAT(sum(t2.prepay_fine),2) prepayFine,	<!--提前还款罚金付给平台-->
+	FORMAT(sum(t2.overdue_fine),2) overdueFine 	<!--逾期还款罚金付给平台-->
+	FROM repayment_plan t2) t
+  </select>
+  <!-- 网站统计- 借出总统计  结束-->
+  
+  
+  <!-- 网站统计- 投资人数  开始 -->
+  <select id="getLendPcountList" resultType="java.util.Map" parameterType="java.lang.String">
+  select count(*) count,DATE_FORMAT(create_time,'%Y-%m-%d') as day from user
+  <include refid="LendPcount_Base_Where" />
+   group by day order by day desc
+   <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="getLendPcountCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+  select count(*) from 
+  (select count(*) count from user 
+  <include refid="LendPcount_Base_Where" />
+   group by DATE_FORMAT(create_time,'%Y-%m-%d') ) usercount
+  </select>
+  <sql id="LendPcount_Base_Where">
+  	<where>
+      <if test="startCreateTime != null and startCreateTime != '' " >
+        and create_time &gt;= #{startCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endCreateTime != null and endCreateTime != '' " >
+        and create_time &lt;= #{endCreateTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <!-- 网站统计- 投资人数  结束-->
+  
+  <!-- 股票配资 实名认证审批     开始 -->
+  <select id="getAuthingUserList" parameterType="java.util.Map" resultType="java.util.Map">
+  	SELECT t1.user_id userId,
+			t1.auth_status authStatus,
+       		t2.real_name realName,
+			t2.certificate_no certificateNo,
+			t2.third_account thirdAccount,
+			t2.user_level userLevel,
+			t2.email,
+			t2.mobile,
+			t2.create_time createTime
+	FROM capital_user t1
+	LEFT JOIN `user` t2 ON t1.user_id = t2.user_id
+	WHERE t1.auth_status = '审核中'
+  </select>
+  <select id="getAuthingUserListCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	SELECT count(*)
+	FROM capital_user t1
+	LEFT JOIN `user` t2 ON t1.user_id = t2.user_id
+	WHERE t1.auth_status = '审核中'
+  </select>
+  
+  <!-- 股票配资 实名认证审批     结束 -->
+  
+  
+  
+  <!-- 验证昵称 -->
+    <select id="selectNickName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user 
+    where nick_name = #{nickName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectMobile" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user 
+    where mobile = #{mobile,jdbcType=VARCHAR}
+  </select>
+  
+  <sql id="MKW_Base_Where">
+  	<where>
+      <if test="nickName != null and nickName != '' " >
+        and nick_name = #{nickName,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null and mobile != '' " >
+        and mobile =c
+      </if>
+    </where>
+  </sql>
+  
+  <select id="selectCountUser" resultType="java.lang.Long" parameterType="java.lang.String" >
+  	select count(1) from user
+  </select>
+  
+  
+     <!-- 众筹用户-查询数据 -->
+  <select id="selectUserList"  resultType="java.util.Map" parameterType="com.fbd.core.app.user.model.UserModel" >
+    SELECT
+		t1.user_id userId,
+		t1.real_name realName,
+		t1.photo,
+		cus.concern_city,
+		cus.seal,
+		t1.self_detail as selfDetail,
+		cus.user_experience userExperience,
+		cus.lend_auth_photo lendAuthPhoto,
+		cus.capital_des capitalDes,
+		cus.user_identity userIdentity
+	FROM
+		user t1
+	left join crowdfund_user_stuff cus on t1.user_id=cus.user_id
+	<include refid="Base_Crowdfund_user_Where" />
+   	ORDER BY t1.create_time desc
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <!--众筹用户-查询数据 -->
+  
+   <select id="selectUserCount" resultType="java.lang.Integer" parameterType="com.fbd.core.app.user.model.UserModel">
+    select count(1) 
+    FROM
+		user t1
+	left join crowdfund_user_stuff cus on t1.user_id=cus.user_id
+    <include refid="Base_Crowdfund_user_Where" />
+  </select>
+  <select id="selectIsRegister" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(1) from user where mobile= #{mobile,jdbcType=VARCHAR}
+    
+  </select>
+  
+  <!-- 查询用户详情 -->
+  <select id="selectUserInfoByUserId"  resultType="java.util.Map" parameterType="java.lang.String" >
+    SELECT
+		t1.user_id userId,
+		t1.real_name realName,
+		t1.photo,
+		cus.concern_city,
+		cus.seal,
+		t1.self_detail as selfDetail,
+		cus.user_experience userExperience,
+		cus.lend_auth_photo lendAuthPhoto,
+		cus.capital_des capitalDes,
+		cus.user_identity userIdentity
+	FROM
+		user t1
+	<include refid="Base_Crowdfund_user_Where" />
+   	ORDER BY t1.create_time desc
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>  
+  
+  <select  id="userStatistics"  resultType="java.util.Map" parameterType="java.lang.String" >
+       select 
+    <include refid="Base_Column_List" />
+      from user t1
+      <include refid="Base_Where" /> 
+  </select>
+  
+  <!-- 更新用户数据上锁 -->
+  <select id="findUserLockByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=VARCHAR} for update
+  </select>
+   
+  <!-- 更新用户账户余额和冻结金额 -->
+  <update id="updateUserAccount" parameterType="com.fbd.core.app.user.model.UserModel" >
+    update user 
+	  <set >
+	      <if test="balance != null" >
+	         balance = balance + #{balance,jdbcType=DOUBLE},
+	      </if>
+	      <if test="frozenAmt != null" >
+	         frozen_amt = frozen_amt + #{frozenAmt,jdbcType=DOUBLE},
+	      </if>
+	      update_time = NOW()
+	   </set>           
+     where user_id=  #{userId,jdbcType=VARCHAR} 
+  </update>
+  
+  <sql id="Base_User_Column_List" >
+    id, user_id, email,real_name, nick_name, sex, birthday, 
+    qq_no, mobile, certificate_no, auth_time, 
+    create_time,is_auth,self_detail,company,position,block_chain_address,
+    block_chain_state,is_set_signature,member_type,
+    balance,frozen_amt,safety_eye_flag,update_time
+  </sql>  
+  
+  <!-- 提供用户列表查询API -->
+  <select id="selectUserListForApi"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+      select 
+    <include refid="Base_User_Column_List" />
+     from user t1
+     <include refid="Base_Where_API"/>
+  </select>
+  <!-- 提供用户对象查询API -->
+  <select id="selectUserModelForApi"  resultMap="BaseResultMap" parameterType="java.lang.String" >
+      select 
+    <include refid="Base_User_Column_List" />
+     from user t1
+     <include refid="Base_Where_API"/>
+  </select>  
+  
+  <!-- 对外API查询-->
+  <sql id="Base_Where_API">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="email != null and email != '' " >
+        and t1.email like CONCAT(CONCAT('%', #{email,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="mobile != null and mobile != '' " >
+        and t1.mobile like CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="realName != null and realName != '' " >
+        and t1.real_name like CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="certificateNo != null and certificateNo != '' " >
+        and t1.certificate_no like CONCAT(CONCAT('%', #{certificateNo,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="startCreateTime != null and startCreateTime != '' " >
+        and t1.create_time &gt;= #{startCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endCreateTime != null and endCreateTime != '' " >
+        and t1.create_time &lt;= #{endCreateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="lastUpdateTime != null and lastUpdateTime != '' " >
+        and t1.update_time &gt;= #{lastUpdateTime,jdbcType=TIMESTAMP}
+      </if>      
+      <if test="isAuth != null and isAuth != '' " >
+        and t1.is_auth = #{isAuth,jdbcType=VARCHAR}
+      </if>
+      <if test="isSetSignature != null and isSetSignature != '' " >
+        and t1.is_set_signature = #{isSetSignature,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>  
+  
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.banner.model.BannerModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.banner.model.BannerModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code,description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from banner
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectMapById" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from banner
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <sql id="Base_Where_List">
+	<where>
+		<if test="id != null">
+			and id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="code != null">
+			and code like CONCAT(CONCAT('%', #{code,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="description != null">
+			and description like CONCAT(CONCAT('%', #{description,jdbcType=VARCHAR}),'%')
+		</if>
+	</where>
+  </sql>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.banner.model.BannerModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from banner
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from banner
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.banner.model.BannerModel" >
+    insert into banner (id, code,description)
+    values (#{id,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.banner.model.BannerModel" >
+    insert into banner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.banner.model.BannerModel" >
+    update banner
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.banner.model.BannerModel" >
+    update banner
+    set description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

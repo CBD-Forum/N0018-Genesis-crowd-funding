@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_state" property="auditState" jdbcType="VARCHAR" />
+    <result column="audit_opinion" property="auditOpinion" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="loan_state" property="loanState" jdbcType="VARCHAR" />
+    <result column="support_no" property="supportNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, auditor, audit_state, audit_opinion, audit_time, loan_state, support_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_refund_audit
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_refund_audit
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModel" >
+    insert into crowdfund_refund_audit (id, loan_no, auditor, 
+      audit_state, audit_opinion, audit_time, 
+      loan_state, support_no)
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditState,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{loanState,jdbcType=VARCHAR}, #{supportNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModel" >
+    insert into crowdfund_refund_audit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditState != null" >
+        audit_state,
+      </if>
+      <if test="auditOpinion != null" >
+        audit_opinion,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="loanState != null" >
+        loan_state,
+      </if>
+      <if test="supportNo != null" >
+        support_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditState != null" >
+        #{auditState,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanState != null" >
+        #{loanState,jdbcType=VARCHAR},
+      </if>
+      <if test="supportNo != null" >
+        #{supportNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModel" >
+    update crowdfund_refund_audit
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditState != null" >
+        audit_state = #{auditState,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanState != null" >
+        loan_state = #{loanState,jdbcType=VARCHAR},
+      </if>
+      <if test="supportNo != null" >
+        support_no = #{supportNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModel" >
+    update crowdfund_refund_audit
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_state = #{auditState,jdbcType=VARCHAR},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      loan_state = #{loanState,jdbcType=VARCHAR},
+      support_no = #{supportNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="selectLoanAuditRefundList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModel">
+  	select 
+  	t1.id, 
+  	t1.loan_no loanNo, 
+  	t1.auditor, 
+  	t1.audit_state auditState, 
+  	case when t1.audit_state = 'passed' then '审核通过' else '审核拒绝' end auditStateName,
+  	t1.audit_opinion auditOpinion, 
+  	t1.audit_time auditTime, 
+  	t1.loan_state loanState, 
+  	(select d.display_name from dictionary d 
+				         where d.type_code='refund_state' and d.code=t1.loan_state)as refundStateName,
+  	t1.support_no supportNo,
+  	t2.loan_name loanName
+  	
+  	from crowdfund_refund_audit t1 
+  	left join crowdfunding t2 on t1.loan_no = t2.loan_no
+  	<include refid="base_where" />
+  	order by t1.audit_time asc
+  	<if test="endPage>0">
+	  LIMIT #{startPage},#{endPage}
+	</if>  	
+  </select>
+  <select id="selectLoanAuditRefundCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundRefundAuditModel">
+  	select count(1) 
+  	from crowdfund_refund_audit t1 
+  	left join crowdfunding t2 on t1.loan_no = t2.loan_no
+  </select>
+  <sql id="base_where">
+  	<where>
+  		<if test="supportNo !=null and ''!= supportNo ">
+  			and t1.support_no = #{supportNo,jdbcType=VARCHAR}
+  		</if>
+  	</where>
+  </sql>
+  
+</mapper>

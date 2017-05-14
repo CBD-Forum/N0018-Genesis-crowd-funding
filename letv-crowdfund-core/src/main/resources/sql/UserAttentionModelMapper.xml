@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.UserAttentionModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.UserAttentionModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="be_attention_user" property="beAttentionUser" jdbcType="VARCHAR" />
+    <result column="attention_time" property="attentionTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, be_attention_user, attention_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_attention
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.user.model.UserAttentionModel" >
+    select 
+	    a.user_id as userId,
+	    a.be_attention_user as beAttentionUser, 
+	    a.attention_time as attentionTime,
+    	u1.photo as userPhoto,
+    	u1.real_name as realName,
+    	u2.photo as beUserPhoto,
+    	u2.real_name as beRealName,
+    	cus.user_level userLevel,
+    	cus2.user_level beuserLevel
+    from user_attention a left join user u1 on a.user_id=u1.user_id 
+                          left join user u2 on a.be_attention_user=u2.user_id
+                          left join crowdfund_user_stuff cus on cus.user_id = a.user_id
+                          left join crowdfund_user_stuff cus2 on cus2.user_id = a.be_attention_user
+    
+   <include refid="Base_Where"></include>
+   order by a.attention_time desc
+  </select>
+  <sql id="Base_Where">
+  	<where>
+      <if test="userId != null and userId != ''" >
+        and a.user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="beAttentionUser != null and beAttentionUser != ''" >
+        and a.be_attention_user = #{beAttentionUser,jdbcType=VARCHAR}
+      </if>
+     </where>
+   </sql>
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_attention
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.UserAttentionModel" >
+    insert into user_attention (id, user_id, be_attention_user, 
+      attention_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{beAttentionUser,jdbcType=VARCHAR}, 
+      #{attentionTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.user.model.UserAttentionModel" >
+    insert into user_attention
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="beAttentionUser != null" >
+        be_attention_user,
+      </if>
+      <if test="attentionTime != null" >
+        attention_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="beAttentionUser != null" >
+        #{beAttentionUser,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionTime != null" >
+        #{attentionTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.user.model.UserAttentionModel" >
+    update user_attention
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="beAttentionUser != null" >
+        be_attention_user = #{beAttentionUser,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionTime != null" >
+        attention_time = #{attentionTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.UserAttentionModel" >
+    update user_attention
+    set user_id = #{userId,jdbcType=VARCHAR},
+      be_attention_user = #{beAttentionUser,jdbcType=VARCHAR},
+      attention_time = #{attentionTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

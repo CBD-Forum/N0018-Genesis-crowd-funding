@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.UserSignatureOrgModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.UserSignatureOrgModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="identify_field" property="identifyField" jdbcType="VARCHAR" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="usci" property="usci" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="business_num" property="businessNum" jdbcType="VARCHAR" />
+    <result column="sign_user_id" property="signUserId" jdbcType="VARCHAR" />
+    <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="transactor_name" property="transactorName" jdbcType="VARCHAR" />
+    <result column="transactorId_card_num" property="transactoridCardNum" jdbcType="VARCHAR" />
+    <result column="transactor_mobile" property="transactorMobile" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="client_sign_cert" property="clientSignCert" jdbcType="LONGVARCHAR" />
+    <result column="sign_img" property="signImg" jdbcType="VARCHAR" />
+    <result column="sign_img_state" property="signImgState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, user_type, identify_field, org_name, usci, org_code, business_num, sign_user_id, 
+    legal_person_name, transactor_name, transactorId_card_num, transactor_mobile, create_time, 
+    update_time,client_sign_cert,sign_img,sign_img_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_signature_org
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_signature_org
+    <include refid="Base_Where" />
+  </select>  
+  <sql id="Base_Where">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="signUserId != null and signUserId != '' " >
+        and sign_user_id = #{signUserId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>   
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_signature_org
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.UserSignatureOrgModel" >
+    insert into user_signature_org (id, user_id, user_type, 
+      identify_field, org_name, usci, 
+      org_code, business_num, sign_user_id, 
+      legal_person_name, transactor_name, transactorId_card_num, 
+      transactor_mobile, create_time, update_time, 
+      client_sign_cert,sign_img,sign_img_state)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{identifyField,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{usci,jdbcType=VARCHAR}, 
+      #{orgCode,jdbcType=VARCHAR}, #{businessNum,jdbcType=VARCHAR}, #{signUserId,jdbcType=VARCHAR}, 
+      #{legalPersonName,jdbcType=VARCHAR}, #{transactorName,jdbcType=VARCHAR}, #{transactoridCardNum,jdbcType=VARCHAR}, 
+      #{transactorMobile,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{clientSignCert,jdbcType=LONGVARCHAR},#{signImg,jdbcType=VARCHAR},#{signImgState,jdbcType=VARCHAR})
+  </insert>
+ 
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.UserSignatureOrgModel" >
+    update user_signature_org
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyField != null" >
+        identify_field = #{identifyField,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="usci != null" >
+        usci = #{usci,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null" >
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessNum != null" >
+        business_num = #{businessNum,jdbcType=VARCHAR},
+      </if>
+      <if test="signUserId != null" >
+        sign_user_id = #{signUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="transactorName != null" >
+        transactor_name = #{transactorName,jdbcType=VARCHAR},
+      </if>
+      <if test="transactoridCardNum != null" >
+        transactorId_card_num = #{transactoridCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="transactorMobile != null" >
+        transactor_mobile = #{transactorMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clientSignCert != null" >
+        client_sign_cert = #{clientSignCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="signImg != null" >
+        sign_img = #{signImg,jdbcType=VARCHAR},
+      </if>
+      <if test="signImgState != null" >
+        sign_img_state = #{signImgState,jdbcType=VARCHAR},
+      </if>       
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+ 
+  
+</mapper>

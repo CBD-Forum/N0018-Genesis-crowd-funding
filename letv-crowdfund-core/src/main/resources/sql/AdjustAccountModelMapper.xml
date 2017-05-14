@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.bill.model.AdjustAccountModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.bill.model.AdjustAccountModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="adjust_type" property="adjustType" jdbcType="VARCHAR" />
+    <result column="adjust_amt" property="adjustAmt" jdbcType="DOUBLE" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="adjust_reason" property="adjustReason" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="audit_state" property="auditState" jdbcType="VARCHAR" />
+    <result column="audit_opinion" property="auditOpinion" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="adjustTypeName" property="adjustTypeName" jdbcType="VARCHAR" />
+    <result column="auditStateName" property="auditStateName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, adjust_type, adjust_amt,adjust_reason, operator, auditor, apply_time, audit_time, 
+    audit_state, audit_opinion,order_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from adjust_account
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.bill.model.AdjustAccountModel" >
+    SELECT t1.id,
+		t1.user_id userId,     -- 用户
+		t1.order_id orderId,     -- 
+		t1.adjust_type adjustType,     -- 调账类型
+		t1.adjust_amt adjustAmt,     -- 调账金额
+		t1.operator operator,     -- 操作人
+		t1.adjust_reason adjustReason,     -- 
+		t1.auditor auditor,     -- 审核人
+		t1.apply_time applyTime,     -- 申请时间
+		t1.audit_time auditTime,     -- 审核时间
+		t1.audit_state auditState,     -- 审核状态
+		t1.audit_opinion auditOpinion,     -- 审核意见
+		t2.nick_name nickName,
+		t2.real_name realName,
+		t2.mobile mobile,
+		t3.display_name adjustTypeText,
+		t4.display_name auditStateText
+	FROM adjust_account t1
+	LEFT JOIN `user` t2 ON t1.user_id = t2.user_id
+	LEFT JOIN dictionary t3 ON t1.adjust_type = t3.`code` AND t3.type_code='adjust_type'
+	LEFT JOIN dictionary t4 ON t1.audit_state = t4.`code` AND t4.type_code='adjust_audit_state'
+    
+    <include refid="list_where"></include>
+    order by case t1.audit_state when 'auditing' then 0 when 'passed' then 1 when 'refused' then 2 end,t1.apply_time 
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+   <select id="selectListCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.bill.model.AdjustAccountModel" >
+    select count(*)
+    FROM adjust_account t1
+	LEFT JOIN `user` t2 ON t1.user_id = t2.user_id
+	LEFT JOIN dictionary t3 ON t1.adjust_type = t3.`code` AND t3.type_code='trade_direction'
+	LEFT JOIN dictionary t4 ON t1.audit_state = t4.`code` AND t4.type_code='adjust_audit_state'
+    <include refid="list_where"></include>
+  </select>
+  <sql id="list_where">
+  	<where>
+  	   <if test="userId != null and userId != ''" >
+        and t1.user_id like CONCAT('%',REPLACE(#{userId},'*','%'),'%')  
+      </if>
+      <if test="orderId != null and orderId != ''" >
+        and t1.orderId  = #{orderId,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null and mobile != ''" >
+        and t2.mobile  = #{mobile,jdbcType=VARCHAR}
+      </if>
+  	  <if test="adjustType != null and adjustType != ''" >
+        and t1.adjust_type = #{adjustType,jdbcType=VARCHAR}
+      </if>
+  	  <if test="auditState != null and auditState != ''" >
+        and t1.audit_state = #{auditState,jdbcType=VARCHAR}
+      </if>
+      <if test="applyStartTime != null and applyStartTime != ''" >
+        and t1.apply_time >= #{applyStartTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="applyEndTime != null and applyEndTime != ''" >
+        and t1.apply_time &gt;= #{applyEndTime,jdbcType=TIMESTAMP}
+      </if>
+  	</where>
+  </sql>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from adjust_account
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.bill.model.AdjustAccountModel" >
+    insert into adjust_account (id, user_id, adjust_type, 
+      adjust_amt, adjust_reason,operator, auditor, 
+      apply_time, audit_time, audit_state, 
+      audit_opinion,order_id)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{adjustType,jdbcType=VARCHAR}, 
+      #{adjustAmt,jdbcType=DOUBLE}, #{adjustReason,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{auditTime,jdbcType=TIMESTAMP}, #{auditState,jdbcType=VARCHAR}, 
+      #{auditOpinion,jdbcType=VARCHAR},#{orderId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.bill.model.AdjustAccountModel" >
+    insert into adjust_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="adjustType != null" >
+        adjust_type,
+      </if>
+      <if test="adjustAmt != null" >
+        adjust_amt,
+      </if>
+      <if test="adjustReason != null" >
+        adjust_reason,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="auditState != null" >
+        audit_state,
+      </if>
+      <if test="auditOpinion != null" >
+        audit_opinion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustType != null" >
+        #{adjustType,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustAmt != null" >
+        #{adjustAmt,jdbcType=DOUBLE},
+      </if>
+       <if test="adjustReason != null" >
+        #{adjustReason,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditState != null" >
+        #{auditState,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.bill.model.AdjustAccountModel" >
+    update adjust_account
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+       <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustType != null" >
+        adjust_type = #{adjustType,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustAmt != null" >
+        adjust_amt = #{adjustAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="adjustReason != null" >
+        adjust_reason = #{adjustReason,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditState != null" >
+        audit_state = #{auditState,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.bill.model.AdjustAccountModel" >
+    update adjust_account
+    set user_id = #{userId,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      adjust_type = #{adjustType,jdbcType=VARCHAR},
+      adjust_amt = #{adjustAmt,jdbcType=DOUBLE},
+      adjust_reason = #{adjustReason,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      audit_state = #{auditState,jdbcType=VARCHAR},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

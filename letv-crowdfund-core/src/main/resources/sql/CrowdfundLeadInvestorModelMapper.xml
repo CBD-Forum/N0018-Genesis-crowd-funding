@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundLeadInvestorModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundLeadInvestorModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="lead_investor" property="leadInvestor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, lead_investor
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_lead_investor
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectLoanLeader" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+    t1.id, 
+    t1.loan_no as loanNo, 
+    t1.lead_investor as leadInvestor,
+    t2.mobile,
+    t2.nick_name nickName,
+	t2.real_name realName,
+    t2.certificate_no as certificateNo,
+    t2.photo,
+    t4.totalSupportAmt,
+		t4.supportTime,
+		t2.self_detail selfDetail
+    from crowdfund_lead_investor t1 
+    	left join user t2 on t1.lead_investor=t2.user_id
+    	
+    	left join (select cst.support_user,cst.loan_no,sum(support_amt) totalSupportAmt,cst.support_time supportTime
+                  from crowdfunding_support cst where cst.pay_state='payed'
+                  group by cst.support_user,cst.loan_no) t4 on t4.support_user=t1.lead_investor and t4.loan_no=t1.loan_no 
+    where t1.loan_no = #{loanNo,jdbcType=VARCHAR}
+    order by t1.lead_investor asc
+  </select>
+  
+   <select id="getByLeaderAndLoanNo" resultType="java.lang.Long" parameterType="java.lang.String" >
+    select 
+     count(1)
+    from crowdfund_lead_investor
+    where loan_no = #{loanNo,jdbcType=VARCHAR} and lead_investor =  #{leadInvestor,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_lead_investor
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundLeadInvestorModel" >
+    insert into crowdfund_lead_investor (id, loan_no, lead_investor
+      )
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{leadInvestor,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundLeadInvestorModel" >
+    insert into crowdfund_lead_investor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="leadInvestor != null" >
+        lead_investor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="leadInvestor != null" >
+        #{leadInvestor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundLeadInvestorModel" >
+    update crowdfund_lead_investor
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="leadInvestor != null" >
+        lead_investor = #{leadInvestor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundLeadInvestorModel" >
+    update crowdfund_lead_investor
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      lead_investor = #{leadInvestor,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

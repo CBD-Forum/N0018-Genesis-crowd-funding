@@ -1,0 +1,210 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	margin:0 auto;
+	font-family:"微软雅黑",Tahoma, Verdana, Arial;
+	font-size: 24px;
+	color:#333;
+}
+*{outline:none;font-family:"微软雅黑",Tahoma, Verdana, Arial;}
+ul,dl,dd,h1,h2,h3,h4,h5,h6,form,p { 
+	padding:0; 
+	margin:0;
+}
+p {
+	margin: 0px;
+	padding: 0px;
+}
+textarea {
+	margin: 0px;
+	padding: 0px;
+}
+input {
+	margin: 0px;
+	padding: 0px;
+	outline:none;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+h1,h2,h3,h4,h5,h6{
+	margin: 0px;
+	padding: 0px;
+}
+ul,li,div,body {
+	margin: 0px;
+	padding: 0px;
+}
+img {
+	border:none;
+	padding: 0;
+	margin: 0;
+	outline:none;
+}
+ul li {
+	list-style-type: none;
+}
+a {
+	text-decoration: none;
+	color: #444;
+}
+button{margin: 0;padding: 0;border: none;outline:none;}
+.clear:before,.clear:after {content:""; display:table;}
+.clear:after { clear:both; overflow:hidden;}
+.clear {zoom:1;}
+
+
+/*----------------------------------------------------首页-------------------------------------------------
+--*/
+
+
+html,body{width:100%; height:100%;}
+.commonWidth{width:100%;margin: 0px auto;position: relative;}
+.fl{float: left;}
+.fr{float: right}
+.fs20{font-size:20px;}
+.mb100{margin-bottom:100px;}
+.bgHui{background:#e6e6e6;}
+
+
+/*--------------------------------------脚部----------------------------------------*/
+/* display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: flex;-webkit-box-pack: justify;-moz-box-pack: justify;-ms-flex-pack: justify;-webkit-box-align: center;-moz-box-align: justify;-ms-flex-align: center;justify-content: space-between;align-content: center; */
+.foot_fxied{height:100px;border-bottom:1px solid #F8F8F8;width:100%;background: #FFF;border-top:2px solid #dddddf;position:fixed;bottom:0;left:0;z-index:10;}
+.foot_fxied a{display:block;text-align:center;width:25%; float:left;}
+.foot_fxied a p{font-size:26px;color:#666;}
+.foot_fxied a span{display:block;width:100%;height:55px;padding:5px 0;}
+.foot_fxied .home{background:url(../images/ichou-web/foot1.png) no-repeat center;}
+.foot_fxied .repay{background:url(../images/ichou-web/foot2.png) no-repeat center;}
+.foot_fxied .my{background:url(../images/ichou-web/foot3.png) no-repeat center;}
+.foot_fxied .more{background:url(../images/ichou-web/foot4.png) no-repeat center;}
+.foot_fxied .cur p{color:#c80000;}
+.foot_fxied .cur .home{background:url(../images/ichou-web/foot5.png) no-repeat center;}
+.foot_fxied .cur .repay{background:url(../images/ichou-web/foot6.png) no-repeat center;}
+.foot_fxied .cur .my{background:url(../images/ichou-web/foot7.png) no-repeat center;}
+.foot_fxied .cur .more{background:url(../images/ichou-web/foot8.png) no-repeat center;}
+
+
+/*--------------------------------------首页----------------------------------------*/
+.head{height:90px; background:#fff; text-align: center; width:100%; position: relative; left:0px; top:0px;}
+.company{ font-size:36px;color:#fff;line-height:90px;}
+.indlogo{width:38px;height:42px;left:20px;position:absolute;top:20px;}
+.person{width:38px;height:42px;left:20px;position:absolute;top: 25px;}
+.person_1{position:absolute;right:10px;top:10px;float:right;}
+.user_p{position: absolute; right:20px; top: 15px;border:1px solid #eaeaea;border-radius:50%;width:61px;height:61px;}
+.search{position: absolute; right: 20px; top: 25px;}
+.banner{width:100%;height:385px;}
+.nav{width:100%;background:#fff;overflow:hidden;padding:15px 0;margin:20px 0;}
+.nav_li{display:block;float:left;text-align:center;width:110px;height:110px;border-radius:50%;margin:0 9px;overflow:hidden;}
+.ht1{background:#facb4b;}
+.ht2{background:#d8a2ff;}
+.ht3{background:#0989c9;}
+.ht4{background:#0ca977;}
+.ht5{background:#f95555;}
+.nav_li span{display:block;color:#fff;font-size:22px;}
+.nav_left_img{height:45px;display:block;margin-top:18px;}
+.nav_left_img img{display:inline-block;vertical-align:middle;}
+
+.prolist{background:#fff;padding:0 20px;overflow:hidden; padding-bottom:70px;}
+.prolist_li{width:100%;height:320px;overflow:hidden;border-radius:10px;position:relative;margin:12px auto;}
+.prolist_li .img{width:100%;height:320px;}
+.prolist_li .img img{width:100%;height:100%;}
+.list_ul_pop{height:147px;background:#000;filter:alpha(opacity=60);opacity:0.6;-moz-opacity:0.6;width:100%;position:absolute;left:0;bottom:0;z-index:-1;}
+.list_ul_font{position:absolute;left:0;bottom:0;z-index:2;color:#fff;height:147px;width:100%;}
+.ul_font_top{height:60px;line-height:60px;border-bottom:1px solid #fff;overflow:hidden;}
+.ul_font_top .p1{font-size:28px;float:left;margin-left:20px;font-weight:bold;}
+.ul_font_top .p1 a{ color:#fff;}
+.ul_font_top .p2{font-size:16px;float:left;line-height:65px;margin-left:15px;font-weight:bold;}
+.ul_font_bottom{margin-top:10px;}
+.ul_font_bottom>p{margin-left:10px;float:left;width:290px;font-size:22px;line-height:32px;}
+.ul_font_bottom>p .jdBar{display:block;width:110px;height:13px;background:#ccc;float:left;margin:9px 5px 0 0;}
+.ul_font_bottom>p .jdBar span{display:block;height:100%;background:#ef5353;}
+/*------------------------------------个人中心-------------------------------*/
+.percen_top{width:100%;height:412px;background:url(../images/ichou-web/user_top.png) no-repeat center;}
+.percen_head{height:90px;text-align:center; width: 100%; position: relative;border-bottom:1px solid #b1987b;}
+.user_main{height:320px;text-align:center;color:#fff;width:100%;}
+.user_main .photo{width:155px;height:155px;border:1px solid #fff;border-radius:50%;margin:20px auto; overflow:hidden;}
+.user_main .photo img{ width:155px; height:155px;}
+.user_main .address{font-size:30px;}
+.user_main .address img{margin:0 15px 0 0;}
+.user_main .tel{font-size:48px;}
+.user_list{background:#fff;border-top:1px solid #d9d9d9;border-bottom:1px solid #d9d9d9;padding:0 20px;margin-top:20px;}
+.user_list li{height:114px;line-height:114px;border-bottom:1px solid #d7d7d7;background:url(../images/ichou-web/icon17.png) no-repeat right 0 center;overflow:hidden;}
+.user_list li a{display:block;padding-left:60px;font-size:30px;color:#333;height:100%;}
+.user_list li .u1{background:url(../images/ichou-web/u1.png) no-repeat left center;}
+.user_list li .u2{background:url(../images/ichou-web/u2.png) no-repeat left center;}
+.user_list li .u3{background:url(../images/ichou-web/u3.png) no-repeat left center;}
+.user_list li .u4{background:url(../images/ichou-web/u4.png) no-repeat left center;}
+.user_list li .u5{background:url(../images/ichou-web/u5.png) no-repeat left center;}
+.user_list li .u6{background:url(../images/ichou-web/u6.png) no-repeat left center;}
+.user_list li .u7{background:url(../images/ichou-web/u7.png) no-repeat left center;}
+.user_list li .u8{background:url(../images/ichou-web/u8.png) no-repeat left center;}
+.user_list li .u10{background:url(../images/ichou-web/u10.png) no-repeat left center;}
+.user_list li .u11{background:url(../images/ichou-web/u11.png) no-repeat left center;background-size:38px;}
+.user_list li .u9{background:url(../images/ichou-web/u9.png) no-repeat left center; background-size:38px;}
+.user_list li p{width:60%;float:left;}
+.esc_div{overflow:hidden;}
+.esc_dl{display:block;width:527px;height:78px;text-align:center;line-height:78px;color:#fff;background:#f95555;border-radius:10px;margin:78px auto;font-size:30px; margin-bottom:200px;}
+
+/*------------------------------------列表页--------------------------------------*/
+.back000{background:#373737;}
+.search_div{width:630px;height:50px;background:#fff;margin:17px auto;border-radius:10px;overflow:hidden;padding:0 10px;position:relative;}
+.search_text{width:100%;height:100%;line-height:50px;text-align:center;border:0;font-size:26px;color:#999;}
+.search_abs{position:absolute;top:0;right:0;background:url(../images/ichou-web/search.png) center no-repeat;display:block;height:50px;width:60px;}
+
+.list_filt{background:#fff;height:63px;border-bottom:1px solid #e6e6e6;text-align:center;}
+.list_filt li{width:49.5%;position:relative;}
+.list_filt li>a{display:block;font-size:30px;color:#999;line-height:62px;}
+.list_filt li>a img{margin:-4px 0 0 20px;}
+.list_filt li .cur{color:#d12224;border-bottom:2px solid #ef5a50;}
+.list_filt li .pop_div{position:absolute;width:100%;line-height:67px;z-index:8;background:#fff;top:64px;left:0; display:none;}
+.list_filt li .pop_div>a{display:block;font-size:28px;color:#666;width:100%;border-bottom:1px solid #e6e6e6;}
+.list_filt li .pop_div> .a_cur{color:#d12224;}
+
+
+/*-------------------------------------------列表页挂牌----------------------------------------------*/
+.back111{background:#f4f3f8;}
+
+.startloantype{ border-bottom:1px solid #ccc;background:#fff;}
+.startloantype div{ float:left; width:50%; text-align:center; font-size:16px; height:40px; line-height:40px; position:relative;}
+.startloantype div a{ display:block; width:100%; height:40px; color:#999; border-bottom:1px solid #fff;}
+.startloantype div a.cur{ border-bottom:1px solid #d12224; color:#d12224;}
+.startloantype a i{ padding-right:23px; background:url(../images/ichou-web/icon1.png) right center no-repeat; background-size:16px;}
+.startloantype .pop_div{background:#f9f9f9; position:absolute;left:0px; top:42px; width:100%; z-index:1; display:none;}
+.startloantype .pop_div li{ border-bottom:1px solid #e6e6e6;}
+.startloantype .pop_div li.cur{color:#d12224;}
+.loanbody_div ul{ font-size:15px; line-height:30px; background:#fff;padding:10px; color:#333; margin-bottom:10px;}
+.loanbody_div ul span{ color:#666;}
+.loanbody_div a{ text-decoration:underline; color:#d12224;}
+.small_foot_fixed{ height:60px;}
+.small_foot_fixed a p{ font-size:14px;}
+.small_foot_fixed a span{ height:30px;}
+.small_foot_fixed .home{ background-size:25px;}
+.small_foot_fixed .cur .home{ background-size:25px;}
+.small_foot_fixed .more{ background-size:26px;}
+.small_foot_fixed .cur .more{ background-size:26px;}
+.small_foot_fixed .my{ background-size:25px;}
+.small_foot_fixed .cur .my{ background-size:25px;}
+.small_foot_fixed .repay{ background-size:25px;}
+.small_foot_fixed .cur .repay{ background-size:25px;}
+.invest_title_ul{ font-size:16px; height:40px; line-height:40px; background:#fff; border-bottom:1px solid #ccc;}
+.invest_title_ul li{ float:left; text-align:center; color:#666; border-bottom:1px solid #fff;}
+.invest_title_ul li.cur{ border-bottom:1px solid #d12224; color:#d12224;}
+.title_ul4 li{ width:25%;}
+.title_ul5 li{ width:20%;}
+.title_ul2 li{ width:50%;}
+
+/*申请挂牌*/
+.alerApply_div{ font-size:15px; width:260px; background:#fff; position:fixed; left:0px; top:0px; padding:20px 10px; line-height:40px; display:none;z-index:102;}
+.alerApply_div li{ margin-bottom:5px;}
+.alerApply_div input{ width:100px; height:30px; line-height:30px; border:none; border-bottom:1px solid #ccc; margin-right:5px; text-align:center;}
+.alerApply_div ul{ margin-left:20px;}
+.alerApply_div .apply_btn{ text-align:center; margin-top:20px;}
+.alerApply_div .apply_btn a{ display: inline-block; width:70px; height:30px; line-height:30px; text-align:center; background:#e3423c; color:#fff; border-radius:5px; margin-right:10px;}
+
+.user_list_small li{ height:50px; line-height:50px; background-size:12px;}
+.user_list_small li a{ font-size:16px; padding-left:0px;}
+.user_list_small li:nth-last-child(1){ border-bottom:0px;}
+
+.aboutbox{ margin:10px; background:#fff; padding:10px;}
+.ckgd{text-align:center;color:#fa5d17;margin:20px auto;}

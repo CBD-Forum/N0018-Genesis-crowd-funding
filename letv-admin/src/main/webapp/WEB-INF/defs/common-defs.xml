@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	
+	<definition name="tiles.mainlayout" templateExpression="/view/layout/layout.jsp" preparer="com.fbd.core.web.tiles.preparer.RequestSettingViewPreparer"> 
+    	<put-attribute name="title" expression="${requestScope.tdk.title}"></put-attribute> 
+    	<put-attribute name="keyword" expression="${requestScope.tdk.keyword}"></put-attribute> 
+    	<put-attribute name="description" expression="${requestScope.tdk.description}"></put-attribute> 
+        <put-attribute name="content" value=""></put-attribute>
+    </definition>
+    
+    <definition name="*.*"  extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/view/{1}/{2}.jsp"></put-attribute>  
+    </definition>
+    
+</tiles-definitions>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.reconciliation.model.ReconciliationRecordModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.reconciliation.model.ReconciliationRecordModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, status, time, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from reconciliation_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from reconciliation_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.reconciliation.model.ReconciliationRecordModel" >
+    insert into reconciliation_record (id, status, time, 
+      type)
+    values (#{id,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.reconciliation.model.ReconciliationRecordModel" >
+    insert into reconciliation_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.reconciliation.model.ReconciliationRecordModel" >
+    update reconciliation_record
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.reconciliation.model.ReconciliationRecordModel" >
+    update reconciliation_record
+    set status = #{status,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 后台分页查询 -->
+  <sql id="Base_Where_List">
+	<where>
+		<if test="status != null and status != ''">
+			and status = #{status,jdbcType=VARCHAR}
+		</if>
+		<if test="type != null and type != ''">
+			and type = #{type,jdbcType=VARCHAR}
+		</if>
+		<if test="startOrderTime != null and startOrderTime != ''" >
+	    	and order_time &gt;= #{startOrderTime,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="endOrderTime != null and endOrderTime != ''" >
+	    	and order_time &lt;= #{endOrderTime,jdbcType=TIMESTAMP}
+	    </if>
+	</where>
+  </sql>
+  
+  <!-- 后台分页查询 -->
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='status'" >
+        status ${order}
+      </if>
+      <if test="sort =='type'" >
+        type ${order}
+      </if>
+      <if test="sort =='time'" >
+        time ${order}
+      </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from reconciliation_record
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.reconciliation.model.ReconciliationRecordModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from reconciliation_record
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.InterviewRecordModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.InterviewRecordModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="apply_user" property="applyUser" jdbcType="VARCHAR" />
+    <result column="interview_content" property="interviewContent" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="receive_user" property="receiveUser" jdbcType="VARCHAR" />
+    <result column="interview_time" property="interviewTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, apply_user, interview_content, loan_no, state, receive_user, interview_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from interview_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.InterviewRecordModel" >
+    select 
+    ir.id, ir.apply_user as applyUser, 
+    u1.mobile as applyUserMobile,
+    u1.real_name as applyRealName,
+    ir.interview_content as interviewContent, 
+    ir.loan_no as loanNo, ir.state, 
+    ir.receive_user as receiveUser, 
+    u2.mobile as receiveUserMobile,
+    u2.real_name as receiveRealName,
+    ir.interview_time as interviewTime,
+    c.loan_name as loanName,
+    c.fund_amt as fundAmt,
+    c.loan_type as loanType,
+     (select d.display_name from dictionary d 
+	     		     where d.type_code='crowdFundType' and d.code=c.loan_type)as loanTypeName,
+	(select d.display_name from dictionary d 
+	     		     where d.type_code='cd_interview_state' and d.code=ir.state)as stateName
+    from interview_record ir left join user u1 on ir.apply_user=u1.user_id
+         left join user u2 on ir.receive_user = u2.user_id
+         left join crowdfunding c on c.loan_no=ir.loan_no
+    <include refid="base_where"></include>
+    order by interview_time desc
+     <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <select id="getCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.InterviewRecordModel">
+    select count(1)  
+    from interview_record ir left join user u1 on ir.apply_user=u1.user_id
+         left join user u2 on ir.receive_user = u2.user_id
+         left join crowdfunding c on c.loan_no=ir.loan_no
+    <include refid="base_where" />
+  </select>
+  <sql id="base_where">
+   <where>
+      <if test="loanNo != null and loanNo != ''" >
+        and ir.loan_no = #{loanNo,jdbcType=VARCHAR}
+      </if>
+       <if test="loanNoLike != null and loanNoLike != ''" >
+        and ir.loan_no  like CONCAT(CONCAT('%', #{loanNoLike,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="applyUserLike != null and applyUserLike != ''" >
+        and ir.apply_user like CONCAT(CONCAT('%', #{applyUserLike,jdbcType=VARCHAR}),'%')
+      </if>
+       <if test="applyUser != null and applyUser != ''" >
+        and ir.apply_user = #{applyUser,jdbcType=VARCHAR}
+      </if>
+       <if test="loanType != null and loanType != ''" >
+        and c.loan_type = #{loanType,jdbcType=VARCHAR}
+      </if>
+      <if test="state != null and state != ''" >
+        and ir.state = #{state,jdbcType=VARCHAR}
+      </if>
+      <if test="receiveUser != null and receiveUser != ''" >
+        and ir.receive_user = #{receiveUser,jdbcType=VARCHAR}
+      </if>
+       <if test="receiveUserLike != null and receiveUserLike != ''" >
+        and ir.receive_user like CONCAT(CONCAT('%', #{receiveUserLike,jdbcType=VARCHAR}),'%')
+      </if>
+      
+    </where>
+   </sql>
+   
+    <select id="selectInterviewList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.InterviewRecordModel" >
+    select 
+	    ir.id, ir.apply_user as applyUser, 
+	    u1.real_name as applyRealName,
+	    ir.interview_content as interviewContent, 
+	    ir.loan_no as loanNo, ir.state, 
+	    ir.receive_user as receiveUser, 
+	    u2.real_name as receiveRealName,
+	    ir.interview_time as interviewTime,
+	    c.loan_name as loanName,
+	    c.fund_amt as fundAmt,
+	    c.loan_logo as loanLogo,
+	    c.approve_amt as approveAmt,
+	    c.loan_user as loanUser,
+	    CONCAT(LEFT(c.loan_user,2),'***',RIGHT(c.loan_user,1)) as loanUser2,
+	    c.loan_type as loanType,
+	    c.loan_state as loanState,
+	    (select d.display_name from dictionary d 
+	     		     where d.type_code='crowdfund_state' and d.code=c.loan_state)as loanStateName
+	    from interview_record ir left join user u1 on ir.apply_user=u1.user_id
+         left join user u2 on ir.receive_user = u2.user_id
+         left join crowdfunding c on c.loan_no=ir.loan_no
+    <include refid="base_where"></include>
+    order by interview_time desc
+     <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from interview_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.InterviewRecordModel" >
+    insert into interview_record (id, apply_user, interview_content, 
+      loan_no, state, receive_user, 
+      interview_time)
+    values (#{id,jdbcType=VARCHAR}, #{applyUser,jdbcType=VARCHAR}, #{interviewContent,jdbcType=VARCHAR}, 
+      #{loanNo,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, #{receiveUser,jdbcType=VARCHAR}, 
+      #{interviewTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.InterviewRecordModel" >
+    insert into interview_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applyUser != null" >
+        apply_user,
+      </if>
+      <if test="interviewContent != null" >
+        interview_content,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="receiveUser != null" >
+        receive_user,
+      </if>
+      <if test="interviewTime != null" >
+        interview_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="applyUser != null" >
+        #{applyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewContent != null" >
+        #{interviewContent,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUser != null" >
+        #{receiveUser,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewTime != null" >
+        #{interviewTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.InterviewRecordModel" >
+    update interview_record
+    <set >
+      <if test="applyUser != null" >
+        apply_user = #{applyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewContent != null" >
+        interview_content = #{interviewContent,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUser != null" >
+        receive_user = #{receiveUser,jdbcType=VARCHAR},
+      </if>
+      <if test="interviewTime != null" >
+        interview_time = #{interviewTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.InterviewRecordModel" >
+    update interview_record
+    set apply_user = #{applyUser,jdbcType=VARCHAR},
+      interview_content = #{interviewContent,jdbcType=VARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      receive_user = #{receiveUser,jdbcType=VARCHAR},
+      interview_time = #{interviewTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

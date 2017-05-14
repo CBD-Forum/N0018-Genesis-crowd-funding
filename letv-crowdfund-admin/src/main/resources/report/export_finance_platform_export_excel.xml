@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="平台手续费账户充值" fileName="平台手续费账户充值">
+	<report-header>
+		<column name="订单号" mapping="orderId" />
+		<column name="用户名" mapping="userId" />
+		<column name="充值金额(元)" mapping="rechargeAmt" />
+		<column name="到账金额(元)" mapping="actualAmt" />
+		<column name="手续费(元)" mapping="rechargeFee" />
+		<column name="手续费支付方" mapping="feeAcctNo" />
+		<column name="充值方式" mapping="bankName" />
+		<column name="充值时间" mapping="createTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="到账时间" mapping="completeTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="充值状态" mapping="stateName" />
+	</report-header>
+	<dataSource serviceClassId="rechargeServiceImpl"
+		serviceMethod="getFeeRechargePage" />
+</report>

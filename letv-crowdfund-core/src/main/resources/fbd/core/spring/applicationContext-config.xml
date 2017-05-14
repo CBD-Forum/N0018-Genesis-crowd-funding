@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+			http://www.springframework.org/schema/tx   
+            http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+ 	
+ 
+	<bean id="propertyPlaceholderConfigurer"
+		class="com.fbd.core.util.SpringPropertyPlaceholderConfigurer">
+		<property name="order" value="160"></property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<!-- 系统属性总是优先, 即: JVM "-Dkey=value"方式设置的属性信息总是优先于在配置文件的设置. -->
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true"></property>
+		<property name="locations">
+			<list>
+				<value>classpath*:config/redis-manager-config.properties</value>
+				<value>classpath*:config/config.properties</value>
+				<value>classpath*:config/interface-url.properties</value>
+				<value>classpath*:config/sys.properties</value>
+				<value>classpath*:config/auditLog.properties</value>
+				<value>classpath*:config/memcache.properties</value>
+				<value>classpath*:letvPay/letvPay.properties</value>
+				<value>classpath*:letvPay/sxyPay.properties</value>
+				<value>classpath*:esp/esp.properties</value>
+				<value>classpath*:config/account.properties</value> 
+				<value>classpath*:dataapi/jdbc-bc.properties</value> 
+				<value>classpath*:signature/esp.properties</value>
+				<value>classpath*:signature/tsa.properties</value>
+				<value>classpath*:signature/raapi.properties</value>
+				<value>classpath*:blockChain/blockChain.properties</value> 
+
+			</list>
+		</property>
+	</bean>
+	
+	<bean name="propertiesHolder" class="com.fbd.core.util.SpringPropertiesHolder">
+		<constructor-arg>
+	    	<ref bean="propertyPlaceholderConfigurer" />
+	    </constructor-arg>
+	</bean>
+	
+	<!-- 自动扫描组件，这里要把controler下面的 controller去除，他们是在spring3-servlet.xml中配置的，如果不去除会影响事务管理的。   -->
+	 <context:component-scan base-package="com.fbd.*.app,com.rain.*.app">
+	      <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" /> 
+	 </context:component-scan>
+	 
+	 <!-- 国际化支持 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:config/messages" />
+		<property name="fallbackToSystemLocale" value="false"></property>
+	</bean>
+	
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	
+	<!-- 请求上下文钩子 -->
+	<bean id="requestContextHolder" class="com.fbd.core.web.MyRequestContextHolder">
+		<property name="localeResolver" ref="localeResolver"></property>
+	</bean>
+	
+	<bean id="dataSourceProperties" class="com.fbd.core.common.utils.PropertiesEncryptFactoryBean">  
+        <property name="properties">  
+            <props>  
+                <prop key="user">${database.username}</prop>  
+                <prop key="password">${database.password}</prop>  
+            </props>  
+        </property>  
+    </bean> 
+
+	<!-- 配置DataSource数据源 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="properties" ref="dataSourceProperties"/>
+		<property name="driverClass" value="${database.driverClass}" />
+		<property name="jdbcUrl" value="${database.jdbcUrl}" />
+		<!--  
+		<property name="user" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+		-->
+
+		<property name="initialPoolSize" value="${c3p0.initialPoolSize}" />
+		<property name="minPoolSize" value="${c3p0.minPoolSize}" />
+		<property name="maxPoolSize" value="${c3p0.maxPoolSize}" />
+		<property name="maxStatements" value="${c3p0.maxStatements}" />
+		<property name="maxIdleTime" value="${c3p0.maxIdleTime}" />
+		<property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
+		<property name="acquireRetryAttempts" value="${c3p0.acquireRetryAttempts}" />
+		<property name="acquireRetryDelay" value="${c3p0.acquireRetryDelay}" />
+		<property name="testConnectionOnCheckin" value="${c3p0.testConnectionOnCheckin}" />
+		<property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}" />
+	</bean>
+	
+	
+
+
+	<!-- 配置SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- mapper和resultmap配置路径 -->
+		<property name="mapperLocations">
+			<list>
+				<!-- 表示在classpath:resources/sql包或以下所有目录中，以Mapper.xml结尾所有文件 -->
+				<value>classpath*:sql/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置Mybatis模版 -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+		<!-- 配置事务管理器，注意这里的dataSource和SqlSessionFactoryBean的dataSource要一致，不然事务就没有作用了 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">  
+        <tx:attributes>  
+            <tx:method name="save*" propagation="REQUIRED" />  
+            <tx:method name="ins*" propagation="REQUIRED" />  
+            <tx:method name="del*" propagation="REQUIRED" />  
+            <tx:method name="remove*" propagation="REQUIRED" />  
+            <tx:method name="update*" propagation="REQUIRED" />  
+            <tx:method name="modify*" propagation="REQUIRED" />  
+            <tx:method name="find*" read-only="true" />  
+            <tx:method name="get*" read-only="true" />  
+            <tx:method name="select*" read-only="true" />  
+            <!--   
+            <tx:method name="*" propagation="REQUIRED" />  
+            --> 
+        </tx:attributes>  
+    </tx:advice>
+    
+    <aop:config proxy-target-class="true">  
+        <aop:advisor pointcut="execution( * com.fbd.*.app.*.service.*.*(..))" advice-ref="txAdvice" />  
+    </aop:config> 
+
+
+
+	<!-- redis 配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.pool.maxTotal}" />
+		<property name="maxIdle" value="${redis.pool.maxIdle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${redis.pool.timeBetweenEvictionRunsMillis}" />
+		<property name="minEvictableIdleTimeMillis" value="${redis.pool.minEvictableIdleTimeMillis}" />
+		<property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
+	</bean>
+
+	<bean id="jedisConnFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${redis.pool.host}" />
+		<property name="port" value="${redis.pool.port}" />
+		<property name="poolConfig" ref="jedisPoolConfig" />
+	</bean>
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnFactory" />
+	</bean> 
+	
+	
+	<!-- quartz持久化存储 -->
+<!-- 	<bean id="scheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="exposeSchedulerInRepository" value="true" />
+		
+		<property name="jobFactory">
+			<bean class="com.esoft.core.quartz.AutowiringSpringBeanJobFactory " />
+		
+			<bean class="org.springframework.scheduling.quartz.SpringBeanJobFactory" 
+				/>
+		
+		</property>
+		
+		<property name="schedulerName" value="Mscheduler" />
+		
+		<property name="configLocation" value="classpath:config/quartz.properties" />
+		<property name="applicationContextSchedulerContextKey" value="applicationContextKey" />
+		<property name="autoStartup" value="true" />
+	</bean> -->
+</beans>

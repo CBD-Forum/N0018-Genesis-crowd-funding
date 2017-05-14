@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundTransferDetailModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundTransferDetailModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="transfer_no" property="transferNo" jdbcType="VARCHAR" />
+    <result column="buy_order_no" property="buyOrderNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="buy_money" property="buyMoney" jdbcType="DOUBLE" />
+    <result column="buy_parts" property="buyParts" jdbcType="INTEGER" />
+    <result column="buy_corpus" property="buyCorpus" jdbcType="DOUBLE" />
+    <result column="buy_interest" property="buyInterest" jdbcType="DOUBLE" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="transfer_fee" property="transferFee" jdbcType="DOUBLE" />
+    <result column="actual_pay_money" property="actualPayMoney" jdbcType="DOUBLE" />
+    <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="expect_interest" property="expectInterest" jdbcType="DOUBLE" />
+    <result column="paid_corpus" property="paidCorpus" jdbcType="DOUBLE" />
+    <result column="paid_interest" property="paidInterest" jdbcType="DOUBLE" />
+    <result column="paid_fee" property="paidFee" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, transfer_no, user_id, buy_money, buy_parts, buy_corpus, buy_interest, apply_time, 
+    transfer_fee, actual_pay_money, transfer_time, order_no, expect_interest, paid_corpus, 
+    paid_interest, paid_fee, status,buy_order_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_transfer_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_transfer_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferDetailModel" >
+    insert into crowdfund_transfer_detail (id, transfer_no, user_id, 
+      buy_money, buy_parts, buy_corpus, 
+      buy_interest, apply_time, transfer_fee, 
+      actual_pay_money, transfer_time, order_no, 
+      expect_interest, paid_corpus, paid_interest, 
+      paid_fee, status,buy_order_no)
+    values (#{id,jdbcType=VARCHAR}, #{transferNo,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{buyMoney,jdbcType=DOUBLE}, #{buyParts,jdbcType=INTEGER}, #{buyCorpus,jdbcType=DOUBLE}, 
+      #{buyInterest,jdbcType=DOUBLE}, #{applyTime,jdbcType=TIMESTAMP}, #{transferFee,jdbcType=DOUBLE}, 
+      #{actualPayMoney,jdbcType=DOUBLE}, #{transferTime,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=VARCHAR}, 
+      #{expectInterest,jdbcType=DOUBLE}, #{paidCorpus,jdbcType=DOUBLE}, #{paidInterest,jdbcType=DOUBLE}, 
+      #{paidFee,jdbcType=DOUBLE}, #{status,jdbcType=VARCHAR},#{buyOrderNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferDetailModel" >
+    insert into crowdfund_transfer_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="transferNo != null" >
+        transfer_no,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="buyMoney != null" >
+        buy_money,
+      </if>
+      <if test="buyParts != null" >
+        buy_parts,
+      </if>
+      <if test="buyCorpus != null" >
+        buy_corpus,
+      </if>
+      <if test="buyInterest != null" >
+        buy_interest,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="transferFee != null" >
+        transfer_fee,
+      </if>
+      <if test="actualPayMoney != null" >
+        actual_pay_money,
+      </if>
+      <if test="transferTime != null" >
+        transfer_time,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="expectInterest != null" >
+        expect_interest,
+      </if>
+      <if test="paidCorpus != null" >
+        paid_corpus,
+      </if>
+      <if test="paidInterest != null" >
+        paid_interest,
+      </if>
+      <if test="paidFee != null" >
+        paid_fee,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="transferNo != null" >
+        #{transferNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyMoney != null" >
+        #{buyMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="buyParts != null" >
+        #{buyParts,jdbcType=INTEGER},
+      </if>
+      <if test="buyCorpus != null" >
+        #{buyCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="buyInterest != null" >
+        #{buyInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferFee != null" >
+        #{transferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="actualPayMoney != null" >
+        #{actualPayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transferTime != null" >
+        #{transferTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="expectInterest != null" >
+        #{expectInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="paidCorpus != null" >
+        #{paidCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="paidInterest != null" >
+        #{paidInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="paidFee != null" >
+        #{paidFee,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferDetailModel" >
+    update crowdfund_transfer_detail
+    <set >
+      <if test="transferNo != null" >
+        transfer_no = #{transferNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyMoney != null" >
+        buy_money = #{buyMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="buyParts != null" >
+        buy_parts = #{buyParts,jdbcType=INTEGER},
+      </if>
+      <if test="buyCorpus != null" >
+        buy_corpus = #{buyCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="buyInterest != null" >
+        buy_interest = #{buyInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferFee != null" >
+        transfer_fee = #{transferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="actualPayMoney != null" >
+        actual_pay_money = #{actualPayMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transferTime != null" >
+        transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="expectInterest != null" >
+        expect_interest = #{expectInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="paidCorpus != null" >
+        paid_corpus = #{paidCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="paidInterest != null" >
+        paid_interest = #{paidInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="paidFee != null" >
+        paid_fee = #{paidFee,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="buyOrderNo != null" >
+        buy_order_no = #{buyOrderNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferDetailModel" >
+    update crowdfund_transfer_detail
+    set transfer_no = #{transferNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      buy_money = #{buyMoney,jdbcType=DOUBLE},
+      buy_parts = #{buyParts,jdbcType=INTEGER},
+      buy_corpus = #{buyCorpus,jdbcType=DOUBLE},
+      buy_interest = #{buyInterest,jdbcType=DOUBLE},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      transfer_fee = #{transferFee,jdbcType=DOUBLE},
+      actual_pay_money = #{actualPayMoney,jdbcType=DOUBLE},
+      transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      expect_interest = #{expectInterest,jdbcType=DOUBLE},
+      paid_corpus = #{paidCorpus,jdbcType=DOUBLE},
+      paid_interest = #{paidInterest,jdbcType=DOUBLE},
+      paid_fee = #{paidFee,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR},
+      buy_order_no = #{buyOrderNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  
+   <select id="selectCountBuyParts" resultType="java.lang.Long" parameterType="java.lang.String" >
+    SELECT SUM(t1.buy_parts) from  crowdfund_transfer_detail t1  where t1.transfer_no = #{transferNo,jdbcType=VARCHAR}  and t1.`status` = 'payed'
+  </select>
+  
+  
+    <select id="selectByBuyOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_transfer_detail
+    where buy_order_no = #{buyOrderNo,jdbcType=VARCHAR}
+  </select>
+  
+  
+      <select id="selectCrowdfundTransferUserPayed" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferDetailModel" >
+		    SELECT 
+		t1.user_id userId,
+		t1.buy_money buyMoney,
+		t1.buy_parts buyParts,
+		t1.transfer_time transferTime
+		 from crowdfund_transfer_detail t1 where t1.`status` = 'payed'
+		 and t1.transfer_no = #{transferNo,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

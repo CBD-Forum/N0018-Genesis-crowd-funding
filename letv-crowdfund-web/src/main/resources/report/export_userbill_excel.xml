@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name='收支明细'>
+	<report-header>
+	<column name='时间' mapping='tradeTime' datatype='date' format='yyyy-MM-dd HH:mm:ss'/>
+	 <column name='交易类型' mapping='tradeTypeName'/>
+	<column name='单号' mapping='tradeId'/>
+	<column name='资金' mapping='displayAmt'/>
+	<column name='交易对方'   mapping='oppositeSide'/>
+	<column name='摘要' mapping='detail' />
+	</report-header>
+</report>

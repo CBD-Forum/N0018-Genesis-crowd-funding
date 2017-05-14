@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.push.model.PushDataLogModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.push.model.PushDataLogModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="lastPushTime" property="last_push_time" jdbcType="VARCHAR" />
+    <result column="pushTime" property="push_time" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+        <result column="eventCode" property="event_code" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+   id,last_push_time,push_time,memo,event_code
+  </sql> 
+  
+  <sql id="Base_Where">
+  	<where>
+  	  <if test="id != null and id != ''" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="lastPushTime != null and lastPushTime != ''" >
+          and last_push_time = #{lastPushTime,jdbcType=VARCHAR}
+      </if>
+      <if test="pushTime != null and pushTime != ''" >
+          and push_time = #{pushTime,jdbcType=VARCHAR}
+      </if>
+         <if test="eventCode != null and eventCode != ''" >
+          and event_code = #{eventCode,jdbcType=VARCHAR}
+      </if>
+      
+    </where>
+  </sql>  
+  <sql id="Base_OrderBy_List">
+      <if test="sort =='id'" >
+        id ${order} 
+      </if>
+      <if test="sort =='lastPushTime'" >
+        last_push_time ${order}
+      </if>
+  </sql>    
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id,last_push_time,push_time,memo ,event_code
+    from push_data_log
+   <include refid="Base_Where" />
+    <if test=" sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+   <if test="endPage>0">
+    	LIMIT #{startPage},#{endPage}
+   </if>
+  </select>
+  
+  
+ <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from push_data_log
+     <include refid="Base_Where" />
+ </select>
+
+ <insert id="insert" parameterType="com.fbd.core.app.push.model.PushDataLogModel" >
+    insert into push_data_log (id,last_push_time,push_time,memo,event_code)
+    values (#{id,jdbcType=VARCHAR}, #{lastPushTime,jdbcType=VARCHAR},#{pushTime,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{eventCode,jdbcType=VARCHAR})
+  </insert>
+  
+  <select id="selectlast" resultType="java.util.Map" parameterType="java.lang.String" >
+  select  id,last_push_time as lastPushTime,push_time as pushTime,memo,event_code as eventCode from push_data_log where event_code=#{eventCode,jdbcType=VARCHAR} order by last_push_time desc LIMIT 1
+  </select>
+</mapper>

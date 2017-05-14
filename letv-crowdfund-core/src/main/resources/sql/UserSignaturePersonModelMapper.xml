@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.UserSignaturePersonModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.UserSignaturePersonModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="identify_field" property="identifyField" jdbcType="VARCHAR" />
+    <result column="personal_name" property="personalName" jdbcType="VARCHAR" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="passport_num" property="passportNum" jdbcType="VARCHAR" />
+    <result column="mtp_num" property="mtpNum" jdbcType="VARCHAR" />
+    <result column="sign_user_id" property="signUserId" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="client_sign_cert" property="clientSignCert" jdbcType="LONGVARCHAR" />
+    <result column="sign_img" property="signImg" jdbcType="VARCHAR" />
+    <result column="sign_img_state" property="signImgState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, user_type, identify_field, personal_name, id_card_num, passport_num, 
+    mtp_num, sign_user_id, mobile, create_time, update_time,client_sign_cert,sign_img,sign_img_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_signature_person
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_signature_person
+    <include refid="Base_Where" />
+  </select>  
+  <sql id="Base_Where">
+  	<where>
+      <if test="userId != null and userId != '' " >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="signUserId != null and signUserId != '' " >
+        and sign_user_id = #{signUserId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql> 
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_signature_person
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.UserSignaturePersonModel" >
+    insert into user_signature_person (id, user_id, user_type, 
+      identify_field, personal_name, id_card_num, 
+      passport_num, mtp_num, sign_user_id, 
+      mobile, create_time, update_time, 
+      client_sign_cert,sign_img,sign_img_state)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{identifyField,jdbcType=VARCHAR}, #{personalName,jdbcType=VARCHAR}, #{idCardNum,jdbcType=VARCHAR}, 
+      #{passportNum,jdbcType=VARCHAR}, #{mtpNum,jdbcType=VARCHAR}, #{signUserId,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{clientSignCert,jdbcType=LONGVARCHAR},#{signImg,jdbcType=VARCHAR},#{signImgState,jdbcType=VARCHAR})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.UserSignaturePersonModel" >
+    update user_signature_person
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyField != null" >
+        identify_field = #{identifyField,jdbcType=VARCHAR},
+      </if>
+      <if test="personalName != null" >
+        personal_name = #{personalName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="passportNum != null" >
+        passport_num = #{passportNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mtpNum != null" >
+        mtp_num = #{mtpNum,jdbcType=VARCHAR},
+      </if>
+      <if test="signUserId != null" >
+        sign_user_id = #{signUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clientSignCert != null" >
+        client_sign_cert = #{clientSignCert,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="signImg != null" >
+        sign_img = #{signImg,jdbcType=VARCHAR},
+      </if>
+      <if test="signImgState != null" >
+        sign_img_state = #{signImgState,jdbcType=VARCHAR},
+      </if>           
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+   
+</mapper>

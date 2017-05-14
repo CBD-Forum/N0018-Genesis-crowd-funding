@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="所有项目"  fileName="所有项目列表">
+	<report-header>
+		<column name="项目编号" mapping="loanNo" />
+		<column name="项目名称" mapping="loanName" />
+		<column name="借款用户名" mapping="loanUser" />
+		<column name="借款人真实姓名" mapping="loanUserName" />
+		<column name="借款期限(月)" mapping="loanTerm" />
+		<column name="借款金额(元)" mapping="loanAmt" />
+		<column name="项目所在省" mapping="loanProvinceName" />
+		<column name="项目所在市" mapping="loanCityName" />
+		<column name="担保公司" mapping="guaranteeName" />
+		<column name="借款利率" mapping="interestRate" />
+		<column name="融资截止时间" mapping="financeEndTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="状态" mapping="loanStateName" />
+		<column name="融资进度" mapping="fundPercent" />
+	</report-header>
+	<dataSource serviceClassId="loanService" serviceMethod="getLoansByStatus" />
+</report>

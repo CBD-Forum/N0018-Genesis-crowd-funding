@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.invitecode.model.InviteCodeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="invite_type" property="inviteType" jdbcType="VARCHAR" />
+    <result column="business_id" property="businessId" jdbcType="VARCHAR" />
+    <result column="invite_code" property="inviteCode" jdbcType="VARCHAR" />
+    <result column="invite_user" property="inviteUser" jdbcType="VARCHAR" />
+    <result column="being_invite_user" property="beingInviteUser" jdbcType="VARCHAR" />
+    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="createStartTime" property="createStartTime" jdbcType="TIMESTAMP" />
+    <result column="createEndTime" property="createEndTime" jdbcType="TIMESTAMP" />
+    <result column="invitor_type" property="invitorType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, invite_type, business_id, invite_code, invite_user, being_invite_user, register_time,invitor_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from invite_code
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from invite_code
+    <include refid="Model_Where"></include>
+  </select>
+   <sql id="Model_Where">
+  	<where>
+      <if test="inviteUser != null and inviteUser != ''" >
+        and invite_user = #{inviteUser,jdbcType=VARCHAR}
+      </if>
+       <if test="inviteCode != null and inviteCode != ''" >
+        and invite_code = #{inviteCode,jdbcType=VARCHAR}
+      </if>
+       <if test="inviteUser != null and inviteUser != ''" >
+        and invite_user= #{inviteUser,jdbcType=VARCHAR}
+      </if>
+      <if test="beingInviteUser != null and beingInviteUser != ''" >
+        and being_invite_user= #{beingInviteUser,jdbcType=VARCHAR}
+      </if>
+      <if test="invitorType != null and invitorType != ''" >
+        and invitor_type= #{invitorType,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <!-- 汇总推荐人的邀请结果 -->
+  <select id="selectTotalInviteData" resultType="java.util.Map" parameterType="java.lang.String">
+  select FORMAT(IFNULL(a.totalDirectAmt,0),2) totalDirectAmt,FORMAT(IFNULL(a.totalInDirectAmt,0),2) totalInDirectAmt,
+         b.totalInvestor,c.totalRecommendUser  from 
+	(SELECT 
+	 sum(case when ra.invitor_type='direct' then ra.assign_amt else 0 end) as totalDirectAmt,
+	 sum(case when ra.invitor_type='indirect' then ra.assign_amt else 0 end) as totalInDirectAmt
+	 FROM reward_assign ra where ra.get_user=#{inviteUser,jdbcType=VARCHAR})a,
+	 <!-- 投资的好友 -->
+	(select count(1) totalInvestor FROM  invite_code ic where ic.invite_user=#{inviteUser,jdbcType=VARCHAR} and   
+	 EXISTS (SELECT i.invest_no from invest i where i.invest_state in('success','repaying','complete') and i.investor = ic.being_invite_user))b,
+	<!-- 注册的好友 -->
+	(SELECT count(1) as totalRecommendUser
+	 FROM  invite_code ic where ic.invite_user=#{inviteUser,jdbcType=VARCHAR})c
+  
+  </select>
+  
+  
+  
+  
+  
+  
+  <!-- 查询邀请结果 -->
+  <!-- <select id="selectByInviteUser" resultType="java.util.Map" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    select ic.being_invite_user as beingInviteUser,ic.register_time as registerTime,
+      u.mobile as mobile,
+	  case when u.is_auth='1' then '已开通' else '未开通' end as openThird,
+	  ic.invitor_type as invitorType,
+	  (select d.display_name 
+         from dictionary d 
+         where d.type_code='recommend_type' and d.code=ic.invitor_type) as invitorTypeName,
+	  (select FORMAT(IFNULL(sum(ra.assign_amt),0),2) from reward_assign ra 
+	   where ra.investor=ic.being_invite_user and ra.reward_type='recommend' and ra.get_user=ic.invite_user) as assignAmt,
+	  (SELECT FORMAT(IFNULL(sum(i.invest_amt),0),2) from invest i 
+	   where i.invest_state in('success','repaying','complete') 
+	   and i.investor = ic.being_invite_user) as investAmt
+	 from invite_code ic, user u
+    <include refid="base_Where"/>
+    order by u.create_time
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select> -->
+   <select id="selectByInviteUser" resultType="java.util.Map" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+ 
+    select  ic.register_time as registerTime,
+      u.mobile as mobile,
+	 u.real_name as realName,
+	 u.nick_name as nickName
+	 from invite_code ic inner join user u
+	 on ic.being_invite_user=u.user_id 
+   where
+    ic.invite_user = #{inviteUser,jdbcType=VARCHAR}
+    <if test="createStartTime != null and createStartTime != ''" >
+        and ic.register_time >= #{createStartTime,jdbcType=TIMESTAMP}
+   	</if>
+    <if test="createEndTime != null and createEndTime != ''" >
+        and ic.register_time &lt;= #{createEndTime,jdbcType=TIMESTAMP}
+    </if>
+    order by u.create_time
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <select id="selectCountByInviteUser" resultType="java.lang.Long" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    select count(1)
+    from invite_code ic,
+         user u
+   <include refid="base_Where"/>
+  </select>
+  <sql id="base_Where">
+  	<where>
+  		ic.being_invite_user=u.user_id 
+        and ic.invite_type='register'
+      <if test="inviteUser != null and inviteUser != ''" >
+        and ic.invite_user = #{inviteUser,jdbcType=VARCHAR}
+      </if>
+       <if test="createStartTime != null and createStartTime != ''" >
+        and u.create_time >= #{createStartTime,jdbcType=TIMESTAMP}
+      </if>
+       <if test="createEndTime != null and createEndTime != ''" >
+        and u.create_time &lt;= #{createEndTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  
+  
+   <!-- 查询一级邀请结果 -->
+  <select id="selectDirectByInviteUser" resultType="java.util.Map" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    select ic.being_invite_user as beingInviteUser,ic.register_time as registerTime,
+      u.mobile as mobile,
+	  ic.invitor_type as invitorType,
+	  (select FORMAT(IFNULL(sum(ra.assign_amt),0),2) from reward_assign ra 
+	   where ra.investor=ic.being_invite_user and ra.reward_type='recommend' and ra.get_user=ic.invite_user) as assignAmt
+	 from invite_code ic, user u
+    <include refid="base_Where"/>
+    order by u.create_time
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <select id="selectDirectCountByInviteUser" resultType="java.lang.Long" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    select count(1)
+    from invite_code ic,
+         user u
+   <include refid="base_Where"/>
+  </select>
+  <!-- 汇总推荐人的邀请结果 -->
+  <select id="selectDirectTotalData" resultType="java.util.Map" parameterType="java.lang.String">
+  select FORMAT(IFNULL(a.totalDirectAmt,0),2) totalDirectAmt,
+         c.totalRecommendUser  from 
+	(SELECT 
+	 sum(case when ra.invitor_type='direct' then ra.assign_amt else 0 end) as totalDirectAmt
+	 FROM reward_assign ra where ra.get_user=#{inviteUser,jdbcType=VARCHAR})a,
+	<!-- 注册的好友 -->
+	(SELECT count(1) as totalRecommendUser
+	 FROM  invite_code ic where ic.invite_user=#{inviteUser,jdbcType=VARCHAR})c
+  
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from invite_code
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    insert into invite_code (id, invite_type, business_id, 
+      invite_code, invite_user, being_invite_user, 
+      register_time,invitor_type)
+    values (#{id,jdbcType=VARCHAR}, #{inviteType,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, 
+      #{inviteCode,jdbcType=VARCHAR}, #{inviteUser,jdbcType=VARCHAR}, #{beingInviteUser,jdbcType=VARCHAR}, 
+      #{registerTime,jdbcType=TIMESTAMP},#{invitorType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    insert into invite_code
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="inviteType != null" >
+        invite_type,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="inviteCode != null" >
+        invite_code,
+      </if>
+      <if test="inviteUser != null" >
+        invite_user,
+      </if>
+      <if test="beingInviteUser != null" >
+        being_invite_user,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+       <if test="invitorType != null" >
+        invitor_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteType != null" >
+        #{inviteType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null" >
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteUser != null" >
+        #{inviteUser,jdbcType=VARCHAR},
+      </if>
+      <if test="beingInviteUser != null" >
+        #{beingInviteUser,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitorType != null" >
+        #{invitorType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    update invite_code
+    <set >
+      <if test="inviteType != null" >
+        invite_type = #{inviteType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null" >
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteUser != null" >
+        invite_user = #{inviteUser,jdbcType=VARCHAR},
+      </if>
+      <if test="beingInviteUser != null" >
+        being_invite_user = #{beingInviteUser,jdbcType=VARCHAR},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invitorType != null" >
+        invitor_type = #{invitorType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.invitecode.model.InviteCodeModel" >
+    update invite_code
+    set invite_type = #{inviteType,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=VARCHAR},
+      invite_code = #{inviteCode,jdbcType=VARCHAR},
+      invite_user = #{inviteUser,jdbcType=VARCHAR},
+      being_invite_user = #{beingInviteUser,jdbcType=VARCHAR},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      invitor_type = #{invitorType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询邀请人数 -->
+  <select id="getInviteCount" resultType="java.lang.Long">
+  	SELECT COUNT(*) inviteCount FROM invite_code WHERE invite_user=#{inviteUser,jdbcType=VARCHAR};
+  </select>
+  
+</mapper>

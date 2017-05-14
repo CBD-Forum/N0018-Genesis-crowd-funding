@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="优惠券发放明细"  fileName="优惠券发放明细列表">
+	<report-header>
+		<column name="编号" mapping="rewardNo" />
+		<column name="名称" mapping="rewardName" />
+		<column name="类型" mapping="rewardTypeName" />
+		<column name="来源" mapping="rewardSourceName" />
+		<column name="金额(元)" mapping="rewardAmt" />
+		<column name="使用下限(元)" mapping="lowerLimit" />
+		<column name="发放日期" mapping="genTime" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+		<column name="失效日期" mapping="effectTime" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+		<column name="用户名" mapping="userId" />
+		<column name="状态" mapping="rewardStateName" />
+		<column name="使用时间" mapping="useTime" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+		<column name="投资编号" mapping="investNo" />
+		<column name="投资金额(元)" mapping="investAmt" />
+		<column name="实际支付金额(元)" mapping="rechargeAmt" />
+		<column name="项目编号" mapping="loanNo" />
+		<column name="项目名称" mapping="loanName" />
+	</report-header>
+	<dataSource serviceClassId="rewardServiceImpl" serviceMethod="getUserRewardList" />
+</report>

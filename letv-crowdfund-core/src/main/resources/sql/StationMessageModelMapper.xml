@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.message.model.StationMessageModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.message.model.StationMessageModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="message_type" property="messageType" jdbcType="VARCHAR" />
+    <result column="message_child_type" property="messageChildType" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+    <result column="read_time" property="readTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="message_child_type_name" property="messageChildTypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, message_type, message_child_type, content, send_time, read_time, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from station_message
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.message.model.StationMessageModel" >
+    select 
+     count(1)
+    from station_message
+    <include refid="List_Where"/>
+  </select>
+  <select id="selectPageList" resultMap="BaseResultMap" parameterType="com.fbd.core.app.message.model.StationMessageModel" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select display_name from dictionary where code=message_child_type 
+       and type_code='station_msg_child_type') as message_child_type_name
+    from station_message
+    <include refid="List_Where"/>
+    <if test="sort=='sendTime'" >
+    	order by send_time desc
+    </if>
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <sql id="List_Where">
+  	<where>
+  	  <!-- 查询90天之前的消息 -->
+  	  send_time >= DATE_SUB(now(),INTERVAL 90 DAY)
+      <if test="messageType != null and messageType != ''" >
+        and message_type = #{messageType,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null and userId != ''" >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="id != null and id != ''" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>      
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from station_message
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.message.model.StationMessageModel" >
+    insert into station_message (id, user_id, message_type, 
+      message_child_type, content, send_time, 
+      read_time, status)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{messageType,jdbcType=VARCHAR}, 
+      #{messageChildType,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{sendTime,jdbcType=TIMESTAMP}, 
+      #{readTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.message.model.StationMessageModel" >
+    insert into station_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="messageType != null" >
+        message_type,
+      </if>
+      <if test="messageChildType != null" >
+        message_child_type,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="readTime != null" >
+        read_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        #{messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="messageChildType != null" >
+        #{messageChildType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readTime != null" >
+        #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.message.model.StationMessageModel" >
+    update station_message
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null" >
+        message_type = #{messageType,jdbcType=VARCHAR},
+      </if>
+      <if test="messageChildType != null" >
+        message_child_type = #{messageChildType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readTime != null" >
+        read_time = #{readTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.message.model.StationMessageModel" >
+    update station_message
+    set user_id = #{userId,jdbcType=VARCHAR},
+      message_type = #{messageType,jdbcType=VARCHAR},
+      message_child_type = #{messageChildType,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      read_time = #{readTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

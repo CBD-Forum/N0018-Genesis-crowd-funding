@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="discuss_time" property="discussTime" jdbcType="TIMESTAMP" />
+    <result column="discuss_user" property="discussUser" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, discuss_time, discuss_user, pid, state, auditor, audit_time,content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    select 
+	    cct.id, 
+	    cct.loan_no as loanNo, 
+	    cct.discuss_time as discussTime, 
+	    DATEDIFF(now(),cct.discuss_time) as differDays,
+	    cct.discuss_user as discussUser, 
+	    (case when LENGTH(u.real_name) = 0 or  u.real_name is null then CONCAT(LEFT(cct.discuss_user,2),'***',RIGHT(cct.discuss_user,1))
+        else u.real_name end) as discussUser2,
+	    cct.pid, 
+	    cct.state, 
+	    cct.auditor, 
+	    cct.audit_time as auditTime,
+	    cct.content,
+	    (select d.display_name from dictionary d 
+     		     where d.type_code='crowdFund_auditState' and d.code=cct.state)as stateName,
+	    c.loan_name as loanName,
+	    u.real_name as discussUserName,
+	    u.nick_name as userNickName,
+	    u.photo 
+    from crowdfunding_comment cct
+              left join crowdfunding c on c.loan_no=cct.loan_no
+              left join user u on u.user_id=cct.discuss_user
+<!--               left join crowdfund_user_stuff cus on cus.user_id = cct.discuss_user -->
+    <include refid="base_where"></include>
+    order by cct.discuss_time desc
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <sql id="base_where">
+  	<where>
+  		<if test="loanNo != null and loanNo != ''" >
+        and cct.loan_no = #{loanNo,jdbcType=VARCHAR}
+       </if>
+       <if test="loanNoLike != null and loanNoLike != ''" >
+        and cct.loan_no like CONCAT(CONCAT('%', #{loanNoLike,jdbcType=VARCHAR}),'%')
+       </if>
+       <if test="loanNameLike != null and loanNameLike != ''" >
+        and c.loan_name like CONCAT(CONCAT('%', #{loanNameLike,jdbcType=VARCHAR}),'%')
+       </if>
+        <if test="discussUserLike != null and discussUserLike != ''" >
+        and cct.discuss_user = #{discussUserLike,jdbcType=VARCHAR}
+       </if>
+       <if test="discussUser != null and discussUser != ''" >
+        and cct.discuss_user = #{discussUser,jdbcType=VARCHAR}
+       </if>
+       <if test="state != null and state != ''" >
+        and cct.state = #{state,jdbcType=VARCHAR}
+       </if>
+       <if test="pid != null and pid != ''" >
+        and cct.pid = #{pid,jdbcType=VARCHAR}
+       </if>
+       <if test="content != null and content != ''" >
+        and cct.content like CONCAT(CONCAT('%', #{content,jdbcType=VARCHAR}),'%')
+       </if>
+       
+       
+  	</where>
+  </sql>
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    select count(1)
+    from crowdfunding_comment cct
+              left join crowdfunding c on c.loan_no=cct.loan_no
+              left join user u on u.user_id=cct.discuss_user
+    <include refid="base_where"></include>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    insert into crowdfunding_comment (id, loan_no, discuss_time, 
+      discuss_user, pid, state, 
+      auditor, audit_time, content
+      )
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{discussTime,jdbcType=TIMESTAMP}, 
+      #{discussUser,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{auditor,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    insert into crowdfunding_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="discussTime != null" >
+        discuss_time,
+      </if>
+      <if test="discussUser != null" >
+        discuss_user,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="discussTime != null" >
+        #{discussTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discussUser != null" >
+        #{discussUser,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    update crowdfunding_comment
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="discussTime != null" >
+        discuss_time = #{discussTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="discussUser != null" >
+        discuss_user = #{discussUser,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    update crowdfunding_comment
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      discuss_time = #{discussTime,jdbcType=TIMESTAMP},
+      discuss_user = #{discussUser,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingCommentModel" >
+    update crowdfunding_comment
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      discuss_time = #{discussTime,jdbcType=TIMESTAMP},
+      discuss_user = #{discussUser,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

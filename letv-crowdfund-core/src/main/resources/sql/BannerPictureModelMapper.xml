@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.banner.model.BannerPictureModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.banner.model.BannerPictureModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="banner_id" property="bannerId" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+    <result column="is_out_site" property="isOutSite" jdbcType="BIT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="seq_num" property="seqNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, banner_id, title, picture, is_out_site, url, seq_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from banner_picture
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT t2.* from banner t1,banner_picture t2 where t1.id=t2.banner_id and t1.code=#{code,jdbcType=VARCHAR} ORDER BY t2.seq_num
+  </select>
+  
+  <select id="selectByBannerId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+     select 
+    <include refid="Base_Column_List" />
+    from banner_picture
+    where banner_id = #{bannerId,jdbcType=VARCHAR} ORDER BY seq_num
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from banner_picture
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+   <delete id="deleteByBannerId" parameterType="java.lang.String" >
+    delete from banner_picture
+    where banner_id = #{bannerId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.fbd.core.app.banner.model.BannerPictureModel" >
+    insert into banner_picture (id, banner_id, title, 
+      picture, is_out_site, url, 
+      seq_num)
+    values (#{id,jdbcType=VARCHAR}, #{bannerId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{picture,jdbcType=VARCHAR}, #{isOutSite,jdbcType=BIT}, #{url,jdbcType=VARCHAR}, 
+      #{seqNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.banner.model.BannerPictureModel" >
+    insert into banner_picture
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="bannerId != null" >
+        banner_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+      <if test="isOutSite != null" >
+        is_out_site,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="seqNum != null" >
+        seq_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerId != null" >
+        #{bannerId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="isOutSite != null" >
+        #{isOutSite,jdbcType=BIT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        #{seqNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.banner.model.BannerPictureModel" >
+    update banner_picture
+    <set >
+      <if test="bannerId != null" >
+        banner_id = #{bannerId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="isOutSite != null" >
+        is_out_site = #{isOutSite,jdbcType=BIT},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        seq_num = #{seqNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.banner.model.BannerPictureModel" >
+    update banner_picture
+    set banner_id = #{bannerId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      is_out_site = #{isOutSite,jdbcType=BIT},
+      url = #{url,jdbcType=VARCHAR},
+      seq_num = #{seqNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

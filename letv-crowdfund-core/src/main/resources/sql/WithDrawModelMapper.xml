@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.withdraw.model.WithDrawModelMapper">
+	<resultMap id="BaseResultMap" type="com.fbd.core.app.withdraw.model.WithDrawModel">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="bank_card_id" property="bankCardId" jdbcType="VARCHAR" />
+		<result column="withdraw_way" property="withdrawWay" jdbcType="VARCHAR" />
+		<result column="amt" property="amt" jdbcType="DOUBLE" />
+		<result column="withdraw_fee" property="withdrawFee" jdbcType="DOUBLE" />
+		<result column="actual_money" property="actualMoney" jdbcType="DOUBLE" />
+		<result column="fee" property="fee" jdbcType="DOUBLE" />
+		<result column="fee_child_acctno" property="feeChildAcctno"
+			jdbcType="VARCHAR" />
+		<result column="fee_acct_no" property="feeAcctNo" jdbcType="VARCHAR" />
+		<result column="third_acct_no" property="thirdAcctNo" jdbcType="VARCHAR" />
+		<result column="cash_fine" property="cashFine" jdbcType="DOUBLE" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+		<result column="accept_time" property="acceptTime" jdbcType="TIMESTAMP" />
+		<result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+		<result column="audit_opinion" property="auditOpinion"
+			jdbcType="VARCHAR" />
+		<result column="auditor" property="auditor" jdbcType="VARCHAR" />
+		<result column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="state_name" property="stateName" jdbcType="VARCHAR" />
+		<result column="hy_fee" property="hyFee" jdbcType="DOUBLE" />
+		<result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+		<result column="complete_time" property="completeTime"
+			jdbcType="TIMESTAMP" />
+		<result column="bankName" property="bankName" jdbcType="VARCHAR" />
+		<result column="third_withDraw_type" property="thirdWtihDrawType"
+			jdbcType="VARCHAR" />
+		<result column="withdraw_transaction_id" property="withdrawTransactionId"
+			jdbcType="VARCHAR" />
+		<result column="withdraw_block_chain_state" property="withdrawBlockChainState"
+			jdbcType="VARCHAR" />
+		<result column="audit_transaction_id" property="auditTransactionId"
+			jdbcType="VARCHAR" />
+		<result column="audit_block_chain_state" property="auditBlockChainState"
+			jdbcType="VARCHAR" />
+
+		<result column="agreement_state" property="agreementState"
+			jdbcType="VARCHAR" />
+		<result column="agreement_url" property="agreementUrl"
+			jdbcType="VARCHAR" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, user_id, bank_card_id, withdraw_way, amt, actual_money, fee,
+		fee_child_acctno,
+		fee_acct_no, third_acct_no, cash_fine, state, apply_time, accept_time, audit_time,
+		audit_opinion,
+		auditor,order_id,hy_fee,send_time,complete_time,third_withDraw_type,
+		withdraw_transaction_id,withdraw_block_chain_state,audit_transaction_id,audit_block_chain_state,
+		agreement_state,agreement_url,withdraw_fee
+	</sql>
+	<!-- 查询提现列表 -->
+	<sql id="base_Where">
+		<where>
+			<if test="userId != null and userId != ''">
+				and t1.user_id = #{userId,jdbcType=VARCHAR}
+			</if>
+			<if test="state != null and state != ''">
+				and t1.state = #{state,jdbcType=VARCHAR}
+			</if>
+			<if test="withdrawTransactionId != null and withdrawTransactionId != ''">
+				and t1.withdraw_transaction_id =
+				#{withdrawTransactionId,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="withdrawBlockChainState != null and withdrawBlockChainState != ''">
+				and t1.withdraw_block_chain_state =
+				#{withdrawBlockChainState,jdbcType=VARCHAR}
+			</if>
+			<if test="auditTransactionId != null and auditTransactionId != ''">
+				and t1.audit_transaction_id = #{auditTransactionId,jdbcType=VARCHAR}
+			</if>
+			<if test="auditBlockChainState != null and auditBlockChainState != ''">
+				and t1.audit_block_chain_state =
+				#{auditBlockChainState,jdbcType=VARCHAR}
+			</if>
+			<if test="applyStartTime != null and applyStartTime != ''">
+				and t1.apply_time &gt;= #{applyStartTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="applyEndTime != null and applyEndTime != ''">
+				and t1.apply_time &lt;= #{applyEndTime,jdbcType=TIMESTAMP}
+			</if>
+		</where>
+	</sql>
+	<select id="selectList" resultMap="BaseResultMap"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select
+		t1.id, t1.user_id, t1.withdraw_way, t1.amt, t1.actual_money, t1.fee,
+		t1.fee_child_acctno,
+		t1.fee_acct_no, t1.third_acct_no, t1.cash_fine, t1.state, t1.apply_time,
+		t1.accept_time, t1.audit_time,
+		t1.audit_opinion, t1.auditor,t1.order_id,t1.hy_fee,t1.send_time,t1.complete_time,
+		(select display_name from dictionary where code=t1.state and
+		type_code='withdraw_state') as state_name,
+		t4.bank_account bank_card_id,t5.bank_name bankName,
+		t1.withdraw_transaction_id,t1.withdraw_block_chain_state,t1.audit_transaction_id,t1.audit_block_chain_state
+		from withdraw t1
+		LEFT JOIN user_bank t4 ON t1.user_id = t4.user_id and
+		t4.bank_no=t1.bank_card_id
+		LEFT JOIN recharge_bank t5 ON t4.bank = t5.bank_code AND t5.busi_type =
+		'B2C'
+		<include refid="base_Where" />
+		<!-- 默认按照充值日期 -->
+		order by t1.apply_time desc
+		<if test="endPage>0">
+			LIMIT #{startPage},#{endPage}
+		</if>
+	</select>
+	<select id="selectListCounts" resultType="java.lang.Long"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select count(1)
+		from withdraw t1
+		LEFT JOIN user_bank t4 ON t1.user_id = t4.user_id and
+		t4.bank_no=t1.bank_card_id
+		LEFT JOIN recharge_bank t5 ON t4.bank = t5.bank_code AND t5.busi_type =
+		'B2C'
+		<include refid="base_Where" />
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+
+
+
+	<select id="selectWithDrawList" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw
+		where state = 'sended' and third_withDraw_type = 'SXY'
+	</select>
+	<select id="selectByOrderId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw
+		where order_id = #{orderId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from withdraw
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		insert into withdraw (id, user_id, bank_card_id,
+		withdraw_way, amt, actual_money,
+		fee, fee_child_acctno, fee_acct_no,
+		third_acct_no, cash_fine, state,
+		apply_time, accept_time, audit_time,
+		audit_opinion, auditor,order_id,hy_fee,send_time,complete_time,third_withDraw_type,
+		withdraw_transaction_id,withdraw_block_chain_state,audit_transaction_id,audit_block_chain_state,withdraw_fee)
+		values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+		#{bankCardId,jdbcType=VARCHAR},
+		#{withdrawWay,jdbcType=VARCHAR}, #{amt,jdbcType=DOUBLE}, #{actualMoney,jdbcType=DOUBLE},
+		#{fee,jdbcType=DOUBLE}, #{feeChildAcctno,jdbcType=VARCHAR},
+		#{feeAcctNo,jdbcType=VARCHAR},
+		#{thirdAcctNo,jdbcType=VARCHAR}, #{cashFine,jdbcType=DOUBLE}, #{state,jdbcType=VARCHAR},
+		#{applyTime,jdbcType=TIMESTAMP}, #{acceptTime,jdbcType=TIMESTAMP},
+		#{auditTime,jdbcType=TIMESTAMP},
+		#{auditOpinion,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR},
+		#{hyFee,jdbcType=DOUBLE},#{sendTime,jdbcType=TIMESTAMP},#{completeTime,jdbcType=TIMESTAMP},
+		#{thirdWtihDrawType,jdbcType=TIMESTAMP},
+		#{withdrawTransactionId,jdbcType=VARCHAR},
+		#{withdrawBlockChainState,jdbcType=VARCHAR},
+		#{auditTransactionId,jdbcType=VARCHAR},#{auditBlockChainState,jdbcType=VARCHAR},#{withdrawFee,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		insert into withdraw
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="bankCardId != null">
+				bank_card_id,
+			</if>
+			<if test="withdrawWay != null">
+				withdraw_way,
+			</if>
+			<if test="amt != null">
+				amt,
+			</if>
+			<if test="actualMoney != null">
+				actual_money,
+			</if>
+			<if test="fee != null">
+				fee,
+			</if>
+			<if test="feeChildAcctno != null">
+				fee_child_acctno,
+			</if>
+			<if test="feeAcctNo != null">
+				fee_acct_no,
+			</if>
+			<if test="thirdAcctNo != null">
+				third_acct_no,
+			</if>
+			<if test="cashFine != null">
+				cash_fine,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="applyTime != null">
+				apply_time,
+			</if>
+			<if test="acceptTime != null">
+				accept_time,
+			</if>
+			<if test="auditTime != null">
+				audit_time,
+			</if>
+			<if test="auditOpinion != null">
+				audit_opinion,
+			</if>
+			<if test="auditor != null">
+				auditor,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="hyFee != null">
+				hy_fee,
+			</if>
+			<if test="sendTime != null">
+				send_time,
+			</if>
+			<if test="completeTime != null">
+				complete_time,
+			</if>
+			<if test="withdrawFee!=null">
+			   withdraw_fee,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCardId != null">
+				#{bankCardId,jdbcType=VARCHAR},
+			</if>
+			<if test="withdrawWay != null">
+				#{withdrawWay,jdbcType=VARCHAR},
+			</if>
+			<if test="amt != null">
+				#{amt,jdbcType=DOUBLE},
+			</if>
+			<if test="actualMoney != null">
+				#{actualMoney,jdbcType=DOUBLE},
+			</if>
+			<if test="fee != null">
+				#{fee,jdbcType=DOUBLE},
+			</if>
+			<if test="feeChildAcctno != null">
+				#{feeChildAcctno,jdbcType=VARCHAR},
+			</if>
+			<if test="feeAcctNo != null">
+				#{feeAcctNo,jdbcType=VARCHAR},
+			</if>
+			<if test="thirdAcctNo != null">
+				#{thirdAcctNo,jdbcType=VARCHAR},
+			</if>
+			<if test="cashFine != null">
+				#{cashFine,jdbcType=DOUBLE},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=VARCHAR},
+			</if>
+			<if test="applyTime != null">
+				#{applyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="acceptTime != null">
+				#{acceptTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditTime != null">
+				#{auditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditOpinion != null">
+				#{auditOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="auditor != null">
+				#{auditor,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="hyFee != null">
+				#{hyFee,jdbcType=DOUBLE},
+			</if>
+			<if test="sendTime != null">
+				#{sendTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="completeTime != null">
+				#{completeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="withdrawFee != null">
+			#{withdrawFee,jdbcType=DOBULE}
+				</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		update withdraw
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCardId != null">
+				bank_card_id = #{bankCardId,jdbcType=VARCHAR},
+			</if>
+			<if test="withdrawWay != null">
+				withdraw_way = #{withdrawWay,jdbcType=VARCHAR},
+			</if>
+			<if test="amt != null">
+				amt = #{amt,jdbcType=DOUBLE},
+			</if>
+			<if test="actualMoney != null">
+				actual_money = #{actualMoney,jdbcType=DOUBLE},
+			</if>
+			<if test="fee != null">
+				fee = #{fee,jdbcType=DOUBLE},
+			</if>
+			<if test="feeChildAcctno != null">
+				fee_child_acctno = #{feeChildAcctno,jdbcType=VARCHAR},
+			</if>
+			<if test="feeAcctNo != null">
+				fee_acct_no = #{feeAcctNo,jdbcType=VARCHAR},
+			</if>
+			<if test="thirdAcctNo != null">
+				third_acct_no = #{thirdAcctNo,jdbcType=VARCHAR},
+			</if>
+			<if test="cashFine != null">
+				cash_fine = #{cashFine,jdbcType=DOUBLE},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="applyTime != null">
+				apply_time = #{applyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="acceptTime != null">
+				accept_time = #{acceptTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditTime != null">
+				audit_time = #{auditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditOpinion != null">
+				audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="auditor != null">
+				auditor = #{auditor,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				order_id = #{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="hyFee != null">
+				hy_fee = #{hyFee,jdbcType=DOUBLE},
+			</if>
+			<if test="sendTime != null">
+				send_time = #{sendTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="completeTime != null">
+				complete_time = #{completeTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="financialOpinion != null">
+				financial_opinion = #{financialOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorOpinion != null">
+				operator_opinion = #{operatorOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorAuditTime != null">
+				operator_audit_time = #{operatorAuditTime,jdbcType=VARCHAR},
+			</if>
+			<if test="financialAuditTime != null">
+				financial_audit_time = #{financialAuditTime,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null">
+				operator = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="financialAuditor != null">
+				financial_auditor = #{financialAuditor,jdbcType=VARCHAR},
+			</if>
+			<if test="thirdWtihDrawType != null">
+				third_withDraw_type = #{thirdWtihDrawType,jdbcType=VARCHAR},
+			</if>
+			<if test="withdrawTransactionId != null">
+				withdraw_transaction_id = #{withdrawTransactionId,jdbcType=VARCHAR},
+			</if>
+			<if test="withdrawBlockChainState != null">
+				withdraw_block_chain_state =
+				#{withdrawBlockChainState,jdbcType=VARCHAR},
+			</if>
+			<if test="auditTransactionId != null">
+				audit_transaction_id = #{auditTransactionId,jdbcType=VARCHAR},
+			</if>
+			<if test="auditBlockChainState != null">
+				audit_block_chain_state = #{auditBlockChainState,jdbcType=VARCHAR},
+			</if>
+			<if test="agreementState != null">
+				agreement_state = #{agreementState,jdbcType=VARCHAR},
+			</if>
+			<if test="agreementUrl != null">
+				agreement_url = #{agreementUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="withdrawFee!=null">
+			   withdraw_fee = #{withdrawFee,jdbcType=DOUBLE},
+			
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		update withdraw
+		set user_id = #{userId,jdbcType=VARCHAR},
+		bank_card_id = #{bankCardId,jdbcType=VARCHAR},
+		withdraw_way = #{withdrawWay,jdbcType=VARCHAR},
+		amt = #{amt,jdbcType=DOUBLE},
+		actual_money = #{actualMoney,jdbcType=DOUBLE},
+		fee = #{fee,jdbcType=DOUBLE},
+		fee_child_acctno = #{feeChildAcctno,jdbcType=VARCHAR},
+		fee_acct_no = #{feeAcctNo,jdbcType=VARCHAR},
+		third_acct_no = #{thirdAcctNo,jdbcType=VARCHAR},
+		cash_fine = #{cashFine,jdbcType=DOUBLE},
+		state = #{state,jdbcType=VARCHAR},
+		apply_time = #{applyTime,jdbcType=TIMESTAMP},
+		accept_time = #{acceptTime,jdbcType=TIMESTAMP},
+		audit_time = #{auditTime,jdbcType=TIMESTAMP},
+		audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+		auditor = #{auditor,jdbcType=VARCHAR},
+		order_id = #{orderId,jdbcType=VARCHAR},
+		hy_fee = #{hyFee,jdbcType=DOUBLE},
+		send_time = #{sendTime,jdbcType=TIMESTAMP},
+		complete_time = #{completeTime,jdbcType=TIMESTAMP},
+		third_withDraw_type = #{thirdWtihDrawType,jdbcType=VARCHAR},
+		withdraw_transaction_id = #{withdrawTransactionId,jdbcType=VARCHAR},
+		withdraw_block_chain_state =
+		#{withdrawBlockChainState,jdbcType=VARCHAR},
+		audit_transaction_id = #{auditTransactionId,jdbcType=VARCHAR},
+		audit_block_chain_state = #{auditBlockChainState,jdbcType=VARCHAR},
+		agreement_state = #{agreementState,jdbcType=VARCHAR},
+					   withdraw_fee = #{withdrawFee,jdbcType=DOUBLE},
+		
+		agreement_url = #{agreementUrl,jdbcType=VARCHAR}
+
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+	<!-- 后台查询列表 -->
+	<sql id="Base_Where_List_4_Admin">
+		<where>
+			<if test="orderId != null and orderId != ''">
+				and t1.order_id like CONCAT(CONCAT('%', #{orderId,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="startApplyTime != null and startApplyTime != ''">
+				and t1.apply_time &gt;= #{startApplyTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="endApplyTime != null and endApplyTime != ''">
+				and t1.apply_time &lt;= #{endApplyTime,jdbcType=TIMESTAMP}
+			</if>
+
+			<if test="userId != null and userId != ''">
+				and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="userName != null and userName != ''">
+				and t2.real_name like CONCAT(CONCAT('%', #{userName,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="mobile != null and mobile != ''">
+				and t2.mobile like CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="state != null and state != '' and state!='auditing'">
+				and t1.state = #{state,jdbcType=VARCHAR}
+			</if>
+			<if test="state == 'auditing'">
+				and (t1.state='auditing' or t1.state='operator_passed' )
+			</if>
+		</where>
+	</sql>
+
+	<select id="getWidthdraws4Admin" resultType="java.util.Map">
+		SELECT t1.id,
+		t1.user_id userId, -- 用户编号
+		t1.order_id orderId, --
+		t4.bank bankName, -- 银行名称
+		t4.bank_account bankCardId, -- 银行卡号
+		t4.bank_no
+		bankNo, -- 银行编号
+		t1.withdraw_way withdrawWay, -- 提现方式
+		FORMAT(t1.amt,2)
+		amt, -- 实际交易金额
+		FORMAT(t1.actual_money,2) actualMoney, -- 到账金额
+		FORMAT(t1.fee,2) fee, -- 提现手续费
+		t1.fee_child_acctno feeChildAcctno, -- 手续费子账户号
+		t1.fee_acct_no feeAcctNo, -- 手续费客户号
+		t1.third_acct_no
+		thirdAcctNo, -- 是投资账户还是借款账户提现
+		FORMAT(t1.cash_fine,2) cashFine, -- 提现罚金
+		t1.state, -- 等待处理 new，等待审核 auditing，审核通过 passed，审核不通过 refuse
+		t1.apply_time applyTime, -- 提交申请时间
+		t1.accept_time acceptTime, -- 申请受理时间
+		t1.audit_time auditTime, -- 审核时间
+		t1.audit_opinion auditOpinion, -- 审核信息
+		t1.auditor, -- 审核人编号
+		t2.real_name userName, -- 真实姓名
+		t2.mobile, -- 手机号
+		t3.display_name stateName, -- 状态名称
+		t2.is_borrower -- 手机号
+		,t4.open_acct_bank openAcctBank
+		FROM withdraw t1
+		LEFT JOIN `user` t2 ON t1.user_id = t2.user_id
+		LEFT JOIN dictionary t3 ON t1.state = t3.`code` AND t3.type_code =
+		'withdraw_state'
+		LEFT JOIN user_bank t4 ON t1.user_id = t4.user_id and
+		t4.bank_account=t1.bank_card_id
+		LEFT JOIN recharge_bank t5 ON t4.bank = t5.bank_code AND t5.busi_type =
+		'B2C'
+		<include refid="Base_Where_List_4_Admin" />
+		ORDER BY t1.apply_time DESC
+		<if test="endPage>0">
+			LIMIT #{startPage},#{endPage}
+		</if>
+	</select>
+
+	<select id="getWidthdrawCount4Admin" resultType="java.lang.Long">
+		select count(*) FROM withdraw t1
+		LEFT JOIN `user` t2 ON t1.user_id = t2.user_id
+		LEFT JOIN dictionary t3 ON t1.state = t3.`code` AND t3.type_code =
+		'withdraw_state'
+		LEFT JOIN user_bank t4 ON t1.user_id = t4.user_id and
+		t4.bank_account=t1.bank_card_id
+		LEFT JOIN recharge_bank t5 ON t4.bank = t5.bank_code AND t5.busi_type =
+		'B2C'
+		<include refid="Base_Where_List_4_Admin" />
+	</select>
+	<select id="selectWithdraw" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select
+		#{curDate,jdbcType=VARCHAR} as DATA_DATE,
+		CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+		'6029' as Company,'10089999' as Department,u.user_id as
+		Customer_ID,u.real_name as Customer_Name,
+		DATE_FORMAT(a.audit_time ,'%Y-%m-%d %H-%i-%s') as business_date,
+		f.loan_user Project_Cus_id ,
+		case f.loan_type when 'public' then '76030001' when 'stock' then
+		'76020001' when 'product' then '76010001' end as business_code ,
+
+		f.loan_no as product_code,'BC_ZFKX' as event_code
+		,f.loan_name as product_name
+		,r.assign_amt as client_amount,#{paymentMethod,jdbcType=VARCHAR} as pay_type,
+		r.assign_amt as actual_amount,
+		#{paymentAccount,jdbcType=VARCHAR} as pay_account
+		,a.id as lx_order,case f.loan_type when 'stock' then 'fenhong' else
+		b.back_type end as product_type,'0' as channel_amount
+		from crowdfund_bonus_audit a
+		inner join crowdfunding f on f.loan_no = a.loan_no
+		inner join reward_assign r on r.loan_no = a.loan_no
+		left join user u on u.user_id= r.get_user
+		left join crowdfunding_back_set b on b.loan_no = f.loan_no
+
+		where a.audit_state='passed'
+		<if test="completeTime != null and completeTime != ''">
+			and a.audit_time > #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by a.audit_time desc
+	</select>
+	<select id="withDrawCash" parameterType="java.util.Map"
+		resultType="java.util.Map">
+
+		select
+		#{curDate} as DATA_DATE,round(round(rand(),6)*1000000) as Batch_no ,'6029' as
+		Company,'10089999' as Department,
+		u.user_id as Customer_ID,u.real_name as Customer_Name ,
+		w.id as lx_order,
+		'BC_CZ' as event_code, DATE_FORMAT(send_time ,'%Y-%m-%d %H-%i-%s') as
+		business_date ,'CNY' as currency_code,
+		'1' as currency_rate,IFNULL(amt,0) as client_amount
+		,#{paymentMethod,jdbcType=VARCHAR} as
+		pay_type,#{paymentAccount,jdbcType=VARCHAR} as pay_account
+		,IFNULL(amt,0) as order_amount
+		amt as client_amount,fee as service_amount,
+		actual_money as actual_amount
+		from withdraw w
+		left join user u on w.user_id = u.user_id
+		where w.state='sended' and w.id='8855a405d35446d0b7e085e0034048d8'
+		<if test="completeTime != null and completeTime != ''">
+			and send_time > #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by send_time desc
+	</select>
+	<!-- 众筹提现申请 -->
+	<select id="selectWithDrawData" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select
+		 DATE_FORMAT(#{curDate} ,'%Y-%m-%d %H:%i:%s') as DATA_DATE, CONCAT( CURDATE()+0,'-1') as Batch_no ,'6029' as
+		Company,'10089999' as Department,
+		u.user_id as Customer_ID,u.real_name as Customer_Name ,
+		w.order_id as order_number,'BC_TX' as event_code,
+		DATE_FORMAT(w.apply_time ,'%Y-%m-%d %H:%i:%s') as business_date ,'CNY' as currency_code,
+		'1' as currency_rate
+		,#{paymentMethod,jdbcType=VARCHAR} as pay_type
+		,#{paymentAccount,jdbcType=VARCHAR} as pay_account
+		,0 as client_amount,'76020001' as
+		business_code, 0 as service_amount,IFNULL(w.amt,0) as actual_amount,
+		1 as channel_amount,'0' as product_code,'S602901' as source
+		from withdraw w
+		inner join user u on w.user_id =u.user_id
+		 where w.state='auditing' 
+		<if test="completeTime != null and completeTime != ''">
+			and w.apply_time> #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by w.apply_time desc
+	</select>
+<!-- 众筹提现成功 -->
+	<select id="selectWithDrawDataSuccess" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select
+		 DATE_FORMAT(#{curDate} ,'%Y-%m-%d %H:%i:%s') as DATA_DATE, CONCAT( CURDATE()+0,'-1') as Batch_no ,'6029' as
+		Company,'10089999' as Department,
+		u.user_id as Customer_ID,u.real_name as Customer_Name ,
+		w.order_id as order_number,'BC_TX' as event_code,
+		DATE_FORMAT(w.complete_time ,'%Y-%m-%d %H:%i:%s') as business_date ,'CNY' as currency_code,
+		'1' as currency_rate
+		,#{paymentMethod,jdbcType=VARCHAR} as pay_type
+		,#{paymentAccount,jdbcType=VARCHAR} as pay_account
+		,IFNULL(w.amt,0) as client_amount,'76020001' as
+		business_code, 0 as service_amount,0 as actual_amount,
+		'0' as product_code,'S602901' as source
+		from withdraw w
+		inner join user u on w.user_id =u.user_id
+		 where w.state='success' 
+		<if test="completeTime != null and completeTime != ''">
+			and w.complete_time> #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by w.complete_time desc
+	</select>
+<!-- 众筹提现区块链成功-->
+	<select id="selectWithDrawBlockData" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select
+		 DATE_FORMAT(#{curDate} ,'%Y-%m-%d %H:%i:%s') as DATA_DATE, CONCAT( CURDATE()+0,'-1') as Batch_no ,'6029' as
+		Company,'10089999' as Department,
+		u.user_id as Customer_ID,u.real_name as Customer_Name ,
+		w.order_id as order_number,'BC_TX' as event_code,
+		DATE_FORMAT(w.financial_audit_time ,'%Y-%m-%d %H:%i:%s') as business_date ,'CNY' as currency_code,
+		'1' as currency_rate
+		,#{paymentMethod,jdbcType=VARCHAR} as pay_type
+		,#{paymentAccount,jdbcType=VARCHAR} as pay_account
+		,0 as client_amount,'76020001' as
+		business_code,1 as service_amount,0 as actual_amount,
+		0 as channel_amount,'0' as product_code,'S602901' as source
+		from withdraw w
+		inner join user u on w.user_id =u.user_id
+		  where w.state='withdraw_success' 
+		<if test="completeTime != null and completeTime != ''">
+			and w.financial_audit_time >str_to_date( #{completeTime,jdbcType=TIMESTAMP},'%Y-%m-%d %H:%i:%s') 
+		</if>
+		order by w.financial_audit_time desc
+	</select>
+
+	<select id="selectUserWithDrawDetail" resultType="java.util.Map"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select
+		t1.id,
+		t1.amt,
+		t1.actual_money actualMoney,
+		t1.apply_time applyTime,
+		t1.fee,
+		t1.complete_time completeTime,
+		t1.bank_card_id bankCardId,
+		t1.state,
+		t2.bank,
+		t1.financial_opinion financialOpinion,
+		t1.operator_opinion operatorOpinion,
+		(select d.display_name from dictionary d where d.type_code = 'withdraw_state'
+		and d.`code` = t1.state) withDrawStateName
+		from withdraw t1
+		left join user_bank t2 on t1.bank_card_id = t2.bank_account
+
+		<include refid="Base_Where_user_withDraw_list" />
+	</select>
+
+
+	<select id="selectTranactionList" resultType="java.util.Map"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select id ,amt,jxtime,state,stateName,appendStateName from ( select *
+		from (select
+		t1.id,
+		t1.amt,
+		t1.apply_time jxtime,
+
+		t1.state,
+
+		(select d.display_name from dictionary d where d.type_code = 'withdraw_state'
+		and d.`code` = t1.state) stateName,
+		'提现' appendStateName
+		from withdraw t1
+		left join user_bank t2 on t1.bank_card_id = t2.bank_account
+
+		<include refid="Base_Where_user_withDraw_list" />
+		ORDER BY t1.complete_time DESC,t1.apply_time DESC
+		) t4
+		union all
+		select * from (
+		select
+		t2.id,
+		t2.recharge_amt amt,
+		t2.create_time jxtime,
+		t2.state,
+		(select d.display_name from dictionary d where d.type_code = 'recharge_state'
+		and d.`code` = t2.state) stateName,
+		'充值' appendStateName
+		from recharge t2
+		<include refid="Base_where_user_recharge" />
+		order by t2.complete_time desc,t2.create_time desc
+
+		) t3 ) t5
+		<if test="endPage>0">
+			LIMIT #{startPage},#{endPage}
+		</if>
+
+	</select>
+
+	<select id="selectTranactionListCount" resultType="java.lang.Long"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select count(1) from ( select * from (select
+		t1.id,
+		t1.amt,
+		t1.apply_time jxtime,
+
+		t1.state,
+
+		(select d.display_name from dictionary d where d.type_code = 'withdraw_state'
+		and d.`code` = t1.state) stateName,
+		'提现' appendStateName
+		from withdraw t1
+		left join user_bank t2 on t1.bank_card_id = t2.bank_account
+
+		<include refid="Base_Where_user_withDraw_list" />
+		ORDER BY t1.complete_time DESC,t1.apply_time DESC
+		) t4
+		union all
+		select * from (
+		select
+		t2.id,
+		t2.recharge_amt amt,
+		t2.create_time jxtime,
+		t2.state,
+		(select d.display_name from dictionary d where d.type_code = 'recharge_state'
+		and d.`code` = t2.state) stateName,
+		'充值' appendStateName
+		from recharge t2
+		<include refid="Base_where_user_recharge" />
+		order by t2.complete_time desc,t2.create_time desc
+
+		) t3 ) t5
+
+	</select>
+
+
+	<select id="selectTranactionById" resultType="java.util.Map"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select id
+		,amt,jxtime,state,stateName,appendStateName,financialOpinion,operatorOpinion
+		from ( select * from (select
+		t1.id,
+		t1.amt,
+		t1.apply_time jxtime,
+
+		t1.state,
+		t1.financial_opinion financialOpinion,
+		t1.operator_opinion operatorOpinion,
+		(select d.display_name from dictionary d where d.type_code = 'withdraw_state'
+		and d.`code` = t1.state) stateName,
+		'提现' appendStateName
+		from withdraw t1
+		left join user_bank t2 on t1.bank_card_id = t2.bank_account
+
+		<include refid="Base_Where_user_withDraw_list" />
+		ORDER BY t1.complete_time DESC,t1.apply_time DESC
+		) t4
+		union all
+		select * from (
+		select
+		t2.id,
+		t2.recharge_amt amt,
+		t2.create_time jxtime,
+		t2.state,
+		(select d.display_name from dictionary d where d.type_code = 'recharge_state'
+		and d.`code` = t2.state) stateName,
+		'充值' appendStateName,
+		t2.financial_opinion financialOpinion,
+		t2.operator_opinion operatorOpinion
+		from recharge t2
+		<include refid="Base_where_user_recharge" />
+		order by t2.complete_time desc,t2.create_time desc
+
+		) t3 ) t5
+
+	</select>
+	<sql id="Base_where_user_recharge">
+		<where>
+			<if test="id != null and id != ''">
+				and t2.id= #{id,jdbcType=VARCHAR}
+			</if>
+			<if test="createStartTime != null and createStartTime != ''">
+				and create_time &gt;= #{createStartTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="createEndTime != null and createEndTime != ''">
+				and create_time &lt;= #{createEndTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="stateIn =='fail'">
+				and t2.state in ('recharge_cw_refuse','recharge_yy_refuse')
+			</if>
+			<if test="stateIn =='inTransaction'">
+				and t2.state in ('recharge_success_auditing','operator_passed')
+			</if>
+			<if test="userId != null and userId != ''">
+				and t2.user_id = #{userId,jdbcType=VARCHAR}
+			</if>
+			<if test="id != null and id != ''">
+				and t2.id = #{id,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+	<select id="selectUserWithDrawList" resultType="java.util.Map"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select
+		t1.id,
+		t1.amt,
+		t1.actual_money actualMoney,
+		t1.apply_time applyTime,
+		t1.fee,
+		t1.complete_time completeTime,
+		t1.bank_card_id bankCardId,
+		t1.state,
+		t2.bank,
+		(select d.display_name from dictionary d where d.type_code = 'withdraw_state'
+		and d.`code` = t1.state) withDrawStateName
+		from withdraw t1
+		left join user_bank t2 on t1.bank_card_id = t2.bank_account
+
+		<include refid="Base_Where_user_withDraw_list" />
+		ORDER BY t1.complete_time DESC,t1.apply_time DESC
+		<if test="endPage>0">
+			LIMIT #{startPage},#{endPage}
+		</if>
+
+	</select>
+
+	<select id="selectUserWithDrawCount" resultType="java.lang.Long"
+		parameterType="com.fbd.core.app.withdraw.model.WithDrawModel">
+		select count(1)
+		from withdraw t1
+		left join user_bank t2 on t1.bank_card_id = t2.bank_account
+		<include refid="Base_Where_user_withDraw_list" />
+	</select>
+
+	<sql id="Base_Where_user_withDraw_list">
+		<where>
+			<if test="createStartTime != null and createStartTime != ''">
+				and t1.apply_time &gt;= #{createStartTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="createEndTime != null and createEndTime != ''">
+				and t1.apply_time &lt;= #{createEndTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="stateIn == 'fail'">
+				and t1.state in ('refuse','fail','operator_refuse')
+			</if>
+			<if test="stateIn == 'inTransaction'">
+				and t1.state in ('operator_passed','auditing')
+			</if>
+			<if test="userId != null and userId != ''">
+				and t1.user_id = #{userId,jdbcType=VARCHAR}
+			</if>
+			<if test="id != null and id  != ''">
+				and t1.id = #{id,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+  <select id="selectSuccessCount" resultType="java.lang.Long" parameterType="java.lang.String">
+    select count(1) from withdraw where order_id=#{orderId,jdbcType=VARCHAR} and state='success'
+  </select>
+</mapper>

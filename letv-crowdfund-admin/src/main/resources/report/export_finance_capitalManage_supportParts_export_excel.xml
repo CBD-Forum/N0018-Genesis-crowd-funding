@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="投资流水" fileName="投资流水列表">
+	<report-header>
+		<column name="项目编号" mapping="loanNo" />
+		<column name="项目名称" mapping="loanName" />
+		<column name="投资人" mapping="supportUser" />
+		<column name="投资人真实姓名" mapping="realName" />
+		<column name="投资人电话" mapping="mobile" />
+		<column name="投资金额" mapping="supportAmt" />
+		<column name="转让金额" mapping="transferAmt" />
+		<column name="当前投资金额" mapping="nowSupportAmt" />
+		<column name="投资份数" mapping="buyNum" />
+		<column name="投资时间" mapping="supportTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		
+	</report-header>
+	<dataSource serviceClassId="crowdfundingInvestTransferService" serviceMethod="getSupportPartsDetailListMap" />
+</report>

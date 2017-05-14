@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="attention_user" property="attentionUser" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="attention_type" property="attentionType" jdbcType="VARCHAR" />
+    <result column="attention_time" property="attentionTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, attention_user, loan_no,attention_type,attention_time
+  </sql>
+   <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModel" >
+    select 
+	    ca.id, 
+	    ca.attention_user as attentionUser, 
+	    ca.loan_no as loanNo,
+	    ca.attention_type as attentionType,
+	    ca.attention_time as attentionTime,
+	    cf.loan_name as loanName,
+	    cf.loan_user as loanUser, 
+	    CONCAT(LEFT(cf.loan_user,2),'***',RIGHT(cf.loan_user,1)) as loanUser2,
+	    cf.fund_amt as fundAmt,
+	    cf.loan_type as loanType,
+	    cf.loan_logo as loanLogo,
+	    (select d.display_name from dictionary d 
+	     		     where d.type_code='crowdFundType' and d.code=cf.loan_type)as loanTypeName,
+	    (select d.display_name from dictionary d 
+     		     where d.type_code='crowdfund_state' and d.code=cf.loan_state)as loanStateName,
+        cf.loan_state as loanState,
+        u1.real_name loanUserRealName,
+		u1.nick_name loanUserNickName,
+		u1.user_id loanUser,
+		ROUND(cf.approve_amt/cf.fund_amt,4) as supportRatio,
+		cf.fund_end_time fundEndTime
+        
+    from crowdfunding_attention ca
+	  left join crowdfunding cf on cf.loan_no=ca.loan_no
+	  LEFT JOIN user u1 on cf.loan_user = u1.user_id
+	  <include refid="base_where"></include>
+	  order by ca.attention_time desc
+	   <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+      </if>
+  </select>
+  <sql id="base_where">
+   <where>
+      <if test="loanNo != null and loanNo != ''" >
+        and ca.loan_no = #{loanNo,jdbcType=VARCHAR}
+      </if>
+       <if test="loanUser != null and loanUser != ''" >
+        and cf.loan_user = #{loanUser,jdbcType=VARCHAR}
+      </if>
+      <if test="loanType != null and loanType != ''" >
+        and cf.loan_type = #{loanType,jdbcType=VARCHAR}
+      </if>
+      <if test="attentionType != null and attentionType != ''" >
+        and ca.attention_type = #{attentionType,jdbcType=VARCHAR}
+      </if>
+      <if test="attentionUser != null and attentionUser != ''" >
+        and ca.attention_user = #{attentionUser,jdbcType=VARCHAR}
+      </if>
+       <if test="attentionUserLike != null and attentionUserLike != ''" >
+        and ca.attention_user  like CONCAT(CONCAT('%', #{attentionUserLike,jdbcType=VARCHAR}),'%')
+      </if>
+    </where>
+   </sql>
+   <select id="getCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModel">
+    select count(1)  
+    from crowdfunding_attention ca left join crowdfunding cf on cf.loan_no=ca.loan_no
+    <include refid="base_where" />
+  </select>
+   
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_attention
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_attention
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModel" >
+    insert into crowdfunding_attention (id, attention_user, loan_no,attention_type,attention_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{attentionUser,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, 
+      #{attentionType,jdbcType=VARCHAR},#{attentionTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModel" >
+    insert into crowdfunding_attention
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="attentionUser != null" >
+        attention_user,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="attentionType != null" >
+        attention_type,
+      </if>
+      <if test="attentionTime != null" >
+        attention_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionUser != null" >
+        #{attentionUser,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionType != null" >
+        #{attentionType,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionTime != null" >
+        #{attentionTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModel" >
+    update crowdfunding_attention
+    <set >
+      <if test="attentionUser != null" >
+        attention_user = #{attentionUser,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionType != null" >
+        attention_type = #{attentionType,jdbcType=VARCHAR},
+      </if>
+      <if test="attentionTime != null" >
+        attention_time = #{attentionTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingAttentionModel" >
+    update crowdfunding_attention
+    set attention_user = #{attentionUser,jdbcType=VARCHAR},
+       loan_no = #{loanNo,jdbcType=VARCHAR},
+       attention_type = #{attentionType,jdbcType=VARCHAR},
+       attention_time = #{attentionTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

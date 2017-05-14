@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="投资流水" fileName="投资流水列表">
+	<report-header>
+		<column name="投资单号" mapping="orderId" />
+		<column name="项目编号" mapping="loanNo" />
+		<column name="项目名称" mapping="loanName" />
+		<column name="回报编号" mapping="backNo" />
+		<column name="投资人" mapping="supportUser" />
+		<column name="投资人真实姓名" mapping="supportUserName" />
+		<column name="领投人" mapping="leadInvestorName" />
+		<column name="投资金额" mapping="supportAmt" />
+		<column name="分红比例(%)" mapping="shareRatio" />
+		<column name="认购份数" mapping="buyNum" />
+		
+		<column name="投资方式" mapping="supportWayName" />
+		<column name="投资状态" mapping="payStateName" />
+		<column name="订单状态" mapping="stateName" />
+		<column name="投资时间" mapping="supportTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="投资完成时间" mapping="completeTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="发货时间" mapping="sendTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="发货单号" mapping="sendOrderId" />
+		<column name="发货快递" mapping="sendDelivery" />
+		
+	</report-header>
+	<dataSource serviceClassId="crowdfundingService" serviceMethod="getInvestPage4Loan" />
+</report>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.reward.model.RewardAssignModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.reward.model.RewardAssignModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="reward_type" property="rewardType" jdbcType="VARCHAR" />
+    <result column="invest_no" property="investNo" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="assign_amt" property="assignAmt" jdbcType="DOUBLE" />
+    <result column="bonus_state" property="bonusState" jdbcType="VARCHAR" />
+    <result column="get_user" property="getUser" jdbcType="VARCHAR" />
+    <result column="pay_user" property="payUser" jdbcType="VARCHAR" />
+    <result column="assign_time" property="assignTime" jdbcType="TIMESTAMP" />
+    <result column="invest_amt" property="investAmt" jdbcType="DOUBLE" />
+    <result column="investor" property="investor" jdbcType="VARCHAR" />
+    <result column="invitor_type" property="invitorType" jdbcType="VARCHAR" />
+    <result column="loan_name" property="loanName" jdbcType="VARCHAR" />
+    <result column="rewardTypeName" property="rewardTypeName" jdbcType="VARCHAR" />
+    <result column="bonus_num" property="bonusNum" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="loan_bonus_id" property="loanBonusId" jdbcType="VARCHAR" />
+
+     
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, reward_type, invest_no, loan_no, assign_amt, bonus_state, get_user, pay_user, 
+  create_time,assign_time, invest_amt, investor, invitor_type,bonus_num,loan_bonus_id
+
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from reward_assign
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectListModelByLoanBonusId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from reward_assign
+    where loan_bonus_id = #{loanBonusId,jdbcType=VARCHAR} and bonus_state = 'wait_bonus'
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+ 
+     select ra.id, reward_type rewardType, invest_no investNo, ra.loan_no loanNo, FORMAT(assign_amt,2) assignAmt, 
+    bonus_state bonusState, get_user getUser, pay_user payUser, 
+    assign_time assignTime, FORMAT(invest_amt,2) investAmt, investor, invitor_type invitorType,l.loan_name loanName,
+    u1.real_name getRealName,u1.nick_name getNickName,u1.mobile getMobile,
+    u2.real_name loanUserRealName,u2.nick_name loanUserNickName,u2.mobile loanUserMobile,
+    (select d.display_name from dictionary d 
+     		     where d.type_code='reward_assign_type' and d.code=ra.reward_type)as rewardTypeName,
+     bonus_num bonusNum,
+     loan_bonus_id loanBonusId,
+    -- case when pay_user ='system' then '系统' else '' end payUserName,
+     l.loan_user as loanUser ,u2.real_name as realName,u2.nick_name as payUserName,
+     ra.status status,
+     d1.display_name as statusName,cs.support_time supportTime,
+    ( case ra.bonus_state  when 'add' then '新建' when 'wait_bonus' then '等待分红' 
+      when 'bonus_success' then '分红成功' when 'bonus_fail' then '分红失败' 
+      else '处理中' end )as bonusStateName,ra.bonus_state bonusState
+    from reward_assign ra LEFT JOIN crowdfunding l on  ra.loan_no = l.loan_no
+   LEFT JOIN user u1 on u1.user_id = ra.get_user
+   LEFT JOIN user u2 on u2.user_id = l.loan_user
+   LEFT JOIN dictionary d1 on d1.code=ra.status and d1.type_code='reward_assign_status'
+   LEFT JOIN crowdfunding_support cs on cs.order_id = ra.invest_no
+ 
+    <include refid="baseWhere"></include>
+    order by (
+	case ra.bonus_state  when 'add' then '0' when 'wait_bonus' then '3' 
+	      when 'bonus_success' then '1' when 'bonus_fail' then '4' 
+	      else '5' end 
+	) ,
+    ra.assign_time asc
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  <select id="selectListCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+    select count(1)
+       from reward_assign ra LEFT JOIN crowdfunding l on  ra.loan_no = l.loan_no
+   LEFT JOIN user u1 on u1.user_id = ra.get_user
+   LEFT JOIN user u2 on u2.user_id = l.loan_user
+   LEFT JOIN dictionary d1 on d1.code=ra.status and d1.type_code='reward_assign_status'
+   LEFT JOIN crowdfunding_support cs on cs.order_id = ra.invest_no
+    <include refid="baseWhere"></include>
+  </select>
+  <sql id="baseWhere">
+  <where>
+      <if test="loanNo != null" >
+        and ra.loan_no like CONCAT('%',REPLACE(#{loanNo},'*','%'),'%')  
+      </if>
+      <if test="rewardType != null and rewardType != '' and rewardType == 'invest'" >
+        and ra.reward_type = 'invest'
+      </if>
+      <if test="rewardType != null and rewardType != '' and rewardType == 'direct'" >
+        and ra.reward_type = 'recommend' and invitor_type = 'direct'
+      </if>
+      <if test="rewardType != null and rewardType != '' and rewardType == 'indirect'" >
+        and ra.reward_type = 'recommend' and invitor_type = 'indirect'
+      </if>
+      <if test="investor != null and investor != ''" >
+         and ra.investor = #{investor,jdbcType=VARCHAR}
+      </if>
+      <if test="assignStartTime != null and assignStartTime != ''" >
+        and ra.assign_time >= #{assignStartTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="assignEndTime != null and assignEndTime != ''" >
+        and ra.assign_time &lt;= #{assignEndTime,jdbcType=TIMESTAMP}
+      </if>
+  	  <if test="getUserLike != null and getUserLike != ''" >
+        and ra.get_user like CONCAT('%',REPLACE(#{getUserLike},'*','%'),'%')  
+      </if>
+       <if test="bonusNum != null and bonusNum != ''" >
+        and ra.bonus_num = #{bonusNum,jdbcType=INTEGER}
+      </if>
+      
+      <if test="loanBonusId != null and loanBonusId != ''" >
+        and ra.loan_bonus_id = #{loanBonusId,jdbcType=VARCHAR}
+      </if>
+      <if test="bonusState != null and bonusState != ''" >
+        and ra.bonus_state = #{bonusState,jdbcType=VARCHAR}
+      </if>  
+      <if test="payUser != null and payUser != ''" >
+        and l.loan_user = #{payUser,jdbcType=VARCHAR}
+      </if>     
+  </where>
+  </sql>
+  <!-- 项目奖励发放列表 -->
+  <select id="getLoanRewardList" resultType="java.util.Map" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+     select 
+     l.loan_no as loanNo,
+     l.loan_name as loanName,
+     l.loan_user as loanUser,
+     l.loan_term as loanTerm,
+     l.repayment_no as repaymentNo,
+     l.cash_time as cashTime,
+     FORMAT(l.actual_cash_amt,2) as actualCashAmt,
+     FORMAT(l.interest_rate*100,2) as interestRate,
+     l.loan_state as loanState,
+     (select d.display_name from dictionary d where d.type_code='loan_state' and d.code=l.loan_state)as loanStateName,
+     l.cash_time as cashTime,
+     (select FORMAT(IFNULL(sum(ra.assign_amt),0),2) from reward_assign ra where ra.loan_no=l.loan_no and ra.reward_type='invest') as investRewardAmt,
+     (select FORMAT(IFNULL(sum(ra.assign_amt),0),2) from reward_assign ra where ra.loan_no=l.loan_no and ra.reward_type='recommend' 
+       and ra.invitor_type='direct') as directRecommendRewardAmt,
+     (select FORMAT(IFNULL(sum(ra.assign_amt),0),2) from reward_assign ra where ra.loan_no=l.loan_no and ra.reward_type='recommend' 
+       and ra.invitor_type='indirect') as indirectRecommendRewardAmt
+    from loan l
+    <include refid="LoanReward_where_List"></include>
+    order by l.cash_time asc
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+   <select id="getLoanRewardListCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+    select count(1)
+    from loan l
+    <include refid="LoanReward_where_List"></include>
+  </select>
+  <sql id="LoanReward_where_List">
+  	<where>
+  	   l.loan_state in('repaying','repayed')
+  	  <if test="loanNo != null and loanNo != ''" >
+        and l.loan_no like CONCAT('%',REPLACE(#{loanNo},'*','%'),'%')  
+      </if>
+      <if test="loanName != null and loanName != ''" >
+        and l.loan_name like CONCAT('%',REPLACE(#{loanName},'*','%'),'%')  
+      </if>
+      <if test="loanUser != null and loanUser != ''" >
+        and l.loan_user like CONCAT('%',REPLACE(#{loanUser},'*','%'),'%')  
+      </if>
+      <if test="loanProvince != null and loanProvince != ''" >
+        and l.loan_province = #{loanProvince,jdbcType=VARCHAR}
+      </if>
+      <if test="loanCity != null and loanCity != ''" >
+        and l.loan_city = #{loanCity,jdbcType=VARCHAR}
+      </if>
+    </where>
+   </sql>
+  
+  
+  
+  
+  
+  <!-- 查询项目奖励发放明细 -->
+  <select id="getLoanRewardDetail" resultType="java.util.Map" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+    select ra.loan_no as loanNo,
+    ra.investor,
+    ra.invest_no as investNo,
+    FORMAT(ra.invest_amt,2) as investAmt,
+    u.real_name as realName,
+    i.invest_state as investState,
+    (select d.display_name from dictionary d 
+     		     where d.type_code='invest_state' and d.code=i.invest_state)as investStateName,
+    case when ra.reward_type='invest' then FORMAT(ra.assign_amt,2) end as investAssignReward,
+    case when ra.reward_type='recommend' and ra.invitor_type='direct' then ra.get_user  end as directRecommendUser,
+    case when ra.reward_type='recommend' and ra.invitor_type='direct' then FORMAT(ra.assign_amt,2)  end as directRecommendAssignReward,
+    case when ra.reward_type='recommend' and ra.invitor_type='indirect' then ra.get_user  end as indirectRecommendUser,
+    case when ra.reward_type='recommend' and ra.invitor_type='indirect' then FORMAT(ra.assign_amt,2)  end as indirectRecommendAssignReward
+    from reward_assign ra,loan l,user u,invest i
+    where ra.loan_no=l.loan_no 
+        and ra.invest_no=i.invest_no
+        and ra.investor=u.user_id
+        and ra.loan_no=#{loanNo,jdbcType=VARCHAR}
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from reward_assign
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+    insert into reward_assign (id, reward_type, invest_no, 
+      loan_no, assign_amt, bonus_state, 
+      get_user, pay_user, assign_time, 
+      invest_amt, investor, invitor_type,bonus_num,loan_bonus_id,create_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{rewardType,jdbcType=VARCHAR}, #{investNo,jdbcType=VARCHAR}, 
+      #{loanNo,jdbcType=VARCHAR}, #{assignAmt,jdbcType=DOUBLE}, #{bonusState,jdbcType=VARCHAR}, 
+      #{getUser,jdbcType=VARCHAR}, #{payUser,jdbcType=VARCHAR}, #{assignTime,jdbcType=TIMESTAMP}, 
+      #{investAmt,jdbcType=DOUBLE}, #{investor,jdbcType=VARCHAR}, #{invitorType,jdbcType=VARCHAR},
+      #{bonusNum,jdbcType=INTEGER}, #{loanBonusId,jdbcType=VARCHAR},#{createTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+    insert into reward_assign
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rewardType != null" >
+        reward_type,
+      </if>
+      <if test="investNo != null" >
+        invest_no,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="assignAmt != null" >
+        assign_amt,
+      </if>
+      <if test="bonusState != null" >
+        bonus_state,
+      </if>
+      <if test="getUser != null" >
+        get_user,
+      </if>
+      <if test="payUser != null" >
+        pay_user,
+      </if>
+      <if test="assignTime != null" >
+        assign_time,
+      </if>
+      <if test="investAmt != null" >
+        invest_amt,
+      </if>
+      <if test="investor != null" >
+        investor,
+      </if>
+      <if test="invitorType != null" >
+        invitor_type,
+      </if>
+        <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardType != null" >
+        #{rewardType,jdbcType=VARCHAR},
+      </if>
+      <if test="investNo != null" >
+        #{investNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assignAmt != null" >
+        #{assignAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="bonusState != null" >
+        #{bonusState,jdbcType=VARCHAR},
+      </if>
+      <if test="getUser != null" >
+        #{getUser,jdbcType=VARCHAR},
+      </if>
+      <if test="payUser != null" >
+        #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTime != null" >
+        #{assignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investAmt != null" >
+        #{investAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="investor != null" >
+        #{investor,jdbcType=VARCHAR},
+      </if>
+      <if test="invitorType != null" >
+        #{invitorType,jdbcType=VARCHAR},
+      </if>
+       <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+    update reward_assign
+    <set >
+      <if test="rewardType != null" >
+        reward_type = #{rewardType,jdbcType=VARCHAR},
+      </if>
+      <if test="investNo != null" >
+        invest_no = #{investNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="assignAmt != null" >
+        assign_amt = #{assignAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="bonusState != null" >
+        bonus_state = #{bonusState,jdbcType=VARCHAR},
+      </if>
+      <if test="getUser != null" >
+        get_user = #{getUser,jdbcType=VARCHAR},
+      </if>
+      <if test="payUser != null" >
+        pay_user = #{payUser,jdbcType=VARCHAR},
+      </if>
+      <if test="assignTime != null" >
+        assign_time = #{assignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="investAmt != null" >
+        invest_amt = #{investAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="investor != null" >
+        investor = #{investor,jdbcType=VARCHAR},
+      </if>
+      <if test="invitorType != null" >
+        invitor_type = #{invitorType,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusNum != null" >
+        bonus_num = #{bonusNum,jdbcType=INTEGER},
+      </if>
+      <if test="loanBonusId != null" >
+        loan_bonus_id = #{loanBonusId,jdbcType=VARCHAR},
+      </if>
+      
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.reward.model.RewardAssignModel" >
+    update reward_assign
+    set reward_type = #{rewardType,jdbcType=VARCHAR},
+      invest_no = #{investNo,jdbcType=VARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR},
+      assign_amt = #{assignAmt,jdbcType=DOUBLE},
+      bonus_state = #{bonusState,jdbcType=VARCHAR},
+      get_user = #{getUser,jdbcType=VARCHAR},
+      pay_user = #{payUser,jdbcType=VARCHAR},
+      assign_time = #{assignTime,jdbcType=TIMESTAMP},
+      invest_amt = #{investAmt,jdbcType=DOUBLE},
+      investor = #{investor,jdbcType=VARCHAR},
+      invitor_type = #{invitorType,jdbcType=VARCHAR},
+      bonus_num = #{bonusNum,jdbcType=INTEGER},
+      loan_bonus_id = #{loanBonusId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectLastNum" resultType="java.lang.Integer" parameterType="java.lang.String" >
+     select count(1) from reward_assign 
+	   where loan_no = #{loanNo,jdbcType=VARCHAR} and bonus_state in ('success') 
+  </select>
+  
+  
+  <delete id="deleteByLoanBonusId" parameterType="java.lang.String" >
+    delete from reward_assign
+    where loan_bonus_id = #{loanBonusId,jdbcType=VARCHAR}
+  </delete>  
+  
+  
+  
+  
+</mapper>

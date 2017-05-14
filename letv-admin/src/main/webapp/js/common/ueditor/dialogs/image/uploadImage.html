@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ueditor图片对话框</title>
+
+    <!-- jquery -->
+    <script type="text/javascript" src="../../third-party/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../../../query.query.js"></script>
+
+    <!-- webuploader -->
+    <script src="../../third-party/webuploader/webuploader.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../third-party/webuploader/webuploader.css">
+
+    <!-- image dialog -->
+    <link rel="stylesheet" href="image.css" type="text/css" />
+    <style type="text/css">
+    	#upload .filelist li p.imgWrap {
+    		height: 150px;
+    		width: 150px;
+    	}
+    	.wrapper {
+		  width: 100%;
+		  padding: 2px;
+		}
+		.btns {
+			text-align: center;
+		}
+		.btn {
+			position: relative;
+			display: inline-block;
+			cursor: pointer;
+			background: #00b7ee;
+			padding: 5px 15px;
+			color: #fff;
+			text-align: center;
+			border-radius: 3px;
+			overflow: hidden;
+			width: 100px;
+			text-decoration: none;
+		}
+		.btn:hover {
+			background: #00a2d4;
+		}
+		
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="tabbody" class="tabbody">
+            <!-- 上传图片 -->
+            <div id="upload" class="panel focus">
+                <div id="queueList" class="queueList">
+                    <div class="statusBar element-invisible">
+                        <div class="progress">
+                            <span class="text">0%</span>
+                            <span class="percentage"></span>
+                        </div><div class="info"></div>
+                        <div class="btns">
+                            <div id="filePickerBtn"></div>
+                            <div class="uploadBtn"><var id="lang_start_upload"></var></div>
+                        </div>
+                    </div>
+                    <div id="dndArea" class="placeholder">
+                        <div class="filePickerContainer">
+                            <div id="filePickerReady"></div>
+                        </div>
+                    </div>
+                    <ul class="filelist element-invisible">
+                        <li id="filePickerBlock" class="filePickerBlock"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="btns">
+		    <a id="saveBtn" class="btn" href="javascript:void(0);">确定</a>&nbsp;
+		    <a id="closeBtn" class="btn" href="javascript:void(0);">取消</a>
+        </div>
+    </div>
+    <script type="text/javascript" src="uploadImage.js"></script>
+</body>
+</html>

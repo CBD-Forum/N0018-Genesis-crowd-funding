@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name='还款提醒'>
+	<report-header>
+	<column name='项目编号' mapping='loanNo'/>
+	<column name='项目名称' mapping='loanName'/>
+	<column name='借款人用户名' mapping='loanUser'/>
+	<column name='借款人真实姓名' mapping='loanUserName'/>
+	<column name='当前期数' mapping='repayPeriod' />
+	<column name='还款状态' mapping='repayStateName' />
+	<column name='应还利息(元)' mapping='repayInterest' />
+	<column name='应还本金(元)' mapping='repayPrincipal' />
+	<column name='应还总额(元)' mapping='repayAmt' />
+	<column name='还款截止日' mapping='repayDate' datatype='date' format='yyyy-MM-dd HH:mm:ss'/>
+	<column name='实际还款日期' mapping='actualRepayDate' datatype='date' format='yyyy-MM-dd HH:mm:ss'/>
+	<column name='提前还款罚金付给平台(元)' mapping='prepayPlatformFine' />
+	<column name='提前还款罚金付给投资人(元)' mapping='prepayInvestFine' />
+	<column name='逾期还款罚金付给平台(元)' mapping='overduePlatformFine' />
+	<column name='逾期还款罚金付给投资人(元)' mapping='overdueInvestFine' />
+	<column name='实际还款利息(元)' mapping='actualRepayInterest' />
+	<column name='实际还款本金(元)' mapping='actualRepayPrincipal' />
+	<column name='实际还款总额(元)' mapping='actualRepayAmt' />
+	</report-header>
+</report>

@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="transfer_no" property="transferNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="deadline" property="deadline" jdbcType="TIMESTAMP" />
+    <result column="transfer_money" property="transferMoney" jdbcType="DOUBLE" />
+    <result column="corpus" property="corpus" jdbcType="DOUBLE" />
+    <result column="interest" property="interest" jdbcType="DOUBLE" />
+    <result column="transfer_rate" property="transferRate" jdbcType="DOUBLE" />
+    <result column="paid_corpus" property="paidCorpus" jdbcType="DOUBLE" />
+    <result column="paid_interest" property="paidInterest" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="paid_penalty" property="paidPenalty" jdbcType="DECIMAL" />
+    <result column="transfer_day" property="transferDay" jdbcType="INTEGER" />
+    <result column="transfer_fee" property="transferFee" jdbcType="DOUBLE" />
+    <result column="total_parts" property="totalParts" jdbcType="INTEGER" />
+    <result column="per_amt" property="perAmt" jdbcType="DOUBLE" />
+    <result column="transfer_parts" property="transferParts" jdbcType="INTEGER" />
+    <result column="transfer_amt" property="transferAmt" jdbcType="INTEGER" />
+    <result column="old_parts_money" property="oldPartsMoney" jdbcType="DOUBLE" />
+    <result column="part_money" property="partMoney" jdbcType="DOUBLE" />
+    <result column="transfer_type" property="transferType" jdbcType="VARCHAR" />
+    <result column="actual_transfer_money" property="actualTransferMoney" jdbcType="DOUBLE" />
+    <result column="transfer_corpus" property="transferCorpus" jdbcType="DOUBLE" />
+    <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
+    <result column="audit_state" property="auditState" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="is_agree" property="isAgree" jdbcType="VARCHAR" />
+    <result column="audit_opinion" property="auditOpinion" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, transfer_no, order_no, apply_time, deadline, transfer_money, corpus, interest, 
+    transfer_rate, paid_corpus, paid_interest, status, user_id, paid_penalty, transfer_day, 
+    transfer_fee, total_parts, per_amt, transfer_parts, transfer_amt, old_parts_money, 
+    part_money, transfer_type, actual_transfer_money, transfer_corpus, transfer_time,
+    audit_state,audit_time,start_time,is_agree,audit_opinion
+    
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_transfer
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_transfer
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+    insert into crowdfund_transfer (id, transfer_no, order_no, 
+      apply_time, deadline, transfer_money, 
+      corpus, interest, transfer_rate, 
+      paid_corpus, paid_interest, status, 
+      user_id, paid_penalty, transfer_day, 
+      transfer_fee, total_parts, per_amt, 
+      transfer_parts, transfer_amt, old_parts_money, 
+      part_money, transfer_type, actual_transfer_money, 
+      transfer_corpus, transfer_time,audit_state,audit_time,start_time,is_agree,audit_opinion)
+    values (#{id,jdbcType=VARCHAR}, #{transferNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{deadline,jdbcType=TIMESTAMP}, #{transferMoney,jdbcType=DOUBLE}, 
+      #{corpus,jdbcType=DOUBLE}, #{interest,jdbcType=DOUBLE}, #{transferRate,jdbcType=DOUBLE}, 
+      #{paidCorpus,jdbcType=DOUBLE}, #{paidInterest,jdbcType=DOUBLE}, #{status,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{paidPenalty,jdbcType=DECIMAL}, #{transferDay,jdbcType=INTEGER}, 
+      #{transferFee,jdbcType=DOUBLE}, #{totalParts,jdbcType=INTEGER}, #{perAmt,jdbcType=DOUBLE}, 
+      #{transferParts,jdbcType=INTEGER}, #{transferAmt,jdbcType=INTEGER}, #{oldPartsMoney,jdbcType=DOUBLE}, 
+      #{partMoney,jdbcType=DOUBLE}, #{transferType,jdbcType=VARCHAR}, #{actualTransferMoney,jdbcType=DOUBLE}, 
+      #{transferCorpus,jdbcType=DOUBLE}, #{transferTime,jdbcType=TIMESTAMP},#{auditState,jdbcType=VARCHAR},
+      #{auditTime,jdbcType=TIMESTAMP},#{startTime,jdbcType=TIMESTAMP},#{isAgree,jdbcType=VARCHAR},
+      #{auditOpinion,jdbcType=VARCHAR})
+      </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+    insert into crowdfund_transfer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="transferNo != null" >
+        transfer_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="deadline != null" >
+        deadline,
+      </if>
+      <if test="transferMoney != null" >
+        transfer_money,
+      </if>
+      <if test="corpus != null" >
+        corpus,
+      </if>
+      <if test="interest != null" >
+        interest,
+      </if>
+      <if test="transferRate != null" >
+        transfer_rate,
+      </if>
+      <if test="paidCorpus != null" >
+        paid_corpus,
+      </if>
+      <if test="paidInterest != null" >
+        paid_interest,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="paidPenalty != null" >
+        paid_penalty,
+      </if>
+      <if test="transferDay != null" >
+        transfer_day,
+      </if>
+      <if test="transferFee != null" >
+        transfer_fee,
+      </if>
+      <if test="totalParts != null" >
+        total_parts,
+      </if>
+      <if test="perAmt != null" >
+        per_amt,
+      </if>
+      <if test="transferParts != null" >
+        transfer_parts,
+      </if>
+      <if test="transferAmt != null" >
+        transfer_amt,
+      </if>
+      <if test="oldPartsMoney != null" >
+        old_parts_money,
+      </if>
+      <if test="partMoney != null" >
+        part_money,
+      </if>
+      <if test="transferType != null" >
+        transfer_type,
+      </if>
+      <if test="actualTransferMoney != null" >
+        actual_transfer_money,
+      </if>
+      <if test="transferCorpus != null" >
+        transfer_corpus,
+      </if>
+      <if test="transferTime != null" >
+        transfer_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="transferNo != null" >
+        #{transferNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferMoney != null" >
+        #{transferMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="corpus != null" >
+        #{corpus,jdbcType=DOUBLE},
+      </if>
+      <if test="interest != null" >
+        #{interest,jdbcType=DOUBLE},
+      </if>
+      <if test="transferRate != null" >
+        #{transferRate,jdbcType=DOUBLE},
+      </if>
+      <if test="paidCorpus != null" >
+        #{paidCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="paidInterest != null" >
+        #{paidInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="paidPenalty != null" >
+        #{paidPenalty,jdbcType=DECIMAL},
+      </if>
+      <if test="transferDay != null" >
+        #{transferDay,jdbcType=INTEGER},
+      </if>
+      <if test="transferFee != null" >
+        #{transferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="totalParts != null" >
+        #{totalParts,jdbcType=INTEGER},
+      </if>
+      <if test="perAmt != null" >
+        #{perAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="transferParts != null" >
+        #{transferParts,jdbcType=INTEGER},
+      </if>
+      <if test="transferAmt != null" >
+        #{transferAmt,jdbcType=INTEGER},
+      </if>
+      <if test="oldPartsMoney != null" >
+        #{oldPartsMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="partMoney != null" >
+        #{partMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transferType != null" >
+        #{transferType,jdbcType=VARCHAR},
+      </if>
+      <if test="actualTransferMoney != null" >
+        #{actualTransferMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transferCorpus != null" >
+        #{transferCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="transferTime != null" >
+        #{transferTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+    update crowdfund_transfer
+    <set >
+      <if test="transferNo != null" >
+        transfer_no = #{transferNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deadline != null" >
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transferMoney != null" >
+        transfer_money = #{transferMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="corpus != null" >
+        corpus = #{corpus,jdbcType=DOUBLE},
+      </if>
+      <if test="interest != null" >
+        interest = #{interest,jdbcType=DOUBLE},
+      </if>
+      <if test="transferRate != null" >
+        transfer_rate = #{transferRate,jdbcType=DOUBLE},
+      </if>
+      <if test="paidCorpus != null" >
+        paid_corpus = #{paidCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="paidInterest != null" >
+        paid_interest = #{paidInterest,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="paidPenalty != null" >
+        paid_penalty = #{paidPenalty,jdbcType=DECIMAL},
+      </if>
+      <if test="transferDay != null" >
+        transfer_day = #{transferDay,jdbcType=INTEGER},
+      </if>
+      <if test="transferFee != null" >
+        transfer_fee = #{transferFee,jdbcType=DOUBLE},
+      </if>
+      <if test="totalParts != null" >
+        total_parts = #{totalParts,jdbcType=INTEGER},
+      </if>
+      <if test="perAmt != null" >
+        per_amt = #{perAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="transferParts != null" >
+        transfer_parts = #{transferParts,jdbcType=INTEGER},
+      </if>
+      <if test="transferAmt != null" >
+        transfer_amt = #{transferAmt,jdbcType=INTEGER},
+      </if>
+      <if test="oldPartsMoney != null" >
+        old_parts_money = #{oldPartsMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="partMoney != null" >
+        part_money = #{partMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transferType != null" >
+        transfer_type = #{transferType,jdbcType=VARCHAR},
+      </if>
+      <if test="actualTransferMoney != null" >
+        actual_transfer_money = #{actualTransferMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="transferCorpus != null" >
+        transfer_corpus = #{transferCorpus,jdbcType=DOUBLE},
+      </if>
+      <if test="transferTime != null" >
+        transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditState != null" >
+        audit_state =  #{auditState,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time =  #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+       start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isAgree != null" >
+        is_agree = #{isAgree,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+    update crowdfund_transfer
+    set transfer_no = #{transferNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      deadline = #{deadline,jdbcType=TIMESTAMP},
+      transfer_money = #{transferMoney,jdbcType=DOUBLE},
+      corpus = #{corpus,jdbcType=DOUBLE},
+      interest = #{interest,jdbcType=DOUBLE},
+      transfer_rate = #{transferRate,jdbcType=DOUBLE},
+      paid_corpus = #{paidCorpus,jdbcType=DOUBLE},
+      paid_interest = #{paidInterest,jdbcType=DOUBLE},
+      status = #{status,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      paid_penalty = #{paidPenalty,jdbcType=DECIMAL},
+      transfer_day = #{transferDay,jdbcType=INTEGER},
+      transfer_fee = #{transferFee,jdbcType=DOUBLE},
+      total_parts = #{totalParts,jdbcType=INTEGER},
+      per_amt = #{perAmt,jdbcType=DOUBLE},
+      transfer_parts = #{transferParts,jdbcType=INTEGER},
+      transfer_amt = #{transferAmt,jdbcType=INTEGER},
+      old_parts_money = #{oldPartsMoney,jdbcType=DOUBLE},
+      part_money = #{partMoney,jdbcType=DOUBLE},
+      transfer_type = #{transferType,jdbcType=VARCHAR},
+      actual_transfer_money = #{actualTransferMoney,jdbcType=DOUBLE},
+      transfer_corpus = #{transferCorpus,jdbcType=DOUBLE},
+      transfer_time = #{transferTime,jdbcType=TIMESTAMP},
+      audit_state = #{auditState,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      is_agree = #{isAgree,jdbcType=VARCHAR},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+   <select id="selectModelByTransferNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_transfer
+    where transfer_no = #{transferNo,jdbcType=VARCHAR}
+  </select>
+  
+  
+    <select id="selectCrowdfundingTransferAuditList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+			SELECT 
+		t1.id,
+		t1.transfer_no transferNo,
+		t1.user_id transferUser,
+		t1.audit_opinion auditOpinion,
+		t1.start_time startTime,
+		t1.is_agree isAgree,
+		t1.transfer_money transferMoney,
+		t1.transfer_parts transferParts,
+		t1.transfer_corpus transferCorpus,
+		t1.transfer_fee transferFee,
+		t1.part_money partsMoney,
+		t1.transfer_day transferDay,
+		t1.apply_time apply_time,
+		t1.audit_time auditTime,
+		t1.deadline,
+		t1.`status`,
+		case t1.status when 'transfering' then '转让中' 
+		when 'transfered' then '转让完成'	
+		else '转让结束' end statusName,
+		audit_state auditState,
+		(select d.display_name from dictionary d where d.type_code = 'transfer_audit_state' and d.`code` = t1.audit_state) as auditStateName,
+		t1.deadline,
+		t3.loan_name loanName,
+		t3.loan_no loanNo,
+		t5.buyMoney,
+		t5.buyParts,
+		t5.butFee
+		from crowdfund_transfer t1 
+		LEFT JOIN crowdfunding_support t2 on t1.order_no = t2.order_id 
+		LEFT JOIN crowdfunding t3 on t3.loan_no = t2.loan_no
+		LEFT JOIN 
+		(SELECT SUM(t4.buy_parts) buyParts,SUM(t4.transfer_fee) butFee,SUM(t4.buy_money) buyMoney,t4.transfer_no 
+		from crowdfund_transfer_detail t4 where t4.`status` = 'payed'  GROUP BY t4.transfer_no) t5
+		on t5.transfer_no = t1.transfer_no
+		<include refid="base_where" />
+		ORDER BY  t1.apply_time desc,t3.loan_name desc
+    <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selectCrowdfundingTransferAuditCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+  		select 
+		count(1)
+		from crowdfund_transfer t1 
+		LEFT JOIN crowdfunding_support t2 on t1.order_no = t2.order_id 
+		LEFT JOIN crowdfunding t3 on t3.loan_no = t2.loan_no
+		LEFT JOIN 
+		(SELECT SUM(t4.buy_parts) buyParts,SUM(t4.transfer_fee) butFee,SUM(t4.buy_money) buyMoney,t4.transfer_no 
+		from crowdfund_transfer_detail t4 where t4.`status` = 'payed' GROUP BY t4.transfer_no) t5
+		on t5.transfer_no = t1.transfer_no
+		<include refid="base_where" />
+  </select>
+  
+  
+   <sql id="base_where">
+	   	<where>
+	      <if test=" status !=null and  status != '' " >
+	      		 and t1.status = #{status,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" userId !=null and  userId != '' " >
+	      		 and t1.user_id = #{userId,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" auditState !=null and  auditState != '' " >
+	      		 and t1.audit_state = #{auditState,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" auditStateAll !=null and  auditStateAll != '' " >
+	      		 and t1.audit_state in ('audit_pass','audit_refuse')
+	      </if>
+	      <if test=" transferStateAll !=null and  transferStateAll != '' " >
+	      		 and t1.status in ('transfered','transferend')
+	      </if>
+	      <if test=" loanNo !=null and  loanNo != '' " >
+	      		 and t3.loan_No = #{loanNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" loanName !=null and  loanName != '' " >
+	      		 and t3.loan_name like  CONCAT(CONCAT('%', #{loanName,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <if test=" transferNo !=null and  transferNo != '' " >
+	      		 and t1.transfer_no = #{transferNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" isAgree !=null and  isAgree != '' " >
+	      		 and t1.is_agree = #{isAgree,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" isAgreeNull !=null and  isAgreeNull != '' " >
+	      		 and t1.is_agree is null
+	      </if>
+	    </where>
+    </sql>
+    
+    
+     <select id="selectCrowdfundingTransferInfoList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+        SELECT 
+        	t1.id,
+			t1.transfer_no transferNo,
+			t1.transfer_money transferMoney,
+			t1.transfer_parts transferParts,
+			t1.start_time startTime,
+			t1.is_agree isAgree,
+			t1.transfer_corpus transferCorpus,
+			t1.transfer_fee transferFee,
+			t1.part_money partsMoney,
+			t1.transfer_day transferDay,
+			t1.apply_time apply_time,
+			t1.`status`,
+			t1.audit_time auditTime,
+			t1.deadline,
+			case t1.status when 'transfering' then '转让中' 
+			when 'transfered' then '转让完成'	
+			else '转让结束' end statusName,
+			audit_state auditState,
+			(select d.display_name from dictionary d where d.type_code = 'transfer_audit_state' and d.`code` = t1.audit_state) as auditStateName,
+			t1.deadline,
+			t3.loan_name loanName,
+			t3.loan_no loanNo,
+			IFNULL(t5.transferCompleteParts,0) transferCompleteParts,
+			IFNULL(t5.transferCompleteMoney,0) transferCompleteMoney,
+			IFNULL(t5.transferCompleteFee,0) transferCompleteFee,
+			t1.transfer_parts-IFNULL(t5.transferCompleteParts,0) surplusParts
+			
+			from crowdfund_transfer t1 
+			LEFT JOIN crowdfunding_support t2 on t1.order_no = t2.order_id 
+			LEFT JOIN crowdfunding t3 on t3.loan_no = t2.loan_no
+			LEFT JOIN (SELECT t4.transfer_no,SUM(t4.buy_parts) transferCompleteParts,SUM(t4.buy_money) transferCompleteMoney,SUM(t4.transfer_fee) transferCompleteFee
+			from crowdfund_transfer_detail t4 where t4.`status` ='payed' GROUP BY t4.transfer_no  ) t5 on t5.transfer_no = t1.transfer_no
+		<include refid="base_where" />
+		ORDER BY  t1.transfer_time desc,t3.loan_name desc
+    <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selectCrowdfundingTransferInfoCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+	  		select 
+			count(1)
+			from crowdfund_transfer t1 
+			LEFT JOIN crowdfunding_support t2 on t1.order_no = t2.order_id 
+			LEFT JOIN crowdfunding t3 on t3.loan_no = t2.loan_no
+			LEFT JOIN (SELECT t4.transfer_no,SUM(t4.buy_parts) transferCompleteParts,SUM(t4.buy_money) transferCompleteMoney,SUM(t4.transfer_fee) transferCompleteFee
+			from crowdfund_transfer_detail t4 where t4.`status` ='payed' GROUP BY t4.transfer_no  ) t5 on t5.transfer_no = t1.transfer_no
+		<include refid="base_where" />
+  </select>
+    
+    
+    
+    
+    
+    
+    
+ <select id="selectCrowdfundTransferDetailList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+ 		
+		SELECT 
+		t1.transfer_no transferNo,
+		t1.transfer_money transferMoney,
+		t1.deadline,
+		IFNULL(t2.sumBuyMoney,0) sumBuyMoney,
+		IFNULL(t2.sumBuyParts,0) sumBuyParts,
+		t6.buy_num buyNum,
+		t6.loan_logo loanLogo,
+		t6.loan_no loanNo,
+		t6.loan_name loanName,
+		t6.finance_num financeNum,
+		t6.invest_bonus_ratio investBonusRatio,
+		FORMAT(t1.transfer_parts/t6.finance_num*t6.invest_bonus_ratio,5) transferRatio
+		from crowdfund_transfer t1
+		LEFT JOIN 
+		(SELECT t2.transfer_no,SUM(t2.buy_parts) sumBuyParts,SUM(t2.buy_money) sumBuyMoney
+		from crowdfund_transfer_detail t2 WHERE t2.`status`='payed' GROUP BY t2.transfer_no) t2 on t2.transfer_no = t1.transfer_no
+		LEFT JOIN 
+		(SELECT t3.order_id,t3.buy_num,t4.loan_name,t4.loan_logo,t4.loan_no,t5.finance_num,t5.invest_bonus_ratio from crowdfunding_support t3 LEFT JOIN crowdfunding t4 on t3.loan_no = t4.loan_no
+		LEFT JOIN stock_back_set t5 on t4.loan_no = t5.loan_no
+		 GROUP BY t3.order_id) t6
+		on t6.order_id = t1.order_no
+		<include refid="base_where_detail" />
+		ORDER BY t1.start_time DESC,t6.loan_name DESC
+    <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selectCrowdfundTransferDetailCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+  	select count(1)
+  	from crowdfund_transfer t1
+		LEFT JOIN 
+		(SELECT t2.transfer_no,SUM(t2.buy_parts) sumBuyParts,SUM(t2.buy_money) sumBuyMoney
+		from crowdfund_transfer_detail t2 WHERE t2.`status`='payed' GROUP BY t2.transfer_no) t2 on t2.transfer_no = t1.transfer_no
+		LEFT JOIN 
+		(SELECT t3.order_id,t3.buy_num,t4.loan_name,t4.loan_logo,t5.finance_num,t5.invest_bonus_ratio from crowdfunding_support t3 LEFT JOIN crowdfunding t4 on t3.loan_no = t4.loan_no
+		LEFT JOIN stock_back_set t5 on t4.loan_no = t5.loan_no
+		 GROUP BY t3.order_id) t6
+		on t6.order_id = t1.order_no
+		<include refid="base_where_detail" />
+  </select>
+  
+  <sql id="base_where_detail">
+	   	<where>
+	      <if test=" status !=null and  status != '' " >
+	      		 and t1.status = #{status,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" isAgree !=null and  isAgree != '' " >
+	      		 and t1.is_agree = #{isAgree,jdbcType=VARCHAR}
+	      </if>
+	      <if test=" transferStateAll ==1 " >
+	      		 and t1.status in ('transferend','transfered')
+	      </if>
+	      <if test=" transferStateAll ==0 " >
+	      		 and t1.status in ('transfering','transferend','transfered')
+	      </if>
+	      <if test=" loanName !=null and  loanName != '' " >
+	      		 and t6.loan_name like  CONCAT(CONCAT('%', #{loanName,jdbcType=VARCHAR}),'%') 
+	      </if>
+	    </where>
+    </sql>
+    
+    
+    
+  <select id="selectCrowdfundTransferDetail" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundTransferModel" >
+ 		
+		SELECT 
+		t1.transfer_no transferNo,
+		t1.transfer_money transferMoney,
+		t1.transfer_parts transferParts,
+		t1.part_money partMoney,
+		t1.user_id transferUser,
+		t1.deadline,
+		t1.`status`,
+		case t1.status when 'transfering' then '转让中' 
+		when 'transfered' then '转让完成'	
+		else '转让结束' end statusName,
+		IFNULL(t2.sumBuyMoney,0) sumBuyMoney,
+		IFNULL(t2.sumBuyParts,0) sumBuyParts,
+		t6.buy_num buyNum,
+		t6.loan_logo loanLogo,
+		t6.loan_name loanName,
+		t6.finance_num financeNum,
+		t6.invest_bonus_ratio investBonusRatio,
+		FORMAT(t1.transfer_parts/t6.finance_num*t6.invest_bonus_ratio,5) transferRatio
+		from crowdfund_transfer t1
+		LEFT JOIN 
+		(SELECT t2.transfer_no,SUM(t2.buy_parts) sumBuyParts,SUM(t2.buy_money) sumBuyMoney
+		from crowdfund_transfer_detail t2 WHERE t2.`status`='payed' GROUP BY t2.transfer_no) t2 on t2.transfer_no = t1.transfer_no
+		LEFT JOIN 
+		(SELECT t3.order_id,t3.buy_num,t4.loan_name,t4.loan_no,t4.loan_logo,t5.finance_num,t5.invest_bonus_ratio from crowdfunding_support t3 LEFT JOIN crowdfunding t4 on t3.loan_no = t4.loan_no
+		LEFT JOIN stock_back_set t5 on t4.loan_no = t5.loan_no
+		 GROUP BY t3.order_id) t6
+		on t6.order_id = t1.order_no
+		where t1.transfer_no  =#{transferNo,jdbcType=VARCHAR}
+		
+  </select>   
+  
+  
+  <select id="selectCanTransferParts" resultType="java.lang.Long" parameterType="java.lang.String" >
+  		select 
+		t1.buy_num-IFNULL(t3.sumPransferParts,0) buyNum	
+		from crowdfunding_support t1 
+		LEFT JOIN crowdfunding  t2 on t1.loan_no = t2.loan_no
+		LEFT JOIN
+		(SELECT t3.order_no,t3.transfer_no,SUM(IFNULL(t3.transfer_parts,0)-IFNULL(t4.buyParts,0)) sumPransferParts from crowdfund_transfer t3 
+			LEFT JOIN (SELECT t4.transfer_no,SUM(t4.buy_parts) buyParts from crowdfund_transfer_detail t4 
+		where t4.`status` ='payed'
+		GROUP BY t4.transfer_no ) t4 ON t4.transfer_no= t3.transfer_no where 
+		(t3.`status` = 'transfering'  and t3.is_agree = '0')  or (t3.audit_state='audit_pass' and is_agree is null)
+		GROUP BY t3.order_no) t3 on t3.order_no = t1.order_id
+		where 
+		t1.order_id = #{orderNo,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+	
+	<definition name="tiles.mainlayout" template="/WEB-INF/views/templates/layout.jsp" preparer="com.fbd.core.web.tiles.preparer.RequestSettingViewPreparer">  
+        <put-attribute name="title" expression="${requestScope.tdk.title}"></put-attribute> 
+    	<put-attribute name="keyword" expression="${requestScope.tdk.keyword}"></put-attribute> 
+    	<put-attribute name="description" expression="${requestScope.tdk.description}"></put-attribute>  
+        <put-attribute name="head" value=""></put-attribute>  
+        <put-attribute name="content" value=""></put-attribute>
+        <put-attribute name="footer" value=""></put-attribute>  
+    </definition>  
+    <!-- 登入 -->
+    <definition name="login" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/user/login.jsp"></put-attribute>  
+    </definition>
+    <!-- 注册 -->
+    <definition name="register" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/user/register.jsp"></put-attribute>  
+    </definition>
+    <!-- 找回密码 -->
+    <definition name="password" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/user/password.jsp"></put-attribute>  
+    </definition>
+    <!-- 首页 -->
+    <definition name="index" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/index.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹项目列表 --> 
+    <definition name="projectList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/projectList.jsp"></put-attribute>  
+    </definition>
+    <!-- 挂牌服务列表 -->
+    <definition name="listingService" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/listingService.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹 类型项目列中间页面 -->
+    <definition name="projectTypeList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/projectTypeList.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹 状态项目列中间页面 -->
+    <definition name="projectStateList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/projectStateList.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹 状态项目列中间页面 -->
+    <definition name="projectTypeList-ep" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/projectTypeList-ep.jsp"></put-attribute>  
+    </definition>
+    <!-- 公益众筹项目详情 -->
+    <definition name="loanDetail-public" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/loanDetail-public.jsp"></put-attribute>  
+    </definition>
+    <!-- 产品众筹项目详情 -->
+    <definition name="loanDetail-product" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/loanDetail-product.jsp"></put-attribute>  
+    </definition>
+    <!-- 奖励众筹项目详情 -->
+    <definition name="loanDetail-entity" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/loanDetail-entity.jsp"></put-attribute>  
+    </definition>
+    <!-- 股份众筹项目详情 -->
+    <definition name="loanDetail-stock" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/loanDetail-stock.jsp"></put-attribute>  
+    </definition>
+    <!-- 房产众筹项目详情 -->
+    <definition name="loanDetail-house" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/loanDetail-house.jsp"></put-attribute>  
+    </definition>
+    <!-- 公益众筹项目支持页 -->
+    <definition name="support-pubBenefit" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/supportPage-pubBenefit.jsp"></put-attribute>  
+    </definition>
+    <!-- 产品众筹项目支持页 -->
+    <definition name="support-entity" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/supportPage-entity.jsp"></put-attribute>  
+    </definition>
+    <!-- 发起众筹项目导航页 -->
+    <definition name="enterProjectNav" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterProjectNav.jsp"></put-attribute>  
+    </definition>
+    <!-- 录入公益众筹 -->
+    <definition name="enterPubBenefit" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterPubBenefit.jsp"></put-attribute>  
+    </definition>
+    <!-- 录入公益众筹2 -->
+    <definition name="enterPubBenefitTw" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterPubBenefitTw.jsp"></put-attribute>  
+    </definition>
+    <!-- 录入公益众筹3 -->
+    <definition name="enterPubBenefitTr" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterPubBenefitTr.jsp"></put-attribute>  
+    </definition>
+    <!-- 录入公益众筹4 -->
+    <definition name="enterPubBenefitFr" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterPubBenefitFr.jsp"></put-attribute>  
+    </definition>
+    
+    <!-- 录入产品众筹 -->
+    <definition name="enterReward" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterReward.jsp"></put-attribute>  
+    </definition>
+    <!-- 录入产品众筹2 -->
+    <definition name="enterRewardTw" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterRewardTw.jsp"></put-attribute>  
+    </definition>
+    <!-- 录入奖产品众筹3 -->
+    <definition name="enterRewardTr" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterRewardTr.jsp"></put-attribute>  
+    </definition>
+    <!-- 录入产品众筹4 -->
+    <definition name="enterRewardFr" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterRewardFr.jsp"></put-attribute>  
+    </definition>
+    
+    <!-- 录入股份众筹 -->
+    <definition name="enterStock" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterStock.jsp"></put-attribute>  
+    </definition>
+    <definition name="enterStock-founder" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterStock-founder.jsp"></put-attribute>  
+    </definition>
+    <definition name="enterStock-company" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterStock-company.jsp"></put-attribute>  
+    </definition>
+    <definition name="enterStock-submit" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterStock-submit.jsp"></put-attribute>  
+    </definition>
+    
+    <!-- 查看协议 -->
+    <definition name="FDFagreement" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/FDFagreement.jsp"></put-attribute>  
+    </definition>
+    <definition name="pdfTrade" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/pdfTrade.jsp"></put-attribute>  
+    </definition>
+    
+    <!-- 录入房产众筹 -->
+    <definition name="enterHouse" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/enterHouse.jsp"></put-attribute>  
+    </definition>
+    <!-- 股权-支付 -->
+    <definition name="stock-pay" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/stock-pay.jsp"></put-attribute>  
+    </definition>
+    <!-- 股权-支付-确认 -->
+    <definition name="stock-pay-confirm" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/stock-pay-confirm.jsp"></put-attribute>  
+    </definition>
+    <!-- 股权-支付-意向金 -->
+    <definition name="stock-intention" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/stock-intention.jsp"></put-attribute>  
+    </definition>
+    <!-- 股权-支付-尾款 -->
+    <definition name="stock-retainage" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/stock-retainage.jsp"></put-attribute>  
+    </definition>
+    <!-- 股权-支付-意向金-确认 -->
+    <definition name="stock-intention-confirm" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/stock-intention-confirm.jsp"></put-attribute>  
+    </definition>
+    <!-- 股权-支付-完成 -->
+    <definition name="stock-complete" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/stock-complete.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹-支付 -->
+    <definition name="crowdfund-pay" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/crowdfund-pay.jsp"></put-attribute>  
+    </definition>
+    <definition name="crowdfund-success" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/project/crowdfund-success.jsp"></put-attribute>  
+    </definition>
+    <!-- 用户中心 -->
+    <definition name="myCenter" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/myCenter.jsp"></put-attribute>  
+    </definition>
+    <!-- 挂牌列表-->
+    <definition name="listing" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/listing.jsp"></put-attribute>  
+    </definition>
+    <!-- 个人中心项目管理-->
+    <definition name="administrationCollection" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/administrationCollection.jsp"></put-attribute>  
+    </definition>
+    <definition name="administrationProduct" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/administrationProduct.jsp"></put-attribute>  
+    </definition>
+    <definition name="administrationPublic" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/administrationPublic.jsp"></put-attribute>  
+    </definition>
+    <definition name="administrationStock" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/administrationStock.jsp"></put-attribute>  
+    </definition>
+    <definition name="product-refundSuccess" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/product-refundSuccess.jsp"></put-attribute>  
+    </definition>
+    <definition name="product-lendedDetailed" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/product-lendedDetailed.jsp"></put-attribute>  
+    </definition>
+    <!-- 发货页面 -->
+    <definition name="enterLogico" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/enterLogico.jsp"></put-attribute>  
+    </definition>
+    <definition name="enterLogicoPublic" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/enterLogicoPublic.jsp"></put-attribute>  
+    </definition>
+    <!-- 退款列表 -->
+    <definition name="refundList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/refundList.jsp"></put-attribute>  
+    </definition>
+    <!-- 银行卡列表页面 -->
+    <definition name="bankList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/bankList.jsp"></put-attribute>  
+    </definition>
+    <!-- 银行卡绑定页面 -->
+    <definition name="bankAdd" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/bankAdd.jsp"></put-attribute>  
+    </definition>
+    <!-- 提现页面 -->
+    <definition name="withdraw" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/withdraw.jsp"></put-attribute>  
+    </definition>
+    <!-- 充值页面 -->
+    <definition name="recharge" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/recharge.jsp"></put-attribute>  
+    </definition>
+    <definition name="quotaSee" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/quotaSee.jsp"></put-attribute>  
+    </definition>
+    <!-- 个人认证-引导- -->
+    <definition name="centerRZguide" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/centerRZguide.jsp"></put-attribute>  
+    </definition>
+    <!-- 个人认证 -->
+    <definition name="centerRZ" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/centerRZ.jsp"></put-attribute>  
+    </definition>
+    <!-- 实名认证 -->
+    <definition name="realNameRZ" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/realNameRZ.jsp"></put-attribute>  
+    </definition>
+    <!-- 实名认证通过 -->
+    <definition name="realNameRZTG" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/realNameRZTG.jsp"></put-attribute>  
+    </definition>
+    <!-- 账户安全 -->
+    <definition name="accountSecurity" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/accountSecurity.jsp"></put-attribute>  
+    </definition>
+    <!-- 印章开户 -->
+    <definition name="sealList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/sealList.jsp"></put-attribute>  
+    </definition>
+    <!-- 个人签章 -->
+    <definition name="signaturePersonal" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/signaturePersonal.jsp"></put-attribute>  
+    </definition>
+    <!-- 企业签章 -->
+    <definition name="signatureEnterprise" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/signatureEnterprise.jsp"></put-attribute>  
+    </definition>
+    <!-- 个人会员 -->
+    <definition name="memberPersonal" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/memberPersonal.jsp"></put-attribute>  
+    </definition>
+    <!-- 企业会员 -->
+    <definition name="memberEnterprise" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/memberEnterprise.jsp"></put-attribute>  
+    </definition>
+    <!-- 邮箱认证 -->
+    <definition name="emailRZ" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/emailRZ.jsp"></put-attribute>  
+    </definition>
+    <!-- 资金管理 -->
+    <definition name="myTrade" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/myTrade.jsp"></put-attribute>  
+    </definition>
+    <!-- 资料修改 -->
+    <definition name="modifyData" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/modifyData.jsp"></put-attribute>  
+    </definition>
+    <!-- 收货地址管理 -->
+    <definition name="modifyAddress" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/modifyAddress.jsp"></put-attribute>  
+    </definition>
+    <!-- 修改密码 -->
+    <definition name="modifyPassword" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/modifyPassword.jsp"></put-attribute>  
+    </definition>
+    <!-- 消息管理 -->
+    <definition name="messages" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/messages.jsp"></put-attribute>  
+    </definition>
+    <!-- 我的私信-->
+    <definition name="myPrivateMessage" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/priMessage.jsp"></put-attribute>  
+    </definition>
+     <!-- 领投跟投 -->
+    <definition name="ltgt" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/ltgt/ltgt.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹学院 -->
+    <definition name="zcSchool" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/zcSchool/zcSchool.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹学院的老师 -->
+    <definition name="zcTeacher" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/zcSchool/zcTeacher.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹学院列表 -->
+    <definition name="zcKnowList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/zcSchool/zcKnowList.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹学院列表详情页 -->
+    <definition name="zcKnowDetail" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/zcSchool/zcKnowDetail.jsp"></put-attribute>  
+    </definition>
+    <!-- 众筹学院列表行业资讯详情页 -->
+    <definition name="zcKnowZXDetail" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/zcSchool/zcKnowZXDetail.jsp"></put-attribute>  
+    </definition>
+    
+    <!-- 挂牌项目列表页 -->
+    <definition name="transferList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/transfer/transferList.jsp"></put-attribute>  
+    </definition>
+    <!-- 挂牌项目下单页 -->
+    <definition name="transferPay" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/transfer/transferPay.jsp"></put-attribute>  
+    </definition>
+    <!-- 挂牌项目下单确认页 -->
+    <definition name="transferPay-confirm" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/transfer/transferPay-confirm.jsp"></put-attribute>  
+    </definition>
+    <!-- 挂牌项目下单完成页 -->
+    <definition name="transferPay-complete" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/transfer/transferPay-complete.jsp"></put-attribute>  
+    </definition>
+    <!-- 挂牌项目详情页 -->
+    <definition name="transferListDetail" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/transfer/transferListDetail.jsp"></put-attribute>  
+    </definition>
+    
+    <!-- 领投人详情页 -->
+    <definition name="leadDetail" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/ltgt/leadDetail.jsp"></put-attribute>  
+    </definition>
+    <!-- 加盟合作 -->
+    <definition name="jmhz" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/jmhz/jmhz.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们 -->
+    <definition name="aboutus" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/aboutus/aboutus_new.jsp"></put-attribute>  
+    </definition>
+    <!-- 创客空间 -->
+    <definition name="about-ckkj" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/aboutus/aboutus_ckkj.jsp"></put-attribute>  
+    </definition>
+    <!-- 联系我们 -->
+    <definition name="linkus" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/aboutus/linkus_new.jsp"></put-attribute>  
+    </definition>
+    <!-- 团队介绍 -->
+    <definition name="ourTeam" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/aboutus/ourTeam.jsp"></put-attribute>  
+    </definition>
+    <!-- 粉丝管理 -->
+    <definition name="fansManage" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/fansManage.jsp"></put-attribute>  
+    </definition>
+    <!-- 邀请码 -->
+    <definition name="invitefriend" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/userCenter/invitefriend.jsp"></put-attribute>  
+    </definition>
+    <!-- 新手指南 -->
+    <definition name="newGuide" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/newGuide/newGuide.jsp"></put-attribute>  
+    </definition>
+    
+    <!-- 帮助中心-列表 -->
+    <definition name="nodeList" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/nodeList.jsp"></put-attribute>  
+    </definition>
+     <!-- 显示单条信息 -->
+    <definition name="node_info" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/nodeInfo.jsp"></put-attribute>  
+    </definition>
+    <!-- 帮助中心-详情 -->
+    <definition name="nodeList_info" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/nodeList_info.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-公司简介 -->
+    <definition name="companyInfo" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/companyInfo.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-管理团队 -->
+    <definition name="manageTeam" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/manageTeam.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-监管报告 -->
+    <definition name="report" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/report.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-最新动态 -->
+    <definition name="dynamic" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/dynamic.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-最新动态-最新动态详情 -->
+    <definition name="dynamic_info" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/dynamic_info.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-网站公告 -->
+    <definition name="notice" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/notice.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-网站公告-网站公告详情 -->
+    <definition name="notice_info" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/notice_info.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们-合作伙伴 -->
+    <definition name="partner" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/helpCenter/partner.jsp"></put-attribute>  
+    </definition>
+    <!-- 关于我们end-->
+    
+    <!-- 移动web站点start -->
+	<definition name="m-login" template="/WEB-INF/views/templates/m-web/m-login.jsp" />
+	<definition name="m-register" template="/WEB-INF/views/templates/m-web/m-register.jsp" />
+	<definition name="m-agree" template="/WEB-INF/views/templates/m-web/m-agree.jsp" />
+	<definition name="m-index" template="/WEB-INF/views/templates/m-web/m-index.jsp" />
+	<definition name="m-projectList" template="/WEB-INF/views/templates/m-web/m-projectList.jsp" />
+	<definition name="m-projectList-stock" template="/WEB-INF/views/templates/m-web/m-projectList-stock.jsp" />
+	<definition name="m-projectDetail-public_service" template="/WEB-INF/views/templates/m-web/m-projectDetail-public_service.jsp" />
+	<definition name="m-projectDetail-entity" template="/WEB-INF/views/templates/m-web/m-projectDetail-entity.jsp" />
+    <definition name="m-projectDetail-house" template="/WEB-INF/views/templates/m-web/m-projectDetail-house.jsp" />
+    <definition name="m-projectDetail-stock" template="/WEB-INF/views/templates/m-web/m-projectDetail-stock.jsp" />
+    <definition name="m-teamIntroduce" template="/WEB-INF/views/templates/m-web/m-teamIntroduce.jsp" />
+    <definition name="m-projectDetail" template="/WEB-INF/views/templates/m-web/m-projectDetail.jsp" />
+    <definition name="m-support-entity" template="/WEB-INF/views/templates/m-web/m-support-entity.jsp" />
+    <definition name="m-entityAddress" template="/WEB-INF/views/templates/m-web/m-entityAddress.jsp" />
+    <definition name="m-myCenter" template="/WEB-INF/views/templates/m-web/m-myCenter.jsp" />
+    <definition name="m-message" template="/WEB-INF/views/templates/m-web/m-messages.jsp" />
+    <definition name="m-myTrade" template="/WEB-INF/views/templates/m-web/m-myTrade.jsp" />
+    <definition name="m-myLoan" template="/WEB-INF/views/templates/m-web/m-myLoan.jsp" />
+    <definition name="m-modifyData" template="/WEB-INF/views/templates/m-web/m-modifyData.jsp" />
+    <definition name="m-modifyPassword" template="/WEB-INF/views/templates/m-web/m-modifyPassword.jsp" />
+    <definition name="m-modifyAddress" template="/WEB-INF/views/templates/m-web/m-modifyAddress.jsp" />
+    <definition name="m-fansManage" template="/WEB-INF/views/templates/m-web/m-fansManage.jsp" />
+    <definition name="m-set" template="/WEB-INF/views/templates/m-web/m-set.jsp" />
+    <definition name="m-withVote" template="/WEB-INF/views/templates/m-web/m-withVote.jsp" />
+    <definition name="m-centerRZ" template="/WEB-INF/views/templates/m-web/m-centerRZ.jsp" />
+    <definition name="m-serviceDeal" template="/WEB-INF/views/templates/m-web/m-serviceDeal.jsp" />
+    <definition name="m-riskBook" template="/WEB-INF/views/templates/m-web/m-riskBook.jsp" />
+    <definition name="m-findPass" template="/WEB-INF/views/templates/m-web/m-findPass.jsp" />
+    <definition name="m-invitefriend" template="/WEB-INF/views/templates/m-web/m-invitefriend.jsp" />
+    <definition name="m-enterLogico" template="/WEB-INF/views/templates/m-web/m-enterLogico.jsp" />
+    <definition name="m-withdraw" template="/WEB-INF/views/templates/m-web/m-withdraw.jsp" />
+    <definition name="m-addBank" template="/WEB-INF/views/templates/m-web/m-addBank.jsp" />
+    <definition name="m-createBankCard" template="/WEB-INF/views/templates/m-web/m-createBankCard.jsp" />
+    <definition name="m-createBankCardAdmin" template="/WEB-INF/views/templates/m-web/m-createBankCardAdmin.jsp" />
+    <definition name="m-transferList" template="/WEB-INF/views/templates/m-web/m-transferList.jsp" />
+    <definition name="m-transferListDetail" template="/WEB-INF/views/templates/m-web/m-transferListDetail.jsp" />
+    <definition name="m-myStartLoan" template="/WEB-INF/views/templates/m-web/m-myStartLoan.jsp" />
+    <definition name="m-myInvestLoan" template="/WEB-INF/views/templates/m-web/m-myInvestLoan.jsp" />
+    <definition name="m-myAttention" template="/WEB-INF/views/templates/m-web/m-myAttention.jsp" />
+    <definition name="m-listing" template="/WEB-INF/views/templates/m-web/m-listing.jsp" />
+    <definition name="m-aboutList" template="/WEB-INF/views/templates/m-web/m-aboutList.jsp" />
+    <definition name="m-nodeList_info" template="/WEB-INF/views/templates/m-web/m-nodeList_info.jsp" />
+    <definition name="m-createBankCardAdmi" template="/WEB-INF/views/templates/m-web/m-createBankCardAdmi.jsp" />
+    <definition name="m-downAndroid" template="/WEB-INF/views/templates/m-web/m-downAndroid.jsp" />
+    <definition name="m-downios" template="/WEB-INF/views/templates/m-web/m-downios.jsp" />
+    <!-- 调用通联结果返回页 -->
+    <definition name="m-payResult" template="/WEB-INF/views/templates/allinpay/m-allinpayResult.jsp" />
+    
+    <!-- 忘记密码 -->
+    <!-- <definition name="findPass" extends="tiles.mainlayout">  
+        <put-attribute name="content" value="/WEB-INF/views/templates/user/findPass.jsp"></put-attribute>  
+    </definition> -->
+    
+    
+    <!-- 登录、注册单独显示，不实用模版 -->
+    <!-- <definition name="login" template="/WEB-INF/views/templates/user/login.jsp" />-->
+    <!-- <definition name="register" template="/WEB-INF/views/templates/user/register.jsp" /> -->
+    <!-- 忘记密码 -->
+    <definition name="findPass" template="/WEB-INF/views/templates/user/findPass.jsp" />
+    
+    <!-- 调用通联结果返回页 -->
+    <definition name="payResult" template="/WEB-INF/views/templates/allinpay/allinpayResult.jsp" />
+    
+    <!-- 调用易宝结果返回页  -->
+    <definition name="letvPayResult" template="/WEB-INF/views/templates/letvPay/letvPayResult.jsp" />
+</tiles-definitions>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="待审核提现申请" fileName="待审核提现申请">
+	<report-header>
+		<column name="订单号" mapping="orderId" />
+		<column name="用户名" mapping="userId" />
+		<column name="用户真实姓名" mapping="userName" />
+		<column name="手机号" mapping="mobile" />
+		<column name="提现金额(元)" mapping="amt"  />
+		<column name="银行账户" mapping="bankCardId" />
+		<column name="开户行" mapping="bankName" />
+		<column name="申请时间" mapping="applyTime" datatype="date"
+			format="yyyy-MM-dd HH:mm:ss" />
+		<column name="账户应扣金额(元)" mapping="actualMoney" />
+		<column name="手续费(元)" mapping="fee" />
+<!-- 		<column name="手续费支付方" mapping="feeAcctNo" /> -->
+		<column name="充值状态" mapping="stateName" />
+	</report-header>
+	<dataSource serviceClassId="withDrawService"
+		serviceMethod="getWithDrawPage" />
+</report>

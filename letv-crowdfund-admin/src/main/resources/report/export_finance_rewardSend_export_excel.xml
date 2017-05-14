@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="项目奖励发放" fileName="项目奖励发放列表">
+	<report-header>
+	<column name="项目编号" mapping="loanNo" />
+	<column name="项目名称" mapping="loanName" />
+	<column name="借款用户名" mapping="loanUser" />
+	<column name="还款期限" mapping="repaymentNo" />
+	<column name="借款期限(月)" mapping="loanTerm" />
+	<column name="借款金额(元)" mapping="actualCashAmt" />
+	<column name="借款利率" mapping="interestRate" />
+	<column name="项目状态" mapping="loanStateName" />
+	<column name="放款时间" mapping="cashTime" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+	<column name="投资奖励发放" mapping="investRewardState" />
+	<column name="投资奖励发放金额(元)" mapping="investRewardAmt" />
+	<column name="直接推荐奖励发放" mapping="dRecommendRewardState" />
+	<column name="直接推荐奖励发放金额(元)" mapping="directRecommendRewardAmt" />
+	<column name="间接推荐奖励发放" mapping="indRecommendRewardState" />
+	<column name="间接推荐奖励发放金额(元)" mapping="indirectRecommendRewardAmt" />
+</report-header>
+	<dataSource serviceClassId="rewardAssignServiceImpl" serviceMethod="getLoanRewardPage" />
+</report>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.reward.model.CrowdfundBonusModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.reward.model.CrowdfundBonusModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="bonus_time" property="bonusTime" jdbcType="TIMESTAMP" />
+    <result column="bonus_state" property="bonusState" jdbcType="VARCHAR" />
+    <result column="bonus_num" property="bonusNum" jdbcType="INTEGER" />
+    <result column="bonus_audit_state" property="bonusAuditState" jdbcType="VARCHAR" />
+    <result column="bonus_amt" property="bonusAmt" jdbcType="DOUBLE" />
+    <result column="bonus_audit_user" property="bonusAuditUser" jdbcType="VARCHAR" />
+    <result column="bonus_audit_time" property="bonusAuditTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, bonus_time, bonus_state, bonus_num, bonus_audit_state, bonus_amt, bonus_audit_user, 
+    bonus_audit_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_bonus
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_bonus
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="selectLastNum" resultType="java.lang.Integer" parameterType="java.lang.String" >
+     select count(1) from crowdfund_bonus 
+	   where loan_no = #{loanNo,jdbcType=VARCHAR} and bonus_state in ('bonus_success') 
+  </select>
+  
+  <insert id="insert" parameterType="com.fbd.core.app.reward.model.CrowdfundBonusModel" >
+    insert into crowdfund_bonus (id, loan_no, bonus_time, 
+      bonus_state, bonus_num, bonus_audit_state, 
+      bonus_amt, bonus_audit_user, bonus_audit_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{bonusTime,jdbcType=TIMESTAMP}, 
+      #{bonusState,jdbcType=VARCHAR}, #{bonusNum,jdbcType=INTEGER}, #{bonusAuditState,jdbcType=VARCHAR}, 
+      #{bonusAmt,jdbcType=DOUBLE}, #{bonusAuditUser,jdbcType=VARCHAR}, #{bonusAuditTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.reward.model.CrowdfundBonusModel" >
+    insert into crowdfund_bonus
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="bonusTime != null" >
+        bonus_time,
+      </if>
+      <if test="bonusState != null" >
+        bonus_state,
+      </if>
+      <if test="bonusNum != null" >
+        bonus_num,
+      </if>
+      <if test="bonusAuditState != null" >
+        bonus_audit_state,
+      </if>
+      <if test="bonusAmt != null" >
+        bonus_amt,
+      </if>
+      <if test="bonusAuditUser != null" >
+        bonus_audit_user,
+      </if>
+      <if test="bonusAuditTime != null" >
+        bonus_audit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusTime != null" >
+        #{bonusTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bonusState != null" >
+        #{bonusState,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusNum != null" >
+        #{bonusNum,jdbcType=INTEGER},
+      </if>
+      <if test="bonusAuditState != null" >
+        #{bonusAuditState,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusAmt != null" >
+        #{bonusAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="bonusAuditUser != null" >
+        #{bonusAuditUser,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusAuditTime != null" >
+        #{bonusAuditTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.reward.model.CrowdfundBonusModel" >
+    update crowdfund_bonus
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusTime != null" >
+        bonus_time = #{bonusTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bonusState != null" >
+        bonus_state = #{bonusState,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusNum != null" >
+        bonus_num = #{bonusNum,jdbcType=INTEGER},
+      </if>
+      <if test="bonusAuditState != null" >
+        bonus_audit_state = #{bonusAuditState,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusAmt != null" >
+        bonus_amt = #{bonusAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="bonusAuditUser != null" >
+        bonus_audit_user = #{bonusAuditUser,jdbcType=VARCHAR},
+      </if>
+      <if test="bonusAuditTime != null" >
+        bonus_audit_time = #{bonusAuditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.reward.model.CrowdfundBonusModel" >
+    update crowdfund_bonus
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      bonus_time = #{bonusTime,jdbcType=TIMESTAMP},
+      bonus_state = #{bonusState,jdbcType=VARCHAR},
+      bonus_num = #{bonusNum,jdbcType=INTEGER},
+      bonus_audit_state = #{bonusAuditState,jdbcType=VARCHAR},
+      bonus_amt = #{bonusAmt,jdbcType=DOUBLE},
+      bonus_audit_user = #{bonusAuditUser,jdbcType=VARCHAR},
+      bonus_audit_time = #{bonusAuditTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="selectLoanBonusList" resultType="java.util.Map" parameterType="com.fbd.core.app.reward.model.CrowdfundBonusModel">
+  		select 
+  		t1.id,
+  		t1.loan_no loanNo,
+		t1.bonus_amt bonusAmt,
+		t1.bonus_num bonusNum,
+		t1.bonus_audit_state bonusAuditState,
+	(select d.display_name from dictionary d 
+				         where d.type_code='bonusAuditState' and d.code=t1.bonus_audit_state)as bonusAuditStateName,
+		(select d.display_name from dictionary d 
+				         where d.type_code='bonus_state' and d.code=t1.bonus_state)as bonusStateName,		         
+		t2.loan_name loanName,
+		t2.loan_user loanUser,
+		t3.real_name realName,
+		t1.bonus_time bonusTime,
+		t1.bonus_audit_time bonusAuditTime,
+		t1.bonus_audit_user bonusAuditUser
+		from crowdfund_bonus t1 
+		left join crowdfunding t2 on t1.loan_no = t2.loan_no
+		left join `user` t3 on t3.user_id = t2.loan_user
+  		<include refid="base_where" />
+  		order by t1.bonus_audit_time asc
+  		<if test="endPage>0" >
+	        LIMIT #{startPage},#{endPage}
+	    </if>
+  </select>
+  
+  <select id="selectLoanBonusCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.reward.model.CrowdfundBonusModel">
+  		select count(1)
+  		from crowdfund_bonus t1 
+		left join crowdfunding t2 on t1.loan_no = t2.loan_no
+		left join `user` t3 on t3.user_id = t2.loan_user
+		<include refid="base_where" />
+  </select>
+  
+  <sql id="base_where">
+  	<where>
+  		
+  		<if test="getBonusState !='' " >
+           and t1.bonus_audit_state in ('auditing','passed','refuse')
+        </if>
+  		<if test="loanName != null and loanName != ''" >
+	       and t2.loan_name like CONCAT(CONCAT('%', #{loanName,jdbcType=VARCHAR}),'%')
+	    </if>
+	    <if test="loanNo != null and loanNo != ''" >
+           and t2.loan_no = #{loanNo,jdbcType=VARCHAR}
+        </if>
+	    <if test="realName != null and realName != ''" >
+	       and t3.real_name like CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+	    </if>
+	    <if test="bonusAuditState != null and bonusAuditState != ''" >
+	       and t1.bonus_audit_state = #{bonusAuditState,jdbcType=VARCHAR}
+	    </if>
+	    <if test="bonusState != null and bonusState != ''" >
+	       and t1.bonus_state = #{bonusState,jdbcType=VARCHAR}
+	    </if>
+	    
+	    
+  	</where>
+  </sql>
+  
+  <delete id="deleteByLoanBonusId" parameterType="java.lang.String" >
+		delete crowdfund_bonus ,reward_assign from crowdfund_bonus ,reward_assign  
+		where crowdfund_bonus.id = reward_assign.loan_bonus_id  
+		and crowdfund_bonus.id  = #{loanBonusId,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="selectReciveBonus" parameterType="java.util.Map"  resultType="java.util.Map">
+  select  
+   #{curDate,jdbcType=VARCHAR} as DATA_DATE,
+   CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+  '6029' as Company,'10089999' as Department,u.user_id as Customer_ID,u.real_name as Customer_Name,
+  DATE_FORMAT(r.assign_time ,'%Y-%m-%d %H-%i-%s') as business_date,
+  f.loan_user Project_Cus_id ,
+case  f.loan_type  when 'public' then '76030001' when 'stock' then '76020001' when 'product' then '76010001'  end as business_code ,
+   f.loan_no as product_code,'BC_FH' as event_code ,ur.real_name as Project_Cus_name,r.assign_amt as actual_amount
+,r.assign_amt as client_amount,f.loan_name as product_name
+,r.id as order_number
+from  crowdfund_bonus_audit a 
+inner join crowdfunding f on f.loan_no = a.loan_no
+inner join reward_assign r on r.loan_no = a.loan_no
+left join user u on u.user_id= r.get_user
+left join user ur on ur.user_id = f.loan_user
+where r.bonus_state='wait_bonus'
+  <if test="completeTime != null and completeTime != ''" >
+ and r.assign_time > #{completeTime,jdbcType=TIMESTAMP}
+ </if>
+  order by r.assign_time desc
+  </select>
+   
+</mapper>

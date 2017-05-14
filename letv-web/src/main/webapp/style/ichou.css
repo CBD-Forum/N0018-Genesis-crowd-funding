@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0; padding:0; list-style:none;}
+input, textarea{outline: none;font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro";resize:none;}
+img{border:0; vertical-align:middle;}
+h1,h2,h3,h4,h5,h6{font-weight:normal;}
+em,i{font-style:normal;}
+body{font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro";font-size:14px;color:#333;min-width:1200px;background:#eee;}
+a{color:#333;text-decoration:none;}
+a:hover{color:#ef5a50;cursor:pointer;}
+.box{width:1200px; margin:0 auto;}
+.fl,.left{float:left;}
+.fr,.right{float:right;}
+.clearfix:before,.clearfix:after {content:""; display:table;}
+.clearfix:after { clear:both; overflow:hidden;}
+.clearfix {zoom:1;}
+
+.mb30{margin-bottom:30px;}
+
+.fs12{font-size:12px;}
+.fs14{font-size:14px;}
+.fs16{font-size:16px;}
+.fs18{font-size:18px;}
+.fs20{font-size:20px;}
+.fs22{font-size:22px;}
+.fs24{font-size:24px;}
+.fs30{font-size:30px;}
+
+.bgColorWh{ background-color:#fff;}
+.back1{background-color:#ef5a50;}
+.back1:hover{background-color:#f86d63;}
+.back2{background-color:#c6000a;}
+.back2:hover{background-color:#d11620;}
+
+
+.col1{color:#c6000a;}
+.col2{color:#37abfc;}
+.red{color:#ef5a50}
+
+.rel{ position:relative;}
+.abs{ position:absolute;}
+.none{display:none;}
+.hidden{overflow:hidden;}
+
+.tc{text-align:center}
+
+
+
+/*-------------------------------------------头部-------------------------------------------*/
+.head_box{background:#f7fafa;}
+.rrtsHead{padding:10px 0;}
+.rrtsHead .lxfs{line-height:30px;width:420px;font-size:14px;color:#888;}
+.rrtsHead .lxfs span{float:left;}
+.rrtsHead .lxfs span a{margin:3px;margin-top:-8px;}
+.rrtsHead .lxfs .wb{background:url(../images/ichou/wb.png) no-repeat center;width:42px;height:40px;display:block;float:left}
+.rrtsHead .lxfs .wb:hover{background:url(../images/ichou/mou_wb.png) no-repeat center;}
+.rrtsHead .lxfs .wx{background:url(../images/ichou/wxi.png) no-repeat center;width:42px;height:40px;display:block;float:left}
+.rrtsHead .lxfs .wx:hover{background:url(../images/ichou/mou_wei.png) no-repeat center;}
+.rrtsHead .lxfs .sj{background:url(../images/ichou/sj.png) no-repeat center;width:42px;height:40px;display:block;float:left}
+.rrtsHead .lxfs .sj:hover{background:url(../images/ichou/mou_tel.png) no-repeat center;}
+.rrtsHead .searchDiv{margin-top:35px;}
+.rrtsHead .searchDiv .search{width:300px; height:31px; line-height:35px;border:1px solid #bbb;background:#f3f3f3;border-radius:5px;}
+.searchDiv .search a{display:inline-block;width:53px;height:30px;text-align:center;border-left:1px solid #bbb;background:url(../images/ichou/shr.png) no-repeat 50%;float:left;}
+.searchDiv .search input{ width:225px; height:25px;background:#f3f3f3;line-height:25px;border:none;float:left;margin:3px 10px;}
+.rrtsHead .searchMenu{color:#9a9a9a; font-size:13px; margin-top:7px;} 
+.rrtsHead .searchMenu a{ color:#757575;}
+.rrtsHead .searchMenu span{ font-weight:bold; margin:0 8px;}
+.rrtsHead .login{ margin-top:40px; margin-right:10px;}
+.rrtsHead .login .bule{color:#20b3f6;}
+.rrtsHead .login a{float:left;color:#999;font-size:16px;margin-left:20px;}
+.rrtsHead .login a:hover{color:#20b3f6;}
+.rrtsMenu{ height:48px; line-height:48px; background:#40465E;color:#d7d7d7;}
+.rrtsMenu .menu li{ float:left; margin-right:2px;}
+.rrtsMenu .menu a{ color:#fff; font-size:16px; display:block; padding:0px 42px; height:48px;}
+.rrtsMenu .menu a.first{ width:211px; padding:0px; text-align:center;}
+.rrtsMenu .phone{font-size:16px;display:inline-block;height:48px; padding-left:25px; background:url(../images/ichou/phone.png) left center no-repeat;color:#fff;margin-right:10px;}
+.rrtsMenu .menu li:hover,.rrtsMenu li.cur{background:#747CA9;}
+.rrtsMenu .menu li:hover a,.rrtsMenu li.cur a{ color:#fff}
+
+
+
+/*-------------------------------------------脚部-------------------------------------------*/
+.rrtsFooter{ height:328px;}
+.rrtsFooter .footer{ width:100%; height:299px; background:url(../images/ichou/footer5.png) center top no-repeat; text-align:center;}
+.rrtsFooter .footer .nav{ padding-top:90px; }
+.rrtsFooter .footer .nav a{color:#eee; margin-right:33px;}
+.rrtsFooter .footer .nav a:hover{color:#fff; text-decoration:underline;}
+.rrtsFooter .attention{ color:#ccc; margin-top:30px;}
+.rrtsFooter .attention span{ margin-right:32px;}
+.rrtsFooter .attention a{ margin-right:19px;}
+.rrtsFooter .fri_link{color:#ccc; margin-top:37px; font-size:12px;}
+.rrtsFooter .fri_link a{color:#ccc;font-size:12px;margin-right:10px;}
+.rrtsFooter .fri_link a:hover{color:#fff; text-decoration:underline;}
+.rrtsFooter .footBottom{ text-align:center; font-size:12px; background:#181818; color:#5a5a5a; height:29px; line-height:29px;}
+
+
+
+
+/*-------------------------------------------关于我们-------------------------------------------*/
+.about_us{padding:30px 0 60px 0;background:#fff;margin-top:20px;margin-bottom:30px;overflow:hidden;}
+.about_us_num{padding-bottom:30px;}
+.about_us_tit{height:110px;line-height:110px;background:url(../images/ichou/us1.png) no-repeat center;font-size:60px;color:#d12224;text-align:center;}
+.about_us_font{font-size:48px;color:#333;text-align:center;margin-bottom:30px;}
+.about_us_1{font-size:18px;color:#999;line-height:30px;text-align:center;}
+.about_us_2{overflow:hidden;margin:0 auto;width:990px;}
+.about_us_2 li{float:left;text-align:center;width:330px;}
+.about_us_2 li .img{width:200px;height:200px;margin:0 auto;overflow:hidden;}
+.about_us_2 li .p1{font-size:30px;color:#333;padding:15px 0;}
+.about_us_2 li .p2{font-size:18px;color:#999;}
+
+
+
+
+
+
+
+
+
+
+
+

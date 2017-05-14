@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.contract.model.ContractTemplateModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_type" property="contractType" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="last_modify_user" property="lastModifyUser" jdbcType="VARCHAR" />
+    <result column="template_content" property="templateContent" jdbcType="LONGVARCHAR" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, contract_no, contract_name, contract_type, status, create_time, update_time, 
+    creator, last_modify_user,template_content, description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_template
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_template
+    where contract_no = #{contractNo,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_template
+    <include refid="Base_Where"/>
+  </select>
+  
+   <sql id="Base_Where">
+	<where>
+      <if test="contractNo != null and contractNo != '' " >
+        and contract_no = #{contractNo,jdbcType=VARCHAR}
+      </if>
+      <if test="contractType != null and contractType != '' " >
+        and contract_type = #{contractType,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' " >
+        and status = #{status,jdbcType=VARCHAR}
+      </if>
+	</where>
+  </sql>
+  
+  <!-- *************** 用于分页查询  ************* -->
+  
+  <sql id="Base_Where_List">
+	<where>
+      <if test="contractNo != null and contractNo != '' " >
+        and t1.contract_no like CONCAT(CONCAT('%', #{contractNo,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="contractName != null and contractName != '' " >
+        and t1.contract_name like CONCAT(CONCAT('%', #{contractName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="contractType != null and contractType != '' " >
+        and t1.contract_type = #{contractType,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' " >
+        and t1.status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null and createTime != '' " >
+        and t1.create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updateTime != null and updateTime != '' " >
+        and t1.update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="creator != null and creator != '' " >
+        and t1.creator = #{creator,jdbcType=VARCHAR}
+      </if>
+      <if test="lastModifyUser != null and lastModifyUser != '' " >
+        and t1.last_modify_user = #{lastModifyUser,jdbcType=VARCHAR}
+      </if>
+      <if test="templateContent != null and templateContent != '' " >
+        and t1.template_content = #{templateContent,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="description != null and description != '' " >
+        and t1.description = #{description,jdbcType=LONGVARCHAR}
+      </if>
+      <!-- 判断是否 合同模板管理，已放款项目合同管理-->
+      <!-- 合同模板管理 -->
+      <if test="isTpl == 0">
+      	and t4.loan_name IS NULL
+      </if>
+      <!-- 已放款项目合同管理 -->
+      <if test="isTpl == 1">
+      	and t4.loan_name IS NOT NULL
+      </if>
+	</where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='contractNo'" >
+        ORDER BY t1.contract_no ${order}
+      </if>
+      <if test="sort =='contractName'" >
+        ORDER BY t1.contract_name ${order}
+      </if>
+      <if test="sort =='contractType'" >
+        ORDER BY t1.contract_type ${order}
+      </if>
+      <if test="sort =='createTime'" >
+        ORDER BY t1.create_time ${order}
+      </if>
+      <if test="sort =='updateTime'" >
+        ORDER BY t1.update_time ${order}
+      </if>
+  </sql>
+  
+  <sql id="Base_Table_List">
+  	 contract_template t1
+		LEFT JOIN dictionary t2 ON t1.contract_type = t2.`code` AND t2.type_code = 'contract_template_type'
+		LEFT JOIN dictionary t3 ON t1.`status` = t3.`code` AND t3.type_code = 'node_node_status'
+		LEFT JOIN crowdfunding t4 ON t1.contract_no=t4.loan_no
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from <include refid="Base_Table_List" />
+    <include refid="Base_Where_List" />
+  </select>
+  
+ <select id="select" resultType="java.util.Map" parameterType="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    select 
+    	t1.id,
+		t1.contract_no contractNo,
+		t1.contract_name contractName,
+		t1.contract_type contractType,
+		t2.display_name contractTypeName,
+		t1.template_content templateContent,
+		t1.`status`,
+		t3.display_name statusName,
+		t1.description,
+		t1.create_time createTime,
+		t1.update_time updateTime,
+		t1.creator,
+		t1.last_modify_user lastModifyUser,
+		t4.loan_name loanName 
+	    from <include refid="Base_Table_List" />
+   	<include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		<include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+   <!-- *************** 用于分页查询  end************* -->
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from contract_template
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    insert into contract_template (id, contract_no, contract_name, 
+      contract_type, status, create_time, 
+      update_time, creator, last_modify_user, 
+      template_content, description)
+    values (#{id,jdbcType=VARCHAR}, #{contractNo,jdbcType=VARCHAR}, #{contractName,jdbcType=VARCHAR}, 
+      #{contractType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{lastModifyUser,jdbcType=VARCHAR}, 
+      #{templateContent,jdbcType=LONGVARCHAR}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    insert into contract_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="contractNo != null" >
+        contract_no,
+      </if>
+      <if test="contractName != null" >
+        contract_name,
+      </if>
+      <if test="contractType != null" >
+        contract_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="lastModifyUser != null" >
+        last_modify_user,
+      </if>
+      <if test="templateContent != null" >
+        template_content,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="contractNo != null" >
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractName != null" >
+        #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractType != null" >
+        #{contractType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyUser != null" >
+        #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="templateContent != null" >
+        #{templateContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    update contract_template
+    <set >
+      <if test="contractNo != null" >
+        contract_no = #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractName != null" >
+        contract_name = #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractType != null" >
+        contract_type = #{contractType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyUser != null" >
+        last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="templateContent != null" >
+        template_content = #{templateContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    update contract_template
+    set contract_no = #{contractNo,jdbcType=VARCHAR},
+      contract_name = #{contractName,jdbcType=VARCHAR},
+      contract_type = #{contractType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR},
+      template_content = #{templateContent,jdbcType=LONGVARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.contract.model.ContractTemplateModel" >
+    update contract_template
+    set contract_no = #{contractNo,jdbcType=VARCHAR},
+      contract_name = #{contractName,jdbcType=VARCHAR},
+      contract_type = #{contractType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      last_modify_user = #{lastModifyUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询借款合同 -->
+  <select id="select4borrowContract" resultType="java.util.Map" parameterType="java.lang.String">
+		SELECT
+		t2.real_name realName,
+		t2.certificate_no certificateNo,
+		t2.home_address homeAddress,
+		t1.loan_name loanName,
+		t2.mobile,
+		t2.post_code postCode, 
+		t1.contract_no contractNo,
+		t1.contract_tpl_no contractTplNo,
+    t1.cash_time cashTime
+	FROM
+		crowdfunding t1
+	LEFT JOIN user t2 ON t1.loan_user = t2.user_id
+	WHERE t1.loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectInvestor4borrowContract" resultType="java.util.Map" parameterType="java.lang.String">
+	SELECT
+		t1.investor,
+		t1.invest_amt investAmt,
+		t1.invest_time investTime,
+		FORMAT(SUM(t2.repay_amt), 2) repayAmt
+	FROM
+		invest t1
+	LEFT JOIN invest_repayment t2 ON t1.invest_no = t2.invest_no
+	WHERE t1.invest_state in ('success', 'repaying', 'completed')  AND t1.loan_no = #{loanNo,jdbcType=VARCHAR}
+	 GROUP BY t1.invest_no ORDER BY t1.invest_time
+  </select>
+  
+  <!-- 查询借款合同 end -->
+  
+  <!-- 根据项目编号查询合同模板 -->
+  <select id="selectContractByLoanNo" resultType="java.util.Map" parameterType="java.lang.String">
+     select contract_no as contractNo,template_content as templateContent  from contract_template t1 where t1.contract_no  = #{loanNo,jdbcType=VARCHAR}
+  </select>    
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.UserUploadFileModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.UserUploadFileModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+    <result column="file_child_type" property="fileChildType" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="file_state" property="fileState" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, file_type, file_child_type, file_url, file_state, file_name, audit_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_upload_file
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByFileType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_upload_file
+    where user_id = #{userId,jdbcType=VARCHAR} 
+    and file_type = #{fileType,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectUserFiles" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+    id, user_id as userId, file_type as fileType, 
+    file_child_type, 
+    file_url as fileUrl, 
+    file_state as fileState, 
+    (select d.display_name from dictionary d 
+     		     where d.type_code='audit_state' and d.code=file_state)as fileStateName,
+    (select d.display_name from dictionary d 
+     		     where d.type_code='user_file_type' and d.code=file_type)as fileTypeName,
+    file_name, 
+    audit_time as auditTime
+    from user_upload_file
+    where user_id = #{userId,jdbcType=VARCHAR} 
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_upload_file
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.UserUploadFileModel" >
+    insert into user_upload_file (id, user_id, file_type, 
+      file_child_type, file_url, file_state, 
+      file_name, audit_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, 
+      #{fileChildType,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{fileState,jdbcType=VARCHAR}, 
+      #{fileName,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.user.model.UserUploadFileModel" >
+    insert into user_upload_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="fileType != null" >
+        file_type,
+      </if>
+      <if test="fileChildType != null" >
+        file_child_type,
+      </if>
+      <if test="fileUrl != null" >
+        file_url,
+      </if>
+      <if test="fileState != null" >
+        file_state,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileChildType != null" >
+        #{fileChildType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileState != null" >
+        #{fileState,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.user.model.UserUploadFileModel" >
+    update user_upload_file
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null" >
+        file_type = #{fileType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileChildType != null" >
+        file_child_type = #{fileChildType,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileState != null" >
+        file_state = #{fileState,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.UserUploadFileModel" >
+    update user_upload_file
+    set user_id = #{userId,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
+      file_child_type = #{fileChildType,jdbcType=VARCHAR},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      file_state = #{fileState,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByFileType" parameterType="com.fbd.core.app.user.model.UserUploadFileModel" >
+    update user_upload_file
+   	<set >
+      <if test="fileUrl != null" >
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+      and file_type = #{fileType,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectByTypeAndUserId" resultMap="BaseResultMap" parameterType="com.fbd.core.app.user.model.UserUploadFileModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_upload_file
+    where user_id = #{userId,jdbcType=VARCHAR} 
+    and file_type = #{fileType,jdbcType=VARCHAR}
+  </select>
+</mapper>

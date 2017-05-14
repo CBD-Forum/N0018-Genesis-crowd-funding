@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+/*----------------------------------------------------首页-------------------------------------------------
+--*/
+/*移动端自适应用到的css*/
+
+html,body{width: 100%;height: 100%;}
+.commonWidth{width:750px;min-height: 100%;margin: 0px auto;position: relative;display:none;}
+
+.fl{float: left;}
+.fr{float: right}
+
+.pos-black{position:absolute;width:100%;height:100%;top:0;left:0;background:#000;filter:alpha(opacity=60);opacity:0.6;-moz-opacity:0.6;}
+.pos-top{position:absolute;width:100%;height:100%;top:0;left:0;}
+.pos-top ul{padding:30px 100px;}
+.pos-top ul li{padding:30px 0;}
+.pos_num{}
+.pos_num span{display:inline-block;width:40px;height:40px;text-align:center;line-height:40px;background:#fc4600;color:#fff;font-size:24px;border-radius:50%;float:left;}
+.pos_num p{color:#fff;font-size:30px;float:left;padding-left:10px;}
+.pos_num p img{margin-bottom:-6px;padding:0 15px;}
+
+
+
+
+
+
+

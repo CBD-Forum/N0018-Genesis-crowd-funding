@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" 
+        version="2.0">  
+	    
+	<description>SIAM IM Custom JSP Form Tag Library</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>form</short-name>
+	<uri>http://im.siam.sinopec.com/tags</uri>
+	
+	<tag>
+		<description>BasePath Tag</description>
+		<name>basePath</name>
+		<tag-class>com.sinopec.siam.im.web.tag.BasePathTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	
+	<tag>
+		<description>ViewPath Tag</description>
+		<name>viewPath</name>
+		<tag-class>com.sinopec.siam.im.web.tag.ViewPathTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	
+	<tag>
+		<description>ThemeName Tag</description>
+		<name>themeName</name>
+		<tag-class>com.sinopec.siam.im.web.tag.ThemeNameTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	
+	<tag>
+		<description>Dictionary Tag</description>
+		<name>dict</name>
+		<tag-class>com.sinopec.siam.im.web.tag.DictTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>dicObj</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dictKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>description</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+		
+	<tag>
+		<description>Function notify Tag</description>
+		<name>funcNotify</name>
+		<tag-class>com.sinopec.siam.im.web.tag.NotifyTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>funcCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Function org permission path Tag</description>
+		<name>permissionOrgCodePaths</name>
+		<tag-class>com.sinopec.siam.im.web.tag.PermissionOrgCodePathsTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

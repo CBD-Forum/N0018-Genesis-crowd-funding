@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="mark_id" property="markId" jdbcType="VARCHAR" />
+    <result column="trusteeship" property="trusteeship" jdbcType="VARCHAR" />
+    <result column="request_time" property="requestTime" jdbcType="TIMESTAMP" />
+    <result column="response_time" property="responseTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="request_url" property="requestUrl" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="request_data" property="requestData" jdbcType="LONGVARCHAR" />
+    <result column="response_data" property="responseData" jdbcType="LONGVARCHAR" />
+    <result column="res_info" property="resInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mark_id, trusteeship, request_time, response_time, status, type, request_url, 
+    operator, request_data, response_data,res_info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from trusteeship_operation
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from trusteeship_operation
+    <include refid="base_where"></include>
+    order by request_time desc
+  </select>
+  <sql id="base_where">
+  	<where>
+  	  <if test="markId != null and markId != ''" >
+        and mark_id = #{markId,jdbcType=VARCHAR}
+      </if>
+  	  <if test="type != null and type != ''" >
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="operator != null and operator != ''" >
+        and operator = #{operator,jdbcType=VARCHAR}
+      </if>
+      <if test="trusteeship != null and trusteeship != ''" >
+        and trusteeship = #{trusteeship,jdbcType=VARCHAR}
+      </if>
+  	</where>
+  </sql>
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from trusteeship_operation
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModel" >
+    insert into trusteeship_operation (id, mark_id, trusteeship, 
+      request_time, response_time, status, 
+      type, request_url, operator, 
+      request_data, response_data,res_info)
+    values (#{id,jdbcType=VARCHAR}, #{markId,jdbcType=VARCHAR}, #{trusteeship,jdbcType=VARCHAR}, 
+      #{requestTime,jdbcType=TIMESTAMP}, #{responseTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{requestUrl,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
+      #{requestData,jdbcType=LONGVARCHAR}, #{responseData,jdbcType=LONGVARCHAR}, #{resInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModel" >
+    insert into trusteeship_operation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="markId != null" >
+        mark_id,
+      </if>
+      <if test="trusteeship != null" >
+        trusteeship,
+      </if>
+      <if test="requestTime != null" >
+        request_time,
+      </if>
+      <if test="responseTime != null" >
+        response_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="requestUrl != null" >
+        request_url,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="requestData != null" >
+        request_data,
+      </if>
+      <if test="responseData != null" >
+        response_data,
+      </if>
+      <if test="resInfo != null" >
+        res_info
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="markId != null" >
+        #{markId,jdbcType=VARCHAR},
+      </if>
+      <if test="trusteeship != null" >
+        #{trusteeship,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="responseTime != null" >
+        #{responseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null" >
+        #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="requestData != null" >
+        #{requestData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseData != null" >
+        #{responseData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resInfo != null" >
+        #{resInfo,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModel" >
+    update trusteeship_operation
+    <set >
+      <if test="markId != null" >
+        mark_id = #{markId,jdbcType=VARCHAR},
+      </if>
+      <if test="trusteeship != null" >
+        trusteeship = #{trusteeship,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTime != null" >
+        request_time = #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="responseTime != null" >
+        response_time = #{responseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUrl != null" >
+        request_url = #{requestUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="requestData != null" >
+        request_data = #{requestData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseData != null" >
+        response_data = #{responseData,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="resInfo != null" >
+      res_info = #{resInfo,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModel" >
+    update trusteeship_operation
+    set mark_id = #{markId,jdbcType=VARCHAR},
+      trusteeship = #{trusteeship,jdbcType=VARCHAR},
+      request_time = #{requestTime,jdbcType=TIMESTAMP},
+      response_time = #{responseTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      request_data = #{requestData,jdbcType=LONGVARCHAR},
+      response_data = #{responseData,jdbcType=LONGVARCHAR},
+      res_info = #{resInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.thirdtrusteeship.model.TrusteeshipOperationModel" >
+    update trusteeship_operation
+    set mark_id = #{markId,jdbcType=VARCHAR},
+      trusteeship = #{trusteeship,jdbcType=VARCHAR},
+      request_time = #{requestTime,jdbcType=TIMESTAMP},
+      response_time = #{responseTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      request_url = #{requestUrl,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      res_info = #{resInfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

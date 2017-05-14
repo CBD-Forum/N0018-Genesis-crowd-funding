@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.message.model.MessageNodeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.message.model.MessageNodeModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, description, status
+  </sql>
+  
+  <!-- 分页查询 -->
+  <sql id="Base_Where_List">
+	<where>
+		<if test="id != null and id != ''">
+			and id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="code != null and code != ''">
+			and code like CONCAT(CONCAT('%', #{code,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="name != null and name != ''">
+			and name like CONCAT(CONCAT('%', #{name,jdbcType=VARCHAR}),'%')
+		</if>
+	</where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='code'" >
+        ORDER BY code ${order}
+      </if>
+      <if test="sort =='name'" >
+        ORDER BY name ${order}
+      </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from message_node
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.message.model.MessageNodeModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from message_node
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		 <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <select id="selectModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.message.model.MessageNodeModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from message_node
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from message_node
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from message_node
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.message.model.MessageNodeModel" >
+    insert into message_node (id, code, name, 
+      description, status)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.message.model.MessageNodeModel" >
+    insert into message_node
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.message.model.MessageNodeModel" >
+    update message_node
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.message.model.MessageNodeModel" >
+    update message_node
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

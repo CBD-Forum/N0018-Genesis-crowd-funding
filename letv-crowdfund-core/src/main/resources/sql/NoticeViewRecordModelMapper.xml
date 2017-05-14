@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.notice.model.NoticeViewRecordModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.notice.model.NoticeViewRecordModel" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="notice_type" property="noticeType" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="latest_notice_time" property="latestNoticeTime" jdbcType="TIMESTAMP" />
+    <result column="latest_click_time" property="latestClickTime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, user_id, notice_type, parent_id, latest_notice_time, latest_click_time,state,
+    create_time,update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice_view_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from notice_view_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>  
+  
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice_view_record
+    <include refid="Base_Where" />
+  </select>  
+  <sql id="Base_Where">
+  	<where>
+      <if test="id != null and id != '' " >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>  	
+      <if test="userId != null and userId != '' " >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="state != null and state != '' " >
+        and state = #{state,jdbcType=VARCHAR}
+      </if>       
+      <if test="parentId != null and parentId != '' " >
+        and parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>      
+      <if test="noticeType != null and noticeType != '' " >
+        and notice_type = #{noticeType,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <insert id="insert" parameterType="com.fbd.core.app.notice.model.NoticeViewRecordModel" >
+    insert into notice_view_record (id, user_id, notice_type, 
+      parent_id, latest_notice_time, latest_click_time,state, 
+      create_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{noticeType,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=VARCHAR}, #{latestNoticeTime,jdbcType=TIMESTAMP}, #{latestClickTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.notice.model.NoticeViewRecordModel" >
+    update notice_view_record
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeType != null" >
+        notice_type = #{noticeType,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="latestNoticeTime != null" >
+        latest_notice_time = #{latestNoticeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="latestClickTime != null" >
+        latest_click_time = #{latestClickTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>      
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>     
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>  
+</mapper>

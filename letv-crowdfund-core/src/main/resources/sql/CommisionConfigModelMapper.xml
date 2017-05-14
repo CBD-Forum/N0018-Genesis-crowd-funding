@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.commisionconfig.model.CommisionConfigModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.commisionconfig.model.CommisionConfigModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="min_money" property="minMoney" jdbcType="DOUBLE" />
+    <result column="max_money" property="maxMoney" jdbcType="DOUBLE" />
+    <result column="commision_rate" property="commisionRate" jdbcType="DOUBLE" />
+  </resultMap>
+  <insert id="insert"
+	parameterType="com.fbd.core.app.commisionconfig.model.CommisionConfigModel">
+	insert into commision_config (id, type, min_money,
+	max_money, commision_rate)
+	values (#{id,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+	#{minMoney,jdbcType=DOUBLE},
+	#{maxMoney,jdbcType=DOUBLE}, #{commisionRate,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.commisionconfig.model.CommisionConfigModel" >
+    insert into commision_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="minMoney != null" >
+        min_money,
+      </if>
+      <if test="maxMoney != null" >
+        max_money,
+      </if>
+      <if test="commisionRate != null" >
+        commision_rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="minMoney != null" >
+        #{minMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="maxMoney != null" >
+        #{maxMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="commisionRate != null" >
+        #{commisionRate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 关联字典查询 -->
+    <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.commisionconfig.model.CommisionConfigModel" >
+    select 
+    commision.id, dictionary.display_name type
+    , min_money, max_money,commision_rate
+    from commision_config commision 
+    left join dictionary dictionary on commision.type = dictionary.code
+   	where 1=1 and dictionary.type_code ='commision_type' <if test="id != null and id != ''">
+		and commision.id = #{id,jdbcType=VARCHAR}
+	  </if>
+  	  <if test="type != null and type != ''" >
+        and type like CONCAT(CONCAT('%', #{type,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="minMoney != null and minMoney != ''" >
+        and min_money like CONCAT(CONCAT('%', #{minMoney,jdbcType=VARCHAR}),'%')  
+      </if>
+      <if test="maxMoney != null and maxMoney != ''" >
+        and max_money like CONCAT(CONCAT('%', #{maxMoney,jdbcType=VARCHAR}),'%') 
+      </if>
+      <if test="commisionRate != null and commisionRate != ''" >
+        and commision_rate like CONCAT(CONCAT('%', #{commisionRate,jdbcType=VARCHAR}),'%') 
+      </if>
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="sort == null or sort == ''">
+		ORDER BY type , min_money
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <!-- 限制条件 -->
+  <sql id="Base_Where_List">
+  	<where>
+  	  <if test="id != null and id != ''">
+		and id = #{id,jdbcType=VARCHAR}
+	  </if>
+  	  <if test="type != null and type != ''" >
+        and type like CONCAT(CONCAT('%', #{type,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="minMoney != null and min_money != ''" >
+        and min_money like CONCAT(CONCAT('%', #{minMoney,jdbcType=VARCHAR}),'%')  
+      </if>
+      <if test="maxMoney != null and max_money != ''" >
+        and max_money like CONCAT(CONCAT('%', #{maxMoney,jdbcType=VARCHAR}),'%') 
+      </if>
+      <if test="commisionRate != null and commisionRate != ''" >
+        and commision_rate like CONCAT(CONCAT('%', #{commisionRate,jdbcType=VARCHAR}),'%') 
+      </if>
+  	</where>
+  </sql>
+  <!-- 排序方式  -->
+    <sql id="Base_OrderBy_List">
+  	<if test="sort =='type'" >
+        type ${order}
+      </if>
+      <if test="sort =='minMoney'" >
+        min_Money ${order}
+      </if>
+      <if test="sort =='maxMoney'" >
+        max_Money ${order}
+      </if>
+      <if test="sort =='commisionRate'" >
+        commision_rate ${order}
+      </if>
+  </sql>
+  <!-- 获取总条数 -->
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from commision_config
+    <include refid="Base_Where_List" />
+  </select>
+  
+   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_config
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <!-- 根据主键查询 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select * from commision_config
+  where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 删除多条数据 -->
+    <delete id="deleteBatchById">
+    delete from commision_config
+    where id in
+	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  <!-- 修改 -->
+   <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.commisionconfig.model.CommisionConfigModel" >
+    update commision_config
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="minMoney != null" >
+        min_money = #{minMoney,jdbcType=VARCHAR},
+      </if>
+       <if test="minMoney != null" >
+        max_money = #{maxMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="commisionRate != null" >
+        commision_rate = #{commisionRate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

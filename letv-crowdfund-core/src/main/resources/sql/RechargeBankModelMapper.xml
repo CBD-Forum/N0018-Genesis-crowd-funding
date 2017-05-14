@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.recharge.model.RechargeBankModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.recharge.model.RechargeBankModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_type" property="bankType" jdbcType="VARCHAR" />
+    <result column="bank_code" property="bankCode" jdbcType="VARCHAR" />
+    <result column="bank_short_name" property="bankShortName" jdbcType="VARCHAR" />
+    <result column="busi_type" property="busiType" jdbcType="VARCHAR" />
+    <result column="pay_code" property="payCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, bank_name, bank_type, bank_code, bank_short_name, busi_type,pay_code
+  </sql>
+   <sql id="Base_Where_List">
+  	<where>
+  	 <if test="busiType != null" >
+        and busi_type = #{busiType,jdbcType=VARCHAR}
+      </if>
+   </where>
+   </sql>
+  <select id="selectList" resultMap="BaseResultMap" parameterType="com.fbd.core.app.recharge.model.RechargeBankModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge_bank
+   <include refid="Base_Where_List" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from recharge_bank
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from recharge_bank
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.recharge.model.RechargeBankModel" >
+    insert into recharge_bank (id, bank_name, bank_type, 
+      bank_code, bank_short_name, busi_type,pay_code
+      )
+    values (#{id,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankType,jdbcType=VARCHAR}, 
+      #{bankCode,jdbcType=VARCHAR}, #{bankShortName,jdbcType=VARCHAR}, #{busiType,jdbcType=VARCHAR},
+      #{payCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.recharge.model.RechargeBankModel" >
+    update recharge_bank
+    <set >
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        bank_type = #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        bank_code = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankShortName != null" >
+        bank_short_name = #{bankShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="busiType != null" >
+        busi_type = #{busiType,jdbcType=VARCHAR},
+      </if>
+      <if test="payCode != null" >
+        pay_code = #{payCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.recharge.model.RechargeBankModel" >
+    update recharge_bank
+    set bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_type = #{bankType,jdbcType=VARCHAR},
+      bank_code = #{bankCode,jdbcType=VARCHAR},
+      bank_short_name = #{bankShortName,jdbcType=VARCHAR},
+      busi_type = #{busiType,jdbcType=VARCHAR},
+      pay_code = #{payCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.log.model.UserLogModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.log.model.UserLogModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="login_result" property="loginResult" jdbcType="VARCHAR" />
+    <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="res_info" property="resInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, login_time, login_result, ip_address, res_info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- ****************分页查询************************ -->
+  <sql id="Base_Where_List">
+  	<where>
+  	  <if test="id != null" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+  	  <if test="userId != null" >
+        and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="loginTime != null" >
+        and login_time = #{loginTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="ipAddress != null" >
+        and ip_address = #{ipAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="loginResult != null" >
+        and login_result = #{loginResult,jdbcType=VARCHAR}
+      </if>
+      <if test="resInfo != null" >
+        and res_info = #{resInfo,jdbcType=VARCHAR}
+      </if>
+  	</where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort=='id'" >
+        id ${order}
+      </if>
+  	  <if test="sort=='userId'" >
+  	  	user_id ${order}
+      </if>
+      <if test="sort=='loginTime'" >
+      	login_time ${order}
+      </if>
+      <if test="sort=='ipAddress'" >
+      	ip_address ${order}
+      </if>
+      <if test="sort=='loginResult'" >
+      	login_result ${order}
+      </if>
+      <if test="sort=='resInfo'" >
+      	res_info ${order}
+      </if>
+  </sql>
+  
+   <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from user_log
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.log.model.UserLogModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_log
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  
+  <!-- ****************分页查询************************ -->
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.log.model.UserLogModel" >
+    insert into user_log (id, user_id, login_time, 
+      login_result, ip_address, res_info
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, 
+      #{loginResult,jdbcType=VARCHAR}, #{ipAddress,jdbcType=VARCHAR}, #{resInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.log.model.UserLogModel" >
+    insert into user_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="loginResult != null" >
+        login_result,
+      </if>
+      <if test="ipAddress != null" >
+        ip_address,
+      </if>
+      <if test="resInfo != null" >
+        res_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginResult != null" >
+        #{loginResult,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null" >
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="resInfo != null" >
+        #{resInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.log.model.UserLogModel" >
+    update user_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null" >
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginResult != null" >
+        login_result = #{loginResult,jdbcType=VARCHAR},
+      </if>
+      <if test="ipAddress != null" >
+        ip_address = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="resInfo != null" >
+        res_info = #{resInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.log.model.UserLogModel" >
+    update user_log
+    set user_id = #{userId,jdbcType=VARCHAR},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      login_result = #{loginResult,jdbcType=VARCHAR},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      res_info = #{resInfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

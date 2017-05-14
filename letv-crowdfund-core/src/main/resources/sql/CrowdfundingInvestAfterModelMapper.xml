@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingInvestAfterModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingInvestAfterModel" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="loan_name" property="loanName" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+    <result column="date_node" property="dateNode" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, loan_no, content, pic_url, date_node,auditor,audit_time,create_time,update_time
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_investafter
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_investafter
+    where id = #{id,jdbcType=VARCHAR}
+  </delete> 
+  
+   <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     ci.id, ci.loan_no, ci.content, ci.pic_url, ci.date_node,
+     ci.auditor,ci.audit_time,ci.create_time,ci.update_time,c1.loan_name
+    from crowdfunding_investafter ci 
+      left join crowdfunding c1 on c1.loan_no = ci.loan_no
+        <include refid="base_Where"></include>
+    order by ci.create_time desc
+  </select>  
+  
+   <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+       count(1)
+    from crowdfunding_investafter ci
+        <include refid="base_Where"></include>
+  </select>  
+  
+  <sql id="base_Where">
+  	<where>
+      <if test="state != null and state != ''" >
+        and ci.state = #{state,jdbcType=VARCHAR}
+      </if>
+      <if test="loanNo != null and loanNo != ''" >
+        and ci.loan_no = #{loanNo,jdbcType=VARCHAR}
+      </if>
+      <if test="id != null and id != ''" >
+        and ci.id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>  
+  
+  
+  
+   
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingInvestAfterModel" >
+    insert into crowdfunding_investafter (id, loan_no, content, 
+      pic_url, date_node, state, 
+      auditor, audit_time, create_time, 
+      update_time)
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{picUrl,jdbcType=VARCHAR}, #{dateNode,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+      #{auditor,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  
+  
+  
+  
+  
+  
+ 
+</mapper>

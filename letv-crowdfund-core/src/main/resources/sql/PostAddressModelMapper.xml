@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.address.model.PostAddressModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.address.model.PostAddressModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="address_no" property="addressNo" jdbcType="VARCHAR" />
+    <result column="post_user" property="postUser" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="adress_detail" property="adressDetail" jdbcType="VARCHAR" />
+    <result column="post_code" property="postCode" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="cityName" property="cityName" jdbcType="VARCHAR" />
+    <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, address_no, post_user, mobile, province, city, adress_detail, post_code, 
+    is_default,user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from post_address
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByAddressNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    p.id, p.address_no, p.post_user, p.mobile, p.province, p.city, p.adress_detail, p.post_code, 
+    p.is_default,p.user_id,
+    (select a.short_name from area a  where a.id=p.city) as cityName,
+    (select a.short_name from area a where a.id=p.province) as provinceName
+    from post_address p
+    where p.address_no = #{addressNo,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectList" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+     p.id, p.address_no as addressNo, 
+     p.post_user as postUser, p.mobile, p.province, p.city, 
+     p.adress_detail as adressDetail, 
+     p.post_code as postCode, 
+     p.is_default as isDefault,
+     p.user_id as userId,
+     (select a.short_name from area a  where a.id=p.city) as cityName,
+    (select a.short_name from area a where a.id=p.province) as provinceName
+    from post_address p
+    where p.user_id = #{userId,jdbcType=VARCHAR}
+    order by p.is_default desc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from post_address
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.address.model.PostAddressModel" >
+    insert into post_address (id, address_no, post_user, 
+      mobile, province, city, 
+      adress_detail, post_code, is_default,user_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{addressNo,jdbcType=VARCHAR}, #{postUser,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{adressDetail,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, #{isDefault,jdbcType=VARCHAR},
+      #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.address.model.PostAddressModel" >
+    insert into post_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addressNo != null" >
+        address_no,
+      </if>
+      <if test="postUser != null" >
+        post_user,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="adressDetail != null" >
+        adress_detail,
+      </if>
+      <if test="postCode != null" >
+        post_code,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="addressNo != null" >
+        #{addressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="postUser != null" >
+        #{postUser,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="adressDetail != null" >
+        #{adressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.address.model.PostAddressModel" >
+    update post_address
+    <set >
+      <if test="addressNo != null" >
+        address_no = #{addressNo,jdbcType=VARCHAR},
+      </if>
+      <if test="postUser != null" >
+        post_user = #{postUser,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="adressDetail != null" >
+        adress_detail = #{adressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=VARCHAR},
+      </if>
+       <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.address.model.PostAddressModel" >
+    update post_address
+    set address_no = #{addressNo,jdbcType=VARCHAR},
+      post_user = #{postUser,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      adress_detail = #{adressDetail,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateNotDefault" parameterType="java.lang.String" >
+  
+  	update post_address set is_default=0 where user_id=#{userId,jdbcType=VARCHAR}
+  
+  </update>
+  
+</mapper>

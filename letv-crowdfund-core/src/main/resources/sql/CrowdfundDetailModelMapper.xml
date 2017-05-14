@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundDetailModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundDetailModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="loan_video" property="loanVideo" jdbcType="VARCHAR" />
+    <result column="mobile_video" property="mobileVideo" jdbcType="VARCHAR" />
+    <result column="house_type" property="houseType" jdbcType="VARCHAR" />
+    <result column="house_old_price" property="houseOldPrice" jdbcType="DOUBLE" />
+    <result column="house_present_price" property="housePresentPrice" jdbcType="DOUBLE" />
+    <result column="house_developer" property="houseDeveloper" jdbcType="VARCHAR" />
+    <result column="finance_budget" property="financeBudget" jdbcType="VARCHAR" />
+    <result column="last_quarter_income" property="lastQuarterIncome" jdbcType="DOUBLE" />
+    <result column="last_quarter_profit" property="lastQuarterProfit" jdbcType="DOUBLE" />
+    <result column="loan_detail" property="loanDetail" jdbcType="LONGVARCHAR" />
+    <result column="video_des" property="videoDes" jdbcType="LONGVARCHAR" />
+    <result column="house_manager" property="houseManager" jdbcType="LONGVARCHAR" />
+    <result column="price_compare" property="priceCompare" jdbcType="LONGVARCHAR" />
+    <result column="last_year_income" property="lastYearIncome" jdbcType="DOUBLE" />
+    <result column="last_year_profit" property="lastYearProfit" jdbcType="DOUBLE" />
+    <result column="founder" property="founder" jdbcType="VARCHAR" />
+    <result column="founder_photo" property="founderPhoto" jdbcType="VARCHAR" />
+    <result column="company_fund_date" property="companyFundDate" jdbcType="TIMESTAMP" />
+    <result column="back_photo" property="backPhoto" jdbcType="VARCHAR" />
+    <result column="loan_contract" property="loanContract" jdbcType="VARCHAR" />
+    
+    <result column="loan_team" property="loanTeam" jdbcType="LONGVARCHAR" />
+    <result column="business_license" property="loanContract" jdbcType="VARCHAR" />
+    <result column="legal_card" property="loanContract" jdbcType="VARCHAR" />
+    <result column="transfer_ratio" property="loanContract" jdbcType="VARCHAR" />
+    <result column="exit_scheme" property="loanTeam" jdbcType="LONGVARCHAR" />
+    <result column="capital_used" property="loanTeam" jdbcType="LONGVARCHAR" />
+    <result column="industry_analysis" property="industryAnalysis" jdbcType="LONGVARCHAR" />
+    <result column="risk_measure" property="riskMeasure" jdbcType="LONGVARCHAR" />
+    <result column="finance_plan" property="financePlan" jdbcType="LONGVARCHAR" />
+    <result column="business_proposal" property="businessProposal" jdbcType="VARCHAR" />
+    <result column="other_accessories" property="otherAccessories" jdbcType="VARCHAR" />
+    <result column="license_identity_information" property="licenseIdentityInformation" jdbcType="VARCHAR" />
+    
+    <result column="user_province" property="userProvince" jdbcType="VARCHAR" />
+    <result column="user_city" property="userCity" jdbcType="VARCHAR" />
+    <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="last_valuation" property="lastValuation" jdbcType="DOUBLE" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no,loan_video, house_type, house_old_price, house_present_price, house_developer, 
+    finance_budget, last_quarter_income, last_quarter_profit,
+    loan_detail, video_des, house_manager, price_compare, last_year_income, last_year_profit, founder, 
+    founder_photo,company_fund_date,back_photo,loan_contract,
+    loan_team,business_license,legal_card,transfer_ratio,exit_scheme,capital_used，industry_analysis,
+    risk_measure,finance_plan,business_proposal,other_accessories,license_identity_information,
+    user_province,user_city,user_mobile,company,mobile_video
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_detail
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByLoanNo" parameterType="java.lang.String" >
+    delete from crowdfund_detail
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDetailModel" >
+    insert into crowdfund_detail (id,loan_no, loan_video, house_type, 
+      house_old_price, house_present_price, house_developer, 
+      finance_budget, last_quarter_income, last_quarter_profit, 
+      loan_detail, video_des, house_manager, 
+      price_compare, last_year_income, last_year_profit, 
+      founder, founder_photo,company_fund_date,back_photo,loan_contract,
+      business_proposal,other_accessories,license_identity_information,user_province,
+      user_city,user_mobile,company,industry_analysis,risk_measure,finance_plan,last_valuation,
+      mobile_video
+      )
+    values (#{id,jdbcType=VARCHAR},#{loanNo,jdbcType=VARCHAR}, #{loanVideo,jdbcType=VARCHAR}, #{houseType,jdbcType=VARCHAR}, 
+      #{houseOldPrice,jdbcType=DOUBLE}, #{housePresentPrice,jdbcType=DOUBLE}, #{houseDeveloper,jdbcType=VARCHAR}, 
+      #{financeBudget,jdbcType=VARCHAR}, #{lastQuarterIncome,jdbcType=DOUBLE}, #{lastQuarterProfit,jdbcType=DOUBLE}, 
+      #{loanDetail,jdbcType=LONGVARCHAR}, #{videoDes,jdbcType=LONGVARCHAR}, #{houseManager,jdbcType=LONGVARCHAR}, 
+      #{priceCompare,jdbcType=LONGVARCHAR}, #{lastYearIncome,jdbcType=DOUBLE}, #{lastYearProfit,jdbcType=DOUBLE}, 
+      #{founder,jdbcType=VARCHAR}, #{founderPhoto,jdbcType=VARCHAR}, #{companyFundDate,jdbcType=TIMESTAMP},
+      #{backPhoto,jdbcType=VARCHAR},#{loanContract,jdbcType=VARCHAR},#{businessProposal,jdbcType=VARCHAR},
+      #{otherAccessories,jdbcType=VARCHAR},#{licenseIdentityInformation,jdbcType=VARCHAR},
+      #{userProvince,jdbcType=VARCHAR},#{userCity,jdbcType=VARCHAR},
+      #{userMobile,jdbcType=VARCHAR},#{company,jdbcType=VARCHAR},#{industryAnalysis,jdbcType=VARCHAR},
+      #{riskMeasure,jdbcType=VARCHAR},#{financePlan,jdbcType=VARCHAR},#{lastValuation,jdbcType=VARCHAR},
+      #{mobileVideo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDetailModel" >
+    insert into crowdfund_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+       <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="loanVideo != null" >
+        loan_video,
+      </if>
+      <if test="houseType != null" >
+        house_type,
+      </if>
+      <if test="houseOldPrice != null" >
+        house_old_price,
+      </if>
+      <if test="housePresentPrice != null" >
+        house_present_price,
+      </if>
+      <if test="houseDeveloper != null" >
+        house_developer,
+      </if>
+      <if test="financeBudget != null" >
+        finance_budget,
+      </if>
+      <if test="last_quarter_income != null" >
+        last_quarter_income,
+      </if>
+      <if test="last_quarter_profit != null" >
+        last_quarter_profit,
+      </if>
+      <if test="loanDetail != null" >
+        loan_detail,
+      </if>
+      <if test="videoDes != null" >
+        video_des,
+      </if>
+      <if test="houseManager != null" >
+        house_manager,
+      </if>
+      <if test="priceCompare != null" >
+        price_compare,
+      </if>
+      <if test="lastYearIncome != null" >
+        last_year_income,
+      </if>
+      <if test="lastYearProfit != null" >
+        last_year_profit,
+      </if>
+      <if test="founder != null" >
+        founder,
+      </if>
+      <if test="founderPhoto != null" >
+        founder_photo,
+      </if>
+       <if test="companyFundDate != null" >
+        company_fund_date,
+      </if>
+       <if test="backPhoto != null" >
+        back_photo,
+      </if>
+       <if test="loanContract != null" >
+        loan_contract,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+       <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loanVideo != null" >
+        #{loanVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="houseType != null" >
+        #{houseType,jdbcType=VARCHAR},
+      </if>
+      <if test="houseOldPrice != null" >
+        #{houseOldPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="housePresentPrice != null" >
+        #{housePresentPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="houseDeveloper != null" >
+        #{houseDeveloper,jdbcType=VARCHAR},
+      </if>
+      <if test="financeBudget != null" >
+        #{financeBudget,jdbcType=VARCHAR},
+      </if>
+      <if test="lastQuarterIncome != null" >
+        #{lastQuarterIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="lastQuarterProfit != null" >
+        #{lastQuarterProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="loanDetail != null" >
+        #{loanDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="videoDes != null" >
+        #{videoDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="houseManager != null" >
+        #{houseManager,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="priceCompare != null" >
+        #{priceCompare,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="lastYearIncome != null" >
+        #{lastYearIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="lastYear_profit != null" >
+        #{lastYearProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="founder != null" >
+        #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="founderPhoto != null" >
+        #{founderPhoto,jdbcType=VARCHAR},
+      </if>
+       <if test="companyFundDate != null" >
+        #{companyFundDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backPhoto != null" >
+        #{backPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="loanContract != null" >
+        #{loanContract,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDetailModel" >
+    update crowdfund_detail
+    <set >
+      <if test="loanVideo != null" >
+        loan_video = #{loanVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileVideo != null" >
+        mobile_video = #{mobileVideo,jdbcType=VARCHAR},
+      </if>
+       <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="houseType != null" >
+        house_type = #{houseType,jdbcType=VARCHAR},
+      </if>
+      <if test="houseOldPrice != null" >
+        house_old_price = #{houseOldPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="housePresentPrice != null" >
+        house_present_price = #{housePresentPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="houseDeveloper != null" >
+        house_developer = #{houseDeveloper,jdbcType=VARCHAR},
+      </if>
+      <if test="financeBudget != null" >
+        finance_budget = #{financeBudget,jdbcType=VARCHAR},
+      </if>
+      <if test="lastQuarterIncome != null" >
+        last_quarter_income = #{lastQuarterIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="lastQuarterProfit != null" >
+        last_quarter_profit = #{lastQuarterProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="loanDetail != null" >
+        loan_detail = #{loanDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="videoDes != null" >
+        video_des = #{videoDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="houseManager != null" >
+        house_manager = #{houseManager,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="priceCompare != null" >
+        price_compare = #{priceCompare,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="lastYearIncome != null" >
+        last_year_income = #{lastYearIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="lastYearProfit != null" >
+        last_year_profit = #{lastYearProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="founder != null" >
+        founder = #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="founderPhoto != null" >
+        founder_photo = #{founderPhoto,jdbcType=VARCHAR},
+      </if>
+       <if test="companyFundDate != null" >
+        company_fund_date = #{companyFundDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="backPhoto != null" >
+        back_photo = #{backPhoto,jdbcType=VARCHAR},
+      </if>
+       <if test="loanContract != null" >
+        loan_contract = #{loanContract,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="loanTeam != null" >
+        loan_team = #{loanTeam,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="businessLicense != null" >
+        business_license = #{businessLicense,jdbcType=VARCHAR},
+      </if>       
+      <if test="legalCard != null" >
+        legal_card = #{legalCard,jdbcType=VARCHAR},
+      </if>      
+      <if test="transferRatio != null" >
+        transfer_ratio = #{transferRatio,jdbcType=VARCHAR},
+      </if>       
+      <if test="exitScheme != null" >
+        exit_scheme = #{exitScheme,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="capitalUsed != null" >
+        capital_used = #{capitalUsed,jdbcType=LONGVARCHAR},
+      </if>        
+      <if test="industryAnalysis != null" >
+        industry_analysis = #{industryAnalysis,jdbcType=LONGVARCHAR},
+      </if>       
+      <if test="riskMeasure != null" >
+        risk_measure = #{riskMeasure,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="financePlan != null" >
+        finance_plan = #{financePlan,jdbcType=LONGVARCHAR},
+      </if>      
+      
+      <if test="businessProposal != null" >
+        business_proposal = #{businessProposal,jdbcType=VARCHAR},
+      </if>     
+      <if test="otherAccessories != null" >
+        other_accessories = #{otherAccessories,jdbcType=VARCHAR},
+      </if>     
+      
+      <if test="licenseIdentityInformation != null" >
+        license_identity_information = #{licenseIdentityInformation,jdbcType=VARCHAR},
+      </if> 
+      
+      <if test="userProvince != null" >
+        user_province = #{userProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="userCity != null" >
+        user_city = #{userCity,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null" >
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="lastValuation != null" >
+        last_valuation = #{lastValuation,jdbcType=DOUBLE},
+      </if>      
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByLoanNo" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDetailModel" >
+    update crowdfund_detail
+    <set >
+      <if test="loanVideo != null" >
+        loan_video = #{loanVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileVideo != null" >
+        mobile_video = #{mobileVideo,jdbcType=VARCHAR},
+      </if>
+       <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="houseType != null" >
+        house_type = #{houseType,jdbcType=VARCHAR},
+      </if>
+      <if test="houseOldPrice != null" >
+        house_old_price = #{houseOldPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="housePresentPrice != null" >
+        house_present_price = #{housePresentPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="houseDeveloper != null" >
+        house_developer = #{houseDeveloper,jdbcType=VARCHAR},
+      </if>
+      <if test="financeBudget != null" >
+        finance_budget = #{financeBudget,jdbcType=VARCHAR},
+      </if>
+      <if test="lastQuarterIncome != null" >
+        last_quarter_income = #{lastQuarterIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="lastQuarterProfit != null" >
+        last_quarter_profit = #{lastQuarterProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="loanDetail != null" >
+        loan_detail = #{loanDetail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="videoDes != null" >
+        video_des = #{videoDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="houseManager != null" >
+        house_manager = #{houseManager,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="priceCompare != null" >
+        price_compare = #{priceCompare,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="lastYearIncome != null" >
+        last_year_income = #{lastYearIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="lastYearProfit != null" >
+        last_year_profit = #{lastYearProfit,jdbcType=DOUBLE},
+      </if>
+      <if test="founder != null" >
+        founder = #{founder,jdbcType=VARCHAR},
+      </if>
+      <if test="founderPhoto != null" >
+        founder_photo = #{founderPhoto,jdbcType=VARCHAR},
+      </if>
+       <if test="companyFundDate != null" >
+        company_fund_date = #{companyFundDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="backPhoto != null" >
+        back_photo = #{backPhoto,jdbcType=VARCHAR},
+      </if>
+       <if test="loanContract != null" >
+        loan_contract = #{loanContract,jdbcType=VARCHAR},
+      </if>
+     <if test="loanTeam != null" >
+        loan_team = #{loanTeam,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="businessLicense != null" >
+        business_license = #{businessLicense,jdbcType=VARCHAR},
+      </if>       
+      <if test="legalCard != null" >
+        legal_card = #{legalCard,jdbcType=VARCHAR},
+      </if>      
+      <if test="transferRatio != null" >
+        transfer_ratio = #{transferRatio,jdbcType=VARCHAR},
+      </if>       
+      <if test="exitScheme != null" >
+        exit_scheme = #{exitScheme,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="capitalUsed != null" >
+        capital_used = #{capitalUsed,jdbcType=LONGVARCHAR},
+      </if>        
+      <if test="industryAnalysis != null" >
+        industry_analysis = #{industryAnalysis,jdbcType=LONGVARCHAR},
+      </if>       
+      <if test="riskMeasure != null" >
+        risk_measure = #{riskMeasure,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="financePlan != null" >
+        finance_plan = #{financePlan,jdbcType=LONGVARCHAR},
+      </if>      
+      <if test="businessProposal != null" >
+        business_proposal = #{businessProposal,jdbcType=VARCHAR},
+      </if>     
+      <if test="otherAccessories != null" >
+        other_accessories = #{otherAccessories,jdbcType=VARCHAR},
+      </if>     
+      
+      <if test="licenseIdentityInformation != null" >
+        license_identity_information = #{licenseIdentityInformation,jdbcType=VARCHAR},
+      </if> 
+      <if test="userProvince != null" >
+        user_province = #{userProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="userCity != null" >
+        user_city = #{userCity,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null" >
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="lastValuation != null" >
+        last_valuation = #{lastValuation,jdbcType=DOUBLE},
+      </if>      
+      
+    </set>
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDetailModel" >
+    update crowdfund_detail
+    set loan_video = #{loanVideo,jdbcType=VARCHAR},
+       mobile_video = #{mobileVideo,jdbcType=VARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR},
+      house_type = #{houseType,jdbcType=VARCHAR},
+      house_old_price = #{houseOldPrice,jdbcType=DOUBLE},
+      house_present_price = #{housePresentPrice,jdbcType=DOUBLE},
+      house_developer = #{houseDeveloper,jdbcType=VARCHAR},
+      finance_budget = #{financeBudget,jdbcType=VARCHAR},
+      last_quarter_income = #{lastQuarterIncome,jdbcType=DOUBLE},
+      last_quarter_profit = #{lastQuarterProfit,jdbcType=DOUBLE},
+      loan_detail = #{loanDetail,jdbcType=LONGVARCHAR},
+      video_des = #{videoDes,jdbcType=LONGVARCHAR},
+      house_manager = #{houseManager,jdbcType=LONGVARCHAR},
+      price_compare = #{priceCompare,jdbcType=LONGVARCHAR},
+      last_year_income = #{lastYearIncome,jdbcType=DOUBLE},
+      last_year_profit = #{lastYearProfit,jdbcType=DOUBLE},
+      founder = #{founder,jdbcType=VARCHAR},
+      founder_photo = #{founderPhoto,jdbcType=VARCHAR},
+      company_fund_date = #{companyFundDate,jdbcType=TIMESTAMP},
+      back_photo = #{backPhoto,jdbcType=VARCHAR},
+      loan_contract = #{loanContract,jdbcType=VARCHAR},
+      loan_team = #{loanTeam,jdbcType=LONGVARCHAR},
+      business_license = #{businessLicense,jdbcType=VARCHAR},
+      legal_card = #{legalCard,jdbcType=VARCHAR},
+      transfer_ratio = #{transferRatio,jdbcType=VARCHAR},
+      exit_scheme = #{exitScheme,jdbcType=LONGVARCHAR},
+      capital_used = #{capitalUsed,jdbcType=LONGVARCHAR},
+      industry_analysis = #{industryAnalysis,jdbcType=LONGVARCHAR},
+      risk_measure = #{riskMeasure,jdbcType=LONGVARCHAR},
+      finance_plan = #{financePlan,jdbcType=LONGVARCHAR},
+      business_proposal = #{businessProposal,jdbcType=VARCHAR},
+      other_accessories = #{otherAccessories,jdbcType=VARCHAR},
+      license_identity_information = #{licenseIdentityInformation,jdbcType=VARCHAR},
+      user_province = #{userProvince,jdbcType=VARCHAR},
+      user_city = #{userCity,jdbcType=VARCHAR},
+      user_mobile = #{userMobile,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      last_valuation = #{lastValuation,jdbcType=DOUBLE} 
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

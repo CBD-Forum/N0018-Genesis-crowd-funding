@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.bill.model.UserBillModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.bill.model.UserBillModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="seq_num" property="seqNum" jdbcType="INTEGER" />
+    <result column="amt" property="amt" jdbcType="DOUBLE" />
+    <result column="balance" property="balance" jdbcType="DOUBLE" />
+    <result column="frozen_amt" property="frozenAmt" jdbcType="DOUBLE" />
+    <result column="trade_time" property="tradeTime" jdbcType="TIMESTAMP" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="opposite_side" property="oppositeSide" jdbcType="VARCHAR" />
+    <result column="trade_direction" property="tradeDirection" jdbcType="VARCHAR" />
+    <result column="trade_id" property="tradeId" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <!-- 显示使用 -->
+    <result column="display_amt" property="displayAmt" jdbcType="VARCHAR" />
+    <result column="trade_type_name" property="tradeTypeName" jdbcType="VARCHAR" />
+    <result column="tradeDirectionName" property="tradeDirectionName" jdbcType="VARCHAR" />
+     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="realName" property="realName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, seq_num, amt, balance, IFNULL(frozen_amt,0) as frozen_amt, trade_time, trade_type, opposite_side, 
+    trade_direction, trade_id, parent_id, detail
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_bill
+     where user_id = #{userId,jdbcType=VARCHAR} and 
+     seq_num=(select max(t.seq_num) from user_bill t where t.user_id=#{userId,jdbcType=VARCHAR})
+  </select>
+  <!-- 前台列表展示 -->
+  <sql id="Base_Where">
+  	<where>
+  	  <if test="tradeTypeFlag != null and tradeTypeFlag != ''" >
+        and ub.trade_type !='recharge' 
+      </if>
+      <if test="userId != null and userId != ''" >
+        and ub.user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="userIdLike != null and userIdLike != ''" >
+        and ub.user_id like CONCAT('%',REPLACE(#{userIdLike},'*','%'),'%')
+      </if>
+      <if test="realNameLike != null and realNameLike != ''" >
+        and u.real_name like CONCAT('%',REPLACE(#{realNameLike},'*','%'),'%')
+      </if>
+       <if test="mobile != null and mobile != ''" >
+        and u.mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="tradeIdLike != null and tradeIdLike != ''" >
+        and ub.trade_id like CONCAT('%',REPLACE(#{tradeIdLike},'*','%'),'%')
+      </if>
+      <if test="tradeType != null and tradeType != ''" >
+        and ub.trade_type = #{tradeType,jdbcType=VARCHAR}
+      </if>
+      <if test="tradeDirection != null and tradeDirection != ''" >
+        and ub.trade_direction = #{tradeDirection,jdbcType=VARCHAR}
+      </if>
+       <if test="tradeStartTime != null and tradeStartTime != ''" >
+        and ub.trade_time &gt;= #{tradeStartTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="tradeEndTime != null and tradeEndTime != ''" >
+       and ub.trade_time &lt;= #{tradeEndTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="id != null and id != ''" >
+        and ub.id = #{id,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='tradeId'" >
+        ORDER BY ub.trade_id ${order}
+      </if>
+      <if test="sort =='tradeTime'" >
+        ORDER BY ub.trade_time ${order}
+      </if>
+      <if test="sort =='tradeDirectionName'" >
+        ORDER BY ub.tradeDirectionName ${order}
+      </if>
+      <if test="sort =='userId'" >
+        ORDER BY ub.user_id ${order}
+      </if>
+      <if test="sort =='loanTerm'" >
+        ORDER BY ub.loan_term ${order}
+      </if>
+      <if test="sort =='oppositeSide'" >
+        ORDER BY ub.opposite_side ${order}
+      </if>
+      <if test="sort =='displayAmt'" >
+        ORDER BY ub.display_amt ${order}
+      </if>
+      <if test="sort =='balance'" >
+        ORDER BY ub.balance ${order}
+      </if>
+      <if test="sort =='frozenAmt'" >
+        ORDER BY ub.frozen_amt ${order}
+      </if>
+      <if test="sort =='detail'" >
+        ORDER BY ub.detail ${order}
+      </if>
+      <if test="sort =='parentId'" >
+        ORDER BY ub.parent_id ${order}
+      </if>
+  </sql>
+  
+  <sql id="Column_List" >
+    u.id, user_id, seq_num, amt, balance, IFNULL(frozen_amt,0) as frozen_amt, trade_time, trade_type, opposite_side, 
+    trade_direction, trade_id, parent_id, detail
+  </sql>
+  
+  
+  
+  <select id="selectUserBillDetail" resultMap="BaseResultMap" parameterType="com.fbd.core.app.bill.model.UserBillModel" >
+    select 
+     ub.id, ub.user_id, ub.seq_num, ub.amt, ub.balance, IFNULL(ub.frozen_amt,0) as frozen_amt, 
+     ub.trade_time, ub.trade_type, ub.opposite_side, 
+     ub.trade_direction, ub.trade_id, ub.parent_id, ub.detail,
+    (case when ub.trade_direction='in' then concat('+',amt)
+         when  ub.trade_direction='out' then concat('-',amt)
+         else amt end) as display_amt,
+     d1.display_name  as trade_type_name,
+     d2.display_name  as tradeDirectionName,
+     u.mobile,
+     u.real_name as realName
+    from user_bill ub 
+    left join user u on ub.user_id=u.user_id
+    left join dictionary d1 on d1.type_code='trade_type_person' and d1.code=ub.trade_type
+    left join dictionary d2 on d2.type_code='trade_direction' and d2.code=ub.trade_type
+   <include refid="Base_Where"/>
+  </select>
+  
+  
+   <select id="selectList" resultMap="BaseResultMap" parameterType="com.fbd.core.app.bill.model.UserBillModel" >
+    select 
+     ub.id, ub.user_id, ub.seq_num, ub.amt, ub.balance, IFNULL(ub.frozen_amt,0) as frozen_amt, 
+     ub.trade_time, ub.trade_type, ub.opposite_side, 
+     ub.trade_direction, ub.trade_id, ub.parent_id, ub.detail,
+    (case when ub.trade_direction='in' then concat('+',amt)
+         when  ub.trade_direction='out' then concat('-',amt)
+         else amt end) as display_amt,
+     d1.display_name  as trade_type_name,
+     d2.display_name  as tradeDirectionName,
+     u.mobile,
+     u.real_name as realName
+    from user_bill ub 
+    left join user u on ub.user_id=u.user_id
+    left join dictionary d1 on d1.type_code='trade_type_person' and d1.code=ub.trade_type
+    left join dictionary d2 on d2.type_code='trade_direction' and d2.code=ub.trade_direction
+   <include refid="Base_Where"/>
+     
+    <choose>
+        <when test="sort != null and sort != ''">
+            <include refid="Base_OrderBy_List" />
+        </when>
+        <otherwise> 
+            order by ub.trade_time desc
+        </otherwise>
+    </choose>
+     
+   <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  
+  
+   <select id="selectCount" resultType="java.lang.Integer" parameterType="com.fbd.core.app.bill.model.UserBillModel" >
+    select count(1)
+    from user_bill ub left join user u on ub.user_id=u.user_id
+   <include refid="Base_Where"/>
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_bill
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.bill.model.UserBillModel" >
+    insert into user_bill (id, user_id, seq_num, 
+      amt, balance, frozen_amt, 
+      trade_time, trade_type, opposite_side, 
+      trade_direction, trade_id, parent_id, 
+      detail)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{seqNum,jdbcType=INTEGER}, 
+      #{amt,jdbcType=DOUBLE}, #{balance,jdbcType=DOUBLE}, #{frozenAmt,jdbcType=DOUBLE}, 
+      #{tradeTime,jdbcType=TIMESTAMP}, #{tradeType,jdbcType=VARCHAR}, #{oppositeSide,jdbcType=VARCHAR}, 
+      #{tradeDirection,jdbcType=VARCHAR}, #{tradeId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.bill.model.UserBillModel" >
+    insert into user_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="seqNum != null" >
+        seq_num,
+      </if>
+      <if test="amt != null" >
+        amt,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="frozenAmt != null" >
+        frozen_amt,
+      </if>
+      <if test="tradeTime != null" >
+        trade_time,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="oppositeSide != null" >
+        opposite_side,
+      </if>
+      <if test="tradeDirection != null" >
+        trade_direction,
+      </if>
+      <if test="tradeId != null" >
+        trade_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        #{seqNum,jdbcType=INTEGER},
+      </if>
+      <if test="amt != null" >
+        #{amt,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="frozenAmt != null" >
+        #{frozenAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="tradeTime != null" >
+        #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="oppositeSide != null" >
+        #{oppositeSide,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeDirection != null" >
+        #{tradeDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeId != null" >
+        #{tradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.bill.model.UserBillModel" >
+    update user_bill
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        seq_num = #{seqNum,jdbcType=INTEGER},
+      </if>
+      <if test="amt != null" >
+        amt = #{amt,jdbcType=DOUBLE},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="frozenAmt != null" >
+        frozen_amt = #{frozenAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="tradeTime != null" >
+        trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="oppositeSide != null" >
+        opposite_side = #{oppositeSide,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeDirection != null" >
+        trade_direction = #{tradeDirection,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeId != null" >
+        trade_id = #{tradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.bill.model.UserBillModel" >
+    update user_bill
+    set user_id = #{userId,jdbcType=VARCHAR},
+      seq_num = #{seqNum,jdbcType=INTEGER},
+      amt = #{amt,jdbcType=DOUBLE},
+      balance = #{balance,jdbcType=DOUBLE},
+      frozen_amt = #{frozenAmt,jdbcType=DOUBLE},
+      trade_time = #{tradeTime,jdbcType=TIMESTAMP},
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      opposite_side = #{oppositeSide,jdbcType=VARCHAR},
+      trade_direction = #{tradeDirection,jdbcType=VARCHAR},
+      trade_id = #{tradeId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectUserCapitalInfo" resultType="java.util.Map" parameterType="java.lang.String" >
+	select 
+	   ub.user_id userId,ub.balance,ub.frozen_amt frozenAmt,t1.yesterdayProfit,t2.cumulativeProfit
+	from user_bill ub
+	  LEFT JOIN ( select sum(ifnull(amt,0)) yesterdayProfit,user_id from user_bill where date_format(trade_time,'%Y-%m-%d') = CURDATE() and trade_type = 'dailyIncome' GROUP BY user_id ) t1 on t1.user_id = ub.user_id 
+	  LEFT JOIN (
+	     select sum(ifnull(amt,0)) as cumulativeProfit,user_id from user_bill where trade_type = 'dailyIncome'  GROUP BY user_id
+	       ) t2 on t2.user_id = ub.user_id 
+	where ub.user_id = #{userId,jdbcType=VARCHAR} and seq_num=(select max(t.seq_num) from user_bill t where t.user_id=#{userId,jdbcType=VARCHAR})  
+	  
+  </select>
+  
+  
+  
+</mapper>

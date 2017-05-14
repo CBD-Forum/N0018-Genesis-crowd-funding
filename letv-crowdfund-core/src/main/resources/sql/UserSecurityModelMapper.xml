@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.UserSecurityModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.UserSecurityModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="security_question1" property="securityQuestion1" jdbcType="VARCHAR" />
+    <result column="security_question2" property="securityQuestion2" jdbcType="VARCHAR" />
+    <result column="security_answer1" property="securityAnswer1" jdbcType="VARCHAR" />
+    <result column="security_answer2" property="securityAnswer2" jdbcType="VARCHAR" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="login_failed_num" property="loginFailedNum" jdbcType="INTEGER" />
+    <result column="login_failed_time" property="loginFailedTime" jdbcType="TIMESTAMP" />
+    <result column="cash_password" property="cashPassword" jdbcType="VARCHAR" />
+    <result column="disable_time" property="disableTime" jdbcType="TIMESTAMP" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="statusName" property="statusName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, security_question1, security_question2, security_answer1, security_answer2, 
+    last_login_time, login_failed_num, login_failed_time, cash_password, disable_time, 
+    user_type, status
+  </sql>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_security
+    where user_id = #{userId,jdbcType=VARCHAR}
+     and user_type = #{userType,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_security
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_security
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.UserSecurityModel" >
+    insert into user_security (id, user_id, security_question1, 
+      security_question2, security_answer1, security_answer2, 
+      last_login_time, login_failed_num, login_failed_time, 
+      cash_password, disable_time, user_type, 
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{securityQuestion1,jdbcType=VARCHAR}, 
+      #{securityQuestion2,jdbcType=VARCHAR}, #{securityAnswer1,jdbcType=VARCHAR}, #{securityAnswer2,jdbcType=VARCHAR}, 
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{loginFailedNum,jdbcType=INTEGER}, #{loginFailedTime,jdbcType=TIMESTAMP}, 
+      #{cashPassword,jdbcType=VARCHAR}, #{disableTime,jdbcType=TIMESTAMP}, #{userType,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.user.model.UserSecurityModel" >
+    insert into user_security
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="securityQuestion1 != null" >
+        security_question1,
+      </if>
+      <if test="securityQuestion2 != null" >
+        security_question2,
+      </if>
+      <if test="securityAnswer1 != null" >
+        security_answer1,
+      </if>
+      <if test="securityAnswer2 != null" >
+        security_answer2,
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time,
+      </if>
+      <if test="loginFailedNum != null" >
+        login_failed_num,
+      </if>
+      <if test="loginFailedTime != null" >
+        login_failed_time,
+      </if>
+      <if test="cashPassword != null" >
+        cash_password,
+      </if>
+      <if test="disableTime != null" >
+        disable_time,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="securityQuestion1 != null" >
+        #{securityQuestion1,jdbcType=VARCHAR},
+      </if>
+      <if test="securityQuestion2 != null" >
+        #{securityQuestion2,jdbcType=VARCHAR},
+      </if>
+      <if test="securityAnswer1 != null" >
+        #{securityAnswer1,jdbcType=VARCHAR},
+      </if>
+      <if test="securityAnswer2 != null" >
+        #{securityAnswer2,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null" >
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginFailedNum != null" >
+        #{loginFailedNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginFailedTime != null" >
+        #{loginFailedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cashPassword != null" >
+        #{cashPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="disableTime != null" >
+        #{disableTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <sql id="Base_Update_Column">
+  	<set>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="securityQuestion1 != null" >
+        security_question1 = #{securityQuestion1,jdbcType=VARCHAR},
+      </if>
+      <if test="securityQuestion2 != null" >
+        security_question2 = #{securityQuestion2,jdbcType=VARCHAR},
+      </if>
+      <if test="securityAnswer1 != null" >
+        security_answer1 = #{securityAnswer1,jdbcType=VARCHAR},
+      </if>
+      <if test="securityAnswer2 != null" >
+        security_answer2 = #{securityAnswer2,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginFailedNum != null" >
+        login_failed_num = #{loginFailedNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginFailedTime != null" >
+        login_failed_time = #{loginFailedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cashPassword != null" >
+        cash_password = #{cashPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="disableTime != null" >
+        disable_time = #{disableTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+  </sql>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.user.model.UserSecurityModel" >
+    update user_security
+    <include refid="Base_Update_Column" />
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateByUserId" parameterType="com.fbd.core.app.user.model.UserSecurityModel" >
+    update user_security
+    <include refid="Base_Update_Column" />
+    where user_id = #{userId,jdbcType=VARCHAR}
+     and user_type = #{userType,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.UserSecurityModel" >
+    update user_security
+    set user_id = #{userId,jdbcType=VARCHAR},
+      security_question1 = #{securityQuestion1,jdbcType=VARCHAR},
+      security_question2 = #{securityQuestion2,jdbcType=VARCHAR},
+      security_answer1 = #{securityAnswer1,jdbcType=VARCHAR},
+      security_answer2 = #{securityAnswer2,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      login_failed_num = #{loginFailedNum,jdbcType=INTEGER},
+      login_failed_time = #{loginFailedTime,jdbcType=TIMESTAMP},
+      cash_password = #{cashPassword,jdbcType=VARCHAR},
+      disable_time = #{disableTime,jdbcType=TIMESTAMP},
+      user_type = #{userType,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

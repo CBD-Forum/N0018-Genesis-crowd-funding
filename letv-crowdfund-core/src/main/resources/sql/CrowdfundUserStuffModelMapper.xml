@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="id_card_front" property="idCardFront" jdbcType="VARCHAR" />
+    <result column="id_card_back" property="idCardBack" jdbcType="VARCHAR" />
+    <result column="hand_card_front" property="handCardFront" jdbcType="VARCHAR" />
+    <result column="hand_card_back" property="handCardBack" jdbcType="VARCHAR" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="post" property="post" jdbcType="VARCHAR" />
+    <result column="person_web" property="personWeb" jdbcType="VARCHAR" />
+    <result column="user_level" property="userLevel" jdbcType="VARCHAR" />
+    <result column="user_identity" property="userIdentity" jdbcType="VARCHAR" />
+    <result column="institution" property="institution" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="concern_industry" property="concernIndustry" jdbcType="VARCHAR" />
+    <result column="like_industry" property="likeIndustry" jdbcType="VARCHAR" />
+    <result column="concern_city" property="concernCity" jdbcType="VARCHAR" />
+    <result column="invest_ratio" property="investRatio" jdbcType="DOUBLE" />
+    <result column="is_invest" property="isInvest" jdbcType="VARCHAR" />
+    <result column="invest_experience" property="investExperience" jdbcType="VARCHAR" />
+    <result column="has_invest_plan" property="hasInvestPlan" jdbcType="VARCHAR" />
+    <result column="invest_plan_num" property="investPlanNum" jdbcType="INTEGER" />
+    <result column="invest_plan_amt" property="investPlanAmt" jdbcType="DOUBLE" />
+    <result column="year_income" property="yearIncome" jdbcType="DOUBLE" />
+    <result column="person_capital" property="personCapital" jdbcType="DOUBLE" />
+    <result column="company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="institution_industry" property="institutionIndustry" jdbcType="VARCHAR" />
+    <result column="capital_des" property="capitalDes" jdbcType="LONGVARCHAR" />
+    <result column="user_experience" property="userExperience" jdbcType="LONGVARCHAR" />
+    <result column="invest_auth_state" property="investAuthState" jdbcType="VARCHAR" />
+    <result column="lead_auth_state" property="leadAuthState" jdbcType="VARCHAR" />
+    <result column="invest_audit_time" property="investAuditTime" jdbcType="TIMESTAMP" />
+    <result column="lead_audit_time" property="leadAuditTime" jdbcType="TIMESTAMP" />
+    <result column="invest_author" property="investAuthor" jdbcType="VARCHAR" />
+    <result column="lead_author" property="leadAuthor" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="cert_no" property="certNo" jdbcType="VARCHAR" />
+    <result column="lend_auth_photo" property="lendAuthPhoto" jdbcType="VARCHAR" />
+    
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="card_photo" property="cardPhoto" jdbcType="VARCHAR" />
+    <result column="assets_credentials" property="assetsCredentials" jdbcType="VARCHAR" />
+    <result column="historical_investment_data" property="historicalInvestmentData" jdbcType="VARCHAR" />
+    <result column="org_lend_auth_state" property="orgLendAuthState" jdbcType="VARCHAR" />
+    <result column="org_invest_auth_state" property="orgInvestAuthState" jdbcType="VARCHAR" />
+    <result column="org_lend_audit_time" property="orgLendAuditTime" jdbcType="TIMESTAMP" />
+    <result column="org_invest_audit_time" property="orgInvestAuditTime" jdbcType="TIMESTAMP" />
+    <result column="auth_type" property="authType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, id_card_front, id_card_back, hand_card_front, hand_card_back,  weixin, company_name, post, 
+    person_web, user_level, user_identity, institution, role, concern_industry, like_industry, 
+    concern_city, invest_ratio, is_invest, invest_experience, has_invest_plan, invest_plan_num, 
+    invest_plan_amt, year_income, person_capital, company_address, institution_industry,capital_des, user_experience,invest_auth_state,
+    lead_auth_state,invest_audit_time,lead_audit_time,invest_author,lead_author,cert_no,lend_auth_photo,real_name,
+    position,card_photo,assets_credentials,historical_investment_data,org_lend_auth_state,org_invest_auth_state,
+    org_lend_audit_time,org_invest_audit_time,auth_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_user_stuff
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    select 
+        cus.id,cus.lend_auth_photo, cus.user_id, id_card_front, id_card_back, hand_card_front, hand_card_back,  weixin, cert_no,company_name, post, 
+    person_web, cus.user_level, user_identity, institution, role, concern_industry, like_industry, 
+    concern_city, invest_ratio, is_invest, invest_experience, has_invest_plan, invest_plan_num, 
+    invest_plan_amt, year_income, person_capital, company_address, institution_industry,capital_des, user_experience,invest_auth_state,
+    lead_auth_state,invest_audit_time,lead_audit_time,invest_author,lead_author,t1.mobile,
+    cus.position,cus.card_photo,cus.assets_credentials,cus.historical_investment_data,org_lend_auth_state,org_invest_auth_state,cus.real_name,
+    cus.auth_type authType
+    from crowdfund_user_stuff cus left join user t1 on t1.user_id=cus.user_id
+    where cus.user_id = #{userId,jdbcType=VARCHAR}
+    <if test="authType != null and ''!=authType">
+    	and cus.auth_type = #{authType,jdbcType=VARCHAR}
+    </if>
+    <if test="investAuthState != null and investAuthState.length()>0">
+    	and cus.invest_auth_state = #{investAuthState,jdbcType=VARCHAR}
+    </if>
+    <if test="authTypeState !=null and authTypeState.length()>0">
+    	<if test="authTypeState=='lead'">
+    		and cus.auth_type in('leadInvestor','orgLeadInvestor')
+    	</if>
+    	 <if test="authTypeState=='nomal'">
+    		and cus.auth_type in('investor','orgInvestor')
+    	</if>
+    </if>
+  </select>
+  
+  <select id="selectCrowdfundUserAuth" resultMap="BaseResultMap" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel">
+  	select 
+        cus.id,cus.lend_auth_photo, cus.user_id, id_card_front, id_card_back, hand_card_front, hand_card_back,  weixin, cert_no,company_name, post, 
+    person_web, cus.user_level, user_identity, institution, role, concern_industry, like_industry, 
+    concern_city, invest_ratio, is_invest, invest_experience, has_invest_plan, invest_plan_num, 
+    invest_plan_amt, year_income, person_capital, company_address, institution_industry,capital_des, user_experience,invest_auth_state,
+    lead_auth_state,invest_audit_time,lead_audit_time,invest_author,lead_author,t1.mobile,
+    cus.position,cus.card_photo,cus.assets_credentials,cus.historical_investment_data,org_lend_auth_state,org_invest_auth_state,cus.real_name
+    from crowdfund_user_stuff cus left join user t1 on t1.user_id=cus.user_id
+    <include refid="user_auth_where" />
+  </select>
+  <sql id="user_auth_where">
+  	<where>
+  		  <if test="investAuthState != null" >
+	        and cus.invest_auth_state in ('auditing','passed','refused')
+	      </if>
+	      <if test="leadAuthState != null" >
+	        and cus.lead_auth_state  in ('auditing','passed','refused')
+	      </if>
+	      <if test="orgLendAuthState != null" >
+	        and cus.org_lend_auth_state  in ('auditing','passed','refused')
+	      </if>
+	      <if test="orgInvestAuthState != null" >
+	         and cus.org_invest_auth_state in ('auditing','passed','refused')
+	      </if>
+	      <if test="userId != null and ''!=userId ">
+	         and cus.user_id = #{userId,jdbcType=VARCHAR}
+	      </if>
+	      <if test="authType != null and ''!=authType">
+	         and cus.auth_type = #{authType,jdbcType=VARCHAR}
+	      </if>	      
+	      
+	      
+  	</where>
+  </sql>
+  
+  
+  <select id="selectAuthList" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+		cus.id,
+		t1.user_id userId,
+		cus.real_name realName,
+		cus.cert_no certNo,
+		t1.user_level userLevel,
+		t1.email,
+		t1.mobile,
+		t1.create_time createTime,
+		cus.user_level as userLevel,
+		cus.lend_auth_photo lendAuthPhoto,
+		cus.position ,
+		(select d.display_name from dictionary d 
+     		     where d.type_code='user_level' and d.code=cus.user_level)as userLevelName
+    from crowdfund_user_stuff cus left join user t1 on t1.user_id=cus.user_id
+   <include refid="base_where"></include>
+   <if test="sort=='defaultSort'" >
+      	order by t1.create_time asc
+     </if> 
+    <if test="endPage>0">
+    	LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <select id="selectAuthCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    select count(1)
+    from crowdfund_user_stuff cus left join user t1 on t1.user_id=cus.user_id
+    <include refid="base_where"></include>
+  </select>
+  
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_user_stuff cus
+    <include refid="base_where"></include>
+  </select>  
+  
+  <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+	  select 
+	    cus.user_id as userId,
+	    cus.lend_auth_photo lendAuthPhoto,
+	    cus.company_name as companyName,
+	    cus.auth_type authType,
+	    u.province,
+	    (select a.short_name from area a where a.id=u.province) as provinceName,
+	    u.photo,
+	    IFNULL(t1.interviewLoanNum,0) as interviewLoanNum, 
+	    IFNULL(t2.supportNum,0) as supportNum,
+	    IFNULL(t3.leadNum,0) as leadNum,
+	    IFNULL(t4.supportNum,0) as preSupportNum,
+	    concern_industry as concernIndustry,
+	    u.self_detail as selfDetail,
+	    cus.user_level as userLevel,
+	    cus.cert_no as certNo
+	    from crowdfund_user_stuff cus
+	    left join user u on cus.user_id=u.user_id
+	    left join (select ir.apply_user,count(distinct ir.loan_no) interviewLoanNum 
+	               from interview_record ir 
+	               group by ir.apply_user)t1 on t1.apply_user=cus.user_id
+	    left join (select cst.support_user,count(distinct cst.loan_no) supportNum 
+	               from crowdfunding_support cst where cst.pay_state='payed'
+	               group by cst.support_user)t2 on t2.support_user=cus.user_id 
+	    left join (select lf.super_investor,count(distinct lf.investor) leadNum 
+	               from lead_follow lf
+	               group by lf.super_investor)t3 on t3.super_investor=cus.user_id 
+	    left join (select cpt.support_user,count(distinct cpt.loan_no) supportNum 
+	               from crowdfund_presupport cpt 
+	               group by cpt.support_user)t4 on t4.support_user=cus.user_id 
+    <include refid="base_where"></include>
+     <if test="sort=='defaultSort'" >
+      	order by t2.supportNum desc,t1.interviewLoanNum desc,t3.leadNum desc
+     </if> 
+    <if test="endPage>0">
+    	LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    select count(1)
+    from crowdfund_user_stuff cus
+    <include refid="base_where"></include>
+  </select>
+  
+  <sql id="base_where">
+	  <where>
+	      <!-- 
+	      <if test="supportUserLike != null and supportUserLike != ''" >
+	        and cst.support_user like  CONCAT(CONCAT('%', #{supportUserLike,jdbcType=VARCHAR}),'%')
+	      </if>-->
+	      <if test="userLevel != null and userLevel != ''" >
+	        and cus.user_level = #{userLevel,jdbcType=VARCHAR}
+	      </if>
+	      <if test="authType != null and authType != ''" >
+	        and cus.auth_type = #{authType,jdbcType=VARCHAR}
+	      </if>	      
+	      <if test="investAuthState != null and investAuthState != ''" >
+	        and cus.invest_auth_state = #{investAuthState,jdbcType=VARCHAR}
+	      </if>
+	      <if test="leadAuthState != null and leadAuthState != ''" >
+	        and cus.lead_auth_state = #{leadAuthState,jdbcType=VARCHAR}
+	      </if>
+	       <if test="userIdLike != null and userIdLike != ''" >
+	        and cus.user_id like  CONCAT(CONCAT('%', #{userIdLike,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <!-- 投资地区 -->
+	      <if test="concernCity != null and concernCity != ''" >
+	        and cus.concern_city like  CONCAT(CONCAT('%', #{concernCity,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <!-- 投资领域-->
+	      <if test="concernIndustry != null and concernIndustry != ''" >
+	        and cus.concern_industry like  CONCAT(CONCAT('%', #{concernIndustry,jdbcType=VARCHAR}),'%')
+	      </if>
+	       <if test="authInvestor != null and authInvestor != ''" >
+	        and cus.user_level in('authed','lead')
+	      </if>
+	      <if test="userId != null and userId != ''" >
+	        and cus.user_id = #{userId,jdbcType=VARCHAR}
+	      </if>
+	      
+	      <if test="investAuth == 'investAuth'" >
+	        and cus.invest_auth_state = 'passed' or cus.org_invest_auth_state = 'passed'
+	      </if>
+	      
+	      <if test="investAuth == 'lendAuth'" >
+	        and cus.lead_auth_state = 'passed' or cus.org_lend_auth_state = 'passed'
+	      </if>
+	      
+	      <if test="orgLendAuthState != null and orgLendAuthState != ''" >
+	        and cus.org_lend_auth_state = #{orgLendAuthState,jdbcType=VARCHAR}
+	      </if>
+	      <if test="orgInvestAuthState != null and orgInvestAuthState != ''" >
+	        and cus.org_invest_auth_state = #{orgInvestAuthState,jdbcType=VARCHAR}
+	      </if>
+	      <if test="realName != null and realName != ''" >
+	        and cus.real_name like  CONCAT(CONCAT('%', #{realName,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <if test="mobile != null and mobile != ''" >
+	        and t1.mobile like  CONCAT(CONCAT('%', #{mobile,jdbcType=VARCHAR}),'%')
+	      </if>
+	      <if test="certNo != null and certNo != ''" >
+	        and cus.cert_no like  CONCAT(CONCAT('%', #{certNo,jdbcType=VARCHAR}),'%')
+	      </if>
+	      
+	  </where>
+  </sql>
+  <!-- 查询用户的信息 -->
+   <select id="selectCrowdfundUser" resultType="java.util.Map" parameterType="java.lang.String" >
+    select 
+    cus.company_name as companyName,
+    cus.concern_industry as concernIndustry,
+    cus.concern_city as concernCity,
+    cus.user_level as userLevel,
+    cus.cert_no as certNo,
+    cus.invest_plan_num as investPlanNum,
+    cus.invest_plan_amt as investPlanAmt,
+    cus.has_invest_plan as hasInvestPlan,
+    cus.user_experience as userExperience,
+    cus.lend_auth_photo as lendAuthPhoto,
+    cus.user_identity userIdentity,
+	cus.capital_des capitalDes,
+	cus.auth_type authType,
+    u.user_id as userId,
+    u.real_name as realName,
+    u.create_time as createTime,
+    u.self_detail as selfDetail,
+    u.mobile,
+    u.photo,
+    cus.invest_auth_state as investAuthState,
+    cus.lead_auth_state as leadAuthState,
+    usl.email_state emailState,
+    (select a.short_name from area a  where a.id=u.city) as loanCityName,
+    (select a.short_name from area a where a.id=u.province) as loanProvinceName,
+    (select count(distinct lf.investor) from lead_follow lf where lf.super_investor=u.user_id) as followInvestorNum,
+    (select count(distinct cst.loan_no) from crowdfunding_support cst where cst.support_user=u.user_id and cst.pay_state='payed') as investLoanNum,
+    IFNULL((select sum(support_amt) from crowdfunding_support cst where cst.support_user=u.user_id and cst.pay_state='payed'),0) as totalSupportAmt
+    from user u 
+       left join crowdfund_user_stuff cus on u.user_id=cus.user_id
+       left join user_security_level usl on usl.user_id = u.user_id
+    where u.user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_user_stuff
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByUserAndAuth" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel">
+  	delete from crowdfund_user_stuff
+    where user_id = #{userId,jdbcType=VARCHAR} and auth_type=#{authType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    insert into crowdfund_user_stuff (id, user_id, id_card_front, 
+      id_card_back, hand_card_front, hand_card_back,  weixin, company_name, 
+      post, person_web, user_level, cert_no,
+      user_identity, institution, role, 
+      concern_industry, like_industry, concern_city, 
+      invest_ratio, is_invest, invest_experience, 
+      has_invest_plan, invest_plan_num, invest_plan_amt, 
+      year_income, person_capital, company_address, 
+      institution_industry, capital_des, user_experience,
+      invest_auth_state,
+      lead_auth_state,
+      invest_audit_time,
+      lead_audit_time,
+      lend_auth_photo,real_name,position,card_photo,assets_credentials,historical_investment_data,
+      org_lend_auth_state,org_invest_auth_state,org_lend_audit_time,org_invest_audit_time,auth_type
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{idCardFront,jdbcType=VARCHAR}, 
+      #{idCardBack,jdbcType=VARCHAR}, #{handCardFront,jdbcType=VARCHAR}, #{handCardBack,jdbcType=VARCHAR}, 
+      #{weixin,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
+      #{post,jdbcType=VARCHAR}, #{personWeb,jdbcType=VARCHAR}, #{userLevel,jdbcType=VARCHAR}, 
+      #{certNo,jdbcType=VARCHAR},
+      #{userIdentity,jdbcType=VARCHAR}, #{institution,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR}, 
+      #{concernIndustry,jdbcType=VARCHAR}, #{likeIndustry,jdbcType=VARCHAR}, #{concernCity,jdbcType=VARCHAR}, 
+      #{investRatio,jdbcType=DOUBLE}, #{isInvest,jdbcType=VARCHAR}, #{investExperience,jdbcType=VARCHAR}, 
+      #{hasInvestPlan,jdbcType=VARCHAR}, #{investPlanNum,jdbcType=INTEGER}, #{investPlanAmt,jdbcType=DOUBLE}, 
+      #{yearIncome,jdbcType=DOUBLE}, #{personCapital,jdbcType=DOUBLE}, #{companyAddress,jdbcType=VARCHAR}, 
+      #{institutionIndustry,jdbcType=VARCHAR}, #{capitalDes,jdbcType=LONGVARCHAR}, #{userExperience,jdbcType=LONGVARCHAR},
+      #{investAuthState,jdbcType=VARCHAR},#{leadAuthState,jdbcType=VARCHAR},#{investAuditTime,jdbcType=TIMESTAMP}, 
+      #{leadAuditTime,jdbcType=TIMESTAMP},#{lendAuthPhoto,jdbcType=VARCHAR},
+      #{realName,jdbcType=VARCHAR},#{position,jdbcType=VARCHAR},#{cardPhoto,jdbcType=VARCHAR},
+      #{assetsCredentials,jdbcType=VARCHAR},#{historicalInvestmentData,jdbcType=VARCHAR},#{orgLendAuthState,jdbcType=VARCHAR},
+      #{orgInvestAuthState,jdbcType=VARCHAR},#{orgLendAuditTime,jdbcType=TIMESTAMP},#{orgInvestAuditTime,jdbcType=TIMESTAMP},
+      #{authType,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    insert into crowdfund_user_stuff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="idCardFront != null" >
+        id_card_front,
+      </if>
+      <if test="idCardBack != null" >
+        id_card_back,
+      </if>
+      <if test="handCardFront != null" >
+        hand_card_front,
+      </if>
+      <if test="handCardBack != null" >
+        hand_card_back,
+      </if>
+      <if test="weixin != null" >
+        weixin,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="post != null" >
+        post,
+      </if>
+      <if test="personWeb != null" >
+        person_web,
+      </if>
+      <if test="userLevel != null" >
+        user_level,
+      </if>
+      <if test="userIdentity != null" >
+        user_identity,
+      </if>
+      <if test="institution != null" >
+        institution,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="concernIndustry != null" >
+        concern_industry,
+      </if>
+      <if test="likeIndustry != null" >
+        like_industry,
+      </if>
+      <if test="concernCity != null" >
+        concern_city,
+      </if>
+      <if test="investRatio != null" >
+        invest_ratio,
+      </if>
+      <if test="isInvest != null" >
+        is_invest,
+      </if>
+      <if test="investExperience != null" >
+        invest_experience,
+      </if>
+      <if test="hasInvestPlan != null" >
+        has_invest_plan,
+      </if>
+      <if test="investPlanNum != null" >
+        invest_plan_num,
+      </if>
+      <if test="investPlanAmt != null" >
+        invest_plan_amt,
+      </if>
+      <if test="yearIncome != null" >
+        year_income,
+      </if>
+      <if test="personCapital != null" >
+        person_capital,
+      </if>
+      <if test="companyAddress != null" >
+        company_address,
+      </if>
+      <if test="institutionIndustry != null" >
+        institution_industry,
+      </if>
+      <if test="capitalDes != null" >
+        capital_des,
+      </if>
+      <if test="userExperience != null" >
+        user_experience,
+      </if>
+       <if test="investAuthState != null" >
+        invest_auth_state,
+      </if>
+       <if test="leadAuthState != null" >
+        lead_auth_state,
+      </if>
+       <if test="investAuditTime != null" >
+        invest_audit_time,
+      </if>
+       <if test="leadAuditTime != null" >
+        lead_audit_time,
+      </if>
+      <if test="certNo != null" >
+        cert_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFront != null" >
+        #{idCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardBack != null" >
+        #{idCardBack,jdbcType=VARCHAR},
+      </if>
+      <if test="handCardFront != null" >
+        #{handCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="handCardBack != null" >
+        #{handCardBack,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="personWeb != null" >
+        #{personWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdentity != null" >
+        #{userIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="institution != null" >
+        #{institution,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="concernIndustry != null" >
+        #{concernIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="likeIndustry != null" >
+        #{likeIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="concernCity != null" >
+        #{concernCity,jdbcType=VARCHAR},
+      </if>
+      <if test="investRatio != null" >
+        #{investRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="isInvest != null" >
+        #{isInvest,jdbcType=VARCHAR},
+      </if>
+      <if test="investExperience != null" >
+        #{investExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="hasInvestPlan != null" >
+        #{hasInvestPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="investPlanNum != null" >
+        #{investPlanNum,jdbcType=INTEGER},
+      </if>
+      <if test="investPlanAmt != null" >
+        #{investPlanAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="yearIncome != null" >
+        #{yearIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="personCapital != null" >
+        #{personCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="companyAddress != null" >
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionIndustry != null" >
+        #{institutionIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalDes != null" >
+        #{capitalDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userExperience != null" >
+        #{userExperience,jdbcType=LONGVARCHAR},
+      </if>
+      
+      <if test="investAuthState != null" >
+        #{investAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="leadAuthState != null" >
+        #{leadAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="investAuditTime != null" >
+        #{investAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leadAuditTime != null" >
+        #{leadAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    update crowdfund_user_stuff
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardFront != null" >
+        id_card_front = #{idCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardBack != null" >
+        id_card_back = #{idCardBack,jdbcType=VARCHAR},
+      </if>
+      <if test="handCardFront != null" >
+        hand_card_front = #{handCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="handCardBack != null" >
+        hand_card_back = #{handCardBack,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="personWeb != null" >
+        person_web = #{personWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdentity != null" >
+        user_identity = #{userIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="institution != null" >
+        institution = #{institution,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="concernIndustry != null" >
+        concern_industry = #{concernIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="likeIndustry != null" >
+        like_industry = #{likeIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="concernCity != null" >
+        concern_city = #{concernCity,jdbcType=VARCHAR},
+      </if>
+      <if test="investRatio != null" >
+        invest_ratio = #{investRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="isInvest != null" >
+        is_invest = #{isInvest,jdbcType=VARCHAR},
+      </if>
+      <if test="investExperience != null" >
+        invest_experience = #{investExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="hasInvestPlan != null" >
+        has_invest_plan = #{hasInvestPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="investPlanNum != null" >
+        invest_plan_num = #{investPlanNum,jdbcType=INTEGER},
+      </if>
+      <if test="investPlanAmt != null" >
+        invest_plan_amt = #{investPlanAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="yearIncome != null" >
+        year_income = #{yearIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="personCapital != null" >
+        person_capital = #{personCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="companyAddress != null" >
+        company_address = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionIndustry != null" >
+        institution_industry = #{institutionIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalDes != null" >
+        capital_des = #{capitalDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userExperience != null" >
+        user_experience = #{userExperience,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="investAuthState != null" >
+        invest_auth_state = #{investAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="leadAuthState != null" >
+        lead_auth_state = #{leadAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="investAuditTime != null" >
+        invest_audit_time = #{investAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leadAuditTime != null" >
+         lead_audit_time = #{leadAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="certNo != null" >
+         cert_no = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lendAuthPhoto != null" >
+         lend_auth_photo = #{lendAuthPhoto,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="realName != null" >
+         real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="position != null" >
+         position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPhoto != null" >
+         card_photo = #{cardPhoto,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="assetsCredentials != null" >
+         assets_credentials = #{assetsCredentials,jdbcType=VARCHAR},
+      </if>
+      <if test="historicalInvestmentData != null" >
+         historical_investment_data = #{historicalInvestmentData,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLendAuthState != null" >
+         org_lend_auth_state = #{orgLendAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInvestAuthState != null" >
+         org_invest_auth_state = #{orgInvestAuthState,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="orgLendAuditTime != null" >
+         org_lend_audit_time = #{orgLendAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgInvestAuditTime != null" >
+         org_invest_audit_time = #{orgInvestAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+    update crowdfund_user_stuff
+    set user_id = #{userId,jdbcType=VARCHAR},
+      id_card_front = #{idCardFront,jdbcType=VARCHAR},
+      id_card_back = #{idCardBack,jdbcType=VARCHAR},
+      hand_card_front = #{handCardFront,jdbcType=VARCHAR},
+      hand_card_back = #{handCardBack,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      post = #{post,jdbcType=VARCHAR},
+      person_web = #{personWeb,jdbcType=VARCHAR},
+      user_level = #{userLevel,jdbcType=VARCHAR},
+      user_identity = #{userIdentity,jdbcType=VARCHAR},
+      institution = #{institution,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR},
+      concern_industry = #{concernIndustry,jdbcType=VARCHAR},
+      like_industry = #{likeIndustry,jdbcType=VARCHAR},
+      concern_city = #{concernCity,jdbcType=VARCHAR},
+      invest_ratio = #{investRatio,jdbcType=DOUBLE},
+      is_invest = #{isInvest,jdbcType=VARCHAR},
+      invest_experience = #{investExperience,jdbcType=VARCHAR},
+      has_invest_plan = #{hasInvestPlan,jdbcType=VARCHAR},
+      invest_plan_num = #{investPlanNum,jdbcType=INTEGER},
+      invest_plan_amt = #{investPlanAmt,jdbcType=DOUBLE},
+      year_income = #{yearIncome,jdbcType=DOUBLE},
+      person_capital = #{personCapital,jdbcType=DOUBLE},
+      company_address = #{companyAddress,jdbcType=VARCHAR},
+      institution_industry = #{institutionIndustry,jdbcType=VARCHAR},
+      capital_des = #{capitalDes,jdbcType=LONGVARCHAR},
+      user_experience = #{userExperience,jdbcType=LONGVARCHAR},
+      invest_auth_state = #{investAuthState,jdbcType=VARCHAR},
+      lead_auth_state = #{leadAuthState,jdbcType=VARCHAR},
+      invest_audit_time = #{investAuditTime,jdbcType=TIMESTAMP},
+      lead_audit_time = #{leadAuditTime,jdbcType=TIMESTAMP},
+      cert_no = #{certNo,jdbcType=VARCHAR},
+      lend_auth_photo = #{lendAuthPhoto,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      card_photo = #{cardPhoto,jdbcType=VARCHAR},
+      assets_credentials = #{assetsCredentials,jdbcType=VARCHAR},
+      historical_investment_data = #{historicalInvestmentData,jdbcType=VARCHAR},
+      org_lend_auth_state = #{orgLendAuthState,jdbcType=VARCHAR},
+      org_invest_auth_state = #{orgInvestAuthState,jdbcType=VARCHAR},
+      org_lend_audit_time = #{orgLendAuditTime,jdbcType=TIMESTAMP},
+      org_invest_audit_time = #{orgInvestAuditTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateByUserId" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundUserStuffModel" >
+      update crowdfund_user_stuff
+     <set >
+      <if test="idCardFront != null" >
+        id_card_front = #{idCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardBack != null" >
+        id_card_back = #{idCardBack,jdbcType=VARCHAR},
+      </if>
+      <if test="handCardFront != null" >
+        hand_card_front = #{handCardFront,jdbcType=VARCHAR},
+      </if>
+      <if test="handCardBack != null" >
+        hand_card_back = #{handCardBack,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="personWeb != null" >
+        person_web = #{personWeb,jdbcType=VARCHAR},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdentity != null" >
+        user_identity = #{userIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="institution != null" >
+        institution = #{institution,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="concernIndustry != null" >
+        concern_industry = #{concernIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="likeIndustry != null" >
+        like_industry = #{likeIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="concernCity != null" >
+        concern_city = #{concernCity,jdbcType=VARCHAR},
+      </if>
+      <if test="investRatio != null" >
+        invest_ratio = #{investRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="isInvest != null" >
+        is_invest = #{isInvest,jdbcType=VARCHAR},
+      </if>
+      <if test="investExperience != null" >
+        invest_experience = #{investExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="hasInvestPlan != null" >
+        has_invest_plan = #{hasInvestPlan,jdbcType=VARCHAR},
+      </if>
+      <if test="investPlanNum != null" >
+        invest_plan_num = #{investPlanNum,jdbcType=INTEGER},
+      </if>
+      <if test="investPlanAmt != null" >
+        invest_plan_amt = #{investPlanAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="yearIncome != null" >
+        year_income = #{yearIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="personCapital != null" >
+        person_capital = #{personCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="companyAddress != null" >
+        company_address = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="institutionIndustry != null" >
+        institution_industry = #{institutionIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalDes != null" >
+        capital_des = #{capitalDes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userExperience != null" >
+        user_experience = #{userExperience,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="investAuthState != null" >
+        invest_auth_state = #{investAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="leadAuthState != null" >
+        lead_auth_state = #{leadAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="investAuditTime != null" >
+        invest_audit_time = #{investAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leadAuditTime != null" >
+         lead_audit_time = #{leadAuditTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="investAuthor != null" >
+        invest_author = #{investAuthor,jdbcType=VARCHAR},
+      </if>
+       <if test="leadAuthor != null" >
+        lead_author = #{leadAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+       cert_no = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lendAuthPhoto != null" >
+         lend_auth_photo = #{lendAuthPhoto,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="realName != null" >
+         real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="position != null" >
+         position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPhoto != null" >
+         card_photo = #{cardPhoto,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="assetsCredentials != null" >
+         assets_credentials = #{assetsCredentials,jdbcType=VARCHAR},
+      </if>
+      <if test="historicalInvestmentData != null" >
+         historical_investment_data = #{historicalInvestmentData,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLendAuthState != null" >
+         org_lend_auth_state = #{orgLendAuthState,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInvestAuthState != null" >
+         org_invest_auth_state = #{orgInvestAuthState,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="orgLendAuditTime != null" >
+         org_lend_audit_time = #{orgLendAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgInvestAuditTime != null" >
+         org_invest_audit_time = #{orgInvestAuditTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectUserStuffByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_user_stuff
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+</mapper>

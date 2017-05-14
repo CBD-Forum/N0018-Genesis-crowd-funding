@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="back_no" property="backNo" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="amt" property="amt" jdbcType="DOUBLE" />
+    <result column="number_limits" property="numberLimits" jdbcType="INTEGER" />
+    <result column="back_content" property="backContent" jdbcType="VARCHAR" />
+    <result column="back_time" property="backTime" jdbcType="INTEGER" />
+    <result column="trans_fee" property="transFee" jdbcType="INTEGER" />
+    <result column="back_type" property="backType" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="photo_url1" property="photoUrl1" jdbcType="VARCHAR" />
+    <result column="photo_url2" property="photoUrl2" jdbcType="VARCHAR" />
+    <result column="photo_url3" property="photoUrl3" jdbcType="VARCHAR" />
+    <result column="is_delivery" property="isDelivery" jdbcType="VARCHAR" />
+    <result column="transfer_lock_period" property="transferLockPeriod" jdbcType="DOUBLE" />
+    <result column="daily_profit" property="dailyProfit" jdbcType="DOUBLE" />
+    <result column="back_lable" property="backLable" jdbcType="VARCHAR" />
+    <result column="prize_draw_flag" property="prizeDrawFlag" jdbcType="VARCHAR" />
+    
+    <result column="prize_num" property="prizeNum" jdbcType="INTEGER" />
+    <result column="prize_invest_num" property="prizeInvestNum" jdbcType="INTEGER" />
+    <result column="prize_full_num" property="prizeFullNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, back_no, loan_no, amt, number_limits, back_content, back_time, trans_fee, back_type, 
+    state,photo_url1,photo_url2,photo_url3,is_delivery,transfer_lock_period,daily_profit,
+    back_lable,prize_draw_flag,prize_num,prize_invest_num,prize_full_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_back_set
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLoanNoAndSetNo" resultMap="BaseResultMap" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_back_set
+    where loan_no = #{loanNo,jdbcType=VARCHAR} and back_no = #{backNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLoanNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_back_set
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModel" >
+    select 
+	    cbs.id as id, cbs.back_no as backNo, 
+	    cbs.loan_no as loanNo, cbs.amt as amt, 
+	    cbs.number_limits as numberLimits, 
+	    cbs.back_content as backContent, 
+	    cbs.back_time as backTime, 
+	    cbs.trans_fee as transFee, 
+	    cbs.back_type as backType, 
+	    cbs.back_lable backLable,
+	    cbs.state,
+	    cbs.photo_url1 as photoUrl1,
+	    cbs.photo_url2 as photoUrl2,
+	    cbs.photo_url3 as photoUrl3,
+		cbs.back_lable backLable,
+		cbs.prize_draw_flag prizeDrawFlag,
+		
+		cbs.prize_num prizeNum,
+		cbs.prize_invest_num prizeInvestNum,
+		cbs.prize_full_num prizeFullNum,
+		cf.loan_user loanUser,
+	    cf.loan_name as loanName,
+	    cf.loan_logo as loanLogo,
+	    (select count(1) from crowdfunding_support cst 
+	    where cst.loan_no=cbs.loan_no 
+	    and cst.back_no=cbs.back_no 
+	    and cst.pay_state='payed' and cst.is_transfer = '0') as supportNum,
+	    cbs.is_delivery as isDelivery,
+	    cbs.transfer_lock_period transferLockPeriod,
+	    cbs.daily_profit dailyProfit
+    from crowdfunding_back_set cbs,crowdfunding cf 
+    <include refid="base_where"></include>
+     <if test="sort=='amt'" >
+      order by (case when cbs.amt>0 then 1 else 2 end) asc,cbs.amt asc
+     </if> 
+  </select>
+  <sql id="base_where">
+   <where>
+      cbs.loan_no = cf.loan_no
+      <if test="loanNo != null and loanNo != ''" >
+        and cbs.loan_no = #{loanNo,jdbcType=VARCHAR}
+      </if>
+       <if test="backNo != null and backNo != ''" >
+        and cbs.back_no = #{backNo,jdbcType=VARCHAR}
+      </if>
+       <if test="prizeDrawFlag != null and prizeDrawFlag != ''" >
+        and cbs.prize_draw_flag = #{prizeDrawFlag,jdbcType=VARCHAR}
+      </if>      
+     </where>
+   </sql>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_back_set
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByloanNo" parameterType="java.lang.String" >
+    delete from crowdfunding_back_set
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModel" >
+    insert into crowdfunding_back_set (id, back_no, loan_no, 
+      amt, number_limits, back_content, 
+      back_time, trans_fee, back_type, 
+      state,photo_url1,photo_url2,photo_url3,is_delivery,transfer_lock_period,daily_profit,
+      back_lable,prize_draw_flag,
+      prize_num,prize_invest_num,prize_full_num)
+    values (#{id,jdbcType=VARCHAR}, #{backNo,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, 
+      #{amt,jdbcType=DOUBLE}, #{numberLimits,jdbcType=INTEGER}, #{backContent,jdbcType=VARCHAR}, 
+      #{backTime,jdbcType=INTEGER}, #{transFee,jdbcType=INTEGER}, #{backType,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR},#{photoUrl1,jdbcType=VARCHAR},#{photoUrl2,jdbcType=VARCHAR},
+      #{photoUrl3,jdbcType=VARCHAR},#{isDelivery,jdbcType=VARCHAR},
+      #{transferLockPeriod,jdbcType=DOUBLE},#{dailyProfit,jdbcType=DOUBLE},
+      #{backLable,jdbcType=VARCHAR},#{prizeDrawFlag,jdbcType=VARCHAR}, 
+      #{prizeNum,jdbcType=INTEGER},#{prizeInvestNum,jdbcType=INTEGER},#{prizeFullNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModel" >
+    insert into crowdfunding_back_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="backNo != null" >
+        back_no,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="amt != null" >
+        amt,
+      </if>
+      <if test="numberLimits != null" >
+        number_limits,
+      </if>
+      <if test="backContent != null" >
+        back_content,
+      </if>
+      <if test="backTime != null" >
+        back_time,
+      </if>
+      <if test="transFee != null" >
+        trans_fee,
+      </if>
+      <if test="backType != null" >
+        back_type,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="photoUrl1 != null" >
+        photo_url1,
+      </if>
+      <if test="photoUrl2 != null" >
+        photo_url2,
+      </if>
+      <if test="photoUrl3 != null" >
+        photo_url3,
+      </if>
+      <if test="isDelivery != null" >
+        is_delivery,
+      </if>
+      
+      <if test="prizeNum != null" >
+        prize_num,
+      </if>
+      <if test="prizeInvestNum != null" >
+        prize_invest_num,
+      </if>
+      <if test="prizeFullNum != null" >
+        prize_full_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="backNo != null" >
+        #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amt != null" >
+        #{amt,jdbcType=DOUBLE},
+      </if>
+      <if test="numberLimits != null" >
+        #{numberLimits,jdbcType=INTEGER},
+      </if>
+      <if test="backContent != null" >
+        #{backContent,jdbcType=VARCHAR},
+      </if>
+      <if test="backTime != null" >
+        #{backTime,jdbcType=INTEGER},
+      </if>
+      <if test="transFee != null" >
+        #{transFee,jdbcType=INTEGER},
+      </if>
+      <if test="backType != null" >
+        #{backType,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl1 != null" >
+        #{photoUrl1,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl2 != null" >
+        #{photoUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl3 != null" >
+        #{photoUrl3,jdbcType=VARCHAR},
+      </if>
+       <if test="isDelivery != null" >
+        #{isDelivery,jdbcType=VARCHAR},
+      </if>
+      
+       <if test="prizeNum != null" >
+        #{prizeNum,jdbcType=INTEGER},
+      </if>
+      <if test="prizeInvestNum != null" >
+        #{prizeInvestNum,jdbcType=INTEGER},
+      </if>
+      <if test="prizeFullNum != null" >
+        #{prizeFullNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModel" >
+    update crowdfunding_back_set
+    <set >
+      <if test="backNo != null" >
+        back_no = #{backNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amt != null" >
+        amt = #{amt,jdbcType=DOUBLE},
+      </if>
+      <if test="numberLimits != null" >
+        number_limits = #{numberLimits,jdbcType=INTEGER},
+      </if>
+      <if test="backContent != null" >
+        back_content = #{backContent,jdbcType=VARCHAR},
+      </if>
+      <if test="backTime != null" >
+        back_time = #{backTime,jdbcType=INTEGER},
+      </if>
+      <if test="transFee != null" >
+        trans_fee = #{transFee,jdbcType=INTEGER},
+      </if>
+      <if test="backType != null" >
+        back_type = #{backType,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl1 != null" >
+        photo_url1 = #{photoUrl1,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl2 != null" >
+        photo_url2 = #{photoUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="photoUrl3 != null" >
+        photo_url3 = #{photoUrl3,jdbcType=VARCHAR},
+      </if>
+       <if test="isDelivery != null" >
+        is_delivery = #{isDelivery,jdbcType=VARCHAR},
+      </if>
+      <if test="transferLockPeriod != null" >
+        transfer_lock_period = #{transferLockPeriod,jdbcType=DOUBLE},
+      </if>      
+      <if test="dailyProfit != null" >
+        daily_profit = #{dailyProfit,jdbcType=DOUBLE},
+      </if>      
+      <if test="backLable != null" >
+        back_lable = #{backLable,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeDrawFlag != null" >
+        prize_draw_flag = #{prizeDrawFlag,jdbcType=VARCHAR},
+      </if>     
+      
+      <if test="prizeNum != null" >
+        prize_num=#{prizeNum,jdbcType=INTEGER},
+      </if>
+      <if test="prizeInvestNum != null" >
+        prize_invest_num=#{prizeInvestNum,jdbcType=INTEGER},
+      </if> 
+      
+      <if test="prizeFullNum != null" >
+        prize_full_num=#{prizeFullNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingBackSetModel" >
+    update crowdfunding_back_set
+    set back_no = #{backNo,jdbcType=VARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR},
+      amt = #{amt,jdbcType=DOUBLE},
+      number_limits = #{numberLimits,jdbcType=INTEGER},
+      back_content = #{backContent,jdbcType=VARCHAR},
+      back_time = #{backTime,jdbcType=INTEGER},
+      trans_fee = #{transFee,jdbcType=INTEGER},
+      back_type = #{backType,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      photo_url1 = #{photoUrl1,jdbcType=VARCHAR},
+      photo_url2 = #{photoUrl2,jdbcType=VARCHAR},
+      photo_url3 = #{photoUrl3,jdbcType=VARCHAR},
+      is_delivery = #{isDelivery,jdbcType=VARCHAR},
+      transfer_lock_period = #{transferLockPeriod,jdbcType=DOUBLE},
+      daily_profit = #{dailyProfit,jdbcType=DOUBLE},
+      back_lable = #{backLable,jdbcType=VARCHAR},
+      prize_draw_flag = #{prizeDrawFlag,jdbcType=VARCHAR},
+      prize_num=#{prizeNum,jdbcType=INTEGER},
+      prize_invest_num=#{prizeInvestNum,jdbcType=INTEGER},
+      prize_full_num=#{prizeFullNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryIsPrizeDrawFlag" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select * from crowdfunding_back_set where loan_no=#{loanNo,jdbcType=VARCHAR} and prize_draw_flag=1
+  </select>
+</mapper>

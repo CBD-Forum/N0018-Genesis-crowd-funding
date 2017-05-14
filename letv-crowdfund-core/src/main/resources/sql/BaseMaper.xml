@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.student.po.StudentPo">
+	<!-- 保存 -->
+	<insert id="save" parameterType="HashMap">
+		insert into ${tableName}
+		<foreach item="item" index="index" collection="filedMap" open="(" separator="," close=")">${item.filedname}</foreach>
+		values
+		<foreach item="item" index="index" collection="filedMap" open="(" separator="," close=")">#{item.fieldvalue}</foreach>
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="HashMap">
+		delete ${tableName} where ${filedname} in
+		<foreach item="item" index="index" collection="fieldvalue" open="(" separator="," close=")">#{item}</foreach>
+	</delete>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="HashMap">
+		update ${tableName} t set
+		<foreach item="item" index="index" collection="filedMap" open="" separator="," close="">${item.filedname}=#{item.fieldvalue}</foreach>
+		where ${pkId}=#{pkIdValue}
+	</update>
+
+</mapper>

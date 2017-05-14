@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.auth.model.PermissionModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.auth.model.PermissionModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="label" property="label" jdbcType="VARCHAR" />
+    <result column="sys_type" property="sysType" jdbcType="VARCHAR" />
+    <result column="permission_type" property="permissionType" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="expanded" property="expanded" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="seq_num" property="seqNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, label, sys_type, permission_type, url, pid, status, description, expanded, 
+    language, target, icon, seq_num
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where code = #{code,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- *********************条件查询********************* -->
+  <sql id="Base_Where_List">
+  	<where>
+  	  <if test="id != null and id != ''" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+  	  <if test="code != null and code != ''" >
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="label != null and label != ''" >
+        and label = #{label,jdbcType=VARCHAR}
+      </if>
+      <if test="sysType != null and sysType != ''" >
+        and sys_type = #{sysType,jdbcType=VARCHAR}
+      </if>
+      <if test="permissionType != null and permissionType != ''" >
+        and permission_type = #{permissionType,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null and url != ''" >
+        and url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="pid != null and pid != ''" >
+        and pid = #{pid,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != ''" >
+        and status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null and description != ''" >
+        and description = #{description,jdbcType=VARCHAR}
+      </if>
+      <if test="expanded != null and expanded != ''" >
+        and expanded = #{expanded,jdbcType=VARCHAR}
+      </if>
+      <if test="language != null and language != ''" >
+        and language = #{language,jdbcType=VARCHAR}
+      </if>
+      <if test="target != null and target != ''" >
+        and target = #{target,jdbcType=VARCHAR}
+      </if>
+      <if test="icon != null and icon != ''" >
+        and icon = #{icon,jdbcType=VARCHAR}
+      </if>
+      <if test="seqNum != null and seqNum != ''" >
+        and seq_num = #{seqNum,jdbcType=INTEGER}
+      </if>
+  	</where>
+  </sql>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.auth.model.PermissionModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+   <include refid="Base_Where_List" />
+   order by seq_num
+  </select>
+  
+  <!-- *********************条件查询********************* -->
+  
+  <!-- 根据角色查询权限 -->
+  <select id="getPermission4Role"  resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT t1.* FROM permission t1,role_permission t2
+		WHERE t1.id = t2.permission_id AND t2.role_id = #{roleId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 批量删除 -->
+  <delete id="deleteBatchById">
+    delete from permission
+    where id in
+	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from permission
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.auth.model.PermissionModel" >
+    insert into permission (id, code, label, 
+      sys_type, permission_type, url, 
+      pid, status, description, 
+      expanded, language, target, 
+      icon, seq_num)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{label,jdbcType=VARCHAR}, 
+      #{sysType,jdbcType=VARCHAR}, #{permissionType,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{expanded,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{target,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{seqNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.auth.model.PermissionModel" >
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="label != null" >
+        label,
+      </if>
+      <if test="sysType != null" >
+        sys_type,
+      </if>
+      <if test="permissionType != null" >
+        permission_type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="expanded != null" >
+        expanded,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="seqNum != null" >
+        seq_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null" >
+        #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null" >
+        #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expanded != null" >
+        #{expanded,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        #{seqNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.auth.model.PermissionModel" >
+    update permission
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="label != null" >
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="sysType != null" >
+        sys_type = #{sysType,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionType != null" >
+        permission_type = #{permissionType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="expanded != null" >
+        expanded = #{expanded,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null and seqNum != ''"  >
+        seq_num = #{seqNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.auth.model.PermissionModel" >
+    update permission
+    set code = #{code,jdbcType=VARCHAR},
+      label = #{label,jdbcType=VARCHAR},
+      sys_type = #{sysType,jdbcType=VARCHAR},
+      permission_type = #{permissionType,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      expanded = #{expanded,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      target = #{target,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- ************ 修改排序编号 ****************** -->
+  <update id="updateOrderBy" parameterType="java.util.Map" >
+    update permission
+    <if test="operate == 'top'">
+	    set seq_num = seq_num+1
+    </if>
+    <if test="operate == 'bottom'">
+    	set seq_num = seq_num-1
+    </if>
+    <where>
+    	<if test="startSeqNum!=null and startSeqNum!=''">
+    		and seq_num &gt;= #{startSeqNum,jdbcType=VARCHAR}
+    	</if>
+    	<if test="endSeqNum!=null and endSeqNum!=''">
+    		and seq_num &lt;= #{endSeqNum,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </update>
+  
+  <!-- ************** 查询父节点下最大的排序编号************ -->
+  <select id="getMaxSeqNumByPid" resultType="java.lang.Integer" parameterType="java.lang.String">
+  	SELECT IFNULL(MAX(seq_num),(SELECT seq_num FROM permission WHERE id = #{pid,jdbcType=VARCHAR})) FROM permission where pid=#{pid,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

@@ -1,0 +1,159 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0; padding:0; list-style:none;}
+input, textarea{outline: none;font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro";resize:none;}
+img{border:0; vertical-align:middle;}
+h1,h2,h3,h4,h5,h6{font-weight:normal;}
+em,i{font-style:normal;}/*html,body{height: 100%}*/
+body{font-family:"Microsoft YaHei","Lucida Sans Unicode","Myriad Pro";font-size:14px;color:#333;background:#ecf0f3;}
+a{color:#333;text-decoration:none;}
+a:hover{color:#248af9;}
+.box{width:1200px; margin:0 auto;}
+.fl,.left{float:left;}
+.fr,.right{float:right;}
+.clearfix:before,.clearfix:after {content:""; display:table;}
+.clearfix:after { clear:both; overflow:hidden;}
+.clearfix {zoom:1;}
+
+.fs12{font-size:12px;}
+.fs14{font-size:14px;}
+.fs16{font-size:16px;}
+.fs18{font-size:18px;}
+.fs20{font-size:20px;}
+.fs24{font-size:24px;}
+
+.bgColorWh{ background-color:#fff;}
+.back1{background-color:#373737;}
+.back2{background-color:#ff6600;}
+
+.col1{color:#248af9!important;}
+.col2{color:#ff7942!important;}
+.col3{color:#71c10c!important;}
+.red{color:#ff0000}
+
+
+.rel{ position:relative;}
+.abs{ position:absolute;}
+.none{display:none;}
+.tc{text-align:center;}
+.tl{text-align:left;}
+.tr{text-align:right;}
+
+.border0{border:0!important;}
+
+.mt50{margin-top:50px;}
+.mt60{margin-top:60px;}
+.mb50{margin-bottom:50px;}
+.mb60{margin-bottom:60px;}
+.mb10{margin-bottom:10px;}
+.pb50{padding-bottom:50px;}
+.pb20{padding-bottom:20px;}
+
+
+/*头部*/
+.head_top{height:50px;width:100%;line-height:50px;color:#fff;font-size:20px;text-align:center;position:relative;position:fixed;z-index:10;top:0;left:0;}
+.head_top .back{position:absolute;left:0;display:block;width:40px;height:50px;top:0;color:#fff;font-size:15px;background:url(../images/ichou-web/goback.png) no-repeat 10px center;background-size:auto 35%;z-index:1;padding-left:20px;}
+.head_top .right{position:absolute;right:10px;top:0;}
+.head_top .right a{font-size:14px;color:#fff;}
+.head_top .right .notice{display:block;width:42px;height:50px;background:url(../images/ichou-web/notice.png) no-repeat 10px center;background-size:auto 37%;z-index:1;}
+
+/*首页*/
+.logo-div{height:50px;overflow:hidden;padding:0 10px;background:#fff;}
+.logo-div h1{padding:4px;}
+.ban-div{height:130px;background:url(../images/ichou-web/ban1.png) no-repeat center;background-size:auto 100%;}
+
+.present{background:#fff;padding:10px 10px 6px 10px;margin:0 auto;}
+.present li{width:33.3%;float:left;}
+.present li>a{display:block;margin:0 auto;text-align:center;}
+.present li>a p{line-height:26px;}
+.present li>a i{display:block;width:60px;height:60px;margin:0 auto;border-radius:6px;}
+.present .gy p{color:#ffb900;}
+.present .jl p{color:#3ca1bd;}
+.present .fc p{color:#56b59d;}
+.present .gy i{background-color:#ffb900;background-image:url(../images/ichou-web/wap1.png); background-repeat:no-repeat; background-position:center 14px; background-size:80%;}
+.present .jl i{background-color:#3ca1bd;background-image:url(../images/ichou-web/wap2.png); background-repeat:no-repeat; background-position:center 10px; background-size:78%;}
+.present .fc i{background-color:#56b59d;background-image:url(../images/ichou-web/wap3.png); background-repeat:no-repeat; background-position:center 7px; background-size:70%;}
+
+
+.index-list{background:#fff;}
+
+.equity-info{margin-bottom:3px;position:relative;}
+.equity-info .equity-img{height:180px;position:relative;overflow:hidden;}
+.equity-info .equity-img img{ width:100%; height:100%;}
+.equity-info .equity-pop{background:#000;z-index:1;width:100%;height:40px; overflow:hidden;}
+.equity-info .equity-jd{padding:0 10px;background-color:#fff;/* border-top:1px solid #d7d7d7; */}
+.equity-info .equity-jd li{line-height:30px;}
+.equity-info .equity-jd .jd .jdBar{width:100%;height:4px;background:#d8d7d7;overflow:hidden;border-radius:3px;/* margin-top:14px; */}
+.equity-info .equity-jd .jd .jdBar span{display:block;height:4px;margin:0px;background:#e3423c;}
+.equity-info .equity-jd .jd .zit{width:15%;font-size:12px;color:#e3423c;  text-align: right;}
+.equity-info .equity-jd .fotz{}
+.equity-info .equity-jd .fotz p{width:50%;color:#666;float:left;}
+.equity-info .equity-jd .fotz p span{color:#999;padding-left:10px;}
+
+
+.equity-info .po-zc{position:absolute;width:70px;height:30px;background:#000;filter:alpha(opacity=50);opacity:0.5;-moz-opacity:0.5;z-index:1;top:0;left:0;}
+.equity-info .po-span{position:absolute;width:70px;text-align:center;z-index:2;top:0;left:0;height:30px;line-height:30px;color:#fff;display:block;}
+
+.equ-cont{padding:0px 15px; }
+.equ-cont li{overflow:hidden;}
+.equ-cont li .lt-l{width:10%;float:left;text-align:right;  margin-right: 10px}
+.equ-cont li .cont-l{width:85%;float:left;}
+.equ-cont li .cont-l>div{float:left;width:100%;text-align:left;overflow:hidden;}
+.equ-cont li .cont-l .fs12{color:#999;}
+
+
+/*个人中心*/
+.grzx-ban{height:70px;padding:10px;}
+.grzx-ban li{float:left;margin-top:4px;}
+.grzx-ban .img-div{height:60px;margin-right:20px;}
+.grzx-ban .img-div img{width:60px; height:60px; border-radius:50%;border:2px solid #fff;}
+.grzx-ban .main-div{width:90px;margin-right:15px;line-height:24px;}
+.grzx-ban .main-div span{font-size:13px;}
+.grzx-ban .main-div span img{margin:-3px 5px 0 0;}
+.grzx-ban .right-div{margin-top:23px;float:right;width:80px;}
+.grzx-ban .right-div img,.grzx-ban .right-div span{padding:3px 4px;float:right;}
+
+.grzx-ifn{background:#fff;border-bottom:1px solid #e6e6e6;padding:10px 0;}
+.grzx-ifn li{width:50%;float:left;text-align:center;line-height:26px;color:#999;}
+.grzx-ifn li .red{font-size:20px;color:#fc3636;}
+
+.grzx-list-tit{margin-top:6px;height:35px;line-height:35px;background:#f8f8f8;}
+.grzx-list-tit li{width:25%;float:left;}
+.grzx-list-tit li a{display:block;text-align:center;font-size:16px;color:#999;}
+.grzx-list-tit li .cur{color:#e3423c;border-bottom:1px solid #e3423c;}
+
+.grzx-list{background:#fff;padding:0 10px;}
+.grzx-list li{border-bottom:1px solid #e6e6e6;padding:10px 0;}
+.grzx-list li a{display:block;background-image:url(../images/ichou-web/gr8.png);background-repeat:no-repeat;background-position:right center;background-size:auto 60%;}
+.grzx-list li a img{margin:0 5px 0 0;font-size:15px;}
+
+.wep-login-div{ height:45px; line-height:45px;}
+.forget_pass .yanzheng input{ width:50%; float:left;}
+.forget_pass .yanzheng a{ display:inline-block; float:right; width:40%; text-align:center; border:1px solid #e3423c; border-radius:10px; height:40px; line-height:40px; color:#e3423c;}
+.forget_pass .btu-put input{ width:33%;}
+.forget_pass .btu-put a{ display:inline-block; width:25%; float:right; height:40px; line-height:40px; background:#e3423c; border-radius:10px; color:#fff; font-size:16px; text-align:center;}
+.gy-inviter .yqhy_dx_tit{ text-align:center; font-size:15px; height:40px; line-height:40px;}
+.gy-inviter .yqhy_dx_tit a{ font-size:14px; color:#e3423c; text-decoration:underline; margin-left:10px;}
+.gy-inviter .gy-valicode input{ width:63%; margin-right:16px;}
+.agreeboxinfo{ width:285px; position:fixed; padding:10px; z-index:101; background:#fff; border-radius:6px; display:none;}
+.modifyinfo input[type=text]{height:40px; border:1px solid #ECEAEA; text-align:right; font-size:15px; padding-right:10px;}
+.modifyinfo .center_v label{ color:#333; font-size:15px;}
+.modifyinfo .center-detail textarea{ width:92%; padding:5px 10px; border:1px solid #ECEAEA; line-height:20px;}
+.modifyinfo .center_address select { height:40px; line-height:40px; width:100px;}
+
+.gy_zc .validate .gain{ display:inline-block; float:right; width:110px; margin-left:6px; height:38px; line-height:38px; border:1px solid #55acef; color:#55acef; text-align:center; border-radius:10px;}
+/*发货*/
+.delivery_div{ margin:0 10px; font-size:14px; padding-top:10px;}
+.delivery_div ul{ background:#fff; margin-bottom:10px; line-height:30px; padding:10px; color:#333; border:1px solid #D7D7D7; padding-bottom:0px;}
+.delivery_div ul span{ color:#a0a0a0; display:inline-block; width:84px; text-align:right;}
+.delivery_div .caozuo{ border-top:1px solid #D7D7D7; margin-top:10px; text-align:center;}
+.delivery_div .caozuo a{ color:#55b2f9; display:block; width:100%; height:100%;}
+
+
+/*未认证的投资人提示框*/
+.noinvestortip{ width:95%; height:200px; position:fixed; z-index:101; background:#fff; border:1px solid #999;text-align:center; border-radius:5px; display:none;}
+.noinvestortip .title{ margin-top:10px; height:40px; line-height:40px; font-size:16px; margin-bottom:10px;}
+.noinvestortip .info p{ height:60px; line-height:30px;}
+.noinvestortip .info p{ margin-bottom:20px;}
+.noinvestortip .info a{ display:inline-block; width:110px; height:30px; border-radius:5px; line-height:30px; color:#fff;}
+

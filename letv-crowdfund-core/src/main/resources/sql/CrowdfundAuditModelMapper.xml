@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundAuditModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundAuditModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_state" property="auditState" jdbcType="VARCHAR" />
+    <result column="audit_opinion" property="auditOpinion" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="loan_state" property="loanState" jdbcType="VARCHAR" />
+     <result column="loan_state_name" property="loanStateName" jdbcType="VARCHAR" />
+    <result column="audit_state_name" property="auditStateName" jdbcType="VARCHAR" />
+     <result column="loanName" property="loanName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, auditor, audit_state, audit_opinion, audit_time, loan_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_audit
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="selectList" resultMap="BaseResultMap" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundAuditModel">
+    select 
+      <include refid="Base_Column_List" />,
+      (select display_name from dictionary where code=audit_state and type_code='crowdfund_audit_action') as audit_state_name,
+      (select display_name from dictionary where code=loan_state and type_code='crowdfund_state') as loan_state_name,
+      (select loan_name from crowdfunding where loan_no=crowdfund_audit.loan_no) as loanName
+    from crowdfund_audit 
+    <include refid="base_Where" />
+    <!-- 默认按照审核日期正序 -->
+    order by audit_time asc
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+   <!-- 查询投资列表 -->
+  <sql id="base_Where">
+  	<where>
+      <if test="loanNo != null and loanNo != ''" >
+        and loan_no = #{loanNo,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_audit
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundAuditModel" >
+    insert into crowdfund_audit (id, loan_no, auditor, 
+      audit_state, audit_opinion, audit_time, 
+      loan_state)
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditState,jdbcType=VARCHAR}, #{auditOpinion,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{loanState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundAuditModel" >
+    insert into crowdfund_audit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditState != null" >
+        audit_state,
+      </if>
+      <if test="auditOpinion != null" >
+        audit_opinion,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="loanState != null" >
+        loan_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditState != null" >
+        #{auditState,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanState != null" >
+        #{loanState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundAuditModel" >
+    update crowdfund_audit
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditState != null" >
+        audit_state = #{auditState,jdbcType=VARCHAR},
+      </if>
+      <if test="auditOpinion != null" >
+        audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanState != null" >
+        loan_state = #{loanState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundAuditModel" >
+    update crowdfund_audit
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_state = #{auditState,jdbcType=VARCHAR},
+      audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      loan_state = #{loanState,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

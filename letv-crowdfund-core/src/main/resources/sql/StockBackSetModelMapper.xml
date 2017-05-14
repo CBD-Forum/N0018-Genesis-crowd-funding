@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.StockBackSetModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.StockBackSetModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="project_finance_amt" property="projectFinanceAmt" jdbcType="DOUBLE" />
+    <result column="invest_finance_amt" property="investFinanceAmt" jdbcType="DOUBLE" />
+    <result column="project_bonus_ratio" property="projectBonusRatio" jdbcType="DOUBLE" />
+    <result column="invest_bonus_ratio" property="investBonusRatio" jdbcType="DOUBLE" />
+    <result column="finance_num" property="financeNum" jdbcType="INTEGER" />
+    <result column="mini_invest_amt" property="miniInvestAmt" jdbcType="DOUBLE" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, project_finance_amt, invest_finance_amt, project_bonus_ratio, invest_bonus_ratio, 
+    finance_num, mini_invest_amt,loan_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_back_set
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLoanNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_back_set
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from stock_back_set
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByLoanNo" parameterType="java.lang.String" >
+    delete from stock_back_set
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.StockBackSetModel" >
+    insert into stock_back_set (id, project_finance_amt, invest_finance_amt, 
+      project_bonus_ratio, invest_bonus_ratio, finance_num, 
+      mini_invest_amt,loan_no)
+    values (#{id,jdbcType=VARCHAR}, #{projectFinanceAmt,jdbcType=DOUBLE}, #{investFinanceAmt,jdbcType=DOUBLE}, 
+      #{projectBonusRatio,jdbcType=DOUBLE}, #{investBonusRatio,jdbcType=DOUBLE}, #{financeNum,jdbcType=INTEGER}, 
+      #{miniInvestAmt,jdbcType=DOUBLE},#{loanNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.StockBackSetModel" >
+    insert into stock_back_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="projectFinanceAmt != null" >
+        project_finance_amt,
+      </if>
+      <if test="investFinanceAmt != null" >
+        invest_finance_amt,
+      </if>
+      <if test="projectBonusRatio != null" >
+        project_bonus_ratio,
+      </if>
+      <if test="investBonusRatio != null" >
+        invest_bonus_ratio,
+      </if>
+      <if test="financeNum != null" >
+        finance_num,
+      </if>
+      <if test="miniInvestAmt != null" >
+        mini_invest_amt,
+      </if>
+      <if test="miniInvestAmt != null" >
+        mini_invest_amt,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="projectFinanceAmt != null" >
+        #{projectFinanceAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="investFinanceAmt != null" >
+        #{investFinanceAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="projectBonusRatio != null" >
+        #{projectBonusRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="investBonusRatio != null" >
+        #{investBonusRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="financeNum != null" >
+        #{financeNum,jdbcType=INTEGER},
+      </if>
+      <if test="miniInvestAmt != null" >
+        #{miniInvestAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.StockBackSetModel" >
+    update stock_back_set
+    <set >
+      <if test="projectFinanceAmt != null" >
+        project_finance_amt = #{projectFinanceAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="investFinanceAmt != null" >
+        invest_finance_amt = #{investFinanceAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="projectBonusRatio != null" >
+        project_bonus_ratio = #{projectBonusRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="investBonusRatio != null" >
+        invest_bonus_ratio = #{investBonusRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="financeNum != null" >
+        finance_num = #{financeNum,jdbcType=INTEGER},
+      </if>
+      <if test="miniInvestAmt != null" >
+        mini_invest_amt = #{miniInvestAmt,jdbcType=DOUBLE},
+      </if>
+       <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.StockBackSetModel" >
+    update stock_back_set
+    set project_finance_amt = #{projectFinanceAmt,jdbcType=DOUBLE},
+      invest_finance_amt = #{investFinanceAmt,jdbcType=DOUBLE},
+      project_bonus_ratio = #{projectBonusRatio,jdbcType=DOUBLE},
+      invest_bonus_ratio = #{investBonusRatio,jdbcType=DOUBLE},
+      finance_num = #{financeNum,jdbcType=INTEGER},
+      mini_invest_amt = #{miniInvestAmt,jdbcType=DOUBLE},
+      loan_no = #{loanNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+   <update id="updateByLoanNo" parameterType="com.fbd.core.app.crowdfunding.model.StockBackSetModel" >
+    update stock_back_set
+    set project_finance_amt = #{projectFinanceAmt,jdbcType=DOUBLE},
+      invest_finance_amt = #{investFinanceAmt,jdbcType=DOUBLE},
+      project_bonus_ratio = #{projectBonusRatio,jdbcType=DOUBLE},
+      invest_bonus_ratio = #{investBonusRatio,jdbcType=DOUBLE},
+      finance_num = #{financeNum,jdbcType=INTEGER},
+      mini_invest_amt = #{miniInvestAmt,jdbcType=DOUBLE}
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

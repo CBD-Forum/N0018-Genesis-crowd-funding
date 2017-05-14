@@ -1,0 +1,681 @@
+html, body, p, ul, li, img, h1, h2, h3, h4, pre {
+	border: 0 none;
+	margin: 0;
+	padding: 0;
+}
+html, body {
+	border: 0 none;
+	font-family: "Microsoft Yahei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	width: 100%;
+}
+h1, h2, h3, h4 {
+	font-weight: normal;
+}
+ul {
+	list-style: outside none none;
+}
+a {
+	outline: medium none;
+	text-decoration: none;
+}
+img {
+	border: medium none;
+}
+ .clearfix::after {
+ clear: both;
+ content: "";
+ display: table;
+ line-height: 0;
+}
+/*閲嶇疆鏍峰紡*/
+
+
+
+/*style css start*/
+.chat {
+	width: 320px;
+	height: 480px;
+	position: fixed;
+	bottom: 0px;
+	border-radius: 5px 5px 0px 0px;
+	overflow: hidden;
+	z-index: 2147483583;
+	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.1);
+	right: 50px;
+	transition: all 0.3s ease-in-out 0.1s;
+}
+.lsChat {
+	overflow: hidden;
+	position: relative;
+}
+.lsChat .arrow-tc {
+}
+.header {
+	position: relative;
+	background:#138efd;
+}
+.h60 {
+	height: 60px;
+}
+#header .headBtn {
+	position: absolute;
+	right: 5px;
+	text-align: right;
+	top: 10px;
+	width: 80px;
+}
+#header .headBtn .lsVoice {
+	background-position: 0px -30px;
+}
+
+#header .headBtn .closeVoice {
+	background-position: -15px -30px;
+}
+#header .headBtn a {
+	background-image:url(../images/bglist.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 11px;
+	margin-right: 5px;
+	vertical-align: middle;
+	width: 11px;
+}
+a {
+	outline: medium none;
+	text-decoration: none;
+}
+.infoBar {
+	margin-left: 12px;
+	padding: 10px 0;
+}
+.infoBar .infoBarLogo {
+	border-radius: 50%;
+	float: left;
+	height: 42px;
+	vertical-align: middle;
+	width: 42px;
+}
+img {
+	border: medium none;
+}
+.infoBarText {
+	float: left;
+	margin-left: 16px;
+}
+.white {
+	color: #fff;
+}
+.ml50 {
+	margin-left: 55px;
+}
+.h20 {
+	height: 20px;
+}
+.infoBarCompany {
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+}
+.chatPanel {
+	color: #333;
+	height: 315px;
+	margin-right: -20px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 0;
+	position: relative;
+	width: auto;
+}
+.chatPanelList {
+/*	background-color: #ffffff;
+	box-sizing: border-box;
+	font-size: 12px;
+ 	max-width: 323px;
+	min-height: 306px;
+	max-height:323px;  
+ 	overflow: hidden;*/
+ 
+ -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+  padding: 10px;
+  height: 316px;
+  overflow-y:scroll;
+  overflow-x: hidden;
+}
+.rightMsg {
+    text-align: right;
+    padding-right: 20px;
+}
+.rightMsg .msgDiv {
+    background-color: #09aeb0;
+    color: #f0f0f0;
+    position: relative;
+    text-align: left;
+}
+.rightMsg .msgDiv::before {
+    border-color: transparent #138efd;
+    border-style: solid;
+    border-width: 0 0 12px 12px;
+    content: "";
+    position: absolute;
+    right: -12px;
+    top: 12px;
+    width: 0;
+    
+}
+.rightMsg .msgDiv {
+    background-color: #138efd!important;
+}
+.mainBox {
+	border:1px solid #ccc;
+}
+/* #header .headBtn .lsVoice {
+	background-position: 0 -30px;
+} */
+
+#header .headBtn .lsClose {
+	background-position: -30px -29px;
+}
+#header .headBtn .lsMin {
+	background-position: -70px -30px;
+}
+#header .headBtn .lsMax {
+	background-position: -85px -30px;
+}
+.chatPanelList .msgData {
+	color: #b1b6b4;
+	font-size: 12px;
+	text-align: center;
+}
+.magBox {
+	margin: 20px 0;
+	position: relative;
+}
+.magBox .leftName {
+	color: #858282;
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+/* .chatPanelList .systemMsg span {
+	background-color: #f5f5f5;
+	border-radius: 10px;
+	color: #b1b5b5;
+	display: inline-block;
+	padding: 0 10px;
+}
+.chatPanelList .systemMsg span a {
+	color:#138efd;
+	text-decoration:underline;
+} */
+.chatPanelList .systemMsg{ text-align:center;}
+.chatPanelList .systemMsg span {
+	background-color: #f5f5f5;
+	border-radius: 10px;
+	color: #b1b5b5;
+	display: inline-block;
+	padding: 0 10px;
+	font-size: 12px;
+}
+.chatPanelList .systemMsg span a {
+	color:#138efd;
+	text-decoration:underline;
+}
+.leftMsg .msgDiv::before {
+ border-color: transparent #f0f0f0;
+ border-style: solid;
+ border-width: 0 12px 12px 0;
+ content: "";
+ left: -12px;
+ position: absolute;
+ top: 12px;
+ width: 0;
+}
+.magBox .msgDiv {
+	background-color: #f0f0f0;
+	border-radius: 2px;
+	display: inline-block;
+	max-width: 80%;
+	min-height: 20px;
+	padding: 10px;
+	position: relative;
+}
+.footer {
+	background: #fff none repeat scroll 0 0;
+	border-top: 1px solid #d9d9d9;
+	box-sizing: border-box;
+	display: none;
+	height: 105px;
+}
+.footer-on {
+	box-sizing: border-box;
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+}
+.text-layout {
+	margin: 0 10px;
+}
+.manualMode {
+	display: block;
+}
+.funcPanel {
+	height: 22px;
+	line-height: 22px;
+	position: relative;
+}
+.manualMode .addFace {
+	display: inline-block;
+}
+.funcPanel .addFace {
+	background-image: url("../images/bglist.png");
+	background-position: -46px -1px;
+	display: none;
+}
+.funcPanel .upImg, .funcPanel .addFace {
+	display: inline-block;
+	height: 18px;
+	margin: 4px 6px;
+	width: 18px;
+}
+.manualMode .upImg {
+	display: inline-block;
+}
+.funcPanel .upImg {
+	background-image: url("../images/bglist.png");
+	background-position: 1px 0;
+	display: none;
+}
+.funcPanel .upImg, .funcPanel .addFace {
+	display: inline-block;
+	height: 18px;
+	margin: 4px 6px;
+	width: 18px;
+}
+.manualMode .voiceCalls {
+	display: block;
+}
+.funcPanel .voiceCalls, .funcPanel .leaveMessage {
+	display: none;
+}
+.funcPanel .chatSwitch, .funcPanel .voiceCalls, .funcPanel .leaveMessage {
+	color: #258efa;
+	cursor: pointer;
+	font-size: 12px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.text {
+	border: 0 none;
+	color: #999;
+	font-size: 12px;
+	height: 40px;
+	margin: 5px 0 0;
+	padding: 0;
+	resize: none;
+	width: 100%;
+}
+.powBox {
+	height: 24px;
+	position: relative;
+	width: 100%;
+}
+.pow {
+	bottom: 0;
+	color: #d5d4d4;
+	display: inline-block;
+	font-size: 12px;
+	left: 10px;
+	position: absolute;
+}
+.powBox .pow img {
+	margin-right:3px;
+}
+.send-btn {
+	border: medium none;
+	border-radius: 2px;
+	bottom: 0;
+	cursor: pointer;
+	font-size: 12px;
+	height: 24px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 10px;
+	width: 60px;
+	background:#138efd;
+	color:#fff;
+}
+.footer {
+	background: #fff none repeat scroll 0 0;
+	border-top: 1px solid #d9d9d9;
+	box-sizing: border-box;
+	display: none;
+	height: 105px;
+}
+.footer-off {
+	box-sizing: border-box;
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+}
+.footer-off .block {
+	box-sizing: border-box;
+	display: none;
+	float: left;
+	height: 100%;
+	text-align: center;
+	vertical-align: middle;
+}
+.footer-off .block .block-1 {
+	background-position: -300px 0;
+}
+.footer-off .block .block-img {
+	background: rgba(0, 0, 0, 0) url("../imagesbglist.png") repeat scroll 0 0;
+	height: 40px;
+	margin: 15px auto 0;
+	padding: 0;
+	width: 40px;
+}
+.footer-off .block span {
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+}
+.lsDialog {
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	text-align: center;
+	top: 0;
+	z-index:1020;
+}
+/* .lsDialog .lsDialog-modal {
+	background-color: #ffffff;
+	border-radius: 2px;
+	box-sizing: border-box;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 90%;
+} */
+
+.lsDialog .lsDialog-modal {
+	background-color: #ffffff;
+	border-radius: 2px;
+	box-sizing: border-box;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+	width: 90%;
+}
+.lsDialog .lsDialog-header {
+	box-sizing: border-box;
+	display: inline-block;
+	font-size: 20px;
+	padding: 10px 0;
+	width: 100%;
+	font-size: 12px;
+	padding: 10px;
+	background-color: #138efd;
+}
+.lsDialog .lsDialog-header .header-left {
+	color: #ffffff;
+	float: left;
+}
+.lsDialog-survey .lsDialog-header .surTip {
+	color: #ffffff;
+	margin-right: 8px;
+}
+.lsDialog-survey .lsDialog-header .surtipbg {
+	background: rgba(0, 0, 0, 0) url("../img/bglist.png") no-repeat scroll -48px -26px;
+	display: inline-block;
+	height: 15px;
+	margin-right: 5px;
+	margin-top: -4px;
+	vertical-align: middle;
+	width: 15px;
+}
+.lsDialog .lsDialog-header .header-right {
+	float: right;
+	margin-right: 15px;
+}
+.lsDialog-survey .lsDialog-header a {
+	color: #ffffff;
+	display: inline-block;
+	margin: 0 5px;
+}
+.lsDialog-survey .lsDialog-header a {
+	color: #ffffff;
+	display: inline-block;
+	margin: 0 5px;
+}
+.lsDialog .lsDialog-body {
+	box-sizing: border-box;
+	display: inline-block;
+	font-size: 12px;
+	padding: 20px 0;
+	position: relative;
+	width: 100%;
+}
+.surmid .chackStart {
+	margin-bottom: 10px;
+}
+.surmid .chackStart span {
+	background: rgba(0, 0, 0, 0) url("../img/bglist.png") no-repeat scroll -218px 0;
+	cursor: pointer;
+	display: inline-block;
+	height: 30px;
+	width: 30px;
+}
+.lsDialog .lsDialog-vertical {
+	background-color: transparent;
+	border: medium none;
+	box-sizing: border-box;
+	color: transparent;
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	width: 1px;
+}
+.lsBackdrop {
+	background-color: rgba(0, 0, 0, 0.6);
+	bottom: 0;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 1010;
+}
+.surText h2 {
+	font-size:12px;
+	line-height:25px;
+	font-weight:bold;
+	text-align:left;
+	margin-left:25px;
+}
+.surText textarea {
+	width:86%;
+	border:1px solid #ddd;
+	padding:2px;
+	font-size:12px;
+	text-indent:2px;
+}
+.lsDialog .lsDialog-footer {
+	border-top: 1px solid #d9d9d9;
+	bottom: 0;
+	box-sizing: border-box;
+	display: inline-block;
+	font-size: 12px;
+	left: 0;
+	width: 100%;
+	background:#f4f4f4;
+}
+lsDialog .lsDialog-footer .lsDialog-btn:link {
+	color: #c3c3c3;
+}
+.lsDialog .lsDialog-footer .lsDialog-btn {
+	box-sizing: border-box;
+	display: inline-block;
+	margin: 5px 5px;
+	padding: 5px 0;
+	width: 80px;
+	background:#138efd;
+	border:1px solid #138efd;
+	border-radius:5px;
+	color:#fff;
+}
+.lsDialog .lsDialog-footer .lsDialog-btn:hover {
+	box-sizing: border-box;
+	display: inline-block;
+	margin: 5px 5px;
+	padding: 5px 0;
+	width: 80px;
+	background:#1a81de;
+	border:1px solid #138efd;
+	border-radius:5px;
+	color:#fff;
+}
+.btn-cancel {
+	background:#ddd!important;
+	border:1px solid #ccc!important;
+	color:#fff!important;
+}
+.btn-cancel:hover {
+	background:#b9b9b9!important;
+	border:1px solid #ccc!important;
+	color:#fff!important;
+}
+.surquick {
+	display: none;
+	text-align: center;
+	transition: all 0.5s cubic-bezier(0.86, 0, 0.07, 1) 0s;
+}
+.surquick .surquickp1 {
+	line-height: 30px;
+	margin-top: 15px;
+}
+.surquick .surqList {
+	box-sizing: border-box;
+	margin: 0 auto;
+	padding: 5px;
+	width: 100%;
+}
+.surquick .surqList span {
+	border-radius: 4px;
+	box-sizing: border-box;
+	display: inline-block;
+	margin: 5px 10px;
+	float:left;
+}
+.surquick .surqList span i {
+	width:16px;
+	height:16px;
+	background:url(../images/star-off.png);
+	display:block;
+	float:left;
+}
+.surquick .surqList span i.selected {
+	width:16px;
+	height:16px;
+	background:url(../images/star-light.png)!important;
+	display:block;
+	float:left;
+}
+.wait {
+	background:#ddd;
+	height:20px;
+	line-height:20px;
+	padding:0 2px;
+	position:absolute;
+	font-size:12px;
+	bottom:0;
+	left:0;
+}
+.textarea-tip {
+	position:absolute;
+	bottom:30px;
+	right:30;
+	color:#eee;
+}
+ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+　　color: #ddd;
+　　
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+　　color:#ddd;
+　　
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+　　color:#ddd;
+　　
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+　　color:#ddd;
+　　
+}
+.chatbox {
+	position: fixed;
+	z-index: 2147483583;
+	box-sizing: content-box;
+	height: 43px;
+	bottom: 0px;
+	padding: 0px 20px;
+	border-radius: 4px 4px 0px 0px;
+	right: 100px;
+	background:#138efd none repeat scroll 0% 0%;
+	transition: all 0.3s ease-in-out 0.1s;
+}
+.chatbox a {
+	text-decoration: none;
+	outline: none;
+	font-family: Microsoft Yahei, Arial, Helvetica;
+	color: #fff;
+	font-size: 16px;
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	border: none;
+	line-height:43px;
+	float:none;
+}
+.chatbox img {
+	vertical-align: middle;
+	width: 25px;
+	border:none;
+	margin: 2px 8px 0 0;
+	float: none;
+	position: static;
+	height: 21px;
+}
+.chatbox span.title {
+	font-family: Microsoft Yahei, Arial, Helvetica;
+	color: #fff;
+	font-size:16px;
+	margin: 0;
+	padding: 0;
+}
+.chatbox span.count {
+	height: 30px;
+	width: 30px;
+	line-height: 30px;
+	border: 1px solid #FFFFFF;
+	border-radius: 50%;
+	background-color: red;
+	color: #FFFFFF;
+	text-align: center;
+	display: none;
+	position: absolute;
+	right: -15px;
+	top: -15px;
+}

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.dictionary.model.DictionaryModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.dictionary.model.DictionaryModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type_code" property="typeCode" jdbcType="VARCHAR" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="display_name" property="displayName" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="seq_num" property="seqNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type_code, type_name, code, display_name, pid, description,seq_num
+  </sql>
+  <select id="selectByPid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTypeAndCode" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where type_code = #{typeCode,jdbcType=VARCHAR} and code = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where type_code = #{typeCode,jdbcType=VARCHAR}
+    order by seq_num
+  </select>
+  
+  <select id="getAllType" resultMap="BaseResultMap">
+    SELECT DISTINCT type_code,type_name FROM dictionary
+  </select>
+  
+  <sql id="Base_Where">
+  	<where>
+  	  <if test="id != null and id != ''" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="typeCode != null and typeCode != ''" >
+        and type_code = #{typeCode,jdbcType=VARCHAR}
+      </if>
+      <if test="typeName != null and typeName != ''" >
+        and type_name = #{typeName,jdbcType=VARCHAR}
+      </if>
+      <if test="code != null and code != ''" >
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="displayName != null and displayName != ''" >
+        and display_name like CONCAT(CONCAT('%', #{displayName,jdbcType=VARCHAR}),'%')
+      </if>
+      <if test="pid != null and pid != ''" >
+        and pid = #{pid,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null and description != ''" >
+        and description = #{description,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+      <if test="sort =='typeCode'" >
+        type_code ${order}
+      </if>
+      <if test="sort =='typeName'" >
+        type_name ${order}
+      </if>
+      <if test="sort =='code'" >
+        code ${order}
+      </if>
+      <if test="sort =='displayName'" >
+        display_name ${order}
+      </if>
+      <if test="sort =='pid'" >
+        pid ${order}
+      </if>
+      <if test="sort =='description'" >
+        description ${order}
+      </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from dictionary
+    <include refid="Base_Where" />
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+   <include refid="Base_Where" />
+   <if test=" sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    	LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dictionary
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteBatchById">
+    delete from dictionary
+    where id in
+	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  
+  <insert id="insert" parameterType="com.fbd.core.app.dictionary.model.DictionaryModel" >
+    insert into dictionary (id, type_code, type_name, 
+      code, display_name, pid, 
+      description,seq_num)
+    values (#{id,jdbcType=VARCHAR}, #{typeCode,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR},#{seqNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.dictionary.model.DictionaryModel" >
+    insert into dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="typeCode != null" >
+        type_code,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="displayName != null" >
+        display_name,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="seqNum != null" >
+        seq_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="displayName != null" >
+        #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        #{seqNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.dictionary.model.DictionaryModel" >
+    update dictionary
+    <set >
+      <if test="typeCode != null" >
+        type_code = #{typeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="displayName != null" >
+        display_name = #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="seqNum != null" >
+        seq_num = #{seqNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.dictionary.model.DictionaryModel" >
+    update dictionary
+    set type_code = #{typeCode,jdbcType=VARCHAR},
+      type_name = #{typeName,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      display_name = #{displayName,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      seq_num = #{seqNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

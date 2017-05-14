@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.CrowdfundUserPrizeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.CrowdfundUserPrizeModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="prize_user" property="prizeUser" jdbcType="VARCHAR" />
+    <result column="prize_time" property="prizeTime" jdbcType="TIMESTAMP" />
+    <result column="prize_no" property="prizeNo" jdbcType="INTEGER" />
+    <result column="is_prize" property="isPrize" jdbcType="VARCHAR" />
+    
+    <result column="support_no" property="supportNo" jdbcType="VARCHAR" />
+    <result column="back_no" property="backNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, prize_user, prize_time, prize_no,is_prize,support_no,back_no
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_user_prize
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserPrize" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_user_prize
+    where prize_user = #{prizeUser,jdbcType=VARCHAR} and 
+    loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_user_prize
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.CrowdfundUserPrizeModel" >
+    insert into crowdfund_user_prize (id, loan_no, prize_user, 
+      prize_time, prize_no,is_prize
+      ,support_no,back_no)
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{prizeUser,jdbcType=VARCHAR}, 
+      #{prizeTime,jdbcType=TIMESTAMP}, #{prizeNo,jdbcType=INTEGER}, #{isPrize,jdbcType=VARCHAR}
+    , #{supportNo,jdbcType=VARCHAR}, #{backNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.user.model.CrowdfundUserPrizeModel" >
+    insert into crowdfund_user_prize
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="prizeUser != null" >
+        prize_user,
+      </if>
+      <if test="prizeTime != null" >
+        prize_time,
+      </if>
+      <if test="prizeNo != null" >
+        prize_no,
+      </if>
+      <if test="supportNo != null" >
+        support_no,
+      </if>
+      <if test="backNo != null" >
+        back_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeUser != null" >
+        #{prizeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeTime != null" >
+        #{prizeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prizeNo != null" >
+        #{prizeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="supportNo != null" >
+        #{supportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backNo != null" >
+        #{backNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.user.model.CrowdfundUserPrizeModel" >
+    update crowdfund_user_prize
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeUser != null" >
+        prize_user = #{prizeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeTime != null" >
+        prize_time = #{prizeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prizeNo != null" >
+        prize_no = #{prizeNo,jdbcType=INTEGER},
+      </if>
+      <if test="isPrize != null" >
+        is_prize = #{isPrize,jdbcType=VARCHAR},
+      </if>
+       <if test="supportNo != null" >
+        support_no=#{supportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="backNo != null" >
+        back_no=#{backNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.CrowdfundUserPrizeModel" >
+    update crowdfund_user_prize
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      prize_user = #{prizeUser,jdbcType=VARCHAR},
+      prize_time = #{prizeTime,jdbcType=TIMESTAMP},
+      prize_no = #{prizeNo,jdbcType=INTEGER},
+      is_prize = #{isPrize,jdbcType=VARCHAR},
+      support_no=#{supportNo,jdbcType=VARCHAR},
+      back_no=#{backNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="selectUserPrizeList" resultType="java.util.Map" parameterType="com.fbd.core.app.user.model.CrowdfundUserPrizeModel">
+  	select 
+  		t1.loan_no loanNo,
+  		t1.prize_user prizeUser,
+  		t1.prize_time prizeTime,
+  		t1.prize_no prizeNo,
+  		t1.is_prize isPrize,
+  		t1.support_no supportNo,
+  		t1.back_no backNo,
+  		case when t1.is_prize = '1' then '是' else '' end isPrizeName,
+  		t2.real_name realName
+    from crowdfund_user_prize t1 left join `user` t2 on t1.prize_user = t2.user_id 
+    <include refid="base_where" />
+    order by t1.prize_no desc
+    <if test="endPage>0">
+    	LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  <select id="selectUserPrizeCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.user.model.CrowdfundUserPrizeModel">
+  	select count(1) 
+	from crowdfund_user_prize t1 left join `user` t2 on t1.prize_user = t2.user_id 
+    <include refid="base_where" />
+  </select>
+  
+  <sql id="base_where">	
+  	<where>
+  		<if test="loanNo!=null and loanNo!='' ">
+  			and t1.loan_no = #{loanNo,jdbcType=VARCHAR}
+  		</if>
+  		<if test="prizeUser != null and prizeUser !=''">
+			and t1.prize_user = #{prizeUser,jdbcType=VARCHAR}
+		</if>
+		<if test="prizeNo != null and prizeNo !=''">
+			and t1.prize_no = #{prizeNo,jdbcType=INTEGER}
+		</if>
+		<if test="isPrize != null and isPrize !=''">
+			and t1.is_prize = #{isPrize,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="supportNo != null and supportNo !=''">
+			and t1.support_no = #{supportNo,jdbcType=VARCHAR}
+		</if>
+		<if test="backNo != null and backNo !=''">
+			and t1.back_no = #{backNo,jdbcType=VARCHAR}
+		</if>
+  	</where>
+  </sql>
+  
+  
+  
+  <select id="selectCountPrize" resultType="java.lang.Long" parameterType="java.lang.String">
+  	select count(1) from crowdfund_user_prize t1
+    where t1.loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updatePrize" parameterType="java.util.Map">
+  	update crowdfund_user_prize set is_prize = '1' where loan_no = #{loanNo,jdbcType=VARCHAR} and prize_no = #{prizeNo,jdbcType=INTEGER}
+  </update>
+  <update id="updateNoPrizeByLoanNo" parameterType="java.lang.String">
+  	update crowdfund_user_prize set is_prize='0',prize_time=now() where loan_no=#{loanNo,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByLoanNo" parameterType="java.lang.String">
+  	delete from crowdfund_user_prize where loan_no=#{loanNo,jdbcType=VARCHAR}
+  </delete>
+</mapper>

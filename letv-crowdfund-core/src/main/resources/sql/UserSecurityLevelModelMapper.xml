@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.user.model.UserSecurityLevelModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.user.model.UserSecurityLevelModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="security_level" property="securityLevel" jdbcType="INTEGER" />
+    <result column="email_state" property="emailState" jdbcType="VARCHAR" />
+    <result column="mobile_state" property="mobileState" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="third_account" property="thirdAccount" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="certificate_no" property="certificateNo" jdbcType="VARCHAR" />
+    <result column="home_address" property="homeAddress" jdbcType="VARCHAR" />
+    <result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR" />
+  	<result column="emergency_phone" property="emergencyPhone" jdbcType="VARCHAR" />
+  	<result column="emergency_relation" property="emergencyRelation" jdbcType="VARCHAR" />
+  	<result column="post_code" property="postCode" jdbcType="VARCHAR" />
+  	<result column="email" property="email" jdbcType="VARCHAR" />
+  	<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+  	<result column="level_des" property="levelDes" jdbcType="VARCHAR" />
+  	<result column="mobile_des" property="mobileDes" jdbcType="VARCHAR" />
+  	<result column="email_des" property="emailDes" jdbcType="VARCHAR" />
+  	<result column="is_auth" property="isAuth" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, security_level, email_state, mobile_state, user_type
+  </sql>
+  <select id="selectByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.user.model.UserSecurityLevelModel" >
+    select 
+    <include refid="Base_Column_List" />,
+    case when mobile_state='已认证' then '0' else '1' end as mobile_des,
+    case when email_state='已认证' then '0' else '1' end as email_des,
+    case when security_level &lt;=6 then '低'
+         when security_level >=7 and security_level &lt;=9 then '中'
+         when security_level >=10 then '高' end as level_des
+    from user_security_level
+    where user_id = #{userId,jdbcType=VARCHAR}
+    and user_type = #{userType,jdbcType=VARCHAR}
+  </select>
+   <select id="selectMoreByModel" resultMap="BaseResultMap" parameterType="com.fbd.core.app.user.model.UserSecurityLevelModel" >
+    select 
+      CONCAT(LEFT(u.mobile,3),'****',RIGHT(u.mobile,4)) mobile,
+      u.email email,
+      CONCAT(LEFT(u.certificate_no,2),'**************',RIGHT(u.certificate_no,2))  certificate_no,
+      u.real_name,
+      u.third_account,
+      u.is_auth,
+      u.home_address home_address ,
+      u.post_code,
+      u.emergency_contact emergency_contact,
+      u.emergency_phone,
+      u.emergency_relation,
+      usl.mobile_state,
+      usl.email_state,
+      usl.security_level,
+      usl.id,
+      usl.user_id,
+      usl.user_type
+    from user_security_level usl,user u
+    where usl.user_id=u.user_id
+    and usl.user_id = #{userId,jdbcType=VARCHAR}
+    and usl.user_type = #{userType,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_security_level
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_security_level
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.user.model.UserSecurityLevelModel" >
+    insert into user_security_level (id, user_id, security_level, 
+      email_state, mobile_state, user_type
+      )
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{securityLevel,jdbcType=INTEGER}, 
+      #{emailState,jdbcType=VARCHAR}, #{mobileState,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.user.model.UserSecurityLevelModel" >
+    insert into user_security_level
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="securityLevel != null" >
+        security_level,
+      </if>
+      <if test="emailState != null" >
+        email_state,
+      </if>
+      <if test="mobileState != null" >
+        mobile_state,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="securityLevel != null" >
+        #{securityLevel,jdbcType=INTEGER},
+      </if>
+      <if test="emailState != null" >
+        #{emailState,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileState != null" >
+        #{mobileState,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.user.model.UserSecurityLevelModel" >
+    update user_security_level
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="securityLevel != null" >
+        security_level = #{securityLevel,jdbcType=INTEGER},
+      </if>
+      <if test="emailState != null" >
+        email_state = #{emailState,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileState != null" >
+        mobile_state = #{mobileState,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.user.model.UserSecurityLevelModel" >
+    update user_security_level
+    set user_id = #{userId,jdbcType=VARCHAR},
+      security_level = #{securityLevel,jdbcType=INTEGER},
+      email_state = #{emailState,jdbcType=VARCHAR},
+      mobile_state = #{mobileState,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

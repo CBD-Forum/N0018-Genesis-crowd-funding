@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="enter_time" property="enterTime" jdbcType="TIMESTAMP" />
+    <result column="enter_user" property="enterUser" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="enter_content" property="enterContent" jdbcType="LONGVARCHAR" />
+    <result column="enter_node" property="enterNode" jdbcType="VARCHAR" />
+    <result column="time_node" property="timeNode" jdbcType="TIMESTAMP" />    
+    
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, enter_user,enter_node,enter_time,enter_content,state, auditor, audit_time,time_node
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_progress
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  <select id="selectList" resultType="java.util.Map" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel" >
+    select 
+    cps.id, cps.loan_no as loanNo, 
+    c.loan_name loanName,
+    cps.enter_content as enterContent,
+    cps.enter_user as enterUser,
+    CONCAT(LEFT(cps.enter_user,2),'***',RIGHT(cps.enter_user,1)) as enterUser2,
+    cps.enter_time as enterTime, 
+    cps.time_node as timeNode,
+    cps.state, 
+    (select d.display_name from dictionary d 
+	     		     where d.type_code='crowdfund_audit_state' and d.code=cps.state)as stateName,
+    cps.auditor, 
+    cps.enter_node as enterNode,
+    cps.audit_time as auditTime
+    from crowdfunding_progress cps
+    left join crowdfunding c 
+    on cps.loan_no = c.loan_no
+    <include refid="base_Where"></include>
+    order by cps.time_node desc
+	<if test="endPage>0">
+		LIMIT #{startPage},#{endPage}
+	</if>    
+    
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel" >
+    select 
+    count(1)
+    from crowdfunding_progress cps
+    left join crowdfunding c 
+    on cps.loan_no = c.loan_no
+    <include refid="base_Where"></include>
+  </select>  
+  
+  
+  <sql id="base_Where">
+  	<where>
+      <if test="state != null and state != ''" >
+        and cps.state = #{state,jdbcType=VARCHAR}
+      </if>
+      <if test="loanNo != null and loanNo != ''" >
+        and cps.loan_no = #{loanNo,jdbcType=VARCHAR}
+      </if>
+      <if test="enterNode != null and enterNode != ''" >
+        and cps.enter_node = #{enterNode,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+    <select id="getCountByNode" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel">
+    select count(1)  
+    from crowdfunding_progress cps
+   <include refid="base_Where"></include>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_progress
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel" >
+    insert into crowdfunding_progress (id, loan_no,enter_user, enter_time, 
+      state, auditor, audit_time, 
+      enter_content,enter_node,time_node)
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR},#{enterUser,jdbcType=VARCHAR}, #{enterTime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=VARCHAR}, #{auditor,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{enterContent,jdbcType=LONGVARCHAR},#{enterNode,jdbcType=VARCHAR},
+      #{timeNode,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel" >
+    insert into crowdfunding_progress
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="enterUser != null" >
+        enter_user,
+      </if>
+      <if test="enterTime != null" >
+        enter_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="auditor != null" >
+        auditor,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="enterContent != null" >
+        enter_content,
+      </if>
+      <if test="enterNode != null" >
+        enter_node,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterUser != null" >
+        #{enterUser,jdbcType=VARCHAR},
+      </if>
+      <if test="enterTime != null" >
+        #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterContent != null" >
+        #{enterContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="enterNode != null" >
+        #{enterNode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel" >
+    update crowdfunding_progress
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="enterUser != null" >
+        loan_no = #{enterUser,jdbcType=VARCHAR},
+      </if>
+      <if test="enterTime != null" >
+        enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="auditor != null" >
+        auditor = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterContent != null" >
+        enter_content = #{enterContent,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="enterNode != null" >
+        enter_node = #{enterNode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingProgressModel" >
+    update crowdfunding_progress
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      enter_user = #{enterUser,jdbcType=VARCHAR},
+      enter_time = #{enterTime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      auditor = #{auditor,jdbcType=VARCHAR},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      enter_node = #{enterNode,jdbcType=VARCHAR},
+      enter_content = #{enterContent,jdbcType=LONGVARCHAR},
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

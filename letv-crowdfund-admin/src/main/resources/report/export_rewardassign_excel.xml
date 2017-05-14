@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name='还款提醒'>
+	<report-header>
+	<column name='项目编号' mapping='loanNo'/>
+	<column name='项目名称' mapping='loanName'/>
+	<column name='投资编号' mapping='investNo'/>
+	<column name='投资人' mapping='investor'/>
+	<column name='投资金额(元)' mapping='investAmt' />
+	<column name='收款人' mapping='getUser' />
+	<column name='已发奖励金额(元)' mapping='assignAmt' />
+	<column name='奖励类型' mapping='rewardTypeName' />
+	<column name='付款人' mapping='payUser' />
+	</report-header>
+</report>

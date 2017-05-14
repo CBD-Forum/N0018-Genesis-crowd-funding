@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingOperateDataModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingOperateDataModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="registerNumByDay" property="registerNumByDay" jdbcType="INTEGER" />
+    <result column="userNumByDay" property="userNumByDay" jdbcType="INTEGER" />
+    <result column="retentionByNextDay" property="retentionByNextDay" jdbcType="DOUBLE" />
+    <result column="registerNumByMonth" property="registerNumByMonth" jdbcType="INTEGER" />
+    <result column="userNumByMonth" property="userNumByMonth" jdbcType="INTEGER" />
+    <result column="retentionByNextMonth" property="retentionByNextMonth" jdbcType="DOUBLE" />
+    <result column="payUserNum" property="payUserNum" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="expected_return" property="expectedReturn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, loan_no, registerNumByDay, userNumByDay, retentionByNextDay, registerNumByMonth, 
+    userNumByMonth, retentionByNextMonth, payUserNum, create_time, update_time,expected_return
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_operate_data
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfunding_operate_data
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+    order by create_time desc
+  </select>  
+  
+   <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select 
+    count(1)
+    from crowdfunding_operate_data
+    where loan_no = #{loanNo,jdbcType=VARCHAR}
+  </select>   
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfunding_operate_data
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingOperateDataModel" >
+    insert into crowdfunding_operate_data (id, loan_no, registerNumByDay, 
+      userNumByDay, retentionByNextDay, registerNumByMonth, 
+      userNumByMonth, retentionByNextMonth, payUserNum, 
+      create_time, update_time,expected_return)
+    values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, #{registerNumByDay,jdbcType=INTEGER}, 
+      #{userNumByDay,jdbcType=INTEGER}, #{retentionByNextDay,jdbcType=DOUBLE}, #{registerNumByMonth,jdbcType=INTEGER}, 
+      #{userNumByMonth,jdbcType=INTEGER}, #{retentionByNextMonth,jdbcType=DOUBLE}, #{payUserNum,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{expectedReturn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingOperateDataModel" >
+    insert into crowdfunding_operate_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="registerNumByDay != null" >
+        registerNumByDay,
+      </if>
+      <if test="userNumByDay != null" >
+        userNumByDay,
+      </if>
+      <if test="retentionByNextDay != null" >
+        retentionByNextDay,
+      </if>
+      <if test="registerNumByMonth != null" >
+        registerNumByMonth,
+      </if>
+      <if test="userNumByMonth != null" >
+        userNumByMonth,
+      </if>
+      <if test="retentionByNextMonth != null" >
+        retentionByNextMonth,
+      </if>
+      <if test="payUserNum != null" >
+        payUserNum,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registerNumByDay != null" >
+        #{registerNumByDay,jdbcType=INTEGER},
+      </if>
+      <if test="userNumByDay != null" >
+        #{userNumByDay,jdbcType=INTEGER},
+      </if>
+      <if test="retentionByNextDay != null" >
+        #{retentionByNextDay,jdbcType=DOUBLE},
+      </if>
+      <if test="registerNumByMonth != null" >
+        #{registerNumByMonth,jdbcType=INTEGER},
+      </if>
+      <if test="userNumByMonth != null" >
+        #{userNumByMonth,jdbcType=INTEGER},
+      </if>
+      <if test="retentionByNextMonth != null" >
+        #{retentionByNextMonth,jdbcType=DOUBLE},
+      </if>
+      <if test="payUserNum != null" >
+        #{payUserNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingOperateDataModel" >
+    update crowdfunding_operate_data
+    <set >
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="registerNumByDay != null" >
+        registerNumByDay = #{registerNumByDay,jdbcType=INTEGER},
+      </if>
+      <if test="userNumByDay != null" >
+        userNumByDay = #{userNumByDay,jdbcType=INTEGER},
+      </if>
+      <if test="retentionByNextDay != null" >
+        retentionByNextDay = #{retentionByNextDay,jdbcType=DOUBLE},
+      </if>
+      <if test="registerNumByMonth != null" >
+        registerNumByMonth = #{registerNumByMonth,jdbcType=INTEGER},
+      </if>
+      <if test="userNumByMonth != null" >
+        userNumByMonth = #{userNumByMonth,jdbcType=INTEGER},
+      </if>
+      <if test="retentionByNextMonth != null" >
+        retentionByNextMonth = #{retentionByNextMonth,jdbcType=DOUBLE},
+      </if>
+      <if test="payUserNum != null" >
+        payUserNum = #{payUserNum,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expectedReturn != null" >
+        expected_return = #{expectedReturn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingOperateDataModel" >
+    update crowdfunding_operate_data
+    set loan_no = #{loanNo,jdbcType=VARCHAR},
+      registerNumByDay = #{registerNumByDay,jdbcType=INTEGER},
+      userNumByDay = #{userNumByDay,jdbcType=INTEGER},
+      retentionByNextDay = #{retentionByNextDay,jdbcType=DOUBLE},
+      registerNumByMonth = #{registerNumByMonth,jdbcType=INTEGER},
+      userNumByMonth = #{userNumByMonth,jdbcType=INTEGER},
+      retentionByNextMonth = #{retentionByNextMonth,jdbcType=DOUBLE},
+      payUserNum = #{payUserNum,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      expected_return = #{expectedReturn,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateloanNoByLoanNo" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingOperateDataModel" >
+    update crowdfunding_operate_data
+    set loan_no = #{loanNo,jdbcType=VARCHAR}
+    where loan_no = #{tempLoanNo,jdbcType=VARCHAR}
+  </update>  
+</mapper>

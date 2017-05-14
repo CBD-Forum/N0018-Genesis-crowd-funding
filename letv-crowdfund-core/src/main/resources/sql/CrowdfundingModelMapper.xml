@@ -1,0 +1,2006 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundingModelMapper">
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundingModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="loan_name" property="loanName" jdbcType="VARCHAR" />
+    <result column="loan_user" property="loanUser" jdbcType="VARCHAR" />
+    <result column="loan_label" property="loanLabel" jdbcType="VARCHAR" />
+    <result column="fund_amt" property="fundAmt" jdbcType="DOUBLE" />
+    <result column="fund_amt_upper" property="fundAmtUpper" jdbcType="DOUBLE" />
+    <result column="fund_days" property="fundDays" jdbcType="INTEGER" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+    <result column="charge_fee" property="chargeFee" jdbcType="DOUBLE" />
+    <result column="approve_amt" property="approveAmt" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="release_time" property="releaseTime" jdbcType="TIMESTAMP" />
+    <result column="fund_end_time" property="fundEndTime" jdbcType="TIMESTAMP" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="auditor" property="auditor" jdbcType="VARCHAR" />
+    <result column="cash_user" property="cashUser" jdbcType="VARCHAR" />
+    <result column="cash_time" property="cashTime" jdbcType="TIMESTAMP" />
+    <result column="pay_state" property="payState" jdbcType="VARCHAR" />
+    <result column="loan_state" property="loanState" jdbcType="VARCHAR" />
+    <result column="loan_type" property="loanType" jdbcType="VARCHAR" />
+    <result column="loan_des" property="loanDes" jdbcType="VARCHAR" />
+    <result column="loan_logo" property="loanLogo" jdbcType="VARCHAR" />
+    <result column="audit_opinion" property="auditOpinion" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="is_system" property="isSystem" jdbcType="VARCHAR" />
+    <result column="loan_level" property="loanLevel" jdbcType="VARCHAR" />
+    <result column="loan_deposit" property="loanDeposit" jdbcType="DOUBLE" />
+    <result column="p2p_fee" property="p2pFee" jdbcType="DOUBLE" />
+    <result column="hy_fee" property="hyFee" jdbcType="DOUBLE" />
+    <result column="userId" property="userId" jdbcType="VARCHAR" />
+     <result column="perfect_ratio" property="perfectRatio" jdbcType="DOUBLE" />
+    <result column="house_area" property="houseArea" jdbcType="DOUBLE" />
+    <result column="house_limit" property="houseLimit" jdbcType="INTEGER" />
+    <result column="auth_set" property="authSet" jdbcType="VARCHAR" />
+    <result column="can_over" property="canOver" jdbcType="VARCHAR" />
+    <result column="super_industry" property="superIndustry" jdbcType="VARCHAR" />
+    <result column="child_industry" property="childIndustry" jdbcType="VARCHAR" />
+    <result column="loan_address" property="loanAddress" jdbcType="VARCHAR" />
+    <result column="prepay_amt" property="prepayAmt" jdbcType="DOUBLE" />
+    <result column="order_amt" property="orderAmt" jdbcType="DOUBLE" />
+    <result column="lead_min_amt" property="leadMinAmt" jdbcType="DOUBLE" />
+    <result column="actual_fee" property="actualFee" jdbcType="DOUBLE" />
+    <result column="preheat_end_time" property="preheatEndTime" jdbcType="TIMESTAMP" />
+    <result column="loan_manager" property="loanManager" jdbcType="VARCHAR" />
+    <result column="loan_mobile_logo" property="loanMobileLogo" jdbcType="VARCHAR" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="contract_tpl_no" property="contractTplNo" jdbcType="VARCHAR" />
+    <result column="org_certificate" property="orgCertificate" jdbcType="VARCHAR" />
+    <result column="org_code" property="orgCode" jdbcType="VARCHAR" />
+    <result column="promoter_identity_sign" property="promoterIdentitySign" jdbcType="VARCHAR" />
+    <result column="promoter_identity_photo" property="promoterIdentityPhoto" jdbcType="VARCHAR" />
+    <result column="org_loan_receive_prove" property="orgLoanReceiveProve" jdbcType="VARCHAR" />
+    <result column="isPublicAgencies" property="isPublicAgencies" jdbcType="VARCHAR" />   
+    <result column="loan_introduction" property="loanIntroduction" jdbcType="VARCHAR" />
+    <result column="loan_photo" property="loanPhoto" jdbcType="VARCHAR" />
+    <result column="loan_stage" property="loanStage" jdbcType="VARCHAR" />
+    <result column="competence" property="competence" jdbcType="VARCHAR" />
+    <result column="profit_model" property="profitModel" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="weibo" property="weibo" jdbcType="VARCHAR" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="bank_info" property="bankInfo" jdbcType="VARCHAR" />
+    <result column="prize_num" property="prizeNum" jdbcType="INTEGER" />
+    <result column="lock_day" property="lockDay" jdbcType="INTEGER" />
+    <result column="daily_earnings_forecast" property="dailyEarningsForecast" jdbcType="INTEGER" />
+    <result column="over_fund_amt" property="overFundAmt" jdbcType="DOUBLE" />
+    
+  	<result column="block_chain_address" property="blockChainAddress" jdbcType="VARCHAR" />
+  	<result column="block_chain_secret_key" property="blockChainSecretKey" jdbcType="VARCHAR" />
+    <result column="skey" property="skey" jdbcType="VARCHAR" />
+  	<result column="block_chain_state" property="blockChainState" jdbcType="VARCHAR" />
+  	<result column="platform_transfer_state" property="platformTransferState" jdbcType="VARCHAR" />
+  	<result column="loan_transfer_state" property="loanTransferState" jdbcType="VARCHAR" />   
+    <result column="stock_num" property="stockNum" jdbcType="INTEGER" />
+    <result column="stock_part_amt" property="stockPartAmt" jdbcType="DOUBLE" />
+    
+    <result column="preheat_time" property="preheatTime" jdbcType="TIMESTAMP" />
+    
+    <result column="operate" property="operate" jdbcType="VARCHAR" />
+      
+    <result column="prize_status" property="prizeStatus" jdbcType="VARCHAR" />  
+  </resultMap>
+	<sql id="Base_Column_List">
+		id, loan_no, loan_name, loan_user, loan_type, loan_label, fund_amt,
+		fund_amt_upper,
+		fund_days, province, city,county, charge_fee, approve_amt, create_time,
+		release_time, fund_end_time,
+		audit_time, auditor, cash_user, cash_time, pay_state, loan_state, loan_des,
+		loan_logo,
+		audit_opinion,creator,is_system,loan_level,loan_deposit,p2p_fee,hy_fee,
+		perfect_ratio, house_area, house_limit,
+		auth_set, can_over, super_industry,
+		child_industry,loan_address,prepay_amt,order_amt,lead_min_amt,actual_fee,
+		preheat_end_time,loan_manager,loan_mobile_logo,contract_tpl_no,contract_no,org_certificate,org_code,
+		promoter_identity_sign,promoter_identity_photo,org_loan_receive_prove,isPublicAgencies,loan_introduction,loan_photo,
+		loan_stage,competence,profit_model,website,weibo,weixin,logo,bank_info,prize_num,lock_day,daily_earnings_forecast,
+		over_fund_amt,block_chain_address,block_chain_secret_key,block_chain_state,platform_transfer_state,loan_transfer_state,
+		stock_num,stock_part_amt,preheat_time,operate,prize_status
+	</sql>
+	<!-- 众筹列表 -->
+	<select id="selectList" resultType="java.util.Map"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		select
+		c.prize_status as prizeStatus,
+		c.preheat_time as preheatTime,
+		c.id, c.loan_no as loanNo, c.loan_name as loanName, c.loan_user as
+		loanUser, u.real_name as loanUserName,
+		c.loan_type as loanType, c.loan_label as loanLabel, c.fund_amt as fundAmt,
+		c.fund_amt_upper as fundAmtUpper,
+		c.fund_days as fundDays, c.province , c.city, c.county,c.charge_fee as chargeFee,
+		c.approve_amt as approveAmt,
+		c.create_time as createTime, c.release_time as releaseTime, c.fund_end_time as
+		fundEndTime,
+		c.audit_time as auditTime, c.auditor, c.cash_user as cashUser, c.cash_time as
+		cashTime,
+		c.pay_state as payState, c.loan_state as loanState, c.loan_des as loanDes,
+		c.loan_logo as loanLogo,
+		c.loan_mobile_logo loanMobileLogo,
+		c.audit_opinion as auditOpinion,
+		c.creator,c.is_system as isSystem,c.loan_level as loanLevel,c.loan_deposit as loanDeposit,
+		c.p2p_fee as p2pFee,c.hy_fee as hyFee,
+		c.perfect_ratio as perfectRatio,
+		c.over_fund_amt overFundAmt,
+		c.house_area as houseArea,
+		c.lock_day lockDay,
+		c.daily_earnings_forecast dailyEarningsForecast,
+		c.house_limit as houseLimit,
+		c.prize_num prizeNum,
+		c.auth_set as authSet,
+		c.can_over as canOver,
+		case when c.can_over = '1' then '是' when c.can_over = '0' then '否' else ''
+		end canOverName,
+		c.contract_tpl_no contractTplNo,
+		c.contract_no contractNo,
+		c.super_industry as superIndustry,
+		c.child_industry as childIndustry,
+		c.loan_address as loanAddress,
+		c.prepay_amt as prepayAmt,
+		c.order_amt as orderAmt,
+		c.lead_min_amt as leadMinAmt,
+		c.actual_fee as actualFee,
+		c.loan_photo loanPhoto,
+		c.org_certificate as orgCertificate,
+		c.org_code as orgCode,
+		c.loan_introduction loanIntroduction,
+		c.promoter_identity_sign as promoterIdentitySign,
+		c.promoter_identity_photo as promoterIdentityPhoto,
+		c.org_loan_receive_prove as orgLoanReceiveProve,
+		c.isPublicAgencies,
+		c.loan_stage loanStage,
+		c.competence,
+		c.profit_model as profitModel,
+		c.website,
+		c.weibo,
+		c.weixin,
+		c.logo,
+		c.bank_info as bankInfo,
+		c.preheat_end_time as preheatEndTime,
+		c.loan_manager as loanManager,
+		c.stock_num stockNum,c.stock_part_amt stockPartAmt,
+		c.block_chain_address blockChainAddress,
+		c.block_chain_state blockChainState,
+		(case when c.loan_state='preheat' then DATEDIFF(c.fund_end_time,now()) else
+		0 end)as remainStartdays,
+		(select a.short_name from area a where a.id=c.city) as loanCityName,
+		(select a.short_name from area a where a.id=c.province) as loanProvinceName,
+		(select a.short_name from area a where a.id=c.county) as
+		loanCountyName,
+		(select d.display_name from dictionary d
+		where d.type_code='crowdfund_state' and d.code=c.loan_state)as
+		loanStateName,
+		(select d.display_name from dictionary d
+		where d.type_code='crowdFundType' and d.code=c.loan_type)as loanTypeName,
+		(select d.display_name from dictionary d
+		where d.type_code='crowdFund_level' and d.code=c.loan_level)as
+		loanLevelName,
+		(select d.display_name from dictionary d
+		where d.type_code='is_not_flag' and d.code=c.is_system)as isSystemName,
+
+		(case when c.loan_state='funding' then DATEDIFF(c.fund_end_time,now())
+		else c.fund_days end) as remainDays,
+
+		(case when c.loan_state='funding' then DATEDIFF(c.fund_end_time,now())
+		when c.loan_state in('funded','lended','end') then 0
+		else c.fund_days end) as remainDays,
+
+		(case when c.loan_state='preheat' then DATEDIFF(c.preheat_end_time,now())
+		else 0 end) as remainPreheatDays,
+
+		ROUND(c.approve_amt/c.over_fund_amt,4) as supportRatio,
+
+		FORMAT(IFNULL(t1.supportNum,0),0) as supportNum,
+		FORMAT(IFNULL(t2.commentNum,0),0) as commentNum,
+		FORMAT(IFNULL(t4.attentionNum,0),0) as attentionNum,
+		FORMAT(IFNULL(t8.praiseNum,0),0) as praiseNum,
+		sbs.project_finance_amt as projectFinanceAmt,
+		IFNULL(sbs.finance_num,0) as financeNum,
+		sbs.invest_bonus_ratio as investBonusRatio,
+		IFNULL(t1.buyNum,0) as buyNum,
+		sbs.project_finance_amt-c.prepay_amt as remainPrepayAmt,
+		cd.loan_contract as loanContract,
+		cd.transfer_ratio transferRatio,
+		bs.minAmt miniInvestAmt,
+		IFNULL(cli.leaderNum,0) as leaderNum,
+		d.display_name superIndustryName,
+		<!-- 退款总数 -->
+		(select count(1) from crowdfunding_support cs where cs.loan_no =
+		c.loan_no and c.loan_state = 'lended' and cs.refund_state is not null)
+		as refundCount,
+		<!--等待处理的退款 -->
+		(select count(1) from crowdfunding_support cs where cs.loan_no =
+		c.loan_no and c.loan_state = 'lended' and cs.refund_state in
+		('waitConfirm')) as refundWaitConfirmCount
+		from crowdfunding c
+		LEFT JOIN dictionary d on d.code = c.super_industry and d.type_code =
+		'concernIndustry'
+		left join (select cst.loan_no,count(1) supportNum,sum(buy_num) buyNum
+		from crowdfunding_support cst
+		where cst.pay_state='payed' and cst.is_transfer = '0' group by cst.loan_no) t1 on
+		c.loan_no=t1.loan_no
+		left join (select cct.loan_no,count(1) commentNum
+		from crowdfunding_comment cct
+		group by cct.loan_no) t2 on c.loan_no=t2.loan_no
+		left join (select cat.loan_no,count(1) attentionNum
+		from crowdfunding_attention cat where cat.attention_type='loan'
+		group by cat.loan_no) t4 on c.loan_no=t4.loan_no
+		left join crowdfund_detail cd on c.loan_no=cd.loan_no
+		left join stock_back_set sbs on sbs.loan_no = c.loan_no
+		left join user u on u.user_id=c.loan_user
+		
+		LEFT JOIN (SELECT loan_no,MIN(amt) minAmt
+		FROM crowdfunding_back_set GROUP BY loan_no) bs on c.loan_no = bs.loan_no
+		left join (select loan_no , count(1) as leaderNum
+		from crowdfund_lead_investor group by loan_no) cli on cli.loan_no=
+		c.loan_no
+		left join (select cp.loan_no,count(1) praiseNum
+		from crowdfunding_praise cp group by cp.loan_no) t8 on
+		c.loan_no=t8.loan_no
+
+		<include refid="base_where"></include>
+		<!-- 默认排序 -->
+		<if test="sort=='defaultSort'">
+			order by  c.preheat_time desc,c.release_time desc,c.fund_end_time desc,
+			(case when c.loan_state='preheat' then 0
+			when c.loan_state='funding' then 1
+			when c.loan_state='lended' then 2
+			when c.loan_state='funded' then 3
+			else 4 end ) asc
+		</if>
+		<!-- 热门推荐 -->
+		<if test="sort=='hot'">
+			order by c.loan_level desc,ROUND(c.approve_amt/c.fund_amt,2) desc ,
+			IFNULL(t4.attentionNum,0) desc
+		</if>
+		<!-- 首页产品排序 -->
+		<if test="sort=='productSort'">
+			order by
+			(case when c.loan_state='preheat' then 0
+			when c.loan_state='funding' then 1
+			when c.loan_state='lended' then 2
+			when c.loan_state='funded' then 3
+			else 4 end ) asc,  c.release_time desc
+		</if>		
+		<!-- 首页公益排序 -->
+		<if test="sort=='publicSort'">
+		order by 
+			(case when c.loan_state='preheat' then 0
+			when c.loan_state='funding' then 1
+			when c.loan_state='lended' then 2
+			when c.loan_state='funded' then 3
+			else 4 end ) asc, c.release_time desc
+		</if>		
+		
+		
+		
+		<if test="sort=='loanNo'">
+			order by c.loan_no ${order}
+		</if>
+		<if test="sort=='createTime'">
+			order by c.create_time ${order}
+		</if>
+		<if test="sort=='fundEndTime'">
+			order by c.fund_end_time ${order}
+		</if>
+		<if test="sort=='fundDays'">
+			order by c.fund_days ${order}
+		</if>
+		<if test="sort=='auditTime'">
+			order by c.audit_time desc
+		</if>
+		<!-- 项目完成时间 -->
+		<if test="sort=='fundEndTime'">
+			order by c.fund_end_time ${order}
+		</if>
+		<!-- 最新上线 -->
+		<if test="sort=='releaseTime'">
+			order by c.release_time ${order}
+		</if>
+		<!-- 目标金额 -->
+		<if test="sort=='approveAmt'">
+			order by c.approve_amt ${order}
+		</if>
+		<!-- 支持人数 -->
+		<if test="sort=='supportNum'">
+			order by t1.supportNum ${order}
+		</if>
+		<!-- 融资额 -->
+		<if test="sort=='fundAmt'">
+			order by c.fund_amt ${order}
+		</if>
+		<if test="sort=='cashTime'">
+			order by c.cash_time ${order}
+		</if>
+		<!-- 后台待审核列表排序 -->
+		<if test="sort=='auditing'">
+			order by c.create_time desc
+		</if>
+		<!-- 后台待复审列表排序 -->
+		<if test="sort=='secondAuditing'">
+			order by c.create_time desc
+		</if>
+		<!-- 预热列表排序 -->
+		<if test="sort=='preheat'">
+			order by c.preheat_time desc
+		</if>
+		<!-- 后台待发布项目列表排序 -->
+		<if test="sort=='re_passed'">
+			order by c.create_time desc
+		</if>
+
+
+
+
+		<if test="endPage>0">
+			LIMIT #{startPage},#{endPage}
+		</if>
+	</select>
+	<select id="getCount" resultType="java.lang.Long"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		select count(1)
+		from crowdfunding c
+		left join user u on u.user_id=c.loan_user
+		<include refid="base_where" />
+	</select>
+
+	<!-- 众筹详情  -->
+	<select id="selectDetail" resultType="java.util.Map" parameterType="java.lang.String">
+		select
+		c.prize_status as prizeStatus,
+		c.preheat_time as preheatTime,
+		c.id, c.loan_no as loanNo, c.loan_name as loanName, c.loan_user as
+		loanUser,
+		(case when LENGTH(u.real_name) = 0 or u.real_name is null then
+		CONCAT(LEFT(c.loan_user,2),'***',RIGHT(c.loan_user,1))
+		else u.real_name end) as loanUser2,
+		c.loan_type as loanType, c.loan_label as loanLabel, c.fund_amt as fundAmt,
+		c.fund_amt_upper as fundAmtUpper,
+		c.fund_days as fundDays, c.province , c.city, c.county,c.charge_fee as chargeFee,
+		c.approve_amt as approveAmt,
+		c.create_time as createTime, c.release_time as releaseTime, c.fund_end_time as
+		fundEndTime,
+		c.audit_time as auditTime, c.auditor, c.cash_user as cashUser, c.cash_time as
+		cashTime,
+		c.pay_state as payState, c.loan_state as loanState, c.loan_des as loanDes,
+		c.loan_logo as loanLogo,
+		c.loan_mobile_logo loanMobileLogo,
+		c.audit_opinion as auditOpinion,
+		c.creator,c.is_system as isSystem,c.loan_level as loanLevel,c.loan_deposit as loanDeposit,
+		c.p2p_fee as p2pFee,c.hy_fee as hyFee,
+		c.perfect_ratio as perfectRatio,
+		c.house_area as houseArea,
+		c.over_fund_amt overFundAmt,
+		c.lock_day lockDay,
+		c.daily_earnings_forecast dailyEarningsForecast,
+		c.house_limit as houseLimit,
+		c.auth_set as authSet,
+		c.can_over as canOver,
+		case when c.can_over = '1' then '是' when c.can_over = '0' then '否' else ''
+		end canOverName,
+		ifnull(c.prize_num,0) prizeNum,
+		c.loan_photo loanPhoto,
+		c.contract_tpl_no contractTplNo,
+		c.contract_no contractNo,
+		c.super_industry as superIndustry,
+		c.child_industry as childIndustry,
+		c.loan_address as loanAddress,
+		c.block_chain_address blockChainAddress,
+		c.prepay_amt as prepayAmt,
+		c.order_amt as orderAmt,
+		c.lead_min_amt as leadMinAmt,
+		c.actual_fee as actualFee,
+		c.org_certificate as orgCertificate,
+		c.org_code as orgCode,
+		c.loan_introduction loanIntroduction,
+		c.isPublicAgencies,
+		c.loan_stage loanStage,
+		c.competence,
+		c.profit_model as profitModel,
+		c.website,
+		c.weibo,
+		c.weixin,
+		c.logo,
+		c.bank_info as bankInfo,
+		c.promoter_identity_sign as promoterIdentitySign,
+		c.promoter_identity_photo as promoterIdentityPhoto,
+		c.org_loan_receive_prove as orgLoanReceiveProve,
+		c.preheat_end_time as preheatEndTime,
+		c.loan_manager as loanManager,
+		a.real_name as loanManagerName,
+		c.stock_num stockNum,c.stock_part_amt stockPartAmt,
+		(select d.display_name from dictionary d
+		where (d.type_code='tianxiatou_concernIndustry' or
+		d.type_code='concernIndustry') and d.code=c.super_industry)as
+		superIndustryName,
+		c.child_industry as childIndustry,
+		(case when c.loan_state='preheat' then DATEDIFF(c.fund_end_time,now()) else
+		0 end)as remainStartdays,
+		(case when c.loan_state='preheat' then DATEDIFF(c.preheat_end_time,now())
+		else 0 end) as remainPreheatDays,
+		(select a.short_name from area a where a.id=c.city) as loanCityName,
+		(select a.short_name from area a where a.id=c.province) as loanProvinceName,
+		(select a.short_name from area a where a.id=c.county) as
+		loanCountyName,
+		(select d.display_name from dictionary d
+		where d.type_code='crowdfund_state' and d.code=c.loan_state)as
+		loanStateName,
+		(select d.display_name from dictionary d
+		where d.type_code='crowdFundType' and d.code=c.loan_type)as loanTypeName,
+		(select d.display_name from dictionary d
+		where d.type_code='loan_label' and d.code=c.loan_label)as loanLabelName,
+		(select d.display_name from dictionary d
+		where d.type_code='crowdFund_level' and d.code=c.loan_level)as
+		loanLevelName,
+		(select d.display_name from dictionary d
+		where d.type_code='is_not_flag' and d.code=c.is_system)as isSystemName,
+
+		(case when c.loan_state='funding' then DATEDIFF(c.fund_end_time,now())
+		else c.fund_days end) as remainDays,
+		(case when c.fund_end_time is not null then DATEDIFF(c.fund_end_time,now())
+		else 0 end) as remainDays,
+		ROUND(c.approve_amt/c.over_fund_amt,4) as supportRatio,
+		FORMAT(IFNULL(t1.supportNum,0),0) as supportNum,
+		FORMAT(IFNULL(t2.commentNum,0),0) as commentNum,
+		FORMAT(IFNULL(t4.attentionNum,0),0) as attentionNum,
+		FORMAT(IFNULL(t8.praiseNum,0),0) as praiseNum,
+		u.self_detail as selfDetail,
+		u.photo,
+		u.real_name as loanUserName,
+		cd.loan_detail as loanDetail,
+		cd.loan_video as loanVideo,
+		cd.mobile_video as mobileVideo,
+		cd.house_type as houseType,
+		cd.house_old_price as houseOldPrice,
+		cd.house_present_price as housePresentPrice,
+		cd.house_developer as houseDeveloper,
+		cd.finance_budget as financeBudget,
+		cd.video_des as videoDes,
+		cd.house_manager as houseManager,
+		cd.price_compare as priceCompare,
+		cd.last_quarter_income as lastQuarterIncome,
+		cd.last_quarter_profit as lastQuarterProfit,
+		cd.last_year_income as lastYearIncome,
+		cd.last_year_profit as lastYearProfit,
+		cd.founder as founder,
+		cd.founder_photo as founderPhoto,
+		cd.company_fund_date as companyFundDate,
+		cd.back_photo as backPhoto,cd.loan_contract as loanContract,
+
+		cd.loan_team loanTeam,
+		cd.business_license businessLicense,
+		cd.legal_card legalCard,
+		cd.transfer_ratio transferRatio,
+		cd.exit_scheme exitScheme,
+		cd.capital_used capitalUsed,
+		cd.Industry_analysis industryAnalysis,
+		cd.risk_measure riskMeasure,
+		cd.finance_plan financePlan,
+		cd.business_proposal businessProposal,
+		cd.other_accessories otherAccessories,
+		cd.license_identity_information licenseIdentityInformation,
+
+		cd.user_province userProvince,
+		cd.user_city userCity,
+		(select a.short_name from area a where a.id=cd.user_city) as userCityName,
+		(select a.short_name from area a where a.id=cd.user_province) as
+		userProvinceName,
+
+
+		cd.user_mobile userMobile,
+		cd.company,
+		sbs.project_finance_amt as projectFinanceAmt,
+		sbs.invest_finance_amt as investFinanceAmt,
+		sbs.project_bonus_ratio as projectBonusRatio,
+		sbs.invest_bonus_ratio as investBonusRatio,
+		sbs.finance_num as financeNum,
+		sbs.mini_invest_amt as miniInvestAmt,
+		IFNULL(t1.buyNum,0) as buyNum,
+		IFNULL(t5.interviewNum,0) as interviewNum,
+		IFNULL(t6.loanNum,0) as loanNum,
+		<!-- IFNULL(t7.totalPreSupportAmt,0) as totalPreSupportAmt , -->
+		t3.contract_name contractTplName,
+		cd.last_valuation lastValuation,
+		t1.complete_time completeTime,
+		DATE_ADD(c.fund_end_time,INTERVAL -(select `code` from business_config where
+		display_name='INTENTION_CAN_PAY_DAY') DAY) investEndTime
+		from crowdfunding c
+
+		left join crowdfund_detail cd on c.loan_no=cd.loan_no
+
+		LEFT JOIN contract_template t3 ON c.contract_tpl_no = t3.contract_no
+
+		left join (select cst.loan_no,count(1) supportNum,sum(buy_num)
+		buyNum,cst.complete_time
+		
+		from crowdfunding_support cst
+		where (cst.pay_state='payed'  or cst.intention_state='payed') and cst.is_transfer = '0' group by cst.loan_no) t1 on
+		c.loan_no=t1.loan_no
+		left join (select cct.loan_no,count(1) commentNum
+		from crowdfunding_comment cct
+		group by cct.loan_no) t2 on c.loan_no=t2.loan_no
+		left join (select cat.loan_no,count(1) attentionNum
+		from crowdfunding_attention cat where cat.attention_type='loan'
+		group by cat.loan_no) t4 on c.loan_no=t4.loan_no
+
+		left join user u on u.user_id=c.loan_user
+
+		left join (select ir.loan_no, count(1) interviewNum
+		from interview_record ir group by ir.loan_no) t5 on t5.loan_no=c.loan_no
+
+		left join (select cc.loan_user, count(1) loanNum
+		from crowdfunding cc group by cc.loan_user) t6 on t6.loan_user=c.loan_user
+
+		left join stock_back_set sbs on sbs.loan_no = c.loan_no
+ 
+
+		left join admin a on a.admin_id=c.loan_manager
+
+		left join (select cp.loan_no,count(1) praiseNum
+		from crowdfunding_praise cp group by cp.loan_no) t8 on
+		c.loan_no=t8.loan_no
+
+		where c.loan_no = #{loanNo,jdbcType=VARCHAR}
+	</select>
+
+	<sql id="base_where">
+		<where>
+			<if test="queryMethod !=null and queryMethod !=''">
+				<if test="queryMethod == 'waitPrize'">
+					<!-- 等待处理的抽奖 -->
+					and c.prize_status='start'
+					and DATE_FORMAT(DATE_ADD(c.cash_time,INTERVAL 1 DAY),'%Y-%m-%d')&lt;=DATE_FORMAT(NOW(),'%Y-%m-%d')
+				</if>
+			</if>
+			
+			<if test="prizeStatus != null and prizeStatus != ''">
+				and c.prize_status=#{prizeStatus}
+			</if>
+
+			<!-- 控制只显示固定类型的众筹项目 -->
+			<if test="fixLoanType == 'sh' ">   <!-- 预热申请项目包含股权和产品的项目列表 -->
+				and c.loan_type in ('stock','product')
+			</if>
+			<if test="fixLoanType == 'divideShare' ">   <!-- 分红中的项目包含股权 -->
+				and c.loan_type in ('stock')
+			</if>
+			<if test="fixLoanType == 'pe' ">
+				and c.loan_type in ('public','product')  <!-- 待发布项目只有公益项目，产品和股权类型项目在预热审核列表中，审核通过后直接在预热列表中发布 -->
+			</if>
+			<if test="fixLoanType == 'sending' ">   <!-- 代发货项目 -->
+				and c.loan_type in ('public','product')
+			</if>
+
+			<!-- 控制前台只显示五类状态的项目 -->
+			<if test="loanStateIn != null and loanStateIn != ''">
+				and c.loan_state in ('funding','funded','preheat','lended','end')
+			</if>
+			<!-- 个人中心显示项目进程为草稿的项目 -->
+			<if test="loanProcess == 'add'">
+				and c.loan_state = 'add'
+			</if>
+			<!-- 个人中心显示项目进程为提交审核的项目 -->
+			<if test="loanProcess == 'submit'">
+				and c.loan_state = 'submit'
+			</if>
+			<!-- 前台显示项目进程为预热的项目 -->
+			<if test="loanProcess == 'preheat'">
+				and c.loan_state = 'preheat'
+			</if>
+			<!-- 前台显示项目进程为融资的项目 -->
+			<if test="loanProcess == 'funding'">
+				and c.loan_state = 'funding'
+			</if>
+			<!-- 前台显示项目进程为成功的项目 -->
+			<if test="loanProcess == 'success'">
+				and c.loan_state in ('funded','lended')
+			</if>
+			<if test="loanProcess == 'vsuccess'">
+				and c.loan_state in ('funded','lended','end')
+			</if>
+			<!-- 前台显示项目进程为回报的项目 -->
+			<if test="loanProcess == 'back'">
+				and c.loan_state = 'end'
+			</if>
+			<!-- 前台显示 热门项目 -->
+			<if test="loanProcess == 'hot'">
+				and c.loan_level in ('4','5')
+			</if>
+			<if test="loanProcess == 'vhot'">
+				and c.loan_level in ('4','5')
+				and c.loan_state in ('funding','preheat','funded')
+			</if>
+
+			<if test="loanLabel != null and loanLabel != ''">
+				and c.loan_label like CONCAT(CONCAT('%',
+				#{loanLabel,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="loanState != null and loanState != ''">
+				and c.loan_state = #{loanState,jdbcType=VARCHAR}
+			</if>
+			<!-- <if test="loanState =='applyState'" > and c.loan_state in ('funding','funded','preheat','lended','end','add','submit','preheat','canRefund','refunding','passed','refuse') 
+				</if> -->
+			<if test="loanType != null and loanType != ''">
+				and c.loan_type = #{loanType,jdbcType=VARCHAR}
+			</if>
+			<if test="loanNoLike != null and loanNoLike != ''">
+				and c.loan_no like CONCAT(CONCAT('%',
+				#{loanNoLike,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="loanUserLike != null and loanUserLike != ''">
+				and c.loan_user like CONCAT(CONCAT('%',
+				#{loanUserLike,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="loanUser != null and loanUser != ''">
+				and c.loan_user = #{loanUser,jdbcType=VARCHAR}
+			</if>
+			<if test="loanUserNameLike != null and loanUserNameLike != ''">
+				and u.real_name like CONCAT(CONCAT('%',
+				#{loanUserNameLike,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="loanName != null and loanName != ''">
+				and c.loan_name like CONCAT(CONCAT('%',
+				#{loanName,jdbcType=VARCHAR}),'%')
+			</if>
+			<if test="loanNo != null and loanNo != ''">
+				and c.loan_no = #{loanNo,jdbcType=VARCHAR}
+			</if>
+			<if test="province != null and province != ''">
+				and c.province = #{province,jdbcType=VARCHAR}
+			</if>
+			<if test="city != null and city != ''">
+				and c.city = #{city,jdbcType=VARCHAR}
+			</if>
+			<if test="loanLevel != null and loanLevel != ''">
+				and c.loan_level = #{loanLevel,jdbcType=VARCHAR}
+			</if>
+			<if test="loanManager != null and loanManager != ''">
+				and c.loan_manager = #{loanManager,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</sql>
+
+
+	<select id="selectByLoanNo" resultMap="BaseResultMap"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		select
+		<include refid="Base_Column_List" />
+		from crowdfunding
+		where loan_no = #{loanNo,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getByBlockChainAddress" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from crowdfunding
+		where block_chain_address = #{blockChainAddress,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from crowdfunding
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	
+
+    <!-- 查询所有项目 -->
+	<select id="selectByAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from crowdfunding
+	</select>
+
+	<!-- 后台查询用户的资金统计 -->
+	<select id="selectUserCapitalList" resultType="java.util.Map"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		select u.user_id,u.real_name,
+		FORMAT(IFNULL(b.balance,0),2) as balance,
+		FORMAT(IFNULL(b.frozen_amt,0),2) as frozenAmt,
+		FORMAT(IFNULL(c.totalSupportAmt,0),2) as totalSupportAmt,
+		FORMAT(IFNULL(e.totalRechargeAmt,0),2) as totalRechargeAmt,
+		FORMAT(IFNULL(f.totalWithdrawAmt,0),2) as totalWithdrawAmt,
+		FORMAT(IFNULL(g.totalLoanAmt,0),2) as totalLoanAmt,
+		FORMAT(IFNULL(b.balance,0)+IFNULL(b.frozen_amt,0),2) as totalCapital
+		from user u
+		<!-- 用户可用余额 -->
+		left join (select ub.balance,ub.user_id,ub.frozen_amt from user_bill
+		ub
+		where ub.seq_num=(select max(ub2.seq_num) from user_bill ub2 where
+		ub2.user_id=ub.user_id)) b on b.user_id=u.user_id
+		<!-- 用户支持余额 -->
+		left join (select
+		cst.support_user,sum(cst.support_amt-IFNULL(cst.transfer_amt,0)) as
+		totalSupportAmt from crowdfunding_support cst
+		where cst.pay_state='payed' and (state is null or state &lt;> 'cancel')
+		group by cst.support_user )c on c.support_user=u.user_id
+		<!-- 用户充值金额 -->
+		left join (select r.user_id,sum(r.actual_amt) totalRechargeAmt from
+		recharge r where r.state='recharged' group by r.user_id)e on
+		e.user_id=u.user_id
+		<!-- 用户取现金额 -->
+		left join (select w.user_id,sum(w.actual_money) totalWithdrawAmt from
+		withdraw w where w.state='success' group by w.user_id)f on
+		f.user_id=u.user_id
+		<!-- 用户筹资总金额 -->
+		left join (select l.loan_user,sum(l.approve_amt) as totalLoanAmt from
+		crowdfunding l
+		where l.loan_state in('lended','end') group by l.loan_user) g on
+		g.loan_user=u.user_id
+		where 1=1
+		<if test="userId != null and userId != '' ">
+			and u.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+		</if>
+		order by u.user_id
+		<if test="endPage>0">
+			LIMIT #{startPage},#{endPage}
+		</if>
+	</select>
+
+
+	<select id="getUserCapitalCount" resultType="java.lang.Long"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		select count(1) from user u where 1=1
+		<if test="userId != null and userId != '' ">
+			and u.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+		</if>
+	</select>
+
+
+	<!-- 平台统计 -->
+	<select id="selectStatsData" resultType="java.util.Map"
+		parameterType="java.lang.String">
+		select a.totalSupportAmt,b.maxSupportAmt,d.supportNum from
+		(select sum(cst.support_amt) as totalSupportAmt
+		from crowdfunding_support cst
+		where cst.pay_state='payed' and (state is null or state &lt;>
+		'cancel'))a,
+
+		(select max(cst.support_amt) as maxSupportAmt
+		from crowdfunding_support cst
+		where cst.pay_state='payed' and (state is null or state &lt;>
+		'cancel'))b,
+
+		(select max(c.supportNum) as supportNum from (
+		select count(1) as supportNum,cst.loan_no
+		from crowdfunding_support cst
+		where cst.pay_state='payed' and (state is null or state &lt;> 'cancel')
+		group by cst.loan_no
+		)c)d
+	</select>
+
+
+	<delete id="deleteByLoanNo" parameterType="java.lang.String">
+		delete from crowdfunding
+		where loan_no = #{loanNo,jdbcType=VARCHAR}
+	</delete>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from crowdfunding
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		insert into crowdfunding (id, loan_no, loan_name,
+		loan_user, loan_type, loan_label,
+		fund_amt, fund_amt_upper, fund_days,
+		province, city, county,charge_fee,
+		approve_amt, create_time, release_time,
+		fund_end_time, audit_time, auditor,
+		cash_user, cash_time, pay_state,
+		loan_state, loan_des, loan_logo,
+		audit_opinion,creator,is_system,loan_level,loan_deposit,p2p_fee,hy_fee,
+		perfect_ratio,
+		house_area, house_limit, auth_set, can_over,
+		super_industry, child_industry,loan_address,prepay_amt,order_amt,
+		lead_min_amt,actual_fee,
+		preheat_end_time,loan_manager,loan_mobile_logo,contract_no,contract_tpl_no,
+		org_certificate,org_code,promoter_identity_sign,promoter_identity_photo,org_loan_receive_prove,isPublicAgencies,
+		loan_introduction,loan_photo,
+		loan_stage,competence,profit_model,website,weibo,weixin,logo,bank_info,prize_num,
+		lock_day,daily_earnings_forecast,over_fund_amt,stock_num,stock_part_amt,
+		preheat_time,operate,prize_status)
+		values (#{id,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR},
+		#{loanName,jdbcType=VARCHAR},
+		#{loanUser,jdbcType=VARCHAR}, #{loanType,jdbcType=VARCHAR}, #{loanLabel,jdbcType=VARCHAR},
+		#{fundAmt,jdbcType=DOUBLE}, #{fundAmtUpper,jdbcType=DOUBLE},
+		#{fundDays,jdbcType=INTEGER},
+		#{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{county,jdbcType=VARCHAR},
+		#{chargeFee,jdbcType=DOUBLE},
+		#{approveAmt,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, #{releaseTime,jdbcType=TIMESTAMP},
+		#{fundEndTime,jdbcType=TIMESTAMP}, #{auditTime,jdbcType=TIMESTAMP},
+		#{auditor,jdbcType=VARCHAR},
+		#{cashUser,jdbcType=VARCHAR}, #{cashTime,jdbcType=TIMESTAMP}, #{payState,jdbcType=VARCHAR},
+		#{loanState,jdbcType=VARCHAR}, #{loanDes,jdbcType=VARCHAR},
+		#{loanLogo,jdbcType=VARCHAR},
+		#{auditOpinion,jdbcType=VARCHAR},
+		#{creator,jdbcType=VARCHAR},#{isSystem,jdbcType=VARCHAR},#{loanLevel,jdbcType=VARCHAR},
+		#{loanDeposit,jdbcType=DOUBLE},#{p2pFee,jdbcType=DOUBLE},#{hyFee,jdbcType=DOUBLE},
+		#{perfectRatio,jdbcType=DOUBLE},
+		#{houseArea,jdbcType=DOUBLE}, #{houseLimit,jdbcType=INTEGER}, #{authSet,jdbcType=VARCHAR},
+		#{canOver,jdbcType=VARCHAR},
+		#{superIndustry,jdbcType=VARCHAR}, #{childIndustry,jdbcType=VARCHAR},
+		#{loanAddress,jdbcType=VARCHAR},#{prepayAmt,jdbcType=DOUBLE},
+		#{orderAmt,jdbcType=DOUBLE},#{leadMinAmt,jdbcType=DOUBLE},
+		#{actualFee,jdbcType=DOUBLE},#{preheatEndTime,jdbcType=TIMESTAMP},#{loanManager,jdbcType=VARCHAR},#{loanMobileLogo,jdbcType=VARCHAR},
+		#{contractNo,jdbcType=VARCHAR},#{contractTplNo,jdbcType=VARCHAR},
+		#{orgCertificate,jdbcType=VARCHAR},#{orgCode,jdbcType=VARCHAR},#{promoterIdentitySign,jdbcType=VARCHAR},
+		#{promoterIdentityPhoto,jdbcType=VARCHAR},#{orgLoanReceiveProve,jdbcType=VARCHAR},
+		#{isPublicAgencies,jdbcType=VARCHAR},#{loanIntroduction,jdbcType=VARCHAR},#{loanPhoto,jdbcType=VARCHAR},
+		#{loanStage,jdbcType=VARCHAR},#{competence,jdbcType=VARCHAR},#{profitModel,jdbcType=VARCHAR},#{website,jdbcType=VARCHAR},
+		#{weibo,jdbcType=VARCHAR},#{weixin,jdbcType=VARCHAR},#{logo,jdbcType=VARCHAR},#{bankInfo,jdbcType=VARCHAR},
+		#{prizeNum,jdbcType=INTEGER},#{lockDay,jdbcType=INTEGER},#{dailyEarningsForecast,jdbcType=DOUBLE},
+		#{overFundAmt,jdbcType=DOUBLE},#{stockNum,jdbcType=INTEGER},#{stockPartAmt,jdbcType=DOUBLE},
+		#{preheatTime,jdbcType=TIMESTAMP},#{operate,jdbcType=VARCHAR},#{prizeStatus,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		insert into crowdfunding
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="loanNo != null">
+				loan_no,
+			</if>
+			<if test="loanName != null">
+				loan_name,
+			</if>
+			<if test="loanUser != null">
+				loan_user,
+			</if>
+			<if test="loanType != null">
+				loan_type,
+			</if>
+			<if test="loanLabel != null">
+				loan_label,
+			</if>
+			<if test="fundAmt != null">
+				fund_amt,
+			</if>
+			<if test="fundAmtUpper != null">
+				fund_amt_upper,
+			</if>
+			<if test="fundDays != null">
+				fund_days,
+			</if>
+			<if test="province != null">
+				province,
+			</if>
+			<if test="city != null">
+				city,
+			</if>
+			<if test="county != null">
+				county,
+			</if>
+			<if test="chargeFee != null">
+				charge_fee,
+			</if>
+			<if test="approveAmt != null">
+				approve_amt,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="releaseTime != null">
+				release_time,
+			</if>
+			<if test="fundEndTime != null">
+				fund_end_time,
+			</if>
+			<if test="auditTime != null">
+				audit_time,
+			</if>
+			<if test="auditor != null">
+				auditor,
+			</if>
+			<if test="cashUser != null">
+				cash_user,
+			</if>
+			<if test="cashTime != null">
+				cash_time,
+			</if>
+			<if test="payState != null">
+				pay_state,
+			</if>
+			<if test="loanState != null">
+				loan_state,
+			</if>
+			<if test="loanDes != null">
+				loan_des,
+			</if>
+			<if test="loanLogo != null">
+				loan_logo,
+			</if>
+			<if test="auditOpinion != null">
+				audit_opinion,
+			</if>
+			<if test="creator != null">
+				creator,
+			</if>
+			<if test="isSystem != null">
+				is_system,
+			</if>
+			<if test="loanLevel != null">
+				loan_level,
+			</if>
+			<if test="loanDeposit != null">
+				loan_deposit,
+			</if>
+			<if test="p2pFee != null">
+				p2p_fee,
+			</if>
+			<if test="hyFee != null">
+				hy_fee,
+			</if>
+			<if test="perfectRatio != null">
+				perfect_ratio,
+			</if>
+			<if test="houseArea != null">
+				house_area,
+			</if>
+			<if test="houseLimit != null">
+				house_limit,
+			</if>
+			<if test="authSet != null">
+				auth_set,
+			</if>
+			<if test="canOver != null">
+				can_over,
+			</if>
+			<if test="superIndustry != null">
+				super_industry,
+			</if>
+			<if test="childIndustry != null">
+				child_industry,
+			</if>
+			<if test="loanAddress != null">
+				loan_address,
+			</if>
+			<if test="prepayAmt != null">
+				prepay_amt,
+			</if>
+			<if test="orderAmt != null">
+				order_amt,
+			</if>
+			<if test="leadMinAmt != null">
+				lead_min_amt,
+			</if>
+			<if test="actualFee != null">
+				actual_fee,
+			</if>
+			<if test="preheatEndTime != null">
+				preheat_end_time,
+			</if>
+			<if test="loanManager != null">
+				loan_manager,
+			</if>
+			<if test="preheatTime != null">
+				preheat_time,
+			</if>
+			<if test="operate != null">
+				operate,
+			</if>
+			<if test="prizeStatus != null">
+				prize_status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="loanNo != null">
+				#{loanNo,jdbcType=VARCHAR},
+			</if>
+			<if test="loanName != null">
+				#{loanName,jdbcType=VARCHAR},
+			</if>
+			<if test="loanUser != null">
+				#{loanUser,jdbcType=VARCHAR},
+			</if>
+			<if test="loanType != null">
+				#{loanType,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLabel != null">
+				#{loanLabel,jdbcType=VARCHAR},
+			</if>
+			<if test="fundAmt != null">
+				#{fundAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="fundAmtUpper != null">
+				#{fundAmtUpper,jdbcType=DOUBLE},
+			</if>
+			<if test="fundDays != null">
+				#{fundDays,jdbcType=INTEGER},
+			</if>
+			<if test="province != null">
+				#{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="county != null">
+				#{county,jdbcType=VARCHAR},
+			</if>
+			<if test="chargeFee != null">
+				#{chargeFee,jdbcType=DOUBLE},
+			</if>
+			<if test="approveAmt != null">
+				#{approveAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="releaseTime != null">
+				#{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fundEndTime != null">
+				#{fundEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditTime != null">
+				#{auditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditor != null">
+				#{auditor,jdbcType=VARCHAR},
+			</if>
+			<if test="cashUser != null">
+				#{cashUser,jdbcType=VARCHAR},
+			</if>
+			<if test="cashTime != null">
+				#{cashTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payState != null">
+				#{payState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanState != null">
+				#{loanState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanDes != null">
+				#{loanDes,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLogo != null">
+				#{loanLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="auditOpinion != null">
+				#{auditOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="isSystem != null">
+				#{is_system,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLevel != null">
+				#{loanLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="loanDeposit != null">
+				#{loanDeposit,jdbcType=DOUBLE},
+			</if>
+			<if test="p2pFee != null">
+				#{p2pFee,jdbcType=DOUBLE},
+			</if>
+			<if test="hyFee != null">
+				#{hyFee,jdbcType=DOUBLE},
+			</if>
+			<if test="perfectRatio != null">
+				#{perfectRatio,jdbcType=DOUBLE},
+			</if>
+			<if test="houseArea != null">
+				#{houseArea,jdbcType=DOUBLE},
+			</if>
+			<if test="houseLimit != null">
+				#{houseLimit,jdbcType=INTEGER},
+			</if>
+			<if test="authSet != null">
+				#{authSet,jdbcType=VARCHAR},
+			</if>
+			<if test="canOver != null">
+				#{canOver,jdbcType=VARCHAR},
+			</if>
+			<if test="superIndustry != null">
+				#{superIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="childIndustry != null">
+				#{childIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="loanAddress != null">
+				#{loanAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="prepayAmt != null">
+				#{prepayAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="orderAmt != null">
+				#{orderAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="leadMinAmt != null">
+				#{leadMinAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="actualFee != null">
+				#{actualFee,jdbcType=DOUBLE},
+			</if>
+			<if test="preheatEndTime != null">
+				#{preheatEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanManager != null">
+				#{loanManager,jdbcType=VARCHAR},
+			</if>
+			<if test="preheatTime != null">
+				#{preheatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operate != null">
+				#{operate,jdbcType=VARCHAR},
+			</if>
+			<if test="prizeStatus != null">
+				#{prizeStatus,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByLoanNo"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		update crowdfunding
+		<set>
+
+			<if test="loanName != null">
+				loan_name = #{loanName,jdbcType=VARCHAR},
+			</if>
+			<!-- <if test="newBuyNum != null" > new_buy_num = #{newBuyNum,jdbcType=INTEGER}, 
+				</if> -->
+			<if test="loanUser != null">
+				loan_user = #{loanUser,jdbcType=VARCHAR},
+			</if>
+			<if test="loanType != null">
+				loan_type = #{loanType,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLabel != null">
+				loan_label = #{loanLabel,jdbcType=VARCHAR},
+			</if>
+			<if test="fundAmt != null">
+				fund_amt = #{fundAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="fundAmtUpper != null">
+				fund_amt_upper = #{fundAmtUpper,jdbcType=DOUBLE},
+			</if>
+			<if test="fundDays != null">
+				fund_days = #{fundDays,jdbcType=INTEGER},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="county != null">
+				county = #{county,jdbcType=VARCHAR},
+			</if>
+			<if test="chargeFee != null">
+				charge_fee = #{chargeFee,jdbcType=DOUBLE},
+			</if>
+			<if test="approveAmt != null">
+				approve_amt = #{approveAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="releaseTime != null">
+				release_time = #{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fundEndTime != null">
+				fund_end_time = #{fundEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditTime != null">
+				audit_time = #{auditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditor != null">
+				auditor = #{auditor,jdbcType=VARCHAR},
+			</if>
+			<if test="cashUser != null">
+				cash_user = #{cashUser,jdbcType=VARCHAR},
+			</if>
+			<if test="cashTime != null">
+				cash_time = #{cashTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payState != null">
+				pay_state = #{payState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanState != null">
+				loan_state = #{loanState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanDes != null">
+				loan_des = #{loanDes,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLogo != null">
+				loan_logo = #{loanLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="auditOpinion != null">
+				audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="isSystem != null">
+				is_system = #{isSystem,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLevel != null">
+				loan_level = #{loanLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="loanDeposit != null">
+				loan_deposit = #{loanDeposit,jdbcType=DOUBLE},
+			</if>
+			<if test="p2pFee != null">
+				p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+			</if>
+			<if test="hyFee != null">
+				hy_fee = #{hyFee,jdbcType=DOUBLE},
+			</if>
+			<if test="perfectRatio != null">
+				perfect_ratio = #{perfectRatio,jdbcType=DOUBLE},
+			</if>
+			<if test="houseArea != null">
+				house_area = #{houseArea,jdbcType=DOUBLE},
+			</if>
+			<if test="houseLimit != null">
+				house_limit = #{houseLimit,jdbcType=INTEGER},
+			</if>
+			<if test="authSet != null">
+				auth_set = #{authSet,jdbcType=VARCHAR},
+			</if>
+			<if test="canOver != null">
+				can_over = #{canOver,jdbcType=VARCHAR},
+			</if>
+			<if test="superIndustry != null">
+				super_industry = #{superIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="childIndustry != null">
+				child_industry = #{childIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="loanAddress != null">
+				loan_address = #{loanAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="prepayAmt != null">
+				prepay_amt = #{prepayAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="orderAmt != null">
+				order_amt = #{orderAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="leadMinAmt != null">
+				lead_min_amt = #{leadMinAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="actualFee != null">
+				actual_fee = #{actualFee,jdbcType=DOUBLE},
+			</if>
+			<if test="preheatEndTime != null">
+				preheat_end_time = #{preheatEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanManager != null">
+				loan_manager = #{loanManager,jdbcType=VARCHAR},
+			</if>
+			<if test="loanMobileLogo != null">
+				loan_mobile_logo = #{loanMobileLogo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="loanMobileLogo != null">
+				loan_mobile_logo = #{loanMobileLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNo != null">
+				contract_no = #{contractNo,jdbcType=VARCHAR},
+			</if>
+			<if test="contractTplNo != null">
+				contract_tpl_no = #{contractTplNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCertificate != null">
+				org_certificate = #{orgCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCode != null">
+				org_code = #{orgCode,jdbcType=VARCHAR},
+			</if>
+			<if test="promoterIdentitySign != null">
+				promoter_identity_sign = #{promoterIdentitySign,jdbcType=VARCHAR},
+			</if>
+			<if test="promoterIdentityPhoto != null">
+				promoter_identity_photo = #{promoterIdentityPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="orgLoanReceiveProve != null">
+				org_loan_receive_prove = #{orgLoanReceiveProve,jdbcType=VARCHAR},
+			</if>
+			<if test="isPublicAgencies != null">
+				isPublicAgencies = #{isPublicAgencies,jdbcType=VARCHAR},
+			</if>
+			<if test="loanIntroduction != null">
+				loan_introduction = #{loanIntroduction,jdbcType=VARCHAR},
+			</if>
+			<if test="loanPhoto != null">
+				loan_photo = #{loanPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="loanStage != null">
+				loan_stage = #{loanStage,jdbcType=VARCHAR},
+			</if>
+			<if test="competence != null">
+				competence = #{competence,jdbcType=VARCHAR},
+			</if>
+			<if test="profitModel != null">
+				profit_model = #{profitModel,jdbcType=VARCHAR},
+			</if>
+			<if test="website != null">
+				website = #{website,jdbcType=VARCHAR},
+			</if>
+			<if test="weibo != null">
+				weibo = #{weibo,jdbcType=VARCHAR},
+			</if>
+			<if test="weixin != null">
+				weixin = #{weixin,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="bankInfo != null">
+				bank_info = #{bankInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="prizeNum != null">
+				prize_num = #{prizeNum,jdbcType=INTEGER},
+			</if>
+			<if test="lockDay != null">
+				lock_day = #{lockDay,jdbcType=INTEGER},
+			</if>
+			<if test="dailyEarningsForecast != null">
+				daily_earnings_forecast = #{dailyEarningsForecast,jdbcType=DOUBLE},
+			</if>
+			<if test="overFundAmt != null">
+				over_fund_amt = #{overFundAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="blockChainAddress != null">
+				block_chain_address = #{blockChainAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="blockChainSecretKey != null">
+				block_chain_secret_key = #{blockChainSecretKey,jdbcType=VARCHAR},
+			</if>
+			<if test="blockChainState != null">
+				block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+			</if>
+			<if test="platformTransferState != null">
+				platform_transfer_state = #{platformTransferState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanTransferState != null">
+				loan_transfer_state = #{loanTransferState,jdbcType=VARCHAR},
+			</if>
+			<if test="stockNum != null">
+				stock_num = #{stockNum,jdbcType=INTEGER},
+			</if>
+			<if test="stockPartAmt != null">
+				stock_part_amt = #{stockPartAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="preheatTime != null">
+				preheat_time=#{preheatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operate != null">
+				operate=#{operate,jdbcType=VARCHAR},
+			</if>
+			<if test="prizeStatus != null">
+				prize_status=#{prizeStatus,jdbcType=VARCHAR},
+			</if>
+		    <if test="skey != null" >
+		        skey = #{skey,jdbcType=VARCHAR},
+		    </if> 
+		</set>
+		where loan_no = #{loanNo,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		update crowdfunding
+		<set>
+			<if test="loanNo != null">
+				loan_no = #{loanNo,jdbcType=VARCHAR},
+			</if>
+			<if test="loanName != null">
+				loan_name = #{loanName,jdbcType=VARCHAR},
+			</if>
+			<if test="loanUser != null">
+				loan_user = #{loanUser,jdbcType=VARCHAR},
+			</if>
+			<if test="loanType != null">
+				loan_type = #{loanType,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLabel != null">
+				loan_label = #{loanLabel,jdbcType=VARCHAR},
+			</if>
+			<if test="fundAmt != null">
+				fund_amt = #{fundAmt,jdbcType=DOUBLE},
+			</if>
+			<!-- <if test="newBuyNum != null" > new_buy_num = #{newBuyNum,jdbcType=INTEGER}, 
+				</if> -->
+			<if test="fundAmtUpper != null">
+				fund_amt_upper = #{fundAmtUpper,jdbcType=DOUBLE},
+			</if>
+			<if test="fundDays != null">
+				fund_days = #{fundDays,jdbcType=INTEGER},
+			</if>
+			<if test="province != null">
+				province = #{province,jdbcType=VARCHAR},
+			</if>
+			<if test="city != null">
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="county != null">
+				county = #{county,jdbcType=VARCHAR},
+			</if>
+			<if test="chargeFee != null">
+				charge_fee = #{chargeFee,jdbcType=DOUBLE},
+			</if>
+			<if test="approveAmt != null">
+				approve_amt = #{approveAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="releaseTime != null">
+				release_time = #{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fundEndTime != null">
+				fund_end_time = #{fundEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditTime != null">
+				audit_time = #{auditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditor != null">
+				auditor = #{auditor,jdbcType=VARCHAR},
+			</if>
+			<if test="cashUser != null">
+				cash_user = #{cashUser,jdbcType=VARCHAR},
+			</if>
+			<if test="cashTime != null">
+				cash_time = #{cashTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payState != null">
+				pay_state = #{payState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanState != null">
+				loan_state = #{loanState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanDes != null">
+				loan_des = #{loanDes,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLogo != null">
+				loan_logo = #{loanLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="auditOpinion != null">
+				audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="isSystem != null">
+				is_system = #{isSystem,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLevel != null">
+				loan_level = #{loanLevel,jdbcType=VARCHAR},
+			</if>
+			<if test="loanDeposit != null">
+				loan_deposit = #{loanDeposit,jdbcType=DOUBLE},
+			</if>
+			<if test="p2pFee != null">
+				p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+			</if>
+			<if test="hyFee != null">
+				hy_fee = #{hyFee,jdbcType=DOUBLE},
+			</if>
+			<if test="perfectRatio != null">
+				perfect_ratio = #{perfectRatio,jdbcType=DOUBLE},
+			</if>
+			<if test="houseArea != null">
+				house_area = #{houseArea,jdbcType=DOUBLE},
+			</if>
+			<if test="houseLimit != null">
+				house_limit = #{houseLimit,jdbcType=INTEGER},
+			</if>
+			<if test="authSet != null">
+				auth_set = #{authSet,jdbcType=VARCHAR},
+			</if>
+			<if test="canOver != null">
+				can_over = #{canOver,jdbcType=VARCHAR},
+			</if>
+			<if test="superIndustry != null">
+				super_industry = #{superIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="childIndustry != null">
+				child_industry = #{childIndustry,jdbcType=VARCHAR},
+			</if>
+			<if test="loanAddress != null">
+				loan_address = #{loanAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="prepayAmt != null">
+				prepay_amt = #{prepayAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="orderAmt != null">
+				order_amt = #{orderAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="leadMinAmt != null">
+				lead_min_amt = #{leadMinAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="actualFee != null">
+				actual_fee = #{actualFee,jdbcType=DOUBLE},
+			</if>
+			<if test="preheatEndTime != null">
+				preheat_end_time = #{preheatEndTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="loanManager != null">
+				loan_manager = #{loanManager,jdbcType=VARCHAR},
+			</if>
+			<if test="loanMobileLogo != null">
+				loan_mobile_logo = #{loanMobileLogo,jdbcType=VARCHAR},
+			</if>
+
+			<if test="loanMobileLogo != null">
+				loan_mobile_logo = #{loanMobileLogo,jdbcType=VARCHAR},
+			</if>
+			<if test="contractNo != null">
+				contract_no = #{contractNo,jdbcType=VARCHAR},
+			</if>
+			<if test="contractTplNo != null">
+				contract_tpl_no = #{contractTplNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCertificate != null">
+				org_certificate = #{orgCertificate,jdbcType=VARCHAR},
+			</if>
+			<if test="orgCode != null">
+				org_code = #{orgCode,jdbcType=VARCHAR},
+			</if>
+			<if test="promoterIdentitySign != null">
+				promoter_identity_sign = #{promoterIdentitySign,jdbcType=VARCHAR},
+			</if>
+			<if test="promoterIdentityPhoto != null">
+				promoter_identity_photo = #{promoterIdentityPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="orgLoanReceiveProve != null">
+				org_loan_receive_prove = #{orgLoanReceiveProve,jdbcType=VARCHAR},
+			</if>
+			<if test="isPublicAgencies != null">
+				isPublicAgencies = #{isPublicAgencies,jdbcType=VARCHAR},
+			</if>
+			<if test="loanIntroduction != null">
+				loan_introduction = #{loanIntroduction,jdbcType=VARCHAR},
+			</if>
+			<if test="loanPhoto != null">
+				loan_photo = #{loanPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="loanStage != null">
+				loan_stage = #{loanStage,jdbcType=VARCHAR},
+			</if>
+			<if test="competence != null">
+				competence = #{competence,jdbcType=VARCHAR},
+			</if>
+			<if test="profitModel != null">
+				profit_model = #{profitModel,jdbcType=VARCHAR},
+			</if>
+			<if test="website != null">
+				website = #{website,jdbcType=VARCHAR},
+			</if>
+			<if test="weibo != null">
+				weibo = #{weibo,jdbcType=VARCHAR},
+			</if>
+			<if test="weixin != null">
+				weixin = #{weixin,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null">
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="bankInfo != null">
+				bank_info = #{bankInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="prizeNum != null">
+				prize_num = #{prizeNum,jdbcType=INTEGER},
+			</if>
+			<if test="lockDay != null">
+				lock_day = #{lockDay,jdbcType=INTEGER},
+			</if>
+			<if test="dailyEarningsForecast != null">
+				daily_earnings_forecast = #{dailyEarningsForecast,jdbcType=DOUBLE},
+			</if>
+			<if test="overFundAmt != null">
+				over_fund_amt = #{overFundAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="blockChainAddress != null">
+				block_chain_address = #{blockChainAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="blockChainSecretKey != null">
+				block_chain_secret_key = #{blockChainSecretKey,jdbcType=VARCHAR},
+			</if>
+			<if test="blockChainState != null">
+				block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+			</if>
+			<if test="platformTransferState != null">
+				platform_transfer_state = #{platformTransferState,jdbcType=VARCHAR},
+			</if>
+			<if test="loanTransferState != null">
+				loan_transfer_state = #{loanTransferState,jdbcType=VARCHAR},
+			</if>
+			<if test="stockNum != null">
+				stock_num = #{stockNum,jdbcType=INTEGER},
+			</if>
+			<if test="stockPartAmt != null">
+				stock_part_amt = #{stockPartAmt,jdbcType=DOUBLE},
+			</if>
+			<if test="preheatTime != null">
+				preheat_time=#{preheatTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operate != null">
+				operate=#{operate,jdbcType=VARCHAR},
+			</if>
+			<if test="prizeStatus != null">
+				prize_status=#{prizeStatus,jdbcType=VARCHAR},
+			</if>
+		    <if test="skey != null" >
+		        skey = #{skey,jdbcType=VARCHAR},
+		    </if> 
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey"
+		parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		update crowdfunding
+		set loan_no = #{loanNo,jdbcType=VARCHAR},
+		loan_name = #{loanName,jdbcType=VARCHAR},
+		loan_user = #{loanUser,jdbcType=VARCHAR},
+		loan_type = #{loanType,jdbcType=VARCHAR},
+		loan_label = #{loanLabel,jdbcType=VARCHAR},
+		fund_amt = #{fundAmt,jdbcType=DOUBLE},
+		fund_amt_upper = #{fundAmtUpper,jdbcType=DOUBLE},
+		fund_days = #{fundDays,jdbcType=INTEGER},
+		province = #{province,jdbcType=VARCHAR},
+		city = #{city,jdbcType=VARCHAR},
+		county = #{county,jdbcType=VARCHAR},
+		charge_fee = #{chargeFee,jdbcType=DOUBLE},
+		approve_amt = #{approveAmt,jdbcType=DOUBLE},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		release_time = #{releaseTime,jdbcType=TIMESTAMP},
+		fund_end_time = #{fundEndTime,jdbcType=TIMESTAMP},
+		audit_time = #{auditTime,jdbcType=TIMESTAMP},
+		auditor = #{auditor,jdbcType=VARCHAR},
+		cash_user = #{cashUser,jdbcType=VARCHAR},
+		cash_time = #{cashTime,jdbcType=TIMESTAMP},
+		pay_state = #{payState,jdbcType=VARCHAR},
+		loan_state = #{loanState,jdbcType=VARCHAR},
+		loan_des = #{loanDes,jdbcType=VARCHAR},
+		loan_logo = #{loanLogo,jdbcType=VARCHAR},
+		audit_opinion = #{auditOpinion,jdbcType=VARCHAR},
+		creator = #{creator,jdbcType=VARCHAR},
+		is_system = #{isSystem,jdbcType=VARCHAR},
+		loan_level = #{loanLevel,jdbcType=VARCHAR},
+		loan_deposit = #{loanDeposit,jdbcType=DOUBLE},
+		p2p_fee = #{p2pFee,jdbcType=DOUBLE},
+		hy_fee = #{hyFee,jdbcType=DOUBLE},
+		perfect_ratio = #{perfectRatio,jdbcType=DOUBLE},
+		house_area = #{houseArea,jdbcType=DOUBLE},
+		house_limit = #{houseLimit,jdbcType=INTEGER},
+		auth_set = #{authSet,jdbcType=VARCHAR},
+		can_over = #{canOver,jdbcType=VARCHAR},
+		super_industry = #{superIndustry,jdbcType=VARCHAR},
+		child_industry = #{childIndustry,jdbcType=VARCHAR},
+		loan_address = #{loanAddress,jdbcType=VARCHAR},
+		prepay_amt = #{prepayAmt,jdbcType=DOUBLE},
+		order_amt = #{orderAmt,jdbcType=DOUBLE},
+		lead_min_amt = #{leadMinAmt,jdbcType=DOUBLE},
+
+		actual_fee = #{actualFee,jdbcType=DOUBLE},
+		preheat_end_time = #{preheatEndTime,jdbcType=TIMESTAMP},
+		loan_manager = #{loanManager,jdbcType=VARCHAR},
+		contract_no = #{contractNo,jdbcType=VARCHAR},
+		contract_tpl_no = #{contractTplNo,jdbcType=VARCHAR},
+		org_certificate = #{orgCertificate,jdbcType=VARCHAR},
+		org_code = #{orgCode,jdbcType=VARCHAR},
+		promoter_identity_sign = #{promoterIdentitySign,jdbcType=VARCHAR},
+		promoter_identity_photo = #{promoterIdentityPhoto,jdbcType=VARCHAR},
+		org_loan_receive_prove = #{orgLoanReceiveProve,jdbcType=VARCHAR} ,
+		isPublicAgencies = #{isPublicAgencies,jdbcType=VARCHAR} ,
+		loan_introduction = #{loanIntroduction,jdbcType=VARCHAR},
+		loan_photo = #{loanPhoto,jdbcType=VARCHAR},
+		loan_stage = #{loanStage,jdbcType=VARCHAR},
+		competence = #{competence,jdbcType=VARCHAR},
+		profit_model = #{profitModel,jdbcType=VARCHAR},
+		website = #{website,jdbcType=VARCHAR},
+		weibo = #{weibo,jdbcType=VARCHAR},
+		weixin = #{weixin,jdbcType=VARCHAR},
+		logo = #{logo,jdbcType=VARCHAR},
+		bank_info = #{bankInfo,jdbcType=VARCHAR},
+		prize_num = #{prizeNum,jdbcType=INTEGER},
+		lock_day = #{lockDay,jdbcType=INTEGER},
+		daily_earnings_forecast = #{dailyEarningsForecast,jdbcType=DOUBLE},
+		over_fund_amt = #{overFundAmt,jdbcType=DOUBLE},
+		block_chain_address = #{blockChainAddress,jdbcType=VARCHAR},
+		block_chain_secret_key = #{blockChainSecretKey,jdbcType=VARCHAR},
+		block_chain_state = #{blockChainState,jdbcType=VARCHAR},
+		platform_transfer_state = #{platformTransferState,jdbcType=VARCHAR},
+		loan_transfer_state = #{loanTransferState,jdbcType=VARCHAR},
+		stock_num = #{stockNum,jdbcType=INTEGER},
+		stock_part_amt = #{stockPartAmt,jdbcType=DOUBLE},
+		preheat_time=#{preheatTime,jdbcType=TIMESTAMP},
+		operate=#{operate,jdbcType=VARCHAR},
+		prize_status=#{prizeStatus,jdbcType=VARCHAR},
+	    skey = #{skey,jdbcType=VARCHAR} 
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+
+
+	<select id="selectSumSupportAmt" resultType="java.lang.Double"
+		parameterType="java.util.Map">
+		select FORMAT(ifnull(SUM(t1.support_amt),0) ,2)
+		from crowdfunding_support t1 where t1.pay_state ='payed' and (state
+		in('lended') or state is null)
+	</select>
+
+	<select id="selectCountLoan" resultType="java.lang.Long"
+		parameterType="java.lang.String">
+		select count(1) from crowdfunding t1 where t1.loan_state in
+		('funding','preheat','funded','lended','end')
+	</select>
+
+	<select id="selectPrizeLoan" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from crowdfunding
+		where loan_no = #{loanNo,jdbcType=VARCHAR}
+	</select>
+	<!-- 募集失败退款 -->
+	<select id="selectLoanFail" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select #{curDate,jdbcType=VARCHAR} as DATA_DATE,
+		CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+		'6029' as Company,'10089999' as Department,
+		support_user as Customer_ID,c.loan_user as Project_Cus_id,c.loan_no as
+		product_code
+		,case c.loan_type when 'public' then '76030001' when 'stock' then
+		'76020001' when 'product' then '76010001' end as business_code ,
+		DATE_FORMAT(s.support_time ,'%Y-%m-%d %H-%i-%s') as
+		business_date,'CNY' as currency_code,
+		s.actual_pay_amt as actual_amount,'BC_TK' as event_code,
+		'1' as currency_rate
+		,(IFNULL(s.actual_pay_amt,0)+IFNULL(s.trans_fee,0)) as client_amount,
+		u.real_name as Customer_Name,ur.real_name as Project_Cus_name,c.loan_name as
+		product_name,s.order_id as order_number
+		,'0' as service_amount,s.actual_pay_amt as order_amount
+		from crowdfunding c
+		inner join crowdfunding_support s on s.loan_no =c.loan_no
+		left join crowdfunding_back_set b on b.loan_no = c.loan_no
+		left join user u on u.user_id =s.support_user
+		left join user ur on ur.user_id = c.loan_user
+		where s.pay_state='payed' and c.loan_state='flow'
+		<if test="completeTime != null and completeTime != ''">
+			and s.support_time > #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by s.support_time desc
+	</select>
+	<!-- 投资放款 -->
+	<select id="selectIsnvestmentFunds" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select #{curDate,jdbcType=VARCHAR} as DATA_DATE,
+		CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+		'6029' as Company,'10089999' as Department,
+		s.support_user as Customer_ID ,c.loan_no as product_code, c.loan_user as
+		Project_Cus_id,
+		case c.loan_type when 'public' then '76030001' when 'stock' then
+		'76020001' when 'product' then '76010001' end as business_code
+		,'CNY' as currency_code,
+		'1' as currency_rate,(s.actual_pay_amt)*c.charge_fee as service_amount,
+		'BC_TZHK' as event_code,s.order_id as order_number,
+		DATE_FORMAT(c.cash_time ,'%Y-%m-%d %H-%i-%s') as business_date
+		, (s.actual_pay_amt ) as actual_amount,
+		s.support_amt as order_amount,
+		u.real_name as Customer_Name,ur.real_name as Project_Cus_name,
+		c.loan_name as product_name
+		,(s.support_amt - s.support_amt*c.charge_fee)+IFNULL(trans_fee,0) as client_amount
+		from crowdfunding_support s
+		inner join crowdfunding c on s.loan_no = c.loan_no
+		left join user u on u.user_id =s.support_user
+		left join user ur on ur.user_id = c.loan_user
+		where s.pay_state='payed' and c.loan_state='lended'
+		<if test="completeTime != null and completeTime != ''">
+			and c.cash_time > #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by c.cash_time desc
+	</select>
+	<!-- 众筹募集转账 -->
+	<select id="raiseTransfer" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select #{curDate,jdbcType=VARCHAR} as DATA_DATE,
+		CONCAT( CURDATE()+0,'-1',round(round(rand(),6)*1000000) ) as Batch_no,
+		'6029' as Company,'10089999' as Department,
+		s.support_user as Customer_ID ,c.loan_no as product_code, c.loan_user as
+		Project_Cus_id,
+		case c.loan_type when 'public' then '76030001' when 'stock' then
+		'76020001' when 'product' then '76010001' end as business_code
+		,'CNY' as currency_code,'1' as currency_rate,'BC_MJZZ' as
+		event_code,s.order_id as order_number,
+		DATE_FORMAT(s.complete_time,'%Y-%m-%d %H-%i-%s') as business_date
+		, (s.actual_pay_amt ) as actual_amount,(s.actual_pay_amt+s.trans_fee )
+		as receive_amount,
+		s.support_amt as order_amount,u.real_name as Customer_Name,ur.real_name as
+		Project_Cus_name,
+		c.loan_name as product_name
+		from crowdfunding_support s
+		inner join crowdfunding c on s.loan_no = c.loan_no
+		left join user u on u.user_id =s.support_user
+		left join user ur on ur.user_id = c.loan_user
+		where s.pay_state='payed' and s.state='add'
+		<if test="completeTime != null and completeTime != ''">
+			and s.complete_time > #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by s.complete_time desc
+	</select>
+	<!-- 意向金退款 -->
+	<select id="returnIntentionFee" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select #{curDate,jdbcType=VARCHAR} as DATA_DATE,
+		CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+		'6029' as Company,'10089999' as Department,
+		s.support_user as Customer_ID ,c.loan_no as product_code, c.loan_user as
+		Project_Cus_id,
+		case c.loan_type when 'public' then '76030001' when 'stock' then
+		'76020001' when 'product' then '76010001' end as business_code
+		,'CNY' as currency_code,
+		'1' as currency_rate,
+		'BC_YXTK' as event_code,s.order_id as lx_order,
+		DATE_FORMAT(ub.trade_time,'%Y-%m-%d %H-%i-%s') as business_date,
+		s.actual_pay_amt as actual_amount,
+		s.support_amt as order_amount,#{paymentMethod,jdbcType=VARCHAR} as
+		pay_type,#{paymentAccount,jdbcType=VARCHAR} as pay_account,
+		b.back_type as product_type,u.real_name as Customer_Name,ur.real_name
+		as Project_Cus_name,
+		c.loan_name as product_name,(select code from business_config where
+		display_name='IntentionFeeReturnPlatformRatio')*s.actual_pay_amount as
+		service_amount,
+		(s.actual_pay_amount - (select code from business_config where
+		display_name='IntentionFeeReturnPlatformRatio')*s.actual_pay_amount )
+		as client_amount
+		from crowdfunding_support s
+		inner join (select * from system_bill where
+		trade_type='intentionPayReturnFee' ) ub on ub.user_id = s.support_user
+
+		left join crowdfunding c on s.loan_no = c.loan_no
+		left join user u on u.user_id = s.support_user
+		left join user ur on ur.user_id = c.loan_user
+		where s.state='returnback' and s.intention_state='returnback' and
+		c.platform_transfer_state='payed'
+		<if test="completeTime != null and completeTime != ''">
+			and ub.trade_time > #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by ub.trade_time desc
+	</select>
+	<!-- 项目结算 -->
+	<select id="selectJsData" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select
+		#{curDate,jdbcType=VARCHAR} as DATA_DATE,
+		CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+		'6029' as Company,'10089999' as Department,
+		s.support_user as Customer_ID ,c.loan_no as product_code, c.loan_user as
+		Project_Cus_id,
+		case c.loan_type when 'public' then '76030001' when 'stock' then
+		'76020001' when 'product' then '76010001' end as business_code
+		,'CNY' as currency_code,'1' as currency_rate,'BC_JS' as event_code,
+		s.support_amt as order_amount, u.real_name as
+		Customer_Name,ur.real_name as Project_Cus_name,
+		c.loan_name as product_name,s.actual_pay_amt as actual_amount,'BC_JS' as
+		event_type,'close' as BC_memo
+		from crowdfunding c
+		LEFT JOIN crowdfunding_support s on s.loan_no = c.loan_no
+		left join user u on u.user_id = s.support_user
+		left join user ur on ur.user_id = c.loan_user
+		where c.loan_state='end'
+		<if test="completeTime != null and completeTime != ''">
+			and c.fund_end_time > #{completeTime,jdbcType=TIMESTAMP}
+		</if>
+		order by c.fund_end_time desc
+	</select>
+	<select id="selectUserProjectInfo" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select u1.user_id,t1.count as
+		stockSupportCount,IFNULL(t2.stockApplyCount,0)stockApplyCount,
+		IFNULL(t3.stockKeepCount,0)stockKeepCount,IFNULL(t4.productTransferCount,0)productTransferCount,
+		t5.count as
+		productSupportCount,IFNULL(t6.productApplyCount,0)productApplyCount,
+		IFNULL(t7.productKeepCount,0)productKeepCount,t8.count as
+		publicSupportCount,
+		IFNULL(t9.publicApplyCount,0)publicApplyCount,
+		IFNULL(t10.publicKeepCount,0)publicKeepCount
+		from user u1 LEFT JOIN (
+		select support_user,count(c1.loan_no) as count
+
+		from crowdfunding_support cs LEFT JOIN crowdfunding c1 on cs.loan_no =
+		c1.loan_no
+		where c1.loan_type = 'stock'
+		and cs.support_amt - IFNULL(cs.transfer_amt, 0) != 0
+		GROUP BY cs.support_user
+		)t1 on t1.support_user = u1.user_id
+		LEFT JOIN (
+
+		select count(1) as stockApplyCount,loan_user from crowdfunding
+		where loan_type = 'stock' GROUP BY loan_user
+
+		)t2 on t2.loan_user =
+		u1.user_id
+		LEFT JOIN (
+		select ca.attention_user,count(ca.loan_no) as
+		stockKeepCount from crowdfunding_attention ca
+		LEFT JOIN crowdfunding c1 on ca.loan_no = c1.loan_no
+		where c1.loan_type = 'stock'
+		GROUP BY ca.attention_user
+		)t3 on t3.attention_user = u1.user_id
+		left JOIN (
+		select count(1) as
+		productTransferCount,transfer_user from crowdfund_product_transfer cpt
+		LEFT JOIN crowdfunding c1 on cpt.loan_no = c1.loan_no
+		where 1=1 and c1.loan_type = 'product' GROUP BY cpt.transfer_user
+		)t4 on
+		t4.transfer_user = u1.user_id
+		LEFT JOIN (
+		select
+		support_user,count(c1.loan_no ) as count
+		from crowdfunding_support cs LEFT JOIN crowdfunding c1 on cs.loan_no =
+		c1.loan_no
+		where c1.loan_type = 'product' GROUP BY cs.support_user
+		)t5 on
+		t5.support_user = u1.user_id
+		LEFT JOIN (
+		select count(1) as productApplyCount,loan_user from
+		crowdfunding where loan_type = 'product' GROUP BY loan_user
+		)t6 on
+		t6.loan_user = u1.user_id
+		LEFT JOIN (
+		select
+		ca.attention_user,count(ca.loan_no) as productKeepCount from
+		crowdfunding_attention ca
+		LEFT JOIN crowdfunding c1 on ca.loan_no = c1.loan_no
+		where c1.loan_type = 'product'
+		GROUP BY ca.attention_user
+		)t7 on t7.attention_user = u1.user_id
+		LEFT JOIN (
+		select
+		support_user,count(c1.loan_no) as count
+		from crowdfunding_support cs LEFT JOIN crowdfunding c1 on cs.loan_no =
+		c1.loan_no
+		where c1.loan_type = 'public' GROUP BY cs.support_user
+		)t8 on
+		t8.support_user = u1.user_id
+		LEFT JOIN (
+		select count(1) as publicApplyCount,loan_user from crowdfunding
+		where loan_type = 'public' GROUP BY loan_user
+		)t9 on t9.loan_user =
+		u1.user_id
+		LEFT JOIN (
+		select ca.attention_user,count(ca.loan_no) as
+		publicKeepCount from crowdfunding_attention ca
+		LEFT JOIN crowdfunding c1 on ca.loan_no = c1.loan_no
+		where c1.loan_type = 'public'
+		GROUP BY ca.attention_user
+		)t10 on t10.attention_user = u1.user_id
+		where u1.user_id =
+		#{userId,jdbcType=VARCHAR}
+	</select>
+
+    <!-- 查询正在进行中的项目(预热  筹款中) -->
+	<select id="getFundingLoanCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+	  select count(1) from crowdfunding where loan_state in ('preheat','funding')
+	</select>
+
+    <!-- 查询众筹成功的项目 -->
+	<select id="getSuccessLoanCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+	  select count(1) from crowdfunding where loan_state in ('lended','end')
+	</select> 
+	
+	<!-- 查询众筹成功的金额 -->    
+	<select id="getSuccessLoanAmt" resultType="java.lang.Double" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundingModel">
+		select CAST(sum(IFNULL(approve_amt,0)) as DECIMAL(25,2)) as successAmt from crowdfunding where loan_state in ('lended','end')
+	</select>   
+  
+  
+</mapper>

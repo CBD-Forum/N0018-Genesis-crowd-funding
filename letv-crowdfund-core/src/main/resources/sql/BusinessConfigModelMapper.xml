@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.config.model.BusinessConfigModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.config.model.BusinessConfigModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="display_name" property="displayName" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, display_name, code, description
+  </sql>
+
+  <sql id="Base_Where_List">
+	<where>
+		<if test="id != null and id != ''">
+			and id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="displayName != null and displayName != ''">
+			and display_name = #{displayName,jdbcType=VARCHAR}
+		</if>
+		<if test="code != null and code != ''">
+			and code = #{code,jdbcType=VARCHAR}
+		</if>
+		<if test="description != null and description != ''">
+			and description = #{description,jdbcType=VARCHAR}
+		</if>
+	</where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='displayName'" >
+        display_name ${order}
+      </if>
+      <if test="sort =='code'" >
+        code ${order}
+      </if>
+      <if test="sort =='description'" >
+        description ${order}
+      </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) from business_config
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="getByDisplayName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select * from business_config
+    where display_name=#{displayName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.config.model.BusinessConfigModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from business_config
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from business_config
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByDisplayName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from business_config
+    where display_name = #{displayName,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from business_config
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteBatchById">
+    delete from business_config
+    where id in
+	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  
+  <insert id="insert" parameterType="com.fbd.core.app.config.model.BusinessConfigModel" >
+    insert into business_config (id, display_name, code, 
+      description)
+    values (#{id,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.config.model.BusinessConfigModel" >
+    insert into business_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="displayName != null" >
+        display_name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="displayName != null" >
+        #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.config.model.BusinessConfigModel" >
+    update business_config
+    <set >
+      <if test="displayName != null" >
+        display_name = #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.config.model.BusinessConfigModel" >
+    update business_config
+    set display_name = #{displayName,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

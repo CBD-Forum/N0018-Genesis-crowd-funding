@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.crowdfunding.model.CrowdfundDailyIncomeModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.crowdfunding.model.CrowdfundDailyIncomeModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="income_no" property="incomeNo" jdbcType="VARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+    <result column="support_no" property="supportNo" jdbcType="VARCHAR" />
+    <result column="income_user" property="incomeUser" jdbcType="VARCHAR" />
+    <result column="support_amt" property="supportAmt" jdbcType="DOUBLE" />
+    <result column="income_amt" property="incomeAmt" jdbcType="DOUBLE" />
+    <result column="income_rate" property="incomeRate" jdbcType="DOUBLE" />
+    <result column="income_time" property="incomeTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, income_no, loan_no, support_no, income_user, support_amt, income_amt, income_rate, 
+    income_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from crowdfund_daily_income
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from crowdfund_daily_income
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDailyIncomeModel" >
+    insert into crowdfund_daily_income (id, income_no, loan_no, 
+      support_no, income_user, support_amt, 
+      income_amt, income_rate, income_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{incomeNo,jdbcType=VARCHAR}, #{loanNo,jdbcType=VARCHAR}, 
+      #{supportNo,jdbcType=VARCHAR}, #{incomeUser,jdbcType=VARCHAR}, #{supportAmt,jdbcType=DOUBLE}, 
+      #{incomeAmt,jdbcType=DOUBLE}, #{incomeRate,jdbcType=DOUBLE}, #{incomeTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDailyIncomeModel" >
+    insert into crowdfund_daily_income
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="incomeNo != null" >
+        income_no,
+      </if>
+      <if test="loanNo != null" >
+        loan_no,
+      </if>
+      <if test="supportNo != null" >
+        support_no,
+      </if>
+      <if test="incomeUser != null" >
+        income_user,
+      </if>
+      <if test="supportAmt != null" >
+        support_amt,
+      </if>
+      <if test="incomeAmt != null" >
+        income_amt,
+      </if>
+      <if test="incomeRate != null" >
+        income_rate,
+      </if>
+      <if test="incomeTime != null" >
+        income_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeNo != null" >
+        #{incomeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="supportNo != null" >
+        #{supportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeUser != null" >
+        #{incomeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="supportAmt != null" >
+        #{supportAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="incomeAmt != null" >
+        #{incomeAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="incomeRate != null" >
+        #{incomeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="incomeTime != null" >
+        #{incomeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDailyIncomeModel" >
+    update crowdfund_daily_income
+    <set >
+      <if test="incomeNo != null" >
+        income_no = #{incomeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+      <if test="supportNo != null" >
+        support_no = #{supportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeUser != null" >
+        income_user = #{incomeUser,jdbcType=VARCHAR},
+      </if>
+      <if test="supportAmt != null" >
+        support_amt = #{supportAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="incomeAmt != null" >
+        income_amt = #{incomeAmt,jdbcType=DOUBLE},
+      </if>
+      <if test="incomeRate != null" >
+        income_rate = #{incomeRate,jdbcType=DOUBLE},
+      </if>
+      <if test="incomeTime != null" >
+        income_time = #{incomeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.crowdfunding.model.CrowdfundDailyIncomeModel" >
+    update crowdfund_daily_income
+    set income_no = #{incomeNo,jdbcType=VARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR},
+      support_no = #{supportNo,jdbcType=VARCHAR},
+      income_user = #{incomeUser,jdbcType=VARCHAR},
+      support_amt = #{supportAmt,jdbcType=DOUBLE},
+      income_amt = #{incomeAmt,jdbcType=DOUBLE},
+      income_rate = #{incomeRate,jdbcType=DOUBLE},
+      income_time = #{incomeTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 支付补贴 -->
+<select  parameterType="java.util.Map"  resultType="java.util.Map" id="payInerest">
+select 
+#{curDate,jdbcType=VARCHAR} as DATA_DATE,
+  CONCAT( CURDATE()+0,'-1-',round(round(rand(),6)*1000000) ) as Batch_no,
+'6029' as Company,'10089999' as Department,
+d.income_user as Customer_ID ,c.loan_no as product_code, c.loan_user as Project_Cus_id,
+case  c.loan_type  when 'public' then '76030001' when 'stock' then '76020001' when 'product' then '76010001'  end as business_code 
+,'CNY' as currency_code,
+'1' as currency_rate,
+'BC_ZFLX' as event_code,d.income_no as lx_order,
+DATE_FORMAT(d.income_time,'%Y-%m-%d %H-%i-%s') as business_date,
+(d.income_amt ) as actual_amount,
+d.support_amt as order_amount
+,#{paymentMethod,jdbcType=VARCHAR} as recive_type,#{paymentAccount,jdbcType=VARCHAR} as recive_account,
+ b.back_type as product_type,u.real_name as Customer_Name,ur.real_name as Project_Cus_name,
+c.loan_name as product_name
+ from crowdfund_daily_income d
+ left join crowdfunding c on d.loan_no = c.loan_no
+left join crowdfunding_back_set b on b.loan_no = c.loan_no
+
+ left join  user u on u.user_id = d.income_user
+left join user ur on ur.user_id = c.loan_user
+</select>
+</mapper>

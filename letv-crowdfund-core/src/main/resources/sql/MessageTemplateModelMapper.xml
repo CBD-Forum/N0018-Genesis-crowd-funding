@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.message.model.MessageTemplateModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.message.model.MessageTemplateModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="tpl_name" property="tplName" jdbcType="VARCHAR" />
+    <result column="tpl_code" property="tplCode" jdbcType="VARCHAR" />
+    <result column="tpl_type" property="tplType" jdbcType="VARCHAR" />
+    <result column="tpl_desprition" property="tplDesprition" jdbcType="VARCHAR" />
+    <result column="tpl_status" property="tplStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fbd.core.app.message.model.MessageTemplateModel" extends="BaseResultMap" >
+    <result column="tpl_content" property="tplContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, tpl_name, tpl_code, tpl_type, tpl_desprition, tpl_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    tpl_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message_template
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+   <!-- 分页查询 -->
+  <sql id="Base_Where_List">
+	<where>
+		<if test="id != null and id != ''">
+			and id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="tplName != null and tplName != ''">
+			and t1.tpl_name like CONCAT(CONCAT('%', #{tplName,jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="tplCode != null and tplCode  != ''">
+			and t1.tpl_code like CONCAT(CONCAT('%', #{tplCode,jdbcType=VARCHAR}),'%')
+		</if>
+		
+		<if test="nodeName != null and nodeName  != ''">
+			and t2.`name` like CONCAT(CONCAT('%', #{nodeName,jdbcType=VARCHAR}),'%')
+		</if>
+		
+		<if test="tplStatus != null and tplStatus != ''">
+			and t1.tpl_status = #{tplStatus,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="tplType != null and tplType != ''">
+			and t1.tpl_type = #{tplType,jdbcType=VARCHAR}
+		</if>
+		
+	</where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='tplName'" >
+        ORDER BY t1.tpl_name ${order}
+      </if>
+      <if test="sort =='nodeName'" >
+        ORDER BY t2.`name` ${order}
+      </if>
+      <if test="sort =='tplType'" >
+        ORDER BY t1.tpl_type ${order}
+      </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) FROM
+		message_template t1
+	LEFT JOIN message_node t2 ON t1.tpl_code = t2.`code`
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.message.model.MessageTemplateModel" >
+    SELECT
+		t1.id,
+		t1.tpl_name tplName,
+		t1.tpl_type tplType,
+		t1.tpl_status tplStatus,
+		t1.tpl_desprition tplDesprition,
+		t2.`name` nodeName
+	FROM
+		message_template t1
+	LEFT JOIN message_node t2 ON t1.tpl_code = t2.`code`
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		 <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <select id="selectByTplCode" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from message_template
+    where tpl_code = #{tplCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from message_template
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.message.model.MessageTemplateModel" >
+    insert into message_template (id, tpl_name, tpl_code, 
+      tpl_type, tpl_desprition, tpl_status, 
+      tpl_content)
+    values (#{id,jdbcType=VARCHAR}, #{tplName,jdbcType=VARCHAR}, #{tplCode,jdbcType=VARCHAR}, 
+      #{tplType,jdbcType=VARCHAR}, #{tplDesprition,jdbcType=VARCHAR}, #{tplStatus,jdbcType=VARCHAR}, 
+      #{tplContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.message.model.MessageTemplateModel" >
+    insert into message_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tplName != null" >
+        tpl_name,
+      </if>
+      <if test="tplCode != null" >
+        tpl_code,
+      </if>
+      <if test="tplType != null" >
+        tpl_type,
+      </if>
+      <if test="tplDesprition != null" >
+        tpl_desprition,
+      </if>
+      <if test="tplStatus != null" >
+        tpl_status,
+      </if>
+      <if test="tplContent != null" >
+        tpl_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tplName != null" >
+        #{tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="tplCode != null" >
+        #{tplCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tplType != null" >
+        #{tplType,jdbcType=VARCHAR},
+      </if>
+      <if test="tplDesprition != null" >
+        #{tplDesprition,jdbcType=VARCHAR},
+      </if>
+      <if test="tplStatus != null" >
+        #{tplStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tplContent != null" >
+        #{tplContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.message.model.MessageTemplateModel" >
+    update message_template
+    <set >
+      <if test="tplName != null" >
+        tpl_name = #{tplName,jdbcType=VARCHAR},
+      </if>
+      <if test="tplCode != null" >
+        tpl_code = #{tplCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tplType != null" >
+        tpl_type = #{tplType,jdbcType=VARCHAR},
+      </if>
+      <if test="tplDesprition != null" >
+        tpl_desprition = #{tplDesprition,jdbcType=VARCHAR},
+      </if>
+      <if test="tplStatus != null" >
+        tpl_status = #{tplStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="tplContent != null" >
+        tpl_content = #{tplContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fbd.core.app.message.model.MessageTemplateModel" >
+    update message_template
+    set tpl_name = #{tplName,jdbcType=VARCHAR},
+      tpl_code = #{tplCode,jdbcType=VARCHAR},
+      tpl_type = #{tplType,jdbcType=VARCHAR},
+      tpl_desprition = #{tplDesprition,jdbcType=VARCHAR},
+      tpl_status = #{tplStatus,jdbcType=VARCHAR},
+      tpl_content = #{tplContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.message.model.MessageTemplateModel" >
+    update message_template
+    set tpl_name = #{tplName,jdbcType=VARCHAR},
+      tpl_code = #{tplCode,jdbcType=VARCHAR},
+      tpl_type = #{tplType,jdbcType=VARCHAR},
+      tpl_desprition = #{tplDesprition,jdbcType=VARCHAR},
+      tpl_status = #{tplStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

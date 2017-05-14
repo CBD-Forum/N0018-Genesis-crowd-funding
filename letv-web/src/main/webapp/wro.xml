@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
+
+	<group name="basic">
+		<css>/css/basic.css</css>
+		<css>/css/skin.css</css>
+		<css>/css/jquery-ui-1.8.23.custom.css</css>
+		<css>/css/validationEngine.jquery.css</css>
+
+		<js>/js/jquery-1.7.2.min.js</js>
+		<js>/js/jquery-ui-1.8.23.custom.min.js</js>
+		<js>/js/jquery.validationEngine.js</js>
+		<js>/js/jquery.fixedtableheader.min.js</js>
+		<js>/js/roll.js</js>
+		<js>/js/jquery.pagination.js</js>
+		<js>/js/jquery.rooFixed.js</js>
+		<js>/js/jquery.ui.datepicker-zh-CN.js</js>
+		<js>/js/json2.js</js>
+	</group>
+
+	<group name="custom">
+		<js>/js/jquery.validationEngine-zh_CN.js</js>
+		<js>/js/common.js</js>
+	</group>
+
+</groups>

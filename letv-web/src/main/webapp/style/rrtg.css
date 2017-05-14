@@ -1,0 +1,81 @@
+*{
+    margin:0;padding:0;list-style:none;font-size:14px;font-family: "Microsoft YaHei","Lucida Sans Unicode","Myriad Pro";
+}
+a{
+    display:inline-block; text-decoration:none;
+}
+a img{
+    border:0;
+}
+em, i{
+    font-style: normal;
+}
+/*main��ʼ*/
+.box {
+    width:1200px;margin: 0 auto;overflow: hidden;
+}
+
+/*leader*/
+.leader {
+    padding:50px 0;text-align: center;
+}
+.leader-title{
+    padding:50px 0;text-align: center;
+}
+
+.leader_list li {
+    width:360px;height:486px;margin-right:30px;float: left;position: relative;
+}
+
+
+.leader_list .li1 {
+    background: rgba(0, 0, 0, 0) url("../images/leader_1.png") no-repeat scroll 0 0;
+    margin-left:30px;
+}
+.leader_list .li2 {
+    background: rgba(0, 0, 0, 0) url("../images/leader_2.png") no-repeat scroll 0 0;
+}
+.leader_list .li3 {
+    background: rgba(0, 0, 0, 0) url("../images/leader_3.png") no-repeat scroll 0 0;
+}
+
+.leader_list li .pos_bg {
+    width: 336px;height: 172px;padding: 0 12px;line-height:24px;background:#fff;color: #666666; position: absolute;left: 0;bottom: 0;text-align:center;
+}
+
+.leader_list li .pos_bg .name {
+    font-size:16px;margin:17px 0 10px;
+}
+.leader_list li .pos_bg .tl{
+    text-align:left;text-align:center;
+}
+
+/*team*/
+.td_team {
+    background-color: #fff;background-image: url("../images/leaderbg.png");background-repeat: no-repeat;  padding-bottom: 250px;  text-align: center;
+}
+.td_team_title{
+    padding:60px 0;text-align: center;
+}
+img {
+    border: 0 none;vertical-align: middle;
+}
+.td_team .td_team_list {
+    width:1250px;
+}
+.td_team .td_team_list li {
+    width: 292px;height: 195px;float: left;margin:0 10px 10px 0;overflow:hidden;
+}
+.td_team .td_team_list li i {
+    width: 292px;height: 195px;display: block;background: #666 none repeat scroll 0 0;position: absolute; opacity: 0.5;filter:"alpha(opacity= 50)";
+}
+
+.clearfix::before,.clearfix::after{
+    content: "";  display: table;
+}
+.clearfix::after {
+    clear: both;  overflow: hidden;
+}
+.clearfix::before,.clearfix::after{
+    content: "";  display: table;
+}

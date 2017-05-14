@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbd.core.app.todo.model.TodoModelMapper">
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.todo.model.TodoModel">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="event" jdbcType="VARCHAR" property="event" />
+    <result column="event_obj" jdbcType="VARCHAR" property="eventObj" />
+    <result column="detail" jdbcType="VARCHAR" property="detail" />
+    <result column="link" jdbcType="VARCHAR" property="link" />
+    <result column="post" jdbcType="VARCHAR" property="post" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="manage_time" jdbcType="TIMESTAMP" property="manageTime" />
+    <result column="manager" jdbcType="VARCHAR" property="manager" />
+    <result column="manage_result" jdbcType="VARCHAR" property="manageResult" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, event, event_obj, detail, link, post, create_time, manage_time, manager, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from todo
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from todo
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.todo.model.TodoModel">
+    insert into todo (id, event, event_obj, 
+      detail, link, post, 
+      create_time, manage_time, manager, manage_result,
+      status)
+    values (#{id,jdbcType=VARCHAR}, #{event,jdbcType=VARCHAR}, #{eventObj,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{manageTime,jdbcType=TIMESTAMP}, #{manager,jdbcType=VARCHAR}, 
+      #{manageResult,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.todo.model.TodoModel">
+    insert into todo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="event != null">
+        event,
+      </if>
+      <if test="eventObj != null">
+        event_obj,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+      <if test="link != null">
+        link,
+      </if>
+      <if test="post != null">
+        post,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="manageTime != null">
+        manage_time,
+      </if>
+      <if test="manager != null">
+        manager,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="event != null">
+        #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="eventObj != null">
+        #{eventObj,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null">
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manageTime != null">
+        #{manageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manager != null">
+        #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.todo.model.TodoModel">
+    update todo
+    <set>
+      <if test="event != null">
+        event = #{event,jdbcType=VARCHAR},
+      </if>
+      <if test="eventObj != null">
+        event_obj = #{eventObj,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null">
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null">
+        post = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manageTime != null">
+        manage_time = #{manageTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manager != null">
+        manager = #{manager,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.todo.model.TodoModel">
+    update todo
+    set event = #{event,jdbcType=VARCHAR},
+      event_obj = #{eventObj,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      post = #{post,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      manage_time = #{manageTime,jdbcType=TIMESTAMP},
+      manager = #{manager,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getCount" resultType="java.lang.Integer" parameterType="com.fbd.core.app.todo.model.TodoModel">
+    select count(*) from todo
+	 <include refid="Base_Where"/>
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.fbd.core.app.todo.model.TodoModel" >
+    select 
+    <include refid="Base_Column_List" />
+    from todo
+	 <include refid="Base_Where"/>
+   	ORDER BY create_time DESC
+   <if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  <sql id="Base_Where">
+	<where>
+      	post in 
+   		<foreach item="item" index="index" collection="posts" open="(" separator="," close=")">  
+	 	 #{item}  
+	 	</foreach>
+	   <if test="status != null and status != ''" >
+        and status = #{status,jdbcType=VARCHAR}
+       </if>
+   </where>
+   </sql>
+  
+   <update id="updateByEventObj" parameterType="com.fbd.core.app.todo.model.TodoModel">
+    update todo
+    set manage_time = #{manageTime,jdbcType=TIMESTAMP},
+      manager = #{manager,jdbcType=VARCHAR},
+      manage_result = #{manageResult,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR}
+    where event = #{event,jdbcType=VARCHAR} and
+      event_obj = #{eventObj,jdbcType=VARCHAR}
+  </update>
+  
+</mapper>

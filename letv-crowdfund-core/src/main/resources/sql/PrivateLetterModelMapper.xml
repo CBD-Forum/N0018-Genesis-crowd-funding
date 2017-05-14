@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.message.model.PrivateLetterModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.message.model.PrivateLetterModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="send_user" property="sendUser" jdbcType="VARCHAR" />
+    <result column="receive_user" property="receiveUser" jdbcType="VARCHAR" />
+    <result column="send_date" property="sendDate" jdbcType="TIMESTAMP" />
+    <result column="send_content" property="sendContent" jdbcType="LONGVARCHAR" />
+    <result column="loan_no" property="loanNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, send_user, receive_user, send_date,send_content,loan_no
+  </sql>
+  <sql id="List_Where">
+  	<where>
+      <if test="sendUser != null and sendUser != ''" >
+        and send_user = #{sendUser,jdbcType=VARCHAR}
+      </if>
+      <if test="receiveUser != null and receiveUser != ''" >
+        and receive_user = #{receiveUser,jdbcType=VARCHAR}
+      </if>
+      <if test="sendDate != null and sendDate != ''" >
+        and send_date = #{send_date,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from private_letter
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from private_letter
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.message.model.PrivateLetterModel" >
+    insert into private_letter (id, send_user, receive_user, 
+      send_date, send_content,loan_no)
+    values (#{id,jdbcType=VARCHAR}, #{sendUser,jdbcType=VARCHAR}, #{receiveUser,jdbcType=VARCHAR}, 
+      #{sendDate,jdbcType=TIMESTAMP}, #{sendContent,jdbcType=LONGVARCHAR}, #{loanNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.message.model.PrivateLetterModel" >
+    insert into private_letter
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sendUser != null" >
+        send_user,
+      </if>
+      <if test="receiveUser != null" >
+        receive_user,
+      </if>
+      <if test="sendDate != null" >
+        send_date,
+      </if>
+      <if test="sendContent != null" >
+        send_content,
+      </if>
+       <if test="loanNo != null" >
+        loan_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUser != null" >
+        #{sendUser,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUser != null" >
+        #{receiveUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendContent != null" >
+        #{sendContent,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="loanNo != null" >
+        #{loanNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.message.model.PrivateLetterModel" >
+    update private_letter
+    <set >
+      <if test="sendUser != null" >
+        send_user = #{sendUser,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveUser != null" >
+        receive_user = #{receiveUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDate != null" >
+        send_date = #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendContent != null" >
+        send_content = #{sendContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="loanNo != null" >
+        loan_no = #{loanNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.message.model.PrivateLetterModel" >
+    update private_letter
+    set send_user = #{sendUser,jdbcType=VARCHAR},
+      receive_user = #{receiveUser,jdbcType=VARCHAR},
+      send_date = #{sendDate,jdbcType=TIMESTAMP},
+      send_content = #{sendContent,jdbcType=LONGVARCHAR},
+      loan_no = #{loanNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  <select id="getCount" resultType="java.lang.Long" parameterType="com.fbd.core.app.message.model.PrivateLetterModel" >
+    select 
+     count(1)
+    from private_letter
+    <include refid="List_Where"/>
+  </select>
+  <select id="selectPrivateLetterList" resultType="java.util.Map" parameterType="com.fbd.core.app.message.model.PrivateLetterModel" >
+    select 
+        p.id, p.send_user as sendUser, 
+        p.receive_user  as receiveUser, 
+        p.send_date as sendDate,
+        p.send_content as sendContent,
+        p.loan_no as loanNo,
+        l.loan_name as loanName
+    from private_letter p left join crowdfunding l on p.loan_no=l.loan_no
+    <include refid="List_Where"/>
+    	order by send_date desc
+    <if test="endPage>0" >
+        LIMIT #{startPage},#{endPage}
+    </if>
+  </select>
+  
+</mapper>

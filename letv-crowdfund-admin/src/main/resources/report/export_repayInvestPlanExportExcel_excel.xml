@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<report name="投资人应收还款明细" fileName="投资人应收还款明细列表">
+	<report-header>
+		<column name="项目编号" mapping="loanNo" />
+		<column name="项目名称" mapping="loanName" />
+		<column name="投资编号" mapping="investNo" />
+		<column name="投资人用户名" mapping="investorId" />
+		<column name="投资人真实姓名" mapping="investorName" />
+		<column name="投资时间" mapping="investTime" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+		<column name="当前期数" mapping="repayPeriod" />
+		<column name="还款人用户名" mapping="repayUserId" />
+		<column name="还款人真实姓名" mapping="repayUserName" />
+		<column name="利息(元)" mapping="repayInterest" />
+		<column name="本金(元)" mapping="repayPrincipal" />
+		<column name="总额(元)" mapping="repayTotal" />
+		<column name="还款状态" mapping="repayStateName" />
+		<column name="还款截止日" mapping="lastRepayDate" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+		<column name="罚息(元)" mapping="fine" />
+		<column name="计划还款时间" mapping="planRepayDate" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+		<column name="实际还款时间" mapping="actualRepayDate" datatype="date" format="yyyy-MM-dd HH:mm:ss" />
+	</report-header>
+	<dataSource serviceClassId="loanService" serviceMethod="getRepayInvest4Loan" />
+</report>

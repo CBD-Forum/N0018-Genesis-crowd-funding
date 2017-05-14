@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.fileupload.model.FileUploadModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.fileupload.model.FileUploadModel" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_size" property="fileSize" jdbcType="VARCHAR" />
+    <result column="file_extension" property="fileExtension" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,file_name,file_size,file_extension,file_url,parent_id,create_time,update_time,type  
+  </sql>  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from file_upload
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from file_upload
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>   
+  
+  <delete id="deleteByParentId" parameterType="java.lang.String" >
+    delete from file_upload
+    where parent_id = #{parentId,jdbcType=VARCHAR}
+  </delete>    
+  
+  <select id="selectList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   select 
+    <include refid="Base_Column_List" />
+    from file_upload
+    <include refid="Base_Where"/>
+  </select>  
+  <sql id="Base_Where">
+  	<where>
+      <if test="id != null and id != '' " >
+        and  id = #{id,jdbcType=VARCHAR}
+      </if>
+      <if test="parentId != null and parentId != '' " >
+        and  parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != '' " >
+        and  type = #{type,jdbcType=VARCHAR}
+      </if>
+    </where>  
+  </sql>
+   
+  <insert id="insert" parameterType="com.fbd.core.app.fileupload.model.FileUploadModel" >
+    insert into file_upload (id, file_name, file_size, 
+      file_extension, file_url, parent_id,type, 
+      create_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=VARCHAR}, 
+      #{fileExtension,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateParentIdByParentId" parameterType="com.fbd.core.app.fileupload.model.FileUploadModel" >
+    update file_upload
+    set parent_id = #{parentId,jdbcType=VARCHAR}
+    where parent_id = #{tempParentId,jdbcType=VARCHAR}
+  </update>  
+</mapper>

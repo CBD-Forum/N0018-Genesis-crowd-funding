@@ -1,0 +1,52 @@
+/*首页banner*/
+.index_pig {width : 100%; height: 460px; overflow :hidden ; position : relative;}
+.index_pig ul {height :460px ; position : absolute;}
+.index_pig ul li {float : left; height :460px ; overflow : hidden; position :relative ; background : #000;}
+.index_pig ul li div { position :absolute ; overflow : hidden;}
+.index_pig .btnBg { position :absolute ; width : 659px; height: 20px; left :0 ; bottom :0 ; background : #000;display: none;}
+.index_pig .btn_wdiv{position:absolute;width:100%;height:23px;padding:0px 10px 0px 10px;bottom:6px;text-align:center;z-index:2;}
+.index_pig .btn {height: 23px;}
+.index_pig .btn span {display : inline-block; _display: inline ; _zoom : 1; width :12px ; height : 12px; line-height: 24px ; text-align:center; _font-size:0;margin-left:10px; cursor:pointer; background:#EEEAA7;border-radius:50%;}
+.index_pig .btn span.on { background :#fff ;}
+.index_pig .preNext { width :45px ; height : 100px; position: absolute ; top : 90px; background :url(img/sprite.png) no-repeat 0 0 ; cursor : pointer;}
+.index_pig .pre { left :0 ;}
+.index_pig .next { right :0 ; background-position : right top;}
+.index_pig .abstractDiv{ position :absolute ;z-index : 1; bottom: 0 ;height : 40px; width: 100%; background :#000 ;opacity : 0.6 ;color : #FFF; filter: alpha(opacity= 60) ;}
+.index_pig .abstarctInfo{ margin :12px 0 0 30px; font-size: 12px ;font-weight : bold; position: absolute ;z-index : 3; bottom: 12px; color :#FFF ;}
+#banner_pig a{display:inline-block;width:100%;height:340px;}
+
+/*遮罩层*/
+.bgpop,.paymentBgpop{width:100%;height:100%;background:#000;filter:alpha(opacity=30);opacity:0.3;-moz-opacity:0.3;z-index:888;position:fixed;top:0;left:0;display:none;}
+.sbgpop{width:100%;height:100%;background:#000;filter:alpha(opacity=30);opacity:0.3;-moz-opacity:0.3;z-index:100;position:fixed;top:0;left:0;display:none;}
+/*全局弹框alertmessage*/
+
+/*等待加载gif*/
+.bgpop_wait{width:100%;height:100%;background:url(../images/ui-waiting.gif) no-repeat center center #000;filter:alpha(opacity=60);opacity:0.6;-moz-opacity:0.6;z-index:55;position:fixed;top:0;left:0;display:none;}
+/*提示框*/
+.tip_div{min-width:120px;height:20px;padding:5px 6px;background:#fffaf3;border:1px solid #f9a123;filter:alpha(opacity=98);opacity:0.98;-moz-opacity:0.98;z-index:2000;font-size:14px;display:none;position:absolute;border-radius:3px; color:#777;}
+span.tip_z{position:absolute;z-index:1;background:url(../images/promptIon.png) no-repeat;display: inline-block;width: 12px;height: 7px;top: 30px; left: 10px;}
+.tip_div div{width:100%;text-align:center;position: relative;z-index: 9999;}
+/*comfirm弹出框*/
+.com_div{width:300px;height:150px;background:#FFF;border:1px solid #eee;position:fixed;z-index:9999;display:none;}
+.com_div .com_tit{width:280px;height:30px;line-height:30px;color:#000;font-weight:bold;font-size:14px;padding-left:20px;border-bottom:1px solid #E5E5E5;}
+.com_div .com_close{color:#D2D2D2;font-size:14px;cursor:pointer;float:right;margin-right:10px;font-size:20px;}
+.com_div .com_close:hover{color:#000;}
+.com_div .com_content{width:100%;text-align:center;font-size:13px;color:#333;height:80px;line-height:80px;}
+.com_div .com_btn{text-align:center;}
+.com_div .com_btn span.s{display:inline-block;letter-spacing:3px;background:#1ea5ff;padding:5px 10px;color:#FFF;cursor:pointer;}
+.com_div .com_btn span.c{display:inline-block;letter-spacing:3px;background:#EBEBEB;padding:5px 10px;color:#333;cursor:pointer;margin-left:50px;}
+/*按钮*/
+.button{display:inline-block;padding:5px 25px;background:#1ea5ff;border-radius:6px;text-align:center;color:#FFF;cursor:pointer;}
+.button:hover{background:#1ea5ff;}
+a.button:hover{background:#1ea5ff;color:#fff!important;}
+
+/*网站模仿投弹框样式*/
+.site_tip_div{width:415px;height:300px;padding:2px;position:fixed;z-index:101;background:#e4e4e4;display:none;}
+.site_tip_div .head{height:30px;background:#14446A;line-height:30px;}
+.site_tip_div .head .w{display:inline-block;padding-left:10px;font-size:16px;color:#FFF;}
+.site_tip_div .head .x{display:inline-block;font-size:22px;color:#FFF;margin-right:10px;float:right;cursor:pointer;}
+.site_tip_div .head_s{padding:20px;}
+.site_tip_div .talkArea{width:365px;height:100px;border:1px solid #ccc;padding:5px;resize:none;}
+.site_tip_div table{border-collapse: collapse;border: none;width:100%;}
+.site_tip_div table td{border: solid #CBD2D6 1px;text-align:center;vertical-align:middle;}
+#countDiv td{height:45px;}

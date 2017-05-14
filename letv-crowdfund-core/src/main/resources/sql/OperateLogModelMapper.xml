@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fbd.core.app.log.model.OperateLogModelMapper" >
+  <resultMap id="BaseResultMap" type="com.fbd.core.app.log.model.OperateLogModel" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
+    <result column="operate_type" property="operateType" jdbcType="VARCHAR" />
+    <result column="operate_model" property="operateModel" jdbcType="VARCHAR" />
+    <result column="operate_result" property="operateResult" jdbcType="VARCHAR" />
+    <result column="res_info" property="resInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id,user_type, operate_time, ip_address, operate_type, operate_model, operate_result, 
+    res_info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from operate_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from operate_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbd.core.app.log.model.OperateLogModel" >
+    insert into operate_log (id, user_id,user_type, operate_time, 
+      ip_address, operate_type, operate_model, 
+      operate_result, res_info)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{ipAddress,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR}, #{operateModel,jdbcType=VARCHAR}, 
+      #{operateResult,jdbcType=VARCHAR}, #{resInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbd.core.app.log.model.OperateLogModel" >
+    insert into operate_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+       <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="ipAddress != null" >
+        ip_address,
+      </if>
+      <if test="operateType != null" >
+        operate_type,
+      </if>
+      <if test="operateModel != null" >
+        operate_model,
+      </if>
+      <if test="operateResult != null" >
+        operate_result,
+      </if>
+      <if test="resInfo != null" >
+        res_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+       <if test="userType != null" >
+       #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipAddress != null" >
+        #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null" >
+        #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateModel != null" >
+        #{operateModel,jdbcType=VARCHAR},
+      </if>
+      <if test="operateResult != null" >
+        #{operateResult,jdbcType=VARCHAR},
+      </if>
+      <if test="resInfo != null" >
+        #{resInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbd.core.app.log.model.OperateLogModel" >
+    update operate_log
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+       <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipAddress != null" >
+        ip_address = #{ipAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="operateType != null" >
+        operate_type = #{operateType,jdbcType=VARCHAR},
+      </if>
+      <if test="operateModel != null" >
+        operate_model = #{operateModel,jdbcType=VARCHAR},
+      </if>
+      <if test="operateResult != null" >
+        operate_result = #{operateResult,jdbcType=VARCHAR},
+      </if>
+      <if test="resInfo != null" >
+        res_info = #{resInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbd.core.app.log.model.OperateLogModel" >
+    update operate_log
+    set user_id = #{userId,jdbcType=VARCHAR},
+       user_type = #{userType,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      ip_address = #{ipAddress,jdbcType=VARCHAR},
+      operate_type = #{operateType,jdbcType=VARCHAR},
+      operate_model = #{operateModel,jdbcType=VARCHAR},
+      operate_result = #{operateResult,jdbcType=VARCHAR},
+      res_info = #{resInfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- #################### 后台分页查询 #####################3 -->
+  <sql id="Base_Where_List">
+  	<where>
+      <if test="userId != null and userId != ''" >
+        and t1.user_id like CONCAT(CONCAT('%', #{userId,jdbcType=VARCHAR}),'%')
+      </if>
+  	  <if test="operateModel != null and operateModel != ''" >
+        and t1.operate_model = #{operateModel,jdbcType=VARCHAR}
+      </if>
+      <if test="operateType != null and operateType != ''" >
+        and t1.operate_type = #{operateType,jdbcType=VARCHAR}
+      </if>
+      <if test="operateResult != null and operateResult != ''" >
+        and t1.operate_result = #{operateResult,jdbcType=VARCHAR}
+      </if>
+  	</where>
+  </sql>
+  
+  <sql id="Base_OrderBy_List">
+  	<if test="sort =='operateTime'" >
+      t1.operate_time ${order}
+    </if>
+    <if test="sort =='userId'" >
+      t1.user_id ${order}
+    </if>
+  </sql>
+  
+  <select id="getCount" resultType="java.lang.Integer" >
+    select count(*) FROM operate_log t1
+	LEFT JOIN dictionary t2 ON t1.user_type = t2.`code` AND t2.type_code = 'user_type'
+	LEFT JOIN dictionary t3 ON t1.operate_model = t3.`code` AND t3.type_code = 'audit_operate_model'
+	LEFT JOIN dictionary t4 ON t1.operate_model = t4.`code` AND t4.type_code = 'audit_operate_type'
+    <include refid="Base_Where_List" />
+  </select>
+  
+  <select id="select" resultType="java.util.Map" parameterType="java.util.Map" >
+    SELECT
+		t1.id,
+		t1.user_id userId,                        -- 用户名
+		t1.operate_time operateTime,              -- 操作时间
+		t1.ip_address ipAddress,                  -- ip地址
+		t1.operate_type operateType,              -- 操作类型
+		t4.display_name operateTypeText,          -- 操作类型
+		t1.operate_model operateModel,            -- 操作模块
+		t3.display_name operateModeText,
+		t1.operate_result operateResult,          -- 操作结果
+		t1.res_info resInfo,                      -- 异常信息
+		t1.user_type userType,                    -- 用户类型
+		t2.display_name userTypeText
+	FROM operate_log t1
+	LEFT JOIN dictionary t2 ON t1.user_type = t2.`code` AND t2.type_code = 'user_type'
+	LEFT JOIN dictionary t3 ON t1.operate_model = t3.`code` AND t3.type_code = 'audit_operate_model'
+	LEFT JOIN dictionary t4 ON t1.operate_type = t4.`code` AND t4.type_code = 'audit_operate_type'
+   <include refid="Base_Where_List" />
+   <if test="sort != null and sort != ''">
+		ORDER BY <include refid="Base_OrderBy_List" />
+	</if>
+	<if test="sort == null or sort == ''">
+		ORDER BY operate_time desc
+	</if>
+	<if test="endPage>0">
+    LIMIT #{startPage},#{endPage}
+	</if>
+  </select>
+  
+  
+</mapper>
