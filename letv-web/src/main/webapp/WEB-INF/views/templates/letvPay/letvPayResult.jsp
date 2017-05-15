@@ -49,7 +49,7 @@ String userphoto = session.getAttribute("userphoto")==null?null:session.getAttri
 <div class="header2">
     <div class="box">
         <div class="logo fl">
-            <h1><a href="<%=path%>/common/index.html"><img src="<%=path%>/images/letv/logo.png" title="中华创世纪" alt="中华创世纪"/></a></h1>
+            <h1><a href="<%=path%>/common/index.html"><img src="<%=path%>/images/letv/logo.png" title="中华创世纪1" alt="中华创世纪"/></a></h1>
         </div>
         <div class="webMenu fr">
             <ul class="clearfix" id="navUl">
