@@ -98,9 +98,9 @@ String userphoto = session.getAttribute("userphoto")==null?null:session.getAttri
     <div class="fr">
 	 <i id="user_top"></i>
 	 <span class="line">|</span>
-	 <a href="http://letvjr.com/index.html" target="_blank">乐视金融</a>
+	 <!-- <a href="" target="_blank">中华创世纪</a> -->
 	 <!-- <span class="line">|</span>
-	 <a>乐视金融app</a> -->
+	 <a>中华创世纪</a> -->
 	 <span class="line">|</span>
 	 <a href="<%=path%>/common/nodeList.html?nodeType=help">帮助中心</a>
 	 <span class="line">|</span>
@@ -112,7 +112,7 @@ String userphoto = session.getAttribute("userphoto")==null?null:session.getAttri
 <div class="header2">
     <div class="box">
         <div class="logo fl">
-            <h1><a href="<%=path%>/common/index.html"><img src="" title="乐视金融" alt="乐视金融" id="logo"/></a></h1>
+            <h1><a href="<%=path%>/common/index.html"><img src="" title="中华创世纪" alt="中华创世纪" id="logo"/></a></h1>
         </div>
         <div class="webMenu fr" style="margin:0;">
             <ul class="clearfix" id="navUl">
